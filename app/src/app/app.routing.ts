@@ -16,7 +16,12 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'apps',
     loadChildren: './apps/apps.module#AppsModule'
-  }, {
+  },
+  {
+    path: 'schools',
+    loadChildren: './school/school.module#SchoolModule'
+  },
+   {
     path: 'widgets',
     loadChildren: './widgets/widgets.module#WidgetsModule'
   }, {
@@ -52,4 +57,3 @@ export const AppRoutes: Routes = [{
   path: '**',
   redirectTo: 'session/404'
 }];
-
