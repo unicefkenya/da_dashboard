@@ -21,6 +21,14 @@ export const AppRoutes: Routes = [{
     path: 'schools',
     loadChildren: './school/school.module#SchoolModule'
   },
+  {
+    path: 'students',
+    loadChildren: './student/student.module#StudentModule'
+  },
+  {
+    path: 'teacher',
+    loadChildren: './teacher/teacher.module#TeacherModule'
+  },
    {
     path: 'widgets',
     loadChildren: './widgets/widgets.module#WidgetsModule'

@@ -37,18 +37,18 @@ const MENUITEMS = [
     ],
   },
   {
-    state: 'apps',
+    state: 'school',
     name: 'School',
     type: 'sub',
-    icon: 'building',
+    icon: 'home',
     badge: [
       {type: 'red', value: '3'}
     ],
     children: [
-      {state: 'schools', name: 'Schools'},
-      {state: 'teachers', name: 'Teachers'},
-      {state: 'classes', name: 'Classes'},
-      {state: 'students', name: 'Students'}
+      {state: 'school', name: 'Schools'},
+      {state: 'teacher', name: 'Teachers'},
+      {state: 'class', name: 'Classes'},
+      {state: 'student', name: 'Students'}
     ]
   },
   {
