@@ -17,24 +17,34 @@ import {TeacherService} from './teacher.service';
 
 
 export class TeacherComponent implements OnInit{
+  editing = {};
+  rows = [];
+
   constructor(
     private _teacherRegistrationService: TeacherService
-  ){}
+  ){
+    this.fetch((data) => {
+      this.rows = data;
+    });
+  }
 
   ngOnInit(){}
 
-  systems: Object[] = [{
-    name: 'Lights',
-    on: false,
-  }, {
-    name: 'Surround Sound',
-    on: true,
-  }, {
-    name: 'T.V.',
-    on: true,
-  }, {
-    name: 'Entertainment System',
-    on: true,
-  }, ];
+  fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
+
+    req.onload = () => {
+      cb(JSON.parse(req.response));
+    };
+
+    req.send();
+  }
+
+  updateValue(event, cell, cellValue, row) {
+    this.editing[row.$$index + '-' + cell] = false;
+    this.rows[row.$$index][cell] = event.target.value;
+  }
+  
 
 }

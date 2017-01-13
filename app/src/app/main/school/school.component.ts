@@ -17,9 +17,32 @@ import {SchoolService} from './school.service';
 
 
 export class SchoolComponent implements OnInit{
+  editing = {};
+  rows = [];
+
   constructor(
     private _schoolRegistrationService: SchoolService
-  ){}
+  ){
+    this.fetch((data) => {
+      this.rows = data;
+    });
+  }
+
+  fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
+
+    req.onload = () => {
+      cb(JSON.parse(req.response));
+    };
+
+    req.send();
+  }
+
+  updateValue(event, cell, cellValue, row) {
+    this.editing[row.$$index + '-' + cell] = false;
+    this.rows[row.$$index][cell] = event.target.value;
+  }
 
 
   public headTeachers: any[] = [];
@@ -32,20 +55,6 @@ export class SchoolComponent implements OnInit{
     this.getHeadTeacherData();
     this.getSchoolConstituencies();
   }
-
-  systems: Object[] = [{
-    name: 'Lights',
-    on: false,
-  }, {
-    name: 'Surround Sound',
-    on: true,
-  }, {
-    name: 'T.V.',
-    on: true,
-  }, {
-    name: 'Entertainment System',
-    on: true,
-  }, ];
 
 
   onSubmit(registerSchool: SchoolRegistration){
