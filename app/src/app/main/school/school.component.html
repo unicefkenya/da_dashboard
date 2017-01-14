@@ -10,33 +10,34 @@
         <md-tab>
           <template md-tab-label>Registration</template>
           <md-card-content>
-            <form  fxLayout="column">
+            <form (ngSubmit)="onSubmit(schoolregistration.value)" #schoolregistration="ngForm"  fxLayout="column">
 
-              <md-input placeholder="School Name" class="mb-1"></md-input>
+              <md-input placeholder="School Name" required ngModel name="schoolName" class="mb-1"></md-input>
 
-              <md-input placeholder="School Code" class="mb-1"></md-input>
+              <md-input placeholder="School Code" required ngModel name="schoolCode" class="mb-1"></md-input>
 
-              <md-input placeholder="Emis Code" class="mb-1"></md-input>
+              <md-input placeholder="Emis Code" required ngModel name="emisCode" class="mb-1"></md-input>
 
-              <md-input placeholder="Geo co-ordinates (long,lat)" class="mb-1"></md-input>
+              <md-input placeholder="Geo co-ordinates (long,lat)" required ngModel name="geo_cordinates" class="mb-1"></md-input>
 
-              <md-select placeholder="County" class="mb-1">
-                <md-option value="Nairobi">Nairobi</md-option>
-                <md-option value="Mombasa">Mombasa</md-option>
-                <md-option value="Kisumu">Kisumu</md-option>
+              <md-select required ngModel name="county" placeholder="County" class="mb-1">
+                <md-option *ngFor = "let name of schoolCounty" value="{{name.county}}">{{name.county}}</md-option>
               </md-select>
 
-              <md-select placeholder="Constituency" class="mb-1">
-                <md-option value="Starehe">Starehe</md-option>
-                <md-option value="Lang'ata">Lang'ata</md-option>
-                <md-option value="Madaraka">Madaraka</md-option>
+              <md-select required ngModel name="constituency" placeholder="Constituency" class="mb-1">
+                <md-option *ngFor = "let name of schoolConstituency" value="{{name.constituency}}">{{name.constituency}}</md-option>
               </md-select>
 
-              <md-select placeholder="Source of Water" class="mb-1">
+              <md-select required ngModel name="waterSource" placeholder="Source of Water" class="mb-1">
                 <md-option value="borehole">Borehole</md-option>
                 <md-option value="river">River</md-option>
               </md-select>
-
+              <hr>
+              <md-card-actions>
+                <button type="submit" [disabled]="!schoolregistration.valid" md-raised-button class="shadow-none">Save</button>
+                <button md-raised-button class="warn">Delete</button>
+                <button md-raised-button color="primary">Cancel</button>
+              </md-card-actions>
 
             </form>
           </md-card-content>
@@ -181,15 +182,15 @@
               </ngx-datatable-column>
 
             </ngx-datatable>
+            <hr>
+            <md-card-actions>
+              <button md-raised-button class="shadow-none">Save</button>
+              <button md-raised-button class="warn">Delete</button>
+              <button md-raised-button color="primary">Cancel</button>
+            </md-card-actions>
           </md-card-content>
         </md-tab>
       </md-tab-group>
-      <hr>
-      <md-card-actions>
-        <button md-raised-button class="shadow-none">Save</button>
-        <button md-raised-button style="background-color: red">Delete</button>
-        <button md-raised-button color="primary">Cancel</button>
-      </md-card-actions>
     </md-card>
   </div>
 </div>

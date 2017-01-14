@@ -12,13 +12,14 @@
           <md-card-content>
             <form  fxLayout="column">
 
-              <md-input placeholder="First Name" class="mb-1"></md-input>
-
-              <md-input placeholder="Last Code" class="mb-1"></md-input>
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-input required placeholder="First Name" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
+                <md-input required placeholder="Last Name" class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
+              </div>
 
               <md-input placeholder="Phone Number" class="mb-1"></md-input>
 
-              <md-input placeholder="Email" class="mb-1"></md-input>
+              <md-input placeholder="Email" type="email" class="mb-1"></md-input>
 
               <md-input placeholder="Birthday" class="mb-1"></md-input>
 
@@ -191,7 +192,7 @@
       <hr>
       <md-card-actions>
         <button md-raised-button class="shadow-none">Save</button>
-        <button md-raised-button style="background-color: red">Delete</button>
+        <button md-raised-button class="warn">Delete</button>
         <button md-raised-button color="primary">Cancel</button>
       </md-card-actions>
     </md-card>

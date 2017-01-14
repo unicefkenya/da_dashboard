@@ -14,7 +14,7 @@ export class SchoolService{
 
     //console.log(myApiRoutes=>apiRoutes);
 
-    const _schoolRegistrationUrl = 'http://127.0.0.1:8000/api/school';
+    const _schoolRegistrationUrl = 'http://uoosc.cloudapp.net/api/school';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -39,20 +39,20 @@ export class SchoolService{
     return body.data || { };
   }
 
-  getHeadTeacherData(){
-    return this.http.get('http://127.0.0.1:8000/api/teachers.json')
-      .map((response: Response) => response.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
   getUsers(){
-    return this.http.get('http://127.0.0.1:8000/api/users.json')
+    return this.http.get('http://uoosc.cloudapp.net/api/users.json')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getConstituencies(){
-    return this.http.get('http://127.0.0.1:8000/api/counstituencies.json')
+    return this.http.get('http://uoosc.cloudapp.net/api/counstituencies.json')
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getCounties(){
+    return this.http.get('http://uoosc.cloudapp.net/api/counties.json')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

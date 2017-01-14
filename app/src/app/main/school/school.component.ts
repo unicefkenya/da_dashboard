@@ -9,7 +9,7 @@ import {SchoolService} from './school.service';
 
 
 @Component({
-  selector: 'app-edit',
+  selector: 'app-school',
   templateUrl: './school.component.html',
   styleUrls: ['./school.component.scss'],
   providers: [SchoolService]
@@ -45,15 +45,16 @@ export class SchoolComponent implements OnInit{
   }
 
 
-  public headTeachers: any[] = [];
   public schoolConstituency;
+  public schoolCounty;
   public submitted: boolean =  true;
   public school: SchoolRegistration;
 
   ngOnInit(){
     //this.onSubmit;
-    this.getHeadTeacherData();
+    this.getSchoolCounties();
     this.getSchoolConstituencies();
+
   }
 
 
@@ -62,17 +63,18 @@ export class SchoolComponent implements OnInit{
 
       //edit
     }else{
-      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.headTeacherName,registerSchool.headTeacherPhone, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.waterSource, registerSchool.constituency);
+      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.geo_cordinates,registerSchool.waterSource, registerSchool.headTeacherName, registerSchool.headTeacherPhone,registerSchool.constituency,registerSchool.county);
 
       this._schoolRegistrationService.sendData({
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
-            geo_cordinates: 0,
+            geo_cordinates: registerSchool.geo_cordinates,
             emis_code: registerSchool.emisCode,
             constituency: registerSchool.constituency,
+            county: registerSchool.county,
             source_of_water: registerSchool.waterSource,
-            headteacher: registerSchool.headTeacherName,
-            phone_no: registerSchool.headTeacherPhone
+            headteacher: 8,
+            phone_no: 2323
           })
           .subscribe(
             data => console.log(data)
@@ -80,16 +82,17 @@ export class SchoolComponent implements OnInit{
         }
   }
 
-  getHeadTeacherData(){
-    this._schoolRegistrationService.getHeadTeacherData()
+  getSchoolCounties(){
+
+    this._schoolRegistrationService.getCounties()
       .subscribe(
-        res=>{
-          const teacher = [];
-          for(let id in res){
-            teacher.push(res[id]);
+        (res)=>{
+          const countyName = [];
+          for (let county_name in res){
+            countyName.push(res[county_name]);
           }
-          this.headTeachers = teacher;
-          console.log(teacher);
+          this.schoolCounty = countyName;
+          console.log(name);
         },
       (err) => console.log(err),
       ()=>console.log("Done")
@@ -101,17 +104,19 @@ export class SchoolComponent implements OnInit{
     this._schoolRegistrationService.getConstituencies()
       .subscribe(
         (res)=>{
-          const name = [];
+          const constituencyName = [];
           for (let constituency in res){
-            name.push(res[constituency]);
+            constituencyName.push(res[constituency]);
           }
-          this.schoolConstituency = name;
-          console.log(name);
+          this.schoolConstituency = constituencyName;
+          console.log(constituencyName);
         },
       (err) => console.log(err),
       ()=>console.log("Done")
     );
   }
+
+
 
 
 }
