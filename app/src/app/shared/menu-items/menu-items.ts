@@ -34,7 +34,7 @@ const MENUITEMS = [
     icon: 'notifications',
     badge: [
       {type: 'purple', value: '10'}
-    ],
+    ]
   },
   {
     state: 'reports',
@@ -48,12 +48,8 @@ const MENUITEMS = [
     name: 'Schools',
     type: 'sub',
     icon: 'home',
-    badge: [
-      {type: 'red', value: '4'}
-    ],
     children: [
       {state: 'school', name: 'Schools'},
-      {state: 'leaflet', name: 'LEAFLET'},
       {state: 'teacher', name: 'Teachers'},
       {state: 'class', name: 'Classes'},
       {state: 'student', name: 'Children'}
@@ -63,10 +59,7 @@ const MENUITEMS = [
     state: 'schools',
     name: 'Teachers',
     type: 'sub',
-    icon: 'home',
-    badge: [
-      {type: 'red', value: '4'}
-    ],
+    icon: 'people',
     children: [
       {state: 'school', name: 'Schools'},
       {state: 'teacher', name: 'Teachers'},
@@ -76,10 +69,7 @@ const MENUITEMS = [
     state: 'schools',
     name: 'Children',
     type: 'sub',
-    icon: 'home',
-    badge: [
-      {type: 'red', value: '4'}
-    ],
+    icon: 'face',
     children: [
       {state: 'school', name: 'Schools'},
       {state: 'teacher', name: 'Teachers'},
@@ -90,10 +80,6 @@ const MENUITEMS = [
     name: 'Reports',
     type: 'sub',
     icon: 'format_line_spacing',
-    badge: [
-      {type: 'blue-grey', value: '8'
-      }
-    ],
     children: [
       {state: 'fullscreen', name: 'Attendance Summary'},
       {state: 'editing', name: 'Attendance of Boys'},
@@ -119,7 +105,7 @@ const MENUITEMS = [
     state: 'reports',
     name: 'Settings',
     type: 'sub',
-    icon: 'pages',
+    icon: 'settings',
 
     children: [
       {state: 'invoice', name: 'Change Password'},
