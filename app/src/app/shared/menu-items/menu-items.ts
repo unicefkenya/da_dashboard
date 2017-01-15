@@ -25,7 +25,7 @@ const MENUITEMS = [
     state: 'home',
     name: 'Home',
     type: 'link',
-    icon: 'explore'
+    icon: 'dashboard'
   },
   {
     state: 'apps',
@@ -52,10 +52,25 @@ const MENUITEMS = [
     state: 'notifications',
     name: 'Notifications',
     type: 'sub',
-    icon: 'bell',
+    icon: 'notifications',
     badge: [
       {type: 'purple', value: '10'}
     ],
+  },
+  {
+    state: 'schools',
+    name: 'School',
+    type: 'sub',
+    icon: 'home',
+    badge: [
+      {type: 'red', value: '4'}
+    ],
+    children: [
+      {state: 'school', name: 'Schools'},
+      {state: 'teacher', name: 'Teachers'},
+      {state: 'class', name: 'Classes'},
+      {state: 'student', name: 'Students'}
+    ]
   },
   {
     state: 'tables',
@@ -113,6 +128,7 @@ const MENUITEMS = [
     name: 'Reports',
     type: 'sub',
     icon: 'pages',
+
     children: [
       {state: 'invoice', name: 'INVOICE'},
       {state: 'timeline', name: 'TIMELINE'},
