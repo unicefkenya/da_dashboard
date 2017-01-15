@@ -45,6 +45,9 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'pages',
     loadChildren: './pages/pages.module#PagesModule'
+  }, {
+    path: 'teachers',
+    loadChildren: './teachers/teachers.module#TeachersModule'
   }]
 }, {
   path: '',
