@@ -28,27 +28,6 @@ const MENUITEMS = [
     icon: 'dashboard'
   },
   {
-    state: 'apps',
-    name: 'School',
-    type: 'sub',
-    icon: 'buiding',
-    badge: [
-      {type: 'red', value: '3'}
-    ],
-    children: [
-      {state: 'schools', name: 'Schools'},
-      {state: 'teachers', name: 'Teachers'},
-      {state: 'classes', name: 'Classes'},
-      {state: 'students', name: 'Students'}
-    ]
-  },
-  {
-    state: 'reports',
-    name: 'Reports',
-    type: 'link',
-    icon: 'book'
-  },
-  {
     state: 'notifications',
     name: 'Notifications',
     type: 'sub',
@@ -58,8 +37,31 @@ const MENUITEMS = [
     ],
   },
   {
+    state: 'reports',
+    name: 'Attendance',
+    type: 'link',
+    icon: 'book'
+  },
+
+  {
     state: 'schools',
-    name: 'School',
+    name: 'Schools',
+    type: 'sub',
+    icon: 'home',
+    badge: [
+      {type: 'red', value: '4'}
+    ],
+    children: [
+      {state: 'school', name: 'Schools'},
+      {state: 'leaflet', name: 'LEAFLET'},
+      {state: 'teacher', name: 'Teachers'},
+      {state: 'class', name: 'Classes'},
+      {state: 'student', name: 'Children'}
+    ]
+  },
+  {
+    state: 'schools',
+    name: 'Teachers',
     type: 'sub',
     icon: 'home',
     badge: [
@@ -68,13 +70,24 @@ const MENUITEMS = [
     children: [
       {state: 'school', name: 'Schools'},
       {state: 'teacher', name: 'Teachers'},
-      {state: 'class', name: 'Classes'},
-      {state: 'student', name: 'Students'}
+    ]
+  },
+  {
+    state: 'schools',
+    name: 'Children',
+    type: 'sub',
+    icon: 'home',
+    badge: [
+      {type: 'red', value: '4'}
+    ],
+    children: [
+      {state: 'school', name: 'Schools'},
+      {state: 'teacher', name: 'Teachers'},
     ]
   },
   {
     state: 'tables',
-    name: 'Tables',
+    name: 'Reports',
     type: 'sub',
     icon: 'format_line_spacing',
     badge: [
@@ -82,58 +95,36 @@ const MENUITEMS = [
       }
     ],
     children: [
-      {state: 'fullscreen', name: 'FULLSCREEN'},
-      {state: 'editing', name: 'EDITING'},
-      {state: 'filter', name: 'FILTER'},
-      {state: 'paging', name: 'PAGING'},
-      {state: 'sorting', name: 'SORTING'},
-      {state: 'pinning', name: 'PINNING'},
-      {state: 'selection', name: 'SELECTION'},
+      {state: 'fullscreen', name: 'Attendance Summary'},
+      {state: 'editing', name: 'Attendance of Boys'},
+      {state: 'filter', name: 'Attendance of Girls'},
+      {state: 'paging', name: 'Attendance per County'},
+      {state: 'sorting', name: 'Registered Schools'},
+      {state: 'pinning', name: 'Registered Teachers'},
     ]
   },
   {
     state: 'charts',
-    name: 'Charts',
+    name: 'System Logs',
     type: 'link',
     icon: 'show_chart',
   },
   {
-    state: 'maps',
-    name: 'Gis Updates',
-    type: 'sub',
-    icon: 'navigation',
-    badge: [
-      {type: 'green', value: 'new'
-      }
-    ],
-    children: [
-      {state: 'google', name: 'GOOGLE'},
-      {state: 'leaflet', name: 'LEAFLET'}
-    ]
-  },
-  {
-    state: 'pages',
-    name: 'Pages',
-    type: 'sub',
-    icon: 'pages',
-    children: [
-      {state: 'invoice', name: 'INVOICE'},
-      {state: 'timeline', name: 'TIMELINE'},
-      {state: 'user', name: 'USER'},
-      {state: 'blank', name: 'BLANK'},
-    ]
+    state: 'charts',
+    name: 'Activity Logs',
+    type: 'link',
+    icon: 'show_chart',
   },
   {
     state: 'reports',
-    name: 'Reports',
+    name: 'Settings',
     type: 'sub',
     icon: 'pages',
 
     children: [
-      {state: 'invoice', name: 'INVOICE'},
-      {state: 'timeline', name: 'TIMELINE'},
-      {state: 'user', name: 'USER'},
-      {state: 'blank', name: 'BLANK'},
+      {state: 'invoice', name: 'Change Password'},
+      {state: 'invoice', name: 'Profile'},
+
     ]
   },
 
