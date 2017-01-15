@@ -23,75 +23,43 @@ export interface Menu {
 const MENUITEMS = [
   {
     state: 'home',
-    name: 'HOME',
+    name: 'Home',
     type: 'link',
     icon: 'explore'
   },
   {
     state: 'apps',
-    name: 'APPS',
+    name: 'School',
     type: 'sub',
-    icon: 'apps',
+    icon: 'buiding',
     badge: [
-      {type: 'red', value: '5'}
+      {type: 'red', value: '3'}
     ],
     children: [
-      {state: 'calendar', name: 'CALENDAR'},
-      {state: 'media', name: 'MEDIA'},
-      {state: 'messages', name: 'MESSAGES'},
-      {state: 'social', name: 'SOCIAL'},
-      {state: 'chat', name: 'CHAT'}
+      {state: 'schools', name: 'Schools'},
+      {state: 'teachers', name: 'Teachers'},
+      {state: 'classes', name: 'Classes'},
+      {state: 'students', name: 'Students'}
     ]
   },
   {
-    state: 'widgets',
-    name: 'WIDGETS',
+    state: 'reports',
+    name: 'Reports',
     type: 'link',
-    icon: 'photo'
+    icon: 'book'
   },
   {
-    state: 'material',
-    name: 'MATERIAL',
+    state: 'notifications',
+    name: 'Notifications',
     type: 'sub',
-    icon: 'equalizer',
+    icon: 'bell',
     badge: [
       {type: 'purple', value: '10'}
     ],
-    children: [
-      {state: 'button', name: 'BUTTON'},
-      {state: 'cards', name: 'CARDS'},
-      {state: 'select', name: 'SELECT'},
-      {state: 'input', name: 'INPUT'},
-      {state: 'checkbox', name: 'CHECKBOX'},
-      {state: 'radio', name: 'RADIO'},
-      {state: 'toolbar', name: 'TOOLBAR'},
-      {state: 'lists', name: 'LISTS'},
-      {state: 'grid', name: 'GRID'},
-      {state: 'progress', name: 'PROGRESS'},
-      {state: 'tabs', name: 'TABS'},
-      {state: 'switch', name: 'SWITCH'},
-      {state: 'tooltip', name: 'TOOLTIP'},
-      {state: 'menu', name: 'MENU'},
-      {state: 'slider', name: 'SLIDER'},
-      {state: 'snackbar', name: 'SNACKBAR'},
-      {state: 'dialog', name: 'DIALOG'}
-    ]
-  },
-  {
-    state: 'forms',
-    name: 'FORMS',
-    type: 'sub',
-    icon: 'looks_3',
-    children: [
-      {state: 'editor', name: 'EDITOR'},
-      {state: 'validation', name: 'VALIDATION'},
-      {state: 'upload', name: 'UPLOAD'},
-      {state: 'tree', name: 'TREE'},
-    ]
   },
   {
     state: 'tables',
-    name: 'TABLES',
+    name: 'Tables',
     type: 'sub',
     icon: 'format_line_spacing',
     badge: [
@@ -110,13 +78,13 @@ const MENUITEMS = [
   },
   {
     state: 'charts',
-    name: 'CHARTS',
+    name: 'Charts',
     type: 'link',
     icon: 'show_chart',
   },
   {
     state: 'maps',
-    name: 'MAPS',
+    name: 'Gis Updates',
     type: 'sub',
     icon: 'navigation',
     badge: [
@@ -129,14 +97,8 @@ const MENUITEMS = [
     ]
   },
   {
-    state: 'dragndrop',
-    name: 'DND',
-    type: 'link',
-    icon: 'show_chart',
-  },
-  {
     state: 'pages',
-    name: 'PAGES',
+    name: 'Pages',
     type: 'sub',
     icon: 'pages',
     children: [
@@ -147,22 +109,21 @@ const MENUITEMS = [
     ]
   },
   {
-    state: 'session',
-    name: 'SESSION',
+    state: 'reports',
+    name: 'Reports',
     type: 'sub',
-    icon: 'face',
+    icon: 'pages',
     children: [
-      {state: '404', name: '404'},
-      {state: 'error', name: 'ERROR'},
-      {state: 'signin', name: 'SIGNIN'},
-      {state: 'signup', name: 'SIGNUP'},
-      {state: 'forgot', name: 'FORGOT'},
-      {state: 'lockscreen', name: 'LOCKSCREEN'},
+      {state: 'invoice', name: 'INVOICE'},
+      {state: 'timeline', name: 'TIMELINE'},
+      {state: 'user', name: 'USER'},
+      {state: 'blank', name: 'BLANK'},
     ]
   },
+
   {
-    state: 'http://primer.nyasha.me/docs',
-    name: 'DOCS',
+    state: 'help',
+    name: 'Help',
     type: 'extTabLink',
     icon: 'local_library'
   }
