@@ -8,6 +8,8 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+import { JazzDialog } from './material/dialog/dialog.component';
+
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
@@ -23,6 +25,7 @@ export function createTranslateLoader(http: Http) {
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    JazzDialog,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ export function createTranslateLoader(http: Http) {
     FlexLayoutModule.forRoot(),
   ],
   providers: [],
-  entryComponents: [  ],
+  entryComponents: [ JazzDialog ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

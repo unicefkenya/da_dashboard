@@ -14,26 +14,32 @@ export const AppRoutes: Routes = [{
     path: 'home',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   }, {
-    path: 'children',
-    loadChildren: './children/children.module#ChildrenModule'
+    path: 'apps',
+    loadChildren: './apps/apps.module#AppsModule'
   }, {
-    path: 'schools',
-    loadChildren: './schools/schools.module#SchoolsModule'
+    path: 'widgets',
+    loadChildren: './widgets/widgets.module#WidgetsModule'
   }, {
-    path: 'teachers',
-    loadChildren: './teachers/teachers.module#TeachersModule'
+    path: 'material',
+    loadChildren: './material/material.module#MaterialComponentsModule'
   }, {
-    path: 'reports',
+    path: 'forms',
+    loadChildren: './forms/forms.module#FormModule'
+  }, {
+    path: 'tables',
     loadChildren: './tables/tables.module#TablesModule'
   }, {
-    path: 'system-logs',
+    path: 'charts',
     loadChildren: './chartlib/chartlib.module#ChartlibModule'
   }, {
-    path: 'activity-logs',
+    path: 'maps',
     loadChildren: './maps/maps.module#MapModule'
   }, {
-    path: 'help',
+    path: 'dragndrop',
     loadChildren: './dragndrop/dragndrop.module#DragndropModule'
+  }, {
+    path: 'pages',
+    loadChildren: './pages/pages.module#PagesModule'
   }]
 }, {
   path: '',
@@ -46,3 +52,4 @@ export const AppRoutes: Routes = [{
   path: '**',
   redirectTo: 'session/404'
 }];
+
