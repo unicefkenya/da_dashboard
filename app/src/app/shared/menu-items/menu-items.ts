@@ -49,20 +49,17 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'home',
     children: [
-      {state: 'school', name: 'Schools'},
-      {state: 'teacher', name: 'Teachers'},
-      {state: 'class', name: 'Classes'},
-      {state: 'student', name: 'Children'}
+      {state: 'school', name: 'View Schools'},
+      {state: 'teacher', name: 'Add Schools'},
     ]
   },
   {
-    state: 'schools',
+    state: 'teachers',
     name: 'Teachers',
     type: 'sub',
     icon: 'people',
     children: [
-      {state: 'school', name: 'Schools'},
-      {state: 'teacher', name: 'Teachers'},
+      {state: 'view-teachers', name: 'View Teachers'},
     ]
   },
   {
@@ -71,8 +68,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'face',
     children: [
-      {state: 'school', name: 'Schools'},
-      {state: 'teacher', name: 'Children'},
+      {state: 'school', name: 'View Children'},
     ]
   },
   {
@@ -112,9 +108,7 @@ const MENUITEMS = [
       {state: 'invoice', name: 'Profile'},
 
     ]
-  },
-
-  {
+  },{
     state: 'help',
     name: 'Help',
     type: 'extTabLink',

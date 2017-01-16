@@ -6,8 +6,9 @@ export const TeachersRoutes: Routes = [
   {
     path: '',
     children: [{
-      path: 'display',
+      path: 'view-teachers',
       component: TeachersComponent
-    }],
+    }
+  ],
   }
 ]
