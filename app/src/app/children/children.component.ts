@@ -1,54 +1,35 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-widgets',
+  selector: 'app-table-sorting',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']
 })
 export class ChildrenComponent {
+  rows = [];
 
-  constructor() {}
+  columns = [
+    { name: 'Company' },
+    { name: 'Name' },
+    { name: 'Gender' }
+  ];
 
-  lat: number = -34.397;
-  lng: number = 150.644;
-  latA: number = -34.754764;
-  lngA: number = 149.736246;
-  zoom: number = 11;
+  constructor() {
+    this.fetch((data) => {
+      this.rows = data;
+    });
+  }
 
-  messages: Object[] = [{
-    from: 'Ali Connors',
-    message: 'I will be in your neighborhood',
-    photo: 'assets/images/face3.jpg',
-    subject: 'Brunch this weekend?',
-  }, {
-    from: 'Trevor Hansen',
-    message: 'Wish I could but we have plans',
-    photo: 'assets/images/face6.jpg',
-    subject: 'Brunch this weekend?',
-  }, {
-    from: 'Sandra Adams',
-    message: 'Do you have Paris recommendations instead?',
-    photo: 'assets/images/face4.jpg',
-    subject: 'Brunch this weekend?',
-  }];
+  fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
 
-  // Doughnut
-  public pieChartColors: any[] = [{
-    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
-  }];
-  public pieOptions: any = Object.assign({
-    responsive: true,
-    legend: {
-      display: false,
-      position: 'bottom'
-    },
-    elements: {
-      arc: {
-        borderWidth: 0
-      }
-    }
-  });
-  public pieChartLabels: string[] = ['Used', 'Free'];
-  public pieChartData: number[] = [400, 500];
-  public pieChartType: string = 'pie';
+    req.onload = () => {
+      let data = JSON.parse(req.response);
+      cb(data);
+    };
+
+    req.send();
+  }
+
 }
