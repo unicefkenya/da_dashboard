@@ -21,7 +21,7 @@
               <md-input placeholder="Geo co-ordinates (long,lat)" required ngModel name="geo_cordinates" class="mb-1"></md-input>
 
               <md-select required ngModel name="county" placeholder="County" class="mb-1">
-                <md-option *ngFor = "let name of schoolCounty" value="{{name.county}}">{{name.county}}</md-option>
+                <md-option *ngFor = "let name of schoolCounty" value="{{name.county_name}}">{{name.county_name}}</md-option>
               </md-select>
 
               <md-select required ngModel name="constituency" placeholder="Constituency" class="mb-1">

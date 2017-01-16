@@ -92,7 +92,7 @@ export class SchoolComponent implements OnInit{
             countyName.push(res[county_name]);
           }
           this.schoolCounty = countyName;
-          console.log(name);
+          console.log(countyName);
         },
       (err) => console.log(err),
       ()=>console.log("Done")
