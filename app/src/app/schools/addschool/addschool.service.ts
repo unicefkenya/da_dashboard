@@ -21,9 +21,7 @@ export class AddSchoolService{
   //  const headers = new Headers();
 
     let headers = new Headers({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+        'Content-Type': 'application/json'
     });
 
     let options = new RequestOptions({headers: headers});
@@ -46,7 +44,7 @@ export class AddSchoolService{
   }
 
   getConstituencies(){
-    return this.http.get('http://uoosc.cloudapp.net/api/counstituencies.json')
+    return this.http.get('http://uoosc.cloudapp.net/api/zones.json')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

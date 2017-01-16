@@ -9,7 +9,7 @@ import {AddSchoolService} from './addschool.service';
 
 
 @Component({
-  selector: 'add-school',
+  selector: 'app-school',
   templateUrl: './addschool.component.html',
   styleUrls: ['./addschool.component.scss'],
   providers: [AddSchoolService]
@@ -70,9 +70,11 @@ export class AddSchoolsComponent implements OnInit{
             school_code: registerSchool.schoolCode,
             geo_cordinates: registerSchool.geo_cordinates,
             emis_code: registerSchool.emisCode,
-            zone: registerSchool.zone,
+            constituency: registerSchool.zone,
             county: registerSchool.county,
-            source_of_water: registerSchool.waterSource
+            source_of_water: registerSchool.waterSource,
+            headteacher: 8,
+            phone_no: 2323
           })
           .subscribe(
             data => console.log(data)

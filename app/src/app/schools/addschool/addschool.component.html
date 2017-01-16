@@ -24,8 +24,8 @@
                 <md-option *ngFor = "let name of schoolCounty" value="{{name.county_name}}">{{name.county_name}}</md-option>
               </md-select>
 
-              <md-select required ngModel name="constituency" placeholder="Constituency" class="mb-1">
-                <md-option *ngFor = "let name of schoolConstituency" value="{{name.constituency}}">{{name.constituency}}</md-option>
+              <md-select required ngModel name="zone" placeholder="Constituency" class="mb-1">
+                <md-option *ngFor = "let name of schoolConstituency" value="{{name.id}}">{{name.name}}</md-option>
               </md-select>
 
               <md-select required ngModel name="waterSource" placeholder="Source of Water" class="mb-1">
