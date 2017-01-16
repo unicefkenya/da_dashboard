@@ -7,10 +7,11 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { SchoolsRoutes } from './schools.routing';
 import { SchoolsComponent } from './schools.component';
+import { AddSchoolsComponent } from './addschool/addschools.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(SchoolsRoutes), MdInputModule, NgxDatatableModule],
-  declarations: [SchoolsComponent]
+  declarations: [SchoolsComponent, AddSchoolsComponent]
 })
 
 export class SchoolsModule {}
