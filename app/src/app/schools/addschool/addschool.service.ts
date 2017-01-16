@@ -57,8 +57,6 @@ export class AddSchoolService{
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-
-
   private handleError(error: any){
     console.log(error);
     return Observable.throw(error);
