@@ -18,7 +18,7 @@ export class AddSchoolService{
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
-  //  const headers = new Headers();
+     //const headers = new Headers();
 
     let headers = new Headers({
         'Content-Type': 'application/json',
