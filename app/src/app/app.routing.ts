@@ -14,37 +14,26 @@ export const AppRoutes: Routes = [{
     path: 'home',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   }, {
-    path: 'apps',
-    loadChildren: './apps/apps.module#AppsModule'
-  },
-  {
+    path: 'children',
+    loadChildren: './children/children.module#ChildrenModule'
+  }, {
     path: 'schools',
-    loadChildren: './main/main.module#MainModule'
-  },
-   {
-    path: 'widgets',
-    loadChildren: './widgets/widgets.module#WidgetsModule'
+    loadChildren: './schools/schools.module#SchoolsModule'
   }, {
-    path: 'material',
-    loadChildren: './material/material.module#MaterialComponentsModule'
+    path: 'teachers',
+    loadChildren: './teachers/teachers.module#TeachersModule'
   }, {
-    path: 'forms',
-    loadChildren: './forms/forms.module#FormModule'
-  }, {
-    path: 'tables',
+    path: 'reports',
     loadChildren: './tables/tables.module#TablesModule'
   }, {
-    path: 'charts',
+    path: 'system-logs',
     loadChildren: './chartlib/chartlib.module#ChartlibModule'
   }, {
-    path: 'maps',
+    path: 'activity-logs',
     loadChildren: './maps/maps.module#MapModule'
   }, {
-    path: 'dragndrop',
+    path: 'help',
     loadChildren: './dragndrop/dragndrop.module#DragndropModule'
-  }, {
-    path: 'pages',
-    loadChildren: './pages/pages.module#PagesModule'
   }]
 }, {
   path: '',
