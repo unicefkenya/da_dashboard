@@ -22,8 +22,6 @@ export class AddSchoolService{
 
     let headers = new Headers({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
     });
 
     let options = new RequestOptions({headers: headers});
