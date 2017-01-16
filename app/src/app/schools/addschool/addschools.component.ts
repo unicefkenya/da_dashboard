@@ -9,7 +9,7 @@ import {AddSchoolService} from './addschool.service';
 
 
 @Component({
-  selector: 'app-school',
+  selector: 'add-school',
   templateUrl: './addschool.component.html',
   styleUrls: ['./addschool.component.scss'],
   providers: [AddSchoolService]

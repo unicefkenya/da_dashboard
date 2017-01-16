@@ -50,7 +50,7 @@ const MENUITEMS = [
     icon: 'home',
     children: [
       {state: 'view-schools', name: 'View Schools'},
-      {state: '#', name: 'Add Schools'},
+      {state: 'add-schools', name: 'Add Schools'},
     ]
   },
   {
