@@ -9,9 +9,13 @@ export class ChildrenComponent {
   rows = [];
 
   columns = [
-    { name: 'Company' },
+    { name: 'ID' },
+    { name: 'EMISCode' },
     { name: 'Name' },
-    { name: 'Gender' }
+    { name: 'Gender' },
+    { name: 'Birthday' },
+    { name: 'Class' },
+
   ];
 
   constructor() {
@@ -22,7 +26,7 @@ export class ChildrenComponent {
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
+    req.open('GET', `assets/data/children.json`);
 
     req.onload = () => {
       let data = JSON.parse(req.response);
