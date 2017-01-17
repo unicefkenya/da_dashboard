@@ -3,16 +3,19 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
+import { AuthGuard } from './authguard/authguard.service';
+
 export const AppRoutes: Routes = [{
   path: '',
-  redirectTo: 'home',
+  redirectTo: 'signin',
   pathMatch: 'full',
 }, {
   path: '',
   component: AdminLayoutComponent,
   children: [{
     path: 'home',
-    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    loadChildren: './dashboard/dashboard.module#DashboardModule',
+    canActivate: [AuthGuard],
   }, {
     path: 'children',
     loadChildren: './children/children.module#ChildrenModule'
@@ -39,8 +42,9 @@ export const AppRoutes: Routes = [{
   path: '',
   component: AuthLayoutComponent,
   children: [{
-    path: 'session',
-    loadChildren: './session/session.module#SessionModule'
+    path: 'signin',
+    loadChildren: './signin/signin.module#SigninModule'
+  //  ./signin/signin.module#SigninModule
   }]
 }, {
   path: '**',

@@ -1,6 +1,6 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {AppModule} from '../../app.module';
-import { NgForm } from '@angular/forms';
+import { FormsModule,NgForm } from '@angular/forms';
 import { SchoolRegistration } from './school';
 import { Response } from '@angular/http';
 import {AddSchoolService} from './addschool.service';
@@ -42,7 +42,7 @@ export class AddSchoolsComponent implements OnInit {
     this.rows[row.$$index][cell] = event.target.value;
   }
 
-
+  public success;
   public schoolConstituency;
   public schoolCounty;
   public submitted: boolean =  true;
@@ -61,22 +61,22 @@ export class AddSchoolsComponent implements OnInit {
 
       //edit
     }else{
-      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.geo_cordinates,registerSchool.waterSource, registerSchool.headTeacherName, registerSchool.headTeacherPhone,registerSchool.constituency,registerSchool.county);
+      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.geo_cordinates,registerSchool.waterSource, registerSchool.headTeacherName, registerSchool.headTeacherPhone,registerSchool.zone,registerSchool.county);
 
       this._schoolRegistrationService.sendData({
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
             geo_cordinates: registerSchool.geo_cordinates,
             emis_code: registerSchool.emisCode,
-            constituency: registerSchool.constituency,
+            zone: registerSchool.zone,
             county: registerSchool.county,
-            source_of_water: registerSchool.waterSource,
-            headteacher: 8,
-            phone_no: 2323
+            source_of_water: registerSchool.waterSource
           })
           .subscribe(
             data => console.log(data)
           );
+          console.log("Added School Successfully");
+          this.success = "Added School Successfully";
         }
   }
 

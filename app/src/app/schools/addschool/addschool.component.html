@@ -10,9 +10,7 @@
         <md-tab>
           <template md-tab-label>Schools Registration</template>
           <md-card-content>
-
-            <form (ngSubmit)="onSubmit(schoolregistration.value)" #schoolregistration="ngForm"  fxLayout="column">
-
+            <form (ngSubmit)="onSubmit(schoolregistration.value);" #schoolregistration="ngForm"  fxLayout="column">
               <md-input placeholder="School Name (required)" required ngModel name="schoolName" class="mb-1"></md-input>
 
               <md-input placeholder="School Code (required)" required ngModel name="schoolCode" class="mb-1"></md-input>
@@ -25,8 +23,8 @@
                 </md-option>
               </md-select>
 
-              <md-select required ngModel name="constituency" placeholder="Constituency (required)" class="mb-2">
-                <md-option *ngFor = "let name of schoolConstituency" value="{{name.constituency}}">{{name.constituency}}</md-option>
+              <md-select required ngModel name="zone" placeholder="Constituency (required)" class="mb-2">
+                <md-option *ngFor = "let name of schoolConstituency" value="{{name.id}}">{{name.name}}</md-option>
               </md-select>
 
               <md-select ngModel name="waterSource" placeholder="Source of Water" class="mb-2">

@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
+import { AuthGuard } from './authguard/authguard.service';
+
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -22,7 +24,7 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,9 @@ export function createTranslateLoader(http: Http) {
     MaterialModule.forRoot(),
     FlexLayoutModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   entryComponents: [  ],
   bootstrap: [AppComponent]
 })

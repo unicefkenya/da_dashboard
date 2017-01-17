@@ -4,7 +4,7 @@ export class SchoolRegistration {
     public schoolCode: number,
     public emisCode: string,
     public waterSource: string,
-    public constituency: string,
+    public zone: string,
     public county: string,
     public geo_cordinates: string,
     public headTeacherName: string,
