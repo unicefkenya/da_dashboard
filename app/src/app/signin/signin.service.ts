@@ -18,8 +18,8 @@ export class SigninService {
 
 
   logout() {
-    //localStorage.removeItem("user");
-    this._router.navigate(['Login']);
+    localStorage.removeItem("user");
+    this._router.navigate(['signin']);
   }
 
   login(user: any){
@@ -38,7 +38,7 @@ export class SigninService {
 
     return this.http.post(_signinUrl, user, options)
       .map((data) => {
-        console.log(data.json());
+        console.log(data.json().access_token);
         this.extractData  = data.json().access_token;
         localStorage.setItem("user",data.json().access_token)
       })
@@ -56,7 +56,7 @@ export class SigninService {
 
    checkCredentials(){
     if (localStorage.getItem("user") === null){
-        this._router.navigate(['Login']);
+        this._router.navigate(['signin']);
     }
   }
 }

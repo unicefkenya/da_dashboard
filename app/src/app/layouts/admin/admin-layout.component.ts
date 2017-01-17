@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { Subscription } from "rxjs";
+import { SigninService} from '../../signin/signin.service';
+
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector: 'app-layout',
-  templateUrl: './admin-layout.component.html'
+  templateUrl: './admin-layout.component.html',
+  providers: [SigninService]
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
 
@@ -19,7 +22,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   @ViewChild('sidemenu') sidemenu;
 
-  constructor(public menuItems: MenuItems, private router: Router, private translate: TranslateService ) {
+  constructor(public menuItems: MenuItems, private router: Router, private translate: TranslateService, private _signin: SigninService ) {
     let browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
   }
@@ -29,6 +32,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       this.url = event.url;
       if (this.isOver()) this.sidemenu.close();
     });
+
+
   }
 
   ngOnDestroy() {
@@ -43,6 +48,11 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  logout(){
+    this._signin.logout();
+  }
+  
   addMenuItem(): void {
     this.menuItems.add({
       state: 'menu',
