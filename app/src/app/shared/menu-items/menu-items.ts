@@ -59,6 +59,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'people',
     children: [
+      {state: 'add-teachers', name: 'Add Teachers'},
       {state: 'view-teachers', name: 'View Teachers'},
     ]
   },
@@ -68,6 +69,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'face',
     children: [
+      {state: 'add-children', name: 'Add Children'},
       {state: 'view-children', name: 'View Children'},
     ]
   },
