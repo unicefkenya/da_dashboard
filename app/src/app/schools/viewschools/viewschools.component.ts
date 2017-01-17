@@ -16,7 +16,7 @@ export class ViewSchoolsComponent implements OnInit {
 
   columns = [
     { name: 'Schoolcode' },
-    { name: 'name' },
+    { name: 'Name' },
     { name: 'Emiscode' },
     { name: 'Level' },
   ];
@@ -25,7 +25,7 @@ export class ViewSchoolsComponent implements OnInit {
     this.schoolService.fetchSchools().subscribe(data => {
       console.log(data);
 
-      let items =[]
+      let items =[];
       for (let i = 0; i < data.length; i++){
         this.dt = {}
         this.dt.schoolcode = data[i].school_code
@@ -36,10 +36,12 @@ export class ViewSchoolsComponent implements OnInit {
       }
       this.schools = items;
 
+      console.log('Done');
+
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchSchools();
   }
 
