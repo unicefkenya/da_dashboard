@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 
 
 @Injectable()
-export class AddSchoolService{
+export class AddSchoolService {
   constructor(
     private http: Http
   ){}
@@ -18,7 +18,7 @@ export class AddSchoolService{
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
-  //  const headers = new Headers();
+     //const headers = new Headers();
 
     let headers = new Headers({
         'Content-Type': 'application/json'
@@ -60,8 +60,6 @@ export class AddSchoolService{
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-
-
 
   private handleError(error: any){
     console.log(error);

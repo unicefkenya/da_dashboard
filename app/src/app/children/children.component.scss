@@ -1,7 +1,5 @@
-:host {
-  .sebm-google-map-container {
-    width: 100%;
-    height: 400px;
-    display: flex;
-  }
+.datatable,
+.datatable > div,
+.datatable.fixed-header .datatable-header .datatable-header-inner {
+	height: 100%;
 }

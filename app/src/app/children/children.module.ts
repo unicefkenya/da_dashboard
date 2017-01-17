@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MdIconModule, MdCardModule, MdButtonModule, MdListModule } from "@angular/material";
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { MdInputModule } from "@angular/material";
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import { ChildrenComponent } from './children.component';
 import { ChildrenRoutes } from './children.routing';
+import { ChildrenComponent } from './children.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ChildrenRoutes), MdIconModule, MdCardModule, MdButtonModule, MdListModule, ChartsModule, FlexLayoutModule, AgmCoreModule.forRoot({apiKey: 'AIzaSyB3HQ_Gk_XRt6KitPdiHQNGpVn0NDwQGMI'})],
+  imports: [CommonModule, RouterModule.forChild(ChildrenRoutes), MdInputModule, NgxDatatableModule],
   declarations: [ChildrenComponent]
 })
 

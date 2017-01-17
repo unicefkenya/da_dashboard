@@ -16,7 +16,7 @@ export class TeachersComponent {
 
   fetch(cb) {
     let req = new XMLHttpRequest();
-    req.open('GET', `assets/data/100k.json`);
+    req.open('GET', `assets/data/teachers.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));

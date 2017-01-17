@@ -5,18 +5,16 @@ import { SchoolRegistration } from './school';
 import { Response } from '@angular/http';
 import {AddSchoolService} from './addschool.service';
 
-
-
-
 @Component({
   selector: 'add-school',
   templateUrl: './addschool.component.html',
   styleUrls: ['./addschool.component.scss'],
   providers: [AddSchoolService]
+
 })
 
 
-export class AddSchoolsComponent implements OnInit{
+export class AddSchoolsComponent implements OnInit {
   editing = {};
   rows = [];
 
@@ -115,8 +113,4 @@ export class AddSchoolsComponent implements OnInit{
       ()=>console.log("Done")
     );
   }
-
-
-
-
 }
