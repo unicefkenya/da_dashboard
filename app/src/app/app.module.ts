@@ -22,7 +22,7 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,

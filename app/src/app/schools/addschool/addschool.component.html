@@ -10,7 +10,7 @@
         <md-tab>
           <template md-tab-label>Registration</template>
           <md-card-content>
-            <form (ngSubmit)="onSubmit(schoolregistration.value)" #schoolregistration="ngForm"  fxLayout="column">
+            <form (ngSubmit)="onSubmit(schoolregistration.value);"  #schoolregistration="ngForm"  fxLayout="column">
 
               <md-input placeholder="School Name" required ngModel name="schoolName" class="mb-1"></md-input>
 

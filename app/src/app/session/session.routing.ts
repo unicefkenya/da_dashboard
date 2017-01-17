@@ -10,6 +10,8 @@ import { SignupComponent } from './signup/signup.component';
 export const SessionRoutes: Routes = [
   {
     path: '',
+    redirectTo: 'signin',
+    pathMatch: 'full',
     children: [{
       path: '404',
       component: NotFoundComponent

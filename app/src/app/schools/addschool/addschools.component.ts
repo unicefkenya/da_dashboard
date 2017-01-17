@@ -1,6 +1,6 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {AppModule} from '../../app.module';
-import { NgForm } from '@angular/forms';
+import { FormsModule,NgForm } from '@angular/forms';
 import { SchoolRegistration } from './school';
 import { Response } from '@angular/http';
 import {AddSchoolService} from './addschool.service';
@@ -44,7 +44,7 @@ export class AddSchoolsComponent implements OnInit{
     this.rows[row.$$index][cell] = event.target.value;
   }
 
-
+  public success;
   public schoolConstituency;
   public schoolCounty;
   public submitted: boolean =  true;
@@ -77,6 +77,8 @@ export class AddSchoolsComponent implements OnInit{
           .subscribe(
             data => console.log(data)
           );
+          console.log("Added School Successfully");
+          this.success = "Added School Successfully";
         }
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+
+import { FormsModule,NgForm,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -12,10 +13,15 @@ export class SigninComponent implements OnInit {
   public form: FormGroup;
   constructor(private fb: FormBuilder, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.fb.group({
+      uname: [null, Validators.compose([Validators.required])],
+      password: [null, Validators.compose([Validators.required])]
+    });
+  }
 
   onSubmit() {
-  	//this.router.navigate(['/dashboard']);
+  	this.router.navigate(['/dashboard']);
   }
 
 }

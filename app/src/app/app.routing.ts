@@ -5,7 +5,7 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 export const AppRoutes: Routes = [{
   path: '',
-  redirectTo: 'home',
+  redirectTo: 'signin',
   pathMatch: 'full',
 }, {
   path: '',
@@ -39,8 +39,9 @@ export const AppRoutes: Routes = [{
   path: '',
   component: AuthLayoutComponent,
   children: [{
-    path: 'session',
-    loadChildren: './session/session.module#SessionModule'
+    path: 'signin',
+    loadChildren: './signin/signin.module#SigninModule'
+  //  ./signin/signin.module#SigninModule
   }]
 }, {
   path: '**',
