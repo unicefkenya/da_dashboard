@@ -10,16 +10,12 @@ import { User } from './user';
 @Injectable()
 export class SigninService {
 
+  //public handleError;
+
   constructor(
     private _router: Router,
     private http: Http){}
 
-    getUser(){
-      return this.http.get('http://uoosc.cloudapp.net/api/users.json')
-        .map((response: Response) => response.json())
-        .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-
-    }
 
   logout() {
     //localStorage.removeItem("user");
@@ -27,27 +23,31 @@ export class SigninService {
   }
 
   login(user: any){
-    /*
-    const _signinUrl = 'http://uoosc.cloudapp.net/api/school';
+
+    const _signinUrl = 'http://uoosc.cloudapp.net/o/token/';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
   //  const headers = new Headers();
 
     let headers = new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded'
     });
 
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(_signinUrl, body, options)
-      .map(this.extractData)
+    return this.http.post(_signinUrl, user, options)
+      .map((data) => {
+        console.log(data.json());
+        this.extractData  = data.json().access_token;
+        localStorage.setItem("user",data.json().access_token)
+      })
       .catch(this.handleError);
-      */
+  }
 
-      //localStorage.setItem("user", authenticatedUser);
-
-
+  handleError(error: any){
+    console.error(error);
+   return Observable.throw(error.json().error || 'Server error');
   }
   private extractData(res: Response) {
     let body = res.json();

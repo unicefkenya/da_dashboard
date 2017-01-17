@@ -1,5 +1,5 @@
 export class User {
   constructor(
-    public phonenumber: string,
+    public email: string,
     public password: string) { }
 }

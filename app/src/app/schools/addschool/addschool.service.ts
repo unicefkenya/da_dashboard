@@ -44,7 +44,13 @@ export class AddSchoolService{
   }
 
   getConstituencies(){
-    return this.http.get('http://uoosc.cloudapp.net/api/zones.json')
+    let token=localStorage.getItem("user");
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get('http://uoosc.cloudapp.net/api/zones.json',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
