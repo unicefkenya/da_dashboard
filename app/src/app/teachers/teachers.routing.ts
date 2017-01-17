@@ -1,13 +1,13 @@
 import { Routes } from "@angular/router";
 
-import { TeachersComponent } from './teachers.component';
+import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 
 export const TeachersRoutes: Routes = [
   {
     path: '',
     children: [{
       path: 'view-teachers',
-      component: TeachersComponent
+      component: ViewTeachersComponent
     }
   ],
   }

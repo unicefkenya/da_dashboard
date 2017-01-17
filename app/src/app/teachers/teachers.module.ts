@@ -6,11 +6,11 @@ import { MdInputModule } from "@angular/material";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TeachersRoutes } from './teachers.routing';
-import { TeachersComponent } from './teachers.component';
+import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(TeachersRoutes), MdInputModule, NgxDatatableModule],
-  declarations: [TeachersComponent]
+  declarations: [ViewTeachersComponent]
 })
 
 export class TeachersModule {}
