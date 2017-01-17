@@ -23,146 +23,94 @@ export interface Menu {
 const MENUITEMS = [
   {
     state: 'home',
-    name: 'HOME',
+    name: 'Home',
     type: 'link',
-    icon: 'explore'
+    icon: 'dashboard'
   },
   {
-    state: 'apps',
-    name: 'APPS',
+    state: 'notifications',
+    name: 'Notifications',
     type: 'sub',
-    icon: 'apps',
-    badge: [
-      {type: 'red', value: '5'}
-    ],
-    children: [
-      {state: 'calendar', name: 'CALENDAR'},
-      {state: 'media', name: 'MEDIA'},
-      {state: 'messages', name: 'MESSAGES'},
-      {state: 'social', name: 'SOCIAL'},
-      {state: 'chat', name: 'CHAT'}
-    ]
-  },
-  {
-    state: 'widgets',
-    name: 'WIDGETS',
-    type: 'link',
-    icon: 'photo'
-  },
-  {
-    state: 'material',
-    name: 'MATERIAL',
-    type: 'sub',
-    icon: 'equalizer',
+    icon: 'notifications',
     badge: [
       {type: 'purple', value: '10'}
-    ],
-    children: [
-      {state: 'button', name: 'BUTTON'},
-      {state: 'cards', name: 'CARDS'},
-      {state: 'select', name: 'SELECT'},
-      {state: 'input', name: 'INPUT'},
-      {state: 'checkbox', name: 'CHECKBOX'},
-      {state: 'radio', name: 'RADIO'},
-      {state: 'toolbar', name: 'TOOLBAR'},
-      {state: 'lists', name: 'LISTS'},
-      {state: 'grid', name: 'GRID'},
-      {state: 'progress', name: 'PROGRESS'},
-      {state: 'tabs', name: 'TABS'},
-      {state: 'switch', name: 'SWITCH'},
-      {state: 'tooltip', name: 'TOOLTIP'},
-      {state: 'menu', name: 'MENU'},
-      {state: 'slider', name: 'SLIDER'},
-      {state: 'snackbar', name: 'SNACKBAR'},
-      {state: 'dialog', name: 'DIALOG'}
     ]
   },
   {
-    state: 'forms',
-    name: 'FORMS',
+    state: 'reports',
+    name: 'Attendance',
+    type: 'link',
+    icon: 'book'
+  },
+
+  {
+    state: 'schools',
+    name: 'Schools',
     type: 'sub',
-    icon: 'looks_3',
+    icon: 'home',
     children: [
-      {state: 'editor', name: 'EDITOR'},
-      {state: 'validation', name: 'VALIDATION'},
-      {state: 'upload', name: 'UPLOAD'},
-      {state: 'tree', name: 'TREE'},
+      {state: 'add-schools', name: 'Add Schools'},
+      {state: 'view-schools', name: 'View Schools'}
+    ]
+  },
+  {
+    state: 'teachers',
+    name: 'Teachers',
+    type: 'sub',
+    icon: 'people',
+    children: [
+      {state: 'view-teachers', name: 'View Teachers'},
+    ]
+  },
+  {
+    state: 'children',
+    name: 'Children',
+    type: 'sub',
+    icon: 'face',
+    children: [
+      {state: 'view-children', name: 'View Children'},
     ]
   },
   {
     state: 'tables',
-    name: 'TABLES',
+    name: 'Reports',
     type: 'sub',
     icon: 'format_line_spacing',
-    badge: [
-      {type: 'blue-grey', value: '8'
-      }
-    ],
     children: [
-      {state: 'fullscreen', name: 'FULLSCREEN'},
-      {state: 'editing', name: 'EDITING'},
-      {state: 'filter', name: 'FILTER'},
-      {state: 'paging', name: 'PAGING'},
-      {state: 'sorting', name: 'SORTING'},
-      {state: 'pinning', name: 'PINNING'},
-      {state: 'selection', name: 'SELECTION'},
+      {state: 'fullscreen', name: 'Overal Summary'},
+      {state: 'editing', name: 'Boys'},
+      {state: 'filter', name: 'Girls'},
+      {state: 'paging', name: 'County Summary'},
+      {state: 'sorting', name: 'Listed Schools'},
+      {state: 'pinning', name: 'Listed Teachers'},
     ]
   },
   {
     state: 'charts',
-    name: 'CHARTS',
+    name: 'System Logs',
     type: 'link',
     icon: 'show_chart',
   },
   {
-    state: 'maps',
-    name: 'MAPS',
-    type: 'sub',
-    icon: 'navigation',
-    badge: [
-      {type: 'green', value: 'new'
-      }
-    ],
-    children: [
-      {state: 'google', name: 'GOOGLE'},
-      {state: 'leaflet', name: 'LEAFLET'}
-    ]
-  },
-  {
-    state: 'dragndrop',
-    name: 'DND',
+    state: 'charts',
+    name: 'Activity Logs',
     type: 'link',
     icon: 'show_chart',
   },
   {
-    state: 'pages',
-    name: 'PAGES',
+    state: 'reports',
+    name: 'Settings',
     type: 'sub',
-    icon: 'pages',
+    icon: 'settings',
+
     children: [
-      {state: 'invoice', name: 'INVOICE'},
-      {state: 'timeline', name: 'TIMELINE'},
-      {state: 'user', name: 'USER'},
-      {state: 'blank', name: 'BLANK'},
+      {state: 'invoice', name: 'Change Password'},
+      {state: 'invoice', name: 'Profile'},
+
     ]
-  },
-  {
-    state: 'session',
-    name: 'SESSION',
-    type: 'sub',
-    icon: 'face',
-    children: [
-      {state: '404', name: '404'},
-      {state: 'error', name: 'ERROR'},
-      {state: 'signin', name: 'SIGNIN'},
-      {state: 'signup', name: 'SIGNUP'},
-      {state: 'forgot', name: 'FORGOT'},
-      {state: 'lockscreen', name: 'LOCKSCREEN'},
-    ]
-  },
-  {
-    state: 'http://primer.nyasha.me/docs',
-    name: 'DOCS',
+  },{
+    state: 'help',
+    name: 'Help',
     type: 'extTabLink',
     icon: 'local_library'
   }

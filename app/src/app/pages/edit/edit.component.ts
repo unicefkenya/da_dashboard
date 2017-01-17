@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent {
-  
+
   constructor() {}
 
   systems: Object[] = [{

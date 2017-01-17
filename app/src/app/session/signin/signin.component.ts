@@ -12,15 +12,10 @@ export class SigninComponent implements OnInit {
   public form: FormGroup;
   constructor(private fb: FormBuilder, private router: Router) {}
 
-  ngOnInit() {
-  	this.form = this.fb.group({
-      uname: [null, Validators.compose([Validators.required])],
-      password: [null, Validators.compose([Validators.required])]
-    });
-  }
+  ngOnInit() {}
 
   onSubmit() {
-  	this.router.navigate(['/dashboard']);
+  	//this.router.navigate(['/dashboard']);
   }
 
 }

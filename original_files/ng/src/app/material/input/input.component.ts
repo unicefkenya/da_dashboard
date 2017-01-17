@@ -29,7 +29,7 @@ export class InputComponent {
   }];
 
   rows = 8;
-  
+
   addABunch(n: number) {
     for (let x = 0; x < n; x++) {
       this.items.push({

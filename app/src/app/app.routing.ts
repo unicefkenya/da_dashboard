@@ -3,53 +3,50 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
+import { AuthGuard } from './authguard/authguard.service';
+
 export const AppRoutes: Routes = [{
   path: '',
-  redirectTo: 'home',
+  redirectTo: 'signin',
   pathMatch: 'full',
 }, {
   path: '',
   component: AdminLayoutComponent,
   children: [{
     path: 'home',
-    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    loadChildren: './dashboard/dashboard.module#DashboardModule',
+    canActivate: [AuthGuard],
   }, {
-    path: 'apps',
-    loadChildren: './apps/apps.module#AppsModule'
+    path: 'children',
+    loadChildren: './children/children.module#ChildrenModule'
   }, {
-    path: 'widgets',
-    loadChildren: './widgets/widgets.module#WidgetsModule'
+    path: 'schools',
+    loadChildren: './schools/schools.module#SchoolsModule'
   }, {
-    path: 'material',
-    loadChildren: './material/material.module#MaterialComponentsModule'
+    path: 'teachers',
+    loadChildren: './teachers/teachers.module#TeachersModule'
   }, {
-    path: 'forms',
-    loadChildren: './forms/forms.module#FormModule'
-  }, {
-    path: 'tables',
+    path: 'reports',
     loadChildren: './tables/tables.module#TablesModule'
   }, {
-    path: 'charts',
+    path: 'system-logs',
     loadChildren: './chartlib/chartlib.module#ChartlibModule'
   }, {
-    path: 'maps',
+    path: 'activity-logs',
     loadChildren: './maps/maps.module#MapModule'
   }, {
-    path: 'dragndrop',
+    path: 'help',
     loadChildren: './dragndrop/dragndrop.module#DragndropModule'
-  }, {
-    path: 'pages',
-    loadChildren: './pages/pages.module#PagesModule'
   }]
 }, {
   path: '',
   component: AuthLayoutComponent,
   children: [{
-    path: 'session',
-    loadChildren: './session/session.module#SessionModule'
+    path: 'signin',
+    loadChildren: './signin/signin.module#SigninModule'
+  //  ./signin/signin.module#SigninModule
   }]
 }, {
   path: '**',
   redirectTo: 'session/404'
 }];
-

@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
+import { AuthGuard } from './authguard/authguard.service';
+
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
-
-import { JazzDialog } from './material/dialog/dialog.component';
 
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
@@ -24,8 +24,7 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
-    JazzDialog,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +40,10 @@ export function createTranslateLoader(http: Http) {
     MaterialModule.forRoot(),
     FlexLayoutModule.forRoot(),
   ],
-  providers: [],
-  entryComponents: [ JazzDialog ],
+  providers: [
+    AuthGuard
+  ],
+  entryComponents: [  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

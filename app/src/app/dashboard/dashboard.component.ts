@@ -21,7 +21,7 @@ export class DashboardComponent {
         position: 'bottom'
       }
     }
-  
+
   // Bar
   public barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7'];
   public barChartType: string = 'bar';

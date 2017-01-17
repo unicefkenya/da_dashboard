@@ -1,0 +1,29 @@
+<ngx-datatable
+class="material"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="50"
+[rowHeight]="50"
+[scrollbarV]="true"
+[scrollbarH]="true"
+[rows]="rows">
+  <ngx-datatable-column
+    name="Name"
+    [width]="300"
+    [frozenLeft]="true">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Gender">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Birthday">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Mobile"
+    [width]="150">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Subjects"
+    [width]="300">
+  </ngx-datatable-column>
+</ngx-datatable>
