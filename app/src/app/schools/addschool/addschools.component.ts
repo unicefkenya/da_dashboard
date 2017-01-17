@@ -10,10 +10,11 @@ import {AddSchoolService} from './addschool.service';
   templateUrl: './addschool.component.html',
   styleUrls: ['./addschool.component.scss'],
   providers: [AddSchoolService]
+
 })
 
 
-export class AddSchoolsComponent implements OnInit{
+export class AddSchoolsComponent implements OnInit {
   editing = {};
   rows = [];
 
