@@ -49,8 +49,8 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'home',
     children: [
-      {state: 'view-schools', name: 'View Schools'},
       {state: 'add-schools', name: 'Add Schools'},
+      {state: 'view-schools', name: 'View Schools'}
     ]
   },
   {
