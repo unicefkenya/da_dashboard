@@ -1,0 +1,78 @@
+<md-toolbar color="primary">
+  <md-toolbar-row>
+  </md-toolbar-row>
+</md-toolbar>
+
+<div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="center start">
+  <div fxFlex.gt-sm="90" fxFlex="100">
+    <md-card class="md-card-top">
+      <md-tab-group>
+        <md-tab>
+          <template md-tab-label>Teachers Registration</template>
+          <md-card-content>
+            <form (ngSubmit)="onSubmit(teacherregistration.value);"  #teacherregistration="ngForm"  fxLayout="column">
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-select required ngModel name="school_name" placeholder="School Name (required)" class="ml-xs mr-xs" style="width: 100%">
+                  <md-option *ngFor = "let name of schoolName" value="{{name.id}}">
+                    {{name.school_name}}
+                  </md-option>
+                </md-select>
+                <md-select required ngModel name="gender" placeholder="Gender (required)" class="ml-xs mr-xs" style="width: 100%">
+                  <md-option  value="ML">Male</md-option>
+                  <md-option  value="FM">Female</md-option>
+                </md-select>
+              </div>
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-input required placeholder="First Name (required)"  ngModel name="firstname" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
+                <!--<small *ngIf="form.controls['fname'].hasError('required') && form.controls['fname'].touched" class="md-text-warn">You must include a first name.</small>
+                <small *ngIf="form.controls['fname'].hasError('minlength') && form.controls['fname'].touched" class="md-text-warn">Your first name must be at least 5 characters long.</small>
+                <small *ngIf="form.controls['fname'].hasError('maxlength') && form.controls['fname'].touched" class="md-text-warn">Your first name cannot exceed 10 characters.</small>-->
+                <md-input required placeholder="Last Name (required)"  ngModel name="lastname" class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
+              </div>
+
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-input required placeholder="Phone Number (required)"  ngModel name="phoneNumber" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
+                <md-input placeholder="Birthday (required)" ngModel name="birthday" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
+                <!--<small *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched" class="md-text-warn">You must include a date.</small>
+                <small *ngIf="form.controls['date'].errors?.date && form.controls['date'].touched" class="md-text-warn">You must include a valid date.</small>
+              -->
+              </div>
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-select required ngModel name="teacher_type" placeholder="Teacher Type (required)" class="ml-xs mr-xs" style="width: 100%">
+                  <md-option  value="TSC">T.S.C</md-option>
+                  <md-option  value="BRD">Board</md-option>
+                </md-select>
+                <md-select required ngModel name="qualifications" placeholder="Qualifications (required)" class="ml-xs mr-xs" style="width: 100%">
+                  <md-option  value="COL">College</md-option>
+                  <md-option  value="UNI">University</md-option>
+                </md-select>
+              </div>
+
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-input required placeholder="TSC Number (required)"  ngModel name="tsc_no" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
+                <md-input required placeholder="BOM Number (required)" ngModel name="bom_no" class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
+              </div>
+
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+                <md-input required placeholder="Date Started Teaching (required)" ngModel name="date_started" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
+                <!--<small *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched" class="md-text-warn">You must include a date.</small>
+                <small *ngIf="form.controls['date'].errors?.date && form.controls['date'].touched" class="md-text-warn">You must include a valid date.</small>
+                -->
+                <md-input required placeholder="Joined Current School (required)" ngModel name="joined_school" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
+                <!--<small *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched" class="md-text-warn">You must include a date.</small>
+                <small *ngIf="form.controls['date'].errors?.date && form.controls['date'].touched" class="md-text-warn">You must include a valid date.</small>
+                -->
+              </div>
+              <hr>
+              <md-card-actions>
+                <button type="submit" [disabled]="!teacherregistration.valid" md-raised-button class="shadow-none">Save</button>
+                <button md-raised-button class="warn">Delete</button>
+                <button md-raised-button color="primary">Cancel</button>
+              </md-card-actions>
+            </form>
+          </md-card-content>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
+  </div>
+</div>
