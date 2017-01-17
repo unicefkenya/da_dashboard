@@ -58,7 +58,7 @@
                 <!--<small *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched" class="md-text-warn">You must include a date.</small>
                 <small *ngIf="form.controls['date'].errors?.date && form.controls['date'].touched" class="md-text-warn">You must include a valid date.</small>
                 -->
-                <md-input required placeholder="Joined Current School (required)" ngModel name="joined_school" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
+                <md-input required placeholder="Joined Current School (required)" ngModel name="joined_school" class="ml-xs mr-xs" type="date" style="width: 100%">{{joined_school | date:"yyyy-mm-dd"}}</md-input>
                 <!--<small *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched" class="md-text-warn">You must include a date.</small>
                 <small *ngIf="form.controls['date'].errors?.date && form.controls['date'].touched" class="md-text-warn">You must include a valid date.</small>
                 -->

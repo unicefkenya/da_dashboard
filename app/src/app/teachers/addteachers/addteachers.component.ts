@@ -45,7 +45,7 @@ export class AddTeachersComponent implements OnInit {
   }
 
   public success;
-  //public date;
+  public date;
   public schoolName;
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
@@ -54,19 +54,6 @@ export class AddTeachersComponent implements OnInit {
     //this.onSubmit;
     this.getSchoolNames();
 
-  }
-
-  dateStarted(date){
-    //this.date=new Date();
-    let dateStarted =this.datepipe.transform(date, 'yyyy-MM-dd');
-  }
-  birthdayDate(date){
-    //this.date=new Date();
-    let birthday =this.datepipe.transform(date, 'yyyy-MM-dd');
-  }
-  dateJoined(date){
-    //this.date=new Date();
-    let joinedCurrent =this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
 
@@ -96,20 +83,20 @@ export class AddTeachersComponent implements OnInit {
                   fstname:   registerTeacher.firstName,
                   lstname:   registerTeacher.lastName,
 
-                  birthday:  this.birthdayDate(registerTeacher.birthday),
+                  birthday:  registerTeacher.birthday,
                   teacher_type:registerTeacher.teacher_type,
                   qualifications: registerTeacher.qualifications,
                   tsc_no: registerTeacher.tsc_no,
                   bom_no: registerTeacher.bom_no,
                   subjects: [1],
-                  date_started_teaching: this.dateStarted(registerTeacher.dateStarted),
-                  joined_current_school: this.dateJoined(registerTeacher.joinedCurrent),
+                  date_started_teaching: registerTeacher.dateStarted,
+                  joined_current_school: registerTeacher.joinedCurrent,
                   gender: registerTeacher.gender
           }})
           .subscribe(
             data => console.log(data)
           );
-          console.log("Added Teacher Successfully", this.dateStarted(registerTeacher.dateStarted));
+          console.log("Added Teacher Successfully", registerTeacher.joinedCurrent );
           this.success = "Added Teacher Successfully";
         }
   }
