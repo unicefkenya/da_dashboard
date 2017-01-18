@@ -29,8 +29,6 @@ export class ChildrenComponent implements OnInit {
 
   fetchChildren(): void {
     this.childrenService.fetchChildren().subscribe(data => {
-      console.log(data);
-
       let childs =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
