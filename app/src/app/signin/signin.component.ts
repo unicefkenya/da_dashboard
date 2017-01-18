@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule,NgForm,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { SigninService } from './signin.service';
+import { AlertService } from '../authguard/alert.service';
 import { User } from './user';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
-  providers: [SigninService]
+  providers: [SigninService,AlertService]
 })
 
 
@@ -20,11 +21,14 @@ export class SigninComponent implements OnInit {
   public success;
   public form: FormGroup;
   public userLogin: User;
-
+  returnUrl: string;
+  loading =false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private activatedRouter: ActivatedRoute,
+    private alertService: AlertService,
     private _signin: SigninService) {}
 
   ngOnInit() {
@@ -32,6 +36,11 @@ export class SigninComponent implements OnInit {
       email: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])]
     });
+    //reset login status
+    this._signin.logout();
+
+    //get return url from route parameters or default to '/'
+    this.returnUrl = this.activatedRouter.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onSubmit(){
@@ -44,7 +53,14 @@ export class SigninComponent implements OnInit {
     this._signin.login(
       "username="+email+"&password="+password+"&grant_type=password&client_id=dnFhSdWfy2XjFqTzpSLMbYqRKOgGei2eG7hUnNDS"
     ).subscribe(
-      data => console.log(data),
+      data => //console.log(data),
+      {
+        this.router.navigate([this.returnUrl]);
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
+      }
 
     );
     console.log("Login Successfully");

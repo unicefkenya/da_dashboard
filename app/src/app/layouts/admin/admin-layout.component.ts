@@ -15,6 +15,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   private _router:Subscription;
+  public currentUser;
 
   today: number = Date.now();
   url: string;
@@ -22,9 +23,15 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   @ViewChild('sidemenu') sidemenu;
 
-  constructor(public menuItems: MenuItems, private router: Router, private translate: TranslateService, private _signin: SigninService ) {
+  constructor(
+        public menuItems: MenuItems,
+        private router: Router,
+        private translate: TranslateService,
+        private _signin: SigninService ) {
     let browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    //gets the cuurrently saved user
+    this.currentUser = JSON.parse(localStorage.getItem('user'));
   }
 
   ngOnInit(): void {
@@ -52,7 +59,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   logout(){
     this._signin.logout();
   }
-  
+
   addMenuItem(): void {
     this.menuItems.add({
       state: 'menu',
