@@ -7,8 +7,8 @@ import {AddChildrenService} from './addchildren.service';
 
 @Component({
   selector: 'add-school',
-  templateUrl: './addschool.component.html',
-  styleUrls: ['./addschool.component.scss'],
+  templateUrl: './addchildren.component.html',
+  styleUrls: ['./addchildren.component.scss'],
   providers: [AddChildrenService]
 
 })

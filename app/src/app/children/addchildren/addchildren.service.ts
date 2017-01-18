@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 
 
+
 @Injectable()
 export class AddChildrenService {
   constructor(
@@ -24,7 +25,7 @@ export class AddChildrenService {
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
-    
+
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(_childRegistrationUrl, body, options)

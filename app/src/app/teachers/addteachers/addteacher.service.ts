@@ -3,13 +3,16 @@ import { DatePipe } from '@angular/common';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+//import {ApiService} from '../../api.service';
+
 
 
 @Injectable()
 export class AddTeacherService {
   constructor(
     private http: Http,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    //private api: ApiService
   ){}
 
   transformDate(date){
@@ -18,7 +21,7 @@ export class AddTeacherService {
 
   sendData(user: any){
 
-    //console.log(myApiRoutes=>apiRoutes);
+    //console.log(this.api.api_url);
 
     const _teacherRegistrationUrl = 'http://uoosc.cloudapp.net/api/teacher';
     const body = JSON.stringify(user);
