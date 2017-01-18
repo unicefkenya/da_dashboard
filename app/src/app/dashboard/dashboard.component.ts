@@ -51,7 +51,7 @@ export class DashboardComponent {
       this.malesAbscent   = data.absent.males;
       this.femalesPresent = data.present.females;
       this.femalesAbscent = data.absent.females;
-      this.childrenPresent = data.present.total;
+      this.childrenPresent = data.present.total + "%";
       this.childrenAbscent = data.absent.total;
 
       this.attendanceSnapshot = [

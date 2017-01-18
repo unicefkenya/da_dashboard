@@ -19,7 +19,7 @@
           <md-icon>phone</md-icon>
         </div>
         <div class="pl-0">
-          <h5 md-card-widget-title> {{childrenPresent}} </h5>
+          <h5 md-card-widget-title> {{ childrenPresent }} </h5>
           <p>Present past week</p>
         </div>
       </div>
@@ -57,7 +57,7 @@
 	<div fxFlex.gt-sm="33.33%" fxFlex="100">
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Revenue &nbsp; <span class="font-weight-bold md-text-primary">+458,90</span>
+        Daily Attendance <span class="font-weight-bold md-text-primary"></span>
         <span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card1" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
@@ -96,7 +96,7 @@
 	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Yearly Sales &nbsp; <span class="font-weight-bold md-text-warn">-46,68</span>
+        Monthly Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
         <span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
@@ -131,16 +131,16 @@
       </md-card-content>
 		</md-card>
 	</div>
-	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Sales Report &nbsp; <span class="font-weight-bold md-text-accent">+2,50%</span>
+        Annual Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
         <span fxFlex></span>
-        <button md-icon-button md-button-sm [md-menu-trigger-for]="card3" aria-label="Open card menu">
+        <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
         </button>
       </md-card-subtitle>
-      <md-menu #card3="mdMenu" x-position="before">
+      <md-menu #card2="mdMenu" x-position="before">
         <button md-menu-item>
           <md-icon>settings</md-icon>
           Settings
@@ -160,12 +160,12 @@
       </md-menu>
 			<md-card-content>
         <canvas height="200" baseChart class="chart"
-          [datasets]="bubbleChartData"
+          [datasets]="ComboChartData"
           [labels]="comboChartLabels"
           [options]="ComboChartOptions"
-          [colors]="comboChartColors"
+          [colors]="chartColors"
           [legend]="comboChartLegend"
-          [chartType]="bubbleChartType"></canvas>
+          [chartType]="barChartType"></canvas>
       </md-card-content>
 		</md-card>
 	</div>
