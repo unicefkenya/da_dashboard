@@ -58,27 +58,33 @@ export class DashboardComponent {
         {
           "title": "Girls Present",
           "duration":"1 week",
-          "progress": this.femalesPresent
+          "progress": this.femalesPresent,
+          "color":"primary"
         }, {
           "title": "Boys Present ",
           "duration":"1 week",
-          "progress": this.malesPresent
+          "progress": this.malesPresent,
+          "color":"primary"
         }, {
           "title": "Children Present",
           "duration":"1 week",
-          "progress": this.childrenPresent
+          "progress": this.childrenPresent,
+          "color":"primary"
         },{
           "title": "Girls Absent",
           "duration":"1 week",
-          "progress": this.femalesAbscent
+          "progress": this.femalesAbscent,
+          "color":"accent"
         }, {
           "title": "Males Abscent",
           "duration":"1 week",
-          "progress": this.childrenAbscent
+          "progress": this.childrenAbscent,
+          "color":"accent"
         },  {
           "title": "Children Abscent",
-          "duration":"Past week",
-          "progress": this.malesAbscent
+          "duration":"1 week",
+          "progress": this.malesAbscent,
+          "color":"warn"
         }
       ]
     });

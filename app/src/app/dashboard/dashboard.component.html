@@ -181,20 +181,20 @@
       [headerHeight]="50"
       [footerHeight]="0"
       [rowHeight]="'auto'">
-      <ngx-datatable-column name="Project">
+      <ngx-datatable-column name="Children Status">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{row['title']}}
         </template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Due Date">
+      <ngx-datatable-column name="Duration Analyse">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
           <!-- {{row['date'] | date: 'MMMM dd'}} -->
           {{row['duration']}}
         </template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Progress">
+      <ngx-datatable-column name="Percentages (%)">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <md-progress-bar mode="determinate" value="{{row['progress']}}" color="primary"></md-progress-bar>
+          <md-progress-bar mode="determinate" value="{{row['progress']}}" color="{{row['color']}}"></md-progress-bar>
         </template>
       </ngx-datatable-column>
     </ngx-datatable>
