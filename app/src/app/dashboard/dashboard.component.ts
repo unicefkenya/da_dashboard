@@ -1,16 +1,42 @@
 import { Component } from '@angular/core';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers:[ DashboardService ]
 })
 export class DashboardComponent {
 
   rows = [];
+  
+  public students: any;
+  public males: any;
+  public females: any;
+  public teachers: any;
+  public schools: any;
 
-  constructor() {
+  constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
+  }
+
+  // Shimanyi > getStats()
+  public getStats():void {
+
+    this.dashboardServices.getStats().subscribe(data => {
+
+       this.schools = data.schools;
+       this.males = data.students.males;
+       this.females = data.students.females;
+       this.students = +(this.males+this.females);
+       this.teachers = data.teachers;
+
+    });
+
+  }
+  ngOnInit(): void {
+    this.getStats();
   }
 
   // Shared chart options
