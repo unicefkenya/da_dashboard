@@ -10,12 +10,20 @@ import { DashboardService } from './dashboard.service';
 export class DashboardComponent {
 
   rows = [];
-  
+
   public students: any;
   public males: any;
   public females: any;
   public teachers: any;
   public schools: any;
+
+  public malesPresent: any;
+  public malesAbscent: any;
+  public femalesPresent: any;
+  public femalesAbscent: any;
+  public childrenPresent: any;
+  public childrenAbscent: any;
+
 
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
@@ -33,10 +41,23 @@ export class DashboardComponent {
        this.teachers = data.teachers;
 
     });
-
   }
+
+  // Shimanyi > getWeeklySummary()
+  public getWeeklySummary(){
+    this.dashboardServices.getWeeklySummary().subscribe( data => {
+      this.malesPresent   = data.present.males;
+      this.malesAbscent   = data.absent.males;
+      this.femalesPresent = data.present.females;
+      this.femalesAbscent = data.absent.females;
+      this.childrenPresent = data.present.total;
+      this.childrenAbscent = data.absent.total;
+    });
+  }
+
   ngOnInit(): void {
     this.getStats();
+    this.getWeeklySummary();
   }
 
   // Shared chart options

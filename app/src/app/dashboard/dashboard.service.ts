@@ -13,5 +13,11 @@ export class DashboardService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+  //http://uoosc.cloudapp.net/api/attendance/weekly
+  getWeeklySummary(){
+    return this.http.get('http://uoosc.cloudapp.net/api/attendance/weekly')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
 }
