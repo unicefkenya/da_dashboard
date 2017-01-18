@@ -37,10 +37,18 @@ export class SigninService {
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(_signinUrl, user, options)
-      .map((data) => {
-        console.log(data.json().username);
+      .map((data: Response) => {
+
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
         this.extractData  = data.json().access_token;
-        localStorage.setItem("user",data.json().access_token)
+        let user = data.json();
+      //  console.log(this.extractData, user.access_token);
+
+        if(user && user.access_token){
+          //was in localStorage instead of JSON.stringify
+          //data.json().access_token
+          localStorage.setItem("user", JSON.stringify(user));
+        }
       })
       .catch(this.handleError);
   }
