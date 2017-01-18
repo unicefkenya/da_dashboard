@@ -10,7 +10,7 @@
             </div>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
-                <md-input placeholder="Email" [formControl]="form.controls['email']" style="width: 100%"></md-input>
+                <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>
                 <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">Email is required.</small>
               </div>
               <div class="pb-1">

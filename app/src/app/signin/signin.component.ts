@@ -38,7 +38,6 @@ export class SigninComponent implements OnInit {
     var email = this.form.value.email;
     var password = this.form.value.password;
 
-    console.log(email, password);
     this.user = new User(email,password);
 
 
@@ -51,14 +50,6 @@ export class SigninComponent implements OnInit {
     console.log("Login Successfully");
     this.success = "Logged In Successfully";
 
-    /*
-    if(!(this.user)){
-      this.router.navigate(['/signin']);
-      this.errorMsg = 'Failed to login';
-      console.log(this.errorMsg);
-    }else{
-       this.router.navigate(['/home']);
-    }*/
   }
 
   }

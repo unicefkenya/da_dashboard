@@ -54,7 +54,7 @@ export class AddTeacherService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/schools.json',options)
+    return this.http.get('http://uoosc.cloudapp.net/api/schools',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

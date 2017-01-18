@@ -1,6 +1,7 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
+import { TeachersRoutes } from './../teachers.routing';
 import {AppModule} from '../../app.module';
 import { FormsModule,NgForm } from '@angular/forms';
 import { TeacherRegistration } from './teacher';
@@ -23,7 +24,7 @@ export class AddTeachersComponent implements OnInit {
   constructor(
     private _teacherRegistrationService: AddTeacherService,
     public datepipe:DatePipe,
-    public router: Router
+    public _router: Router
   ){
     this.fetch((data) => {
       this.rows = data;
@@ -102,7 +103,7 @@ export class AddTeachersComponent implements OnInit {
           );
           console.log("Added Teacher Successfully", registerTeacher.joinedCurrent );
           this.success = "Added Teacher Successfully";
-          
+          this._router.navigate(['add-teachers']);
 
         }
   }
