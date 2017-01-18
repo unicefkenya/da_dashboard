@@ -19,9 +19,10 @@ export class AddSchoolService {
 
      //this is optional - angular2 already sends these
      //const headers = new Headers();
-
+    let token=localStorage.getItem("user");
     let headers = new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
     });
 
     let options = new RequestOptions({headers: headers});
@@ -37,12 +38,6 @@ export class AddSchoolService {
     return body.data || { };
   }
 
-  getUsers(){
-    return this.http.get('http://uoosc.cloudapp.net/api/users.json')
-      .map((response: Response) => response.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
   getConstituencies(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
@@ -56,7 +51,13 @@ export class AddSchoolService {
   }
 
   getCounties(){
-    return this.http.get('http://uoosc.cloudapp.net/api/counties.json')
+    let token=localStorage.getItem("user");
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get('http://uoosc.cloudapp.net/api/counties.json',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

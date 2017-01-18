@@ -1,26 +1,20 @@
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 
 
 @Injectable()
-export class AddTeacherService {
+export class AddChildrenService {
   constructor(
-    private http: Http,
-    private datePipe: DatePipe
+    private http: Http
   ){}
-
-  transformDate(date){
-    this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
 
   sendData(user: any){
 
     //console.log(myApiRoutes=>apiRoutes);
 
-    const _teacherRegistrationUrl = 'http://uoosc.cloudapp.net/api/teacher';
+    const _childRegistrationUrl = 'http://uoosc.cloudapp.net/api/school';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -30,10 +24,10 @@ export class AddTeacherService {
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
-
+    
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(_teacherRegistrationUrl, body, options)
+    return this.http.post(_childRegistrationUrl, body, options)
       .map(this.extractData)
       .catch(this.handleError);
 
@@ -44,18 +38,29 @@ export class AddTeacherService {
     return body.data || { };
   }
 
-  getSchools(){
+  getUsers(){
+    return this.http.get('http://uoosc.cloudapp.net/api/users.json')
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getConstituencies(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/schools.json',options)
+    return this.http.get('http://uoosc.cloudapp.net/api/zones.json',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getCounties(){
+    return this.http.get('http://uoosc.cloudapp.net/api/counties.json')
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   private handleError(error: any){
     console.log(error);
