@@ -10,7 +10,7 @@
         <md-tab>
           <template md-tab-label>Schools Registration</template>
           <md-card-content>
-            <form (ngSubmit)="onSubmit(schoolregistration.value);" #schoolregistration="ngForm"  fxLayout="column">
+            <form (ngSubmit)="onSubmit(schoolregistration.value);"  #schoolregistration="ngForm"  fxLayout="column">
               <md-input placeholder="School Name (required)" required ngModel name="schoolName" class="mb-1"></md-input>
 
               <md-input placeholder="School Code (required)" required ngModel name="schoolCode" class="mb-1"></md-input>
@@ -22,28 +22,22 @@
                   {{name.county_name}}
                 </md-option>
               </md-select>
-
               <md-select required ngModel name="zone" placeholder="Constituency (required)" class="mb-2">
                 <md-option *ngFor = "let name of schoolConstituency" value="{{name.id}}">{{name.name}}</md-option>
               </md-select>
-
               <md-select ngModel name="waterSource" placeholder="Source of Water" class="mb-2">
                 <md-option value="borehole">Borehole</md-option>
                 <md-option value="river">River</md-option>
               </md-select>
-
               <h6>Geo Coordinates</h6>
               <md-input placeholder="Longitude"  ngModel name="geo_cordinates" class="mb-1"></md-input>
-
               <md-input placeholder="Latitude"  ngModel name="geo_cordinates" class="mb-1"></md-input>
-
               <hr>
               <md-card-actions>
                 <button type="submit" [disabled]="!schoolregistration.valid" md-raised-button class="shadow-none">Save</button>
                 <button md-raised-button class="warn">Delete</button>
                 <button md-raised-button color="primary">Cancel</button>
               </md-card-actions>
-
             </form>
           </md-card-content>
         </md-tab>

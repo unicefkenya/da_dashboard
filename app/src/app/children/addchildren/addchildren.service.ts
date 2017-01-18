@@ -4,8 +4,9 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 
 
+
 @Injectable()
-export class AddSchoolService {
+export class AddChildrenService {
   constructor(
     private http: Http
   ){}
@@ -14,7 +15,7 @@ export class AddSchoolService {
 
     //console.log(myApiRoutes=>apiRoutes);
 
-    const _schoolRegistrationUrl = 'http://uoosc.cloudapp.net/api/school';
+    const _childRegistrationUrl = 'http://uoosc.cloudapp.net/api/students';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -27,7 +28,7 @@ export class AddSchoolService {
 
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(_schoolRegistrationUrl, body, options)
+    return this.http.post(_childRegistrationUrl, body, options)
       .map(this.extractData)
       .catch(this.handleError);
 
@@ -38,26 +39,15 @@ export class AddSchoolService {
     return body.data || { };
   }
 
-  getConstituencies(){
-    let token=localStorage.getItem("user");
-    let headers = new Headers({
-        'Content-Type': 'application/json',
-        'Authorization':'Bearer '+token
-    });
-    let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/zones.json',options)
-      .map((response: Response) => response.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
 
-  getCounties(){
+  getClass(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/counties.json',options)
+    return this.http.get('http://uoosc.cloudapp.net/api/classes.json',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

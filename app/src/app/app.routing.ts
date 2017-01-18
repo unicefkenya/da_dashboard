@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
-import { AuthGuard } from './authguard/authguard.service';
+import { AuthGuard } from './authguard/auth.guard';
 
 export const AppRoutes: Routes = [{
   path: '',
@@ -14,8 +14,8 @@ export const AppRoutes: Routes = [{
   component: AdminLayoutComponent,
   children: [{
     path: 'home',
-    loadChildren: './dashboard/dashboard.module#DashboardModule',
-    canActivate: [AuthGuard],
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    //canActivate: [AuthGuard],
   }, {
     path: 'children',
     loadChildren: './children/children.module#ChildrenModule'
