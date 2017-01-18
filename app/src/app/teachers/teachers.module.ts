@@ -7,12 +7,13 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TeachersRoutes } from './teachers.routing';
-import { TeachersComponent } from './teachers.component';
 import { AddTeachersComponent } from './addteachers/addteachers.component';
+import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(TeachersRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, NgxDatatableModule],
-  declarations: [TeachersComponent, AddTeachersComponent]
+  declarations: [ViewTeachersComponent, AddTeachersComponent]
+
 })
 
 export class TeachersModule {}
