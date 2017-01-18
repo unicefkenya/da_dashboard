@@ -88,7 +88,8 @@
           [options]="barChartOptions"
           [colors]="chartColors"
           [legend]="barChartLegend"
-          [chartType]="barChartType"></canvas>
+          [chartType]="barChartType">
+        </canvas>
       </md-card-content>
 		</md-card>
 	</div>
@@ -171,22 +172,24 @@
 </div>
 
 <div fxLayout="row"  fxLayoutWrap="wrap">
+
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <ngx-datatable
       class="material"
-      [rows]="rows"
+      [rows]="attendanceSnapshot"
       [columnMode]="'force'"
       [headerHeight]="50"
       [footerHeight]="0"
       [rowHeight]="'auto'">
       <ngx-datatable-column name="Project">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{row['project']}}
+          {{row['title']}}
         </template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Due Date">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{row['date'] | date: 'MMMM dd'}}
+          <!-- {{row['date'] | date: 'MMMM dd'}} -->
+          {{row['duration']}}
         </template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Progress">
@@ -196,6 +199,7 @@
       </ngx-datatable-column>
     </ngx-datatable>
   </div>
+
   <div fxFlex.gt-sm="33.33%" fxFlex="100">
     <md-card>
       <md-card-title>Activity Feeds</md-card-title>

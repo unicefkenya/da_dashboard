@@ -24,6 +24,7 @@ export class DashboardComponent {
   public childrenPresent: any;
   public childrenAbscent: any;
 
+  public attendanceSnapshot: any [];
 
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
@@ -52,6 +53,34 @@ export class DashboardComponent {
       this.femalesAbscent = data.absent.females;
       this.childrenPresent = data.present.total;
       this.childrenAbscent = data.absent.total;
+
+      this.attendanceSnapshot = [
+        {
+          "title": "Girls Present",
+          "duration":"1 week",
+          "progress": this.femalesPresent
+        }, {
+          "title": "Boys Present ",
+          "duration":"1 week",
+          "progress": this.malesPresent
+        }, {
+          "title": "Children Present",
+          "duration":"1 week",
+          "progress": this.childrenPresent
+        },{
+          "title": "Girls Absent",
+          "duration":"1 week",
+          "progress": this.femalesAbscent
+        }, {
+          "title": "Males Abscent",
+          "duration":"1 week",
+          "progress": this.childrenAbscent
+        },  {
+          "title": "Children Abscent",
+          "duration":"Past week",
+          "progress": this.malesAbscent
+        }
+      ]
     });
   }
 
