@@ -51,14 +51,14 @@ export class SigninComponent implements OnInit {
     console.log("Login Successfully");
     this.success = "Logged In Successfully";
 
-
+    /*
     if(!(this.user)){
       this.router.navigate(['/signin']);
       this.errorMsg = 'Failed to login';
       console.log(this.errorMsg);
     }else{
        this.router.navigate(['/home']);
-    }
+    }*/
   }
 
   }

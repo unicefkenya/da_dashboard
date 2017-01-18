@@ -1,5 +1,6 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
+import { Router } from '@angular/router';
 import {AppModule} from '../../app.module';
 import { FormsModule,NgForm } from '@angular/forms';
 import { TeacherRegistration } from './teacher';
@@ -21,7 +22,8 @@ export class AddTeachersComponent implements OnInit {
 
   constructor(
     private _teacherRegistrationService: AddTeacherService,
-    public datepipe:DatePipe
+    public datepipe:DatePipe,
+    public router: Router
   ){
     this.fetch((data) => {
       this.rows = data;
@@ -49,6 +51,7 @@ export class AddTeachersComponent implements OnInit {
   public schoolName;
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
+  form: NgForm;
 
   ngOnInit(){
     //this.onSubmit;
@@ -57,7 +60,7 @@ export class AddTeachersComponent implements OnInit {
   }
 
 
-  onSubmit(registerTeacher: TeacherRegistration){
+  onSubmit(registerTeacher: TeacherRegistration, form){
     var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
 
     if(!this.submitted){
@@ -99,6 +102,8 @@ export class AddTeachersComponent implements OnInit {
           );
           console.log("Added Teacher Successfully", registerTeacher.joinedCurrent );
           this.success = "Added Teacher Successfully";
+          
+
         }
   }
 

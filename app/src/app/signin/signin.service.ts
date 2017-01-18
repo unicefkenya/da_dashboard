@@ -48,6 +48,10 @@ export class SigninService {
           //was in localStorage instead of JSON.stringify
           //data.json().access_token
           localStorage.setItem("user", JSON.stringify(user));
+          this._router.navigate(['home']);
+        }else{
+          localStorage.removeItem("user");
+          this._router.navigate(['signin']);
         }
       })
       .catch(this.handleError);

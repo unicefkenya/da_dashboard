@@ -94,10 +94,12 @@ export class AddChildrenComponent implements OnInit {
                   meals_per_day: registerChild.mealsInDay
           })
           .subscribe(
-            data => console.log(data)
+            data => console.log(data),
+            
           );
           console.log("Added School Successfully");
           this.success = "Added Child Successfully";
+
         }
   }
 
