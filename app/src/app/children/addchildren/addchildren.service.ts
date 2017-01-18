@@ -15,7 +15,7 @@ export class AddChildrenService {
 
     //console.log(myApiRoutes=>apiRoutes);
 
-    const _childRegistrationUrl = 'http://uoosc.cloudapp.net/api/school';
+    const _childRegistrationUrl = 'http://uoosc.cloudapp.net/api/students';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -39,26 +39,15 @@ export class AddChildrenService {
     return body.data || { };
   }
 
-  getUsers(){
-    return this.http.get('http://uoosc.cloudapp.net/api/users.json')
-      .map((response: Response) => response.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
 
-  getConstituencies(){
+  getClass(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/zones.json',options)
-      .map((response: Response) => response.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
-  getCounties(){
-    return this.http.get('http://uoosc.cloudapp.net/api/counties.json')
+    return this.http.get('http://uoosc.cloudapp.net/api/classes.json',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

@@ -81,6 +81,7 @@ export class AddTeachersComponent implements OnInit {
       this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
 
                   school: registerTeacher.schoolName,
+                  phone_no: registerTeacher.phoneNumber,
                   fstname:   registerTeacher.firstName,
                   lstname:   registerTeacher.lastName,
                   birthday:  registerTeacher.birthday,

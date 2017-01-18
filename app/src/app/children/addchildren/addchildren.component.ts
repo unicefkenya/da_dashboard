@@ -6,7 +6,7 @@ import { Response } from '@angular/http';
 import {AddChildrenService} from './addchildren.service';
 
 @Component({
-  selector: 'add-school',
+  selector: 'add-child',
   templateUrl: './addchildren.component.html',
   styleUrls: ['./addchildren.component.scss'],
   providers: [AddChildrenService]
@@ -43,71 +43,75 @@ export class AddChildrenComponent implements OnInit {
   }
 
   public success;
-  public schoolConstituency;
-  public schoolCounty;
+  public schoolClasses;
   public submitted: boolean =  true;
   public school: ChildRegistration;
 
   ngOnInit(){
     //this.onSubmit;
-    this.getSchoolCounties();
-    this.getSchoolConstituencies();
+    this.getSchoolClasses();
 
   }
-
 
   onSubmit(registerChild: ChildRegistration){
     if(!this.submitted){
 
       //edit
     }else{
-      this.school = new ChildRegistration(registerChild.schoolName, registerChild.schoolCode, registerChild.emisCode, registerChild.geo_cordinates,registerChild.waterSource, registerChild.headTeacherName, registerChild.headTeacherPhone,registerChild.zone,registerChild.county);
+      this.school = new ChildRegistration(
+                            registerChild.firstName,
+                            registerChild.maidenName,
+                            registerChild.lastName,
+                            registerChild.admNo,
+                            registerChild.emisCode,
+                            registerChild.gender,
+                            registerChild.dateOfBirth,
+                            registerChild.className,
+                            registerChild.previousClass,
+                            registerChild.notInSchool,
+                            registerChild.modeOfTransport,
+                            registerChild.timeToSchool,
+                            registerChild.stayWith,
+                            registerChild.householdNumber,
+                            registerChild.mealsInDay
+                          );
 
       this._childRegistrationService.sendData({
-            school_name: registerChild.schoolName,
-            school_code: registerChild.schoolCode,
-            geo_cordinates: registerChild.geo_cordinates,
-            emis_code: registerChild.emisCode,
-            zone: registerChild.zone,
-            county: registerChild.county,
-            source_of_water: registerChild.waterSource
+                  fstname: registerChild.firstName,
+                  midname: registerChild.maidenName,
+                  lstname: registerChild.lastName,
+                  admission_no: registerChild.admNo,
+                  emis_code: registerChild.emisCode,
+                  gender: registerChild.gender,
+                  date_of_birth: registerChild.dateOfBirth,
+                  class_id: registerChild.className,
+                  previous_class: registerChild.previousClass,
+                  not_in_school_before: registerChild.notInSchool,
+                  mode_of_transport: registerChild.modeOfTransport,
+                  time_to_school: registerChild.timeToSchool,
+                  stay_with: registerChild.stayWith,
+                  household: registerChild.householdNumber,
+                  meals_per_day: registerChild.mealsInDay
           })
           .subscribe(
             data => console.log(data)
           );
           console.log("Added School Successfully");
-          this.success = "Added School Successfully";
+          this.success = "Added Child Successfully";
         }
   }
 
-  getSchoolCounties(){
+  getSchoolClasses(){
 
-    this._childRegistrationService.getCounties()
+    this._childRegistrationService.getClass()
       .subscribe(
         (res)=>{
-          const countyName = [];
-          for (let county_name in res){
-            countyName.push(res[county_name]);
+          const className = [];
+          for (let class_name in res){
+            className.push(res[class_name]);
           }
-          this.schoolCounty = countyName;
-          console.log(countyName);
-        },
-      (err) => console.log(err),
-      ()=>console.log("Done")
-    );
-  }
-
-  getSchoolConstituencies(){
-
-    this._childRegistrationService.getConstituencies()
-      .subscribe(
-        (res)=>{
-          const constituencyName = [];
-          for (let constituency in res){
-            constituencyName.push(res[constituency]);
-          }
-          this.schoolConstituency = constituencyName;
-          console.log(constituencyName);
+          this.schoolClasses = className;
+          console.log(className);
         },
       (err) => console.log(err),
       ()=>console.log("Done")

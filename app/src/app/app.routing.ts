@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
-import { AuthGuard } from './authguard/authguard.service';
+import { AuthGuard } from './authguard/auth.guard';
 
 export const AppRoutes: Routes = [{
   path: '',
