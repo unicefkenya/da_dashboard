@@ -27,7 +27,7 @@ export const AppRoutes: Routes = [{
     loadChildren: './teachers/teachers.module#TeachersModule'
   }, {
     path: 'reports',
-    loadChildren: './tables/tables.module#TablesModule'
+    loadChildren: './reports/reports.module#ReportsModule'
   }, {
     path: 'system-logs',
     loadChildren: './chartlib/chartlib.module#ChartlibModule'

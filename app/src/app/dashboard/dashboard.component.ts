@@ -1,16 +1,98 @@
 import { Component } from '@angular/core';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers:[ DashboardService ]
 })
 export class DashboardComponent {
 
   rows = [];
 
-  constructor() {
+  public students: any;
+  public males: any;
+  public females: any;
+  public teachers: any;
+  public schools: any;
+
+  public malesPresent: any;
+  public malesAbscent: any;
+  public femalesPresent: any;
+  public femalesAbscent: any;
+  public childrenPresent: any;
+  public childrenAbscent: any;
+
+  public attendanceSnapshot: any [];
+
+  constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
+  }
+
+  // Shimanyi > getStats()
+  public getStats():void {
+
+    this.dashboardServices.getStats().subscribe(data => {
+
+       this.schools = data.schools;
+       this.males = data.students.males;
+       this.females = data.students.females;
+       this.students = +(this.males+this.females);
+       this.teachers = data.teachers;
+
+    });
+  }
+
+  // Shimanyi > getWeeklySummary()
+  public getWeeklySummary(){
+    this.dashboardServices.getWeeklySummary().subscribe( data => {
+      this.malesPresent   = data.present.males;
+      this.malesAbscent   = data.absent.males;
+      this.femalesPresent = data.present.females;
+      this.femalesAbscent = data.absent.females;
+      this.childrenPresent = data.present.total + "%";
+      this.childrenAbscent = data.absent.total;
+
+      this.attendanceSnapshot = [
+        {
+          "title": "Girls Present",
+          "duration":"1 week",
+          "progress": this.femalesPresent,
+          "color":"primary"
+        }, {
+          "title": "Boys Present ",
+          "duration":"1 week",
+          "progress": this.malesPresent,
+          "color":"primary"
+        }, {
+          "title": "Children Present",
+          "duration":"1 week",
+          "progress": this.childrenPresent,
+          "color":"primary"
+        },{
+          "title": "Girls Absent",
+          "duration":"1 week",
+          "progress": this.femalesAbscent,
+          "color":"accent"
+        }, {
+          "title": "Males Abscent",
+          "duration":"1 week",
+          "progress": this.childrenAbscent,
+          "color":"accent"
+        },  {
+          "title": "Children Abscent",
+          "duration":"1 week",
+          "progress": this.malesAbscent,
+          "color":"warn"
+        }
+      ]
+    });
+  }
+
+  ngOnInit(): void {
+    this.getStats();
+    this.getWeeklySummary();
   }
 
   // Shared chart options

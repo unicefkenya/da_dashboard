@@ -6,7 +6,7 @@
           <md-icon>local_offer</md-icon>
         </div>
         <div class="pl-0">
-          <h5 md-card-widget-title>103</h5>
+          <h5 md-card-widget-title>{{ students }}</h5>
           <p>Registered Students</p>
         </div>
       </div>
@@ -19,8 +19,8 @@
           <md-icon>phone</md-icon>
         </div>
         <div class="pl-0">
-          <h5 md-card-widget-title>230 (50%)</h5>
-          <p>Attendance Snapshot</p>
+          <h5 md-card-widget-title> {{ childrenPresent }} </h5>
+          <p>Present past week</p>
         </div>
       </div>
     </md-card>
@@ -32,7 +32,7 @@
           <md-icon>notifications</md-icon>
         </div>
         <div class="pl-0">
-          <h5 md-card-widget-title>323</h5>
+          <h5 md-card-widget-title>{{ schools }}</h5>
           <p>Registered Schools</p>
         </div>
       </div>
@@ -45,7 +45,7 @@
           <md-icon>email</md-icon>
         </div>
         <div class="pl-0">
-          <h5 md-card-widget-title>870</h5>
+          <h5 md-card-widget-title>{{ teachers }}</h5>
           <p>Registered Teachers</p>
         </div>
       </div>
@@ -57,7 +57,7 @@
 	<div fxFlex.gt-sm="33.33%" fxFlex="100">
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Revenue &nbsp; <span class="font-weight-bold md-text-primary">+458,90</span>
+        Daily Attendance <span class="font-weight-bold md-text-primary"></span>
         <span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card1" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
@@ -88,14 +88,15 @@
           [options]="barChartOptions"
           [colors]="chartColors"
           [legend]="barChartLegend"
-          [chartType]="barChartType"></canvas>
+          [chartType]="barChartType">
+        </canvas>
       </md-card-content>
 		</md-card>
 	</div>
 	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Yearly Sales &nbsp; <span class="font-weight-bold md-text-warn">-46,68</span>
+        Monthly Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
         <span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
@@ -130,16 +131,16 @@
       </md-card-content>
 		</md-card>
 	</div>
-	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Sales Report &nbsp; <span class="font-weight-bold md-text-accent">+2,50%</span>
+        Annual Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
         <span fxFlex></span>
-        <button md-icon-button md-button-sm [md-menu-trigger-for]="card3" aria-label="Open card menu">
+        <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
         </button>
       </md-card-subtitle>
-      <md-menu #card3="mdMenu" x-position="before">
+      <md-menu #card2="mdMenu" x-position="before">
         <button md-menu-item>
           <md-icon>settings</md-icon>
           Settings
@@ -159,43 +160,46 @@
       </md-menu>
 			<md-card-content>
         <canvas height="200" baseChart class="chart"
-          [datasets]="bubbleChartData"
+          [datasets]="ComboChartData"
           [labels]="comboChartLabels"
           [options]="ComboChartOptions"
-          [colors]="comboChartColors"
+          [colors]="chartColors"
           [legend]="comboChartLegend"
-          [chartType]="bubbleChartType"></canvas>
+          [chartType]="barChartType"></canvas>
       </md-card-content>
 		</md-card>
 	</div>
 </div>
 
 <div fxLayout="row"  fxLayoutWrap="wrap">
+
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <ngx-datatable
       class="material"
-      [rows]="rows"
+      [rows]="attendanceSnapshot"
       [columnMode]="'force'"
       [headerHeight]="50"
       [footerHeight]="0"
       [rowHeight]="'auto'">
-      <ngx-datatable-column name="Project">
+      <ngx-datatable-column name="Children Status">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{row['project']}}
+          {{row['title']}}
         </template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Due Date">
+      <ngx-datatable-column name="Duration Analyse">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{row['date'] | date: 'MMMM dd'}}
+          <!-- {{row['date'] | date: 'MMMM dd'}} -->
+          {{row['duration']}}
         </template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Progress">
+      <ngx-datatable-column name="Percentages (%)">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <md-progress-bar mode="determinate" value="{{row['progress']}}" color="primary"></md-progress-bar>
+          <md-progress-bar mode="determinate" value="{{row['progress']}}" color="{{row['color']}}"></md-progress-bar>
         </template>
       </ngx-datatable-column>
     </ngx-datatable>
   </div>
+
   <div fxFlex.gt-sm="33.33%" fxFlex="100">
     <md-card>
       <md-card-title>Activity Feeds</md-card-title>

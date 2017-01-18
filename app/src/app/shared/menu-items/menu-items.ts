@@ -37,13 +37,6 @@ const MENUITEMS = [
     ]
   },
   {
-    state: 'reports',
-    name: 'Attendance',
-    type: 'link',
-    icon: 'book'
-  },
-
-  {
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -74,17 +67,17 @@ const MENUITEMS = [
     ]
   },
   {
-    state: 'tables',
+    state: 'reports',
     name: 'Reports',
     type: 'sub',
     icon: 'format_line_spacing',
     children: [
-      {state: 'fullscreen', name: 'Overal Summary'},
-      {state: 'editing', name: 'Boys'},
-      {state: 'filter', name: 'Girls'},
-      {state: 'paging', name: 'County Summary'},
-      {state: 'sorting', name: 'Listed Schools'},
-      {state: 'pinning', name: 'Listed Teachers'},
+      {state: 'overal', name: 'Overal Summary'},
+      {state: 'boys', name: 'Boys'},
+      {state: 'girls', name: 'Girls'},
+      {state: 'county', name: 'County Summary'},
+      {state: 'schools', name: 'Listed Schools'},
+      {state: 'teachers', name: 'Listed Teachers'},
     ]
   },
   {

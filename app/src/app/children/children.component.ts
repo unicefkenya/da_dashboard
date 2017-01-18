@@ -12,16 +12,14 @@ import { Children } from './children';
 })
 export class ChildrenComponent implements OnInit {
 
-  dt:any
-  dts:any
+  dt:any;
   children: any[];
 
   columns = [
-    { name: 'ID' },
-    { name: 'EMISCode' },
-    { name: 'name' },
-    { name: 'gender' },
-    { name: 'Birthday' },
+    { name: 'Emiscode' },
+    { name: 'Name' },
+    { name: 'Gender' },
+    { name: 'Attendance' },
     { name: 'Class' },
 
   ];
@@ -31,13 +29,13 @@ export class ChildrenComponent implements OnInit {
 
   fetchChildren(): void {
     this.childrenService.fetchChildren().subscribe(data => {
-      console.log(data);
-
       let childs =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
+        this.dt.emiscode=data[i].emis_code
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
+        this.dt.attendance=data[i].last_attendance
         this.dt.class=data[i].class_id
         childs.push(this.dt)
       }
