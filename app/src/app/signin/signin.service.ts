@@ -38,12 +38,13 @@ export class SigninService {
 
     return this.http.post(_signinUrl, user, options)
       .map((data) => {
-        console.log(data.json().access_token);
+        console.log(data.json().username);
         this.extractData  = data.json().access_token;
         localStorage.setItem("user",data.json().access_token)
       })
       .catch(this.handleError);
   }
+
 
   handleError(error: any){
     console.error(error);

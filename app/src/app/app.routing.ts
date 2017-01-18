@@ -14,8 +14,8 @@ export const AppRoutes: Routes = [{
   component: AdminLayoutComponent,
   children: [{
     path: 'home',
-    loadChildren: './dashboard/dashboard.module#DashboardModule',
-    canActivate: [AuthGuard],
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    //canActivate: [AuthGuard],
   }, {
     path: 'children',
     loadChildren: './children/children.module#ChildrenModule'

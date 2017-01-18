@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
@@ -7,8 +8,13 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class AddTeacherService {
   constructor(
-    private http: Http
+    private http: Http,
+    private datePipe: DatePipe
   ){}
+
+  transformDate(date){
+    this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
 
   sendData(user: any){
 

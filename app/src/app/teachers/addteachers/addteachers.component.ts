@@ -58,6 +58,8 @@ export class AddTeachersComponent implements OnInit {
 
 
   onSubmit(registerTeacher: TeacherRegistration){
+    var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
+
     if(!this.submitted){
 
       //edit
@@ -76,13 +78,11 @@ export class AddTeachersComponent implements OnInit {
                         registerTeacher.joinedCurrent,
                         registerTeacher.gender
                       );
-
       this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
 
                   school: registerTeacher.schoolName,
                   fstname:   registerTeacher.firstName,
                   lstname:   registerTeacher.lastName,
-
                   birthday:  registerTeacher.birthday,
                   teacher_type:registerTeacher.teacher_type,
                   qualifications: registerTeacher.qualifications,
@@ -90,7 +90,7 @@ export class AddTeachersComponent implements OnInit {
                   bom_no: registerTeacher.bom_no,
                   subjects: [1],
                   date_started_teaching: registerTeacher.dateStarted,
-                  joined_current_school: registerTeacher.joinedCurrent,
+                  joined_current_school:  registerTeacher.joinedCurrent,
                   gender: registerTeacher.gender
           }})
           .subscribe(

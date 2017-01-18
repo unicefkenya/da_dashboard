@@ -45,13 +45,17 @@ export class SigninComponent implements OnInit {
     this._signin.login(
       "username="+email+"&password="+password+"&grant_type=password&client_id=dnFhSdWfy2XjFqTzpSLMbYqRKOgGei2eG7hUnNDS"
     ).subscribe(
-      data => console.log(data)
+      data => console.log(data),
+
     );
     console.log("Login Successfully");
     this.success = "Logged In Successfully";
 
-    if(!this._signin.login(this.user)){
+
+    if(!(this.user)){
+      this.router.navigate(['/signin']);
       this.errorMsg = 'Failed to login';
+      console.log(this.errorMsg);
     }else{
        this.router.navigate(['/home']);
     }
