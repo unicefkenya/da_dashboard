@@ -8,6 +8,7 @@
               <img src="assets/images/logo-dark.png" alt=""/>
               <p class="md-text-muted">Sign in to continue.</p>
             </div>
+            <small style="color: red;">{{fail}}</small>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
                 <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>

@@ -11,7 +11,7 @@ import { User } from './user';
 export class SigninService {
 
   //public handleError;
-
+  public err;
   constructor(
     private _router: Router,
     private http: Http){}
@@ -56,7 +56,8 @@ export class SigninService {
 
 
   handleError(error: any){
-    console.error(error);
+    this.err = error.json();
+    console.log(error);
    return Observable.throw(error.json().error || 'Server error');
   }
   private extractData(res: Response) {

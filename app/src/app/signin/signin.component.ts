@@ -19,6 +19,7 @@ export class SigninComponent implements OnInit {
   public user = new User('','');
   public errorMsg = '';
   public success;
+  public fail;
   public form: FormGroup;
   public userLogin: User;
   returnUrl: string;
@@ -58,8 +59,7 @@ export class SigninComponent implements OnInit {
         this.router.navigate([this.returnUrl]);
       },
       error => {
-        this.alertService.error(error);
-        this.loading = false;
+        this.fail = "Wrong username/password combination";
       }
 
     );
