@@ -22,11 +22,12 @@
                 <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input the school's name.</small>
 
 
-                <md-select [formControl]="form.controls['gender']" placeholder="Gender (required)" class="ml-xs mr-xs" style="width: 100%">
-                  <md-option  value="ML">Male</md-option>
-                  <md-option  value="FM">Female</md-option>
-                </md-select>
-                <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the teacher's gender.</small>
+                <label>Gender</label>
+                <md-radio-group [formControl]="form.controls['gender']" class="ml-xs mr-xs" style="width: 70%">
+                  <md-radio-button value="M">Male</md-radio-button>
+                  <md-radio-button value="F">Female</md-radio-button>
+                </md-radio-group>
+                <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the student's gender.</small>
 
               </div>
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
