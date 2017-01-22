@@ -32,6 +32,7 @@ export class AddChildrenComponent implements OnInit {
       emisCode: [null, Validators.compose([Validators.required])],
       dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date])],
       className: [null, Validators.compose([Validators.required])],
+      previousClass: [null, Validators.compose([Validators.required])],
       notInSchool: [null, Validators.compose([Validators.required])],
       modeOfTransport: [null, Validators.compose([Validators.required])],
       timeToSchool: [null, Validators.compose([Validators.required])],

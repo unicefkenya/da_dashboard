@@ -30,32 +30,30 @@
               </div>
 
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <div class="mb-1">
-                  <md-select [formControl]="form.controls['gender']" placeholder="Gender (required)" class="ml-xs mr-xs" style="width: 100%">
-                    <md-option  value="ML">Male</md-option>
-                    <md-option  value="FM">Female</md-option>
-                  </md-select>
+                  <span style="margin-right:90px;"></span>
+                  <label>Gender</label>
+                  <md-radio-group [formControl]="form.controls['gender']" class="ml-xs mr-xs" style="width: 70%">
+                    <md-radio-button value="ML">Male</md-radio-button>
+                    <md-radio-button value="FM">Female</md-radio-button>
+                  </md-radio-group>
                   <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the student's gender.</small>
-                </div>
-                <!--<small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly select gender type.</small>
-                -->
-
-                <span style="margin-right:80px;"></span>
-                <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
-                <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
-                <small *ngIf="form.controls['dateOfBirth'].errors?.date && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
+                  <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
+                  <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
+                  <small *ngIf="form.controls['dateOfBirth'].errors?.date && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
 
               </div>
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+
                 <md-select required [formControl]="form.controls['className']"  placeholder="Class (required)" style="width: 30%" class="ml-xs mr-xs">
                   <md-option *ngFor = "let name of schoolClasses" value="{{name.id}}">
                     {{name.class_name}}
                   </md-option>
                 </md-select>
                 <small *ngIf="form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
-
+              -
                 <md-input placeholder="Previous Class" [formControl]="form.controls['previousClass']" class="ml-xs mr-xs" type="text" style="width: 40%"></md-input>
                 <small *ngIf="form.controls['previousClass'].hasError('required') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input the previous class.</small>
+
                 <md-select ngModel [formControl]="form.controls['notInSchool']" placeholder="Been in school before?" style="width: 30%" class="ml-xs mr-xs">
                   <md-option value="True">Yes</md-option>
                   <md-option value="False">No</md-option>
