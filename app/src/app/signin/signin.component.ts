@@ -3,14 +3,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule,NgForm,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { SigninService } from './signin.service';
-import { AlertService } from '../authguard/alert.service';
 import { User } from './user';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
-  providers: [SigninService,AlertService]
+  providers: [SigninService]
 })
 
 
@@ -29,7 +28,6 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    private alertService: AlertService,
     private _signin: SigninService) {}
 
   ngOnInit() {
@@ -40,7 +38,7 @@ export class SigninComponent implements OnInit {
     //reset login status
     this._signin.logout();
 
-    //get return url from route parameters or default to '/'
+    //get return url from route parameters or default to '/home'
     this.returnUrl = this.activatedRouter.snapshot.queryParams['returnUrl'] || '/home';
   }
 

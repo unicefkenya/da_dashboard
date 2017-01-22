@@ -18,25 +18,32 @@ export const AppRoutes: Routes = [{
     canActivate: [AuthGuard]
   }, {
     path: 'children',
-    loadChildren: './children/children.module#ChildrenModule'
+    loadChildren: './children/children.module#ChildrenModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'schools',
-    loadChildren: './schools/schools.module#SchoolsModule'
+    loadChildren: './schools/schools.module#SchoolsModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'teachers',
-    loadChildren: './teachers/teachers.module#TeachersModule'
+    loadChildren: './teachers/teachers.module#TeachersModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'reports',
-    loadChildren: './reports/reports.module#ReportsModule'
+    loadChildren: './reports/reports.module#ReportsModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'system-logs',
-    loadChildren: './chartlib/chartlib.module#ChartlibModule'
+    loadChildren: './chartlib/chartlib.module#ChartlibModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'activity-logs',
-    loadChildren: './maps/maps.module#MapModule'
+    loadChildren: './maps/maps.module#MapModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'help',
-    loadChildren: './dragndrop/dragndrop.module#DragndropModule'
+    loadChildren: './dragndrop/dragndrop.module#DragndropModule',
+    canActivate: [AuthGuard]
   }]
 }, {
   path: '',

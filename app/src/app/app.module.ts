@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
 import { AuthGuard } from './authguard/auth.guard';
-import { AlertService } from './authguard/alert.service';
 import { SigninService } from './signin/signin.service';
 //import {AlertComponent} from './authguard/'
 import {ApiService} from './api.service';
@@ -45,7 +44,6 @@ export function createTranslateLoader(http: Http) {
   ],
   providers: [
     AuthGuard,
-    AlertService,
     SigninService
   ],
   entryComponents: [  ],
