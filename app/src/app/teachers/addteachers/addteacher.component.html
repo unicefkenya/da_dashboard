@@ -51,7 +51,7 @@
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
                 <md-select  [formControl]="form.controls['teacher_type']" placeholder="Teacher Type (required)" class="ml-xs mr-xs" style="width: 100%">
                   <md-option  value="TSC">T.S.C</md-option>
-                  <md-option  value="BRD">Board</md-option>
+                  <md-option   value="BRD">Board</md-option>
                 </md-select>
                 <small *ngIf="form.controls['teacher_type'].hasError('required') && form.controls['teacher_type'].touched" class="md-text-warn">Kindly input the teacher type.</small>
 
@@ -64,10 +64,10 @@
               </div>
 
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <md-input  placeholder="TSC Number (required)"  [formControl]="form.controls['tsc_no']" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
-                <small *ngIf="form.controls['tsc_no'].hasError('required') && form.controls['tsc_no'].touched" class="md-text-warn">You must include a first name.</small>
-                <md-input  placeholder="BOM Number (required)" [formControl]="form.controls['bom_no']" class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
-                <small *ngIf="form.controls['bom_no'].hasError('required') && form.controls['bom_no'].touched" class="md-text-warn">You must include a first name.</small>
+                <md-input ng-show="isVisible"  placeholder="TSC Number (required)"  [formControl]="form.controls['tsc_no']" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
+                <small *ngIf="form.controls['tsc_no'].hasError('required') && form.controls['tsc_no'].touched" class="md-text-warn">Kindly input teacher's tsc number.</small>
+                <md-input ng-show="bomNo"  placeholder="BOM Number (required)" [formControl]="form.controls['bom_no']" class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
+                <small *ngIf="form.controls['bom_no'].hasError('required') && form.controls['bom_no'].touched" class="md-text-warn">Kindly input teacher's bom number.</small>
               </div>
 
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">

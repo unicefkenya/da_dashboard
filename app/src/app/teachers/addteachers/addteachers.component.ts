@@ -55,6 +55,7 @@ export class AddTeachersComponent implements OnInit {
   public fail;
   public empty;
   public date;
+  public isVisible;
   public schoolName;
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
@@ -132,6 +133,10 @@ export class AddTeachersComponent implements OnInit {
             }
           );
         }
+  }
+
+  showInput(){
+    this.isVisible = this.isVisible ? false : true;
   }
 
   getSchoolNames(){
