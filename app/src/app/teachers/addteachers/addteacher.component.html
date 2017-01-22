@@ -21,9 +21,9 @@
                 </md-select>
                 <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input the school's name.</small>
 
-
+                <span style="margin-right:60px;"></span>
                 <label>Gender</label>
-                <md-radio-group [formControl]="form.controls['gender']" class="ml-xs mr-xs" style="width: 70%">
+                <md-radio-group [formControl]="form.controls['gender']" class="ml-xs mr-xs" style="width: 77%">
                   <md-radio-button value="M">Male</md-radio-button>
                   <md-radio-button value="F">Female</md-radio-button>
                 </md-radio-group>
