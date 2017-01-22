@@ -1,9 +1,12 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
+
 import { TeachersRoutes } from './../teachers.routing';
 import {AppModule} from '../../app.module';
-import { FormsModule,NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+
 import { TeacherRegistration } from './teacher';
 import { Response } from '@angular/http';
 import {AddTeacherService} from './addteacher.service';
@@ -24,7 +27,8 @@ export class AddTeachersComponent implements OnInit {
   constructor(
     private _teacherRegistrationService: AddTeacherService,
     public datepipe:DatePipe,
-    public _router: Router
+    public _router: Router,
+    private fb: FormBuilder
   ){
     this.fetch((data) => {
       this.rows = data;
@@ -48,14 +52,31 @@ export class AddTeachersComponent implements OnInit {
   }
 
   public success;
+  public fail;
+  public empty;
   public date;
   public schoolName;
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
-  form: NgForm;
+  public form: FormGroup ;
 
   ngOnInit(){
     //this.onSubmit;
+    this.form = this.fb.group({
+      schoolName: [null, Validators.compose([Validators.required,])],
+      gender: [null, Validators.compose([Validators.required])],
+      firstName: [null, Validators.compose([Validators.required])],
+      lastName: [null, Validators.compose([Validators.required])],
+      phoneNumber: [null, Validators.compose([Validators.required])],
+      birthday: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      teacher_type: [null, Validators.compose([Validators.required])],
+      qualifications: [null, Validators.compose([Validators.required])],
+      tsc_no: [null, Validators.compose([Validators.required])],
+      bom_no: [null, Validators.compose([Validators.required])],
+      dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date])],
+
+    });
     this.getSchoolNames();
 
   }
@@ -99,12 +120,17 @@ export class AddTeachersComponent implements OnInit {
                   gender: registerTeacher.gender
           }})
           .subscribe(
-            data => console.log(data)
+            data => //console.log(data)
+            {
+              console.log("Added Teacher Successfully"),
+              this.success = "Added Teacher Successfully";
+              this.form.reset();
+            },
+            error =>{
+              this.empty = "This field is required";
+              this.fail = "Failed to save data";
+            }
           );
-          console.log("Added Teacher Successfully", registerTeacher.joinedCurrent );
-          this.success = "Added Teacher Successfully";
-          this._router.navigate(['add-teachers']);
-
         }
   }
 
