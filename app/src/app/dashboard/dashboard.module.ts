@@ -7,12 +7,14 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { AuthGuard } from '../authguard/auth.guard';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(DashboardRoutes), MdIconModule, MdCardModule, MdButtonModule, MdListModule, MdProgressBarModule, MdMenuModule, ChartsModule, NgxDatatableModule, FlexLayoutModule],
-  declarations: [DashboardComponent]
+  declarations: [DashboardComponent],
+  providers: [AuthGuard]
 })
 
 export class DashboardModule {}

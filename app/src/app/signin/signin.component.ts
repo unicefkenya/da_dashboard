@@ -40,7 +40,7 @@ export class SigninComponent implements OnInit {
     this._signin.logout();
 
     //get return url from route parameters or default to '/'
-    this.returnUrl = this.activatedRouter.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.activatedRouter.snapshot.queryParams['returnUrl'] || '/home';
   }
 
   onSubmit(){
