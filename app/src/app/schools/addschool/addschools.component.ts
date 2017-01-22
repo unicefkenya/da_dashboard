@@ -1,6 +1,8 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {AppModule} from '../../app.module';
-import { FormsModule,NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+
 import { SchoolRegistration } from './school';
 import { Response } from '@angular/http';
 import {AddSchoolService} from './addschool.service';
@@ -10,7 +12,6 @@ import {AddSchoolService} from './addschool.service';
   templateUrl: './addschool.component.html',
   styleUrls: ['./addschool.component.scss'],
   providers: [AddSchoolService]
-
 })
 
 
@@ -19,7 +20,8 @@ export class AddSchoolsComponent implements OnInit {
   rows = [];
 
   constructor(
-    private _schoolRegistrationService: AddSchoolService
+    private _schoolRegistrationService: AddSchoolService,
+    private fb: FormBuilder
   ){
     this.fetch((data) => {
       this.rows = data;
@@ -47,9 +49,20 @@ export class AddSchoolsComponent implements OnInit {
   public schoolCounty;
   public submitted: boolean =  true;
   public school: SchoolRegistration;
+  public form: FormGroup;
 
   ngOnInit(){
     //this.onSubmit;
+    this.form = this.fb.group({
+      schoolName: [null, Validators.compose([Validators.required,])],
+      schoolCode: [null],
+      emisCode: [null],
+      county: [null, Validators.compose([Validators.required])],
+      zone: [null, Validators.compose([Validators.required])],
+      waterSource: [null, Validators.compose([Validators.required])],
+      long_geo_cordinates: [null],
+      lat_geo_cordinates: [null]
+    });
     this.getSchoolCounties();
     this.getSchoolConstituencies();
 
@@ -61,12 +74,12 @@ export class AddSchoolsComponent implements OnInit {
 
       //edit
     }else{
-      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.geo_cordinates,registerSchool.waterSource, registerSchool.headTeacherName, registerSchool.headTeacherPhone,registerSchool.zone,registerSchool.county);
+      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.long_geo_cordinates,registerSchool.lat_geo_cordinates,registerSchool.waterSource, registerSchool.zone,registerSchool.county);
 
       this._schoolRegistrationService.sendData({
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
-            geo_cordinates: registerSchool.geo_cordinates,
+            geo_cordinates: (registerSchool.long_geo_cordinates)+","+(registerSchool.lat_geo_cordinates),
             emis_code: registerSchool.emisCode,
             zone: registerSchool.zone,
             county: registerSchool.county,
@@ -75,8 +88,9 @@ export class AddSchoolsComponent implements OnInit {
           .subscribe(
             data => console.log(data)
           );
-          console.log("Added School Successfully");
+          console.log("Added School Successfully"),
           this.success = "Added School Successfully";
+          this.form.reset();
         }
   }
 

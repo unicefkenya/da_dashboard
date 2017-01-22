@@ -6,8 +6,7 @@ export class SchoolRegistration {
     public waterSource: string,
     public zone: string,
     public county: string,
-    public geo_cordinates: string,
-    public headTeacherName: string,
-    public headTeacherPhone: string
+    public long_geo_cordinates: string,
+    public lat_geo_cordinates: string
   ){}
 }
