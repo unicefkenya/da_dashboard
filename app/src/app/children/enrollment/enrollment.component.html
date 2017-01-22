@@ -1,0 +1,26 @@
+<div fxFlex.gt-sm="100%" fxFlex="100">
+  <ngx-datatable
+    class="material"
+    [rows]="students"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="0"
+    [rowHeight]="'auto'">
+    <ngx-datatable-column name="Student Names">
+      <template let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{row['firstname']}}
+      </template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Dates Enrolled">
+      <template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <!-- {{row['date'] | date: 'MMMM dd'}} -->
+        {{row['gender']}}
+      </template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Last Attendance">
+      <template let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{row['lastdate'] | date: 'MMMM dd'}}
+      </template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>
