@@ -63,6 +63,7 @@ const MENUITEMS = [
     icon: 'face',
     children: [
       {state: 'add-children', name: 'Add Children'},
+      {state: 'enrollments', name: 'Enrollments'},
       {state: 'view-children', name: 'View Children'},
     ]
   },

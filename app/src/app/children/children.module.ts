@@ -10,11 +10,12 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ChildrenRoutes } from './children.routing';
 import { ChildrenComponent } from './children.component';
+import { EnrollmentComponent } from './enrollment/enrollment.component';
 import { AddChildrenComponent } from './addchildren/addchildren.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ChildrenRoutes), MaterialModule, FlexLayoutModule, FormsModule, NgxDatatableModule],
-  declarations: [ChildrenComponent, AddChildrenComponent]
+  declarations: [ChildrenComponent, AddChildrenComponent, EnrollmentComponent]
 })
 
 export class ChildrenModule {}
