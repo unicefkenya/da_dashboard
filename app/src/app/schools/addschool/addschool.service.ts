@@ -10,6 +10,7 @@ export class AddSchoolService {
     private http: Http
   ){}
 
+  public err;
   sendData(user: any){
 
     //console.log(myApiRoutes=>apiRoutes);
@@ -63,7 +64,9 @@ export class AddSchoolService {
   }
 
   private handleError(error: any){
-    console.log(error);
+
+    this.err = error.json();
+    console.log(error, this.err.emis_code);
     return Observable.throw(error);
   }
 }

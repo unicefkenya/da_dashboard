@@ -45,6 +45,7 @@ export class AddSchoolsComponent implements OnInit {
   }
 
   public success;
+  public fail;
   public schoolConstituency;
   public schoolCounty;
   public submitted: boolean =  true;
@@ -86,11 +87,16 @@ export class AddSchoolsComponent implements OnInit {
             source_of_water: registerSchool.waterSource
           })
           .subscribe(
-            data => console.log(data)
+            data => //console.log(data)
+            {
+              console.log("Added School Successfully"),
+              this.success = "Added School Successfully";
+              this.form.reset();
+            },
+            error =>{
+              this.fail = "Failed to save data";
+            }
           );
-          console.log("Added School Successfully"),
-          this.success = "Added School Successfully";
-          this.form.reset();
         }
   }
 

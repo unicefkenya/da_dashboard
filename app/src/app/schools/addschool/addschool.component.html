@@ -10,6 +10,7 @@
           <template md-tab-label>Schools Registration</template>
           <md-card-content>
             <small style="color: green;">{{success}}</small>
+            <small style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);"  fxLayout="column">
               <!--<md-input placeholder="School Name (required)" required ngModel name="schoolName" class="mb-1"></md-input>
 -->
