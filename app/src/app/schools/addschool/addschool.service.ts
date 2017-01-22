@@ -63,10 +63,17 @@ export class AddSchoolService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  private handleError(error: any){
+  private handleError(error: Response | any){
+    let errMsg: string;
 
-    this.err = error.json();
-    console.log(error, this.err.emis_code);
-    return Observable.throw(error);
+    if(error instanceof Response){
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    }else{
+      errMsg = error.message ? error.message: error.toString();
+    }
+    console.log(errMsg);
+    return Observable.throw(errMsg);
   }
 }

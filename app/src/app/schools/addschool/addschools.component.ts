@@ -46,6 +46,7 @@ export class AddSchoolsComponent implements OnInit {
 
   public success;
   public fail;
+  public empty;
   public schoolConstituency;
   public schoolCounty;
   public submitted: boolean =  true;
@@ -94,6 +95,7 @@ export class AddSchoolsComponent implements OnInit {
               this.form.reset();
             },
             error =>{
+              this.empty = "This field is required";
               this.fail = "Failed to save data";
             }
           );

@@ -45,7 +45,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._router.unsubscribe();
-    
+    this.logout();
   }
 
   isOver(): boolean {

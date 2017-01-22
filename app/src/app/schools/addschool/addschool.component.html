@@ -16,12 +16,10 @@
 -->
               <md-input placeholder="School Name (required)" [formControl]="form.controls['schoolName']" style="width: 100%"></md-input>
               <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input a school name.</small>
-
-
+              
               <!--<md-input placeholder="School Code (required)" required ngModel name="schoolCode" class="mb-1"></md-input>
 -->
               <md-input placeholder="School Code (optional)" [formControl]="form.controls['schoolCode']" style="width: 100%"></md-input>
-
               <!--<md-input placeholder="Emis Code (required)" required ngModel name="emisCode" class="mb-1"></md-input>
 -->
               <md-input placeholder="Emis Code (optional)" [formControl]="form.controls['emisCode']"   class="mb-1"></md-input>
