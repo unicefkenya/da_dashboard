@@ -10,70 +10,82 @@
         <md-tab>
           <template md-tab-label>Child Registration</template>
           <md-card-content>
-            <form (ngSubmit)="onSubmit(childregistration.value);"  #childregistration="ngForm"  fxLayout="column">
+            <small style="color: green;">{{success}}</small>
+            <small style="color: red;">{{fail}}</small>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" fxLayout="column">
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <md-input dividerColor="primary" placeholder="First Name (required)" ngModel name="firstName" type="text" class="ml-xs mr-xs" style="width: 100%;"></md-input>
-                <md-input dividerColor="primary" placeholder="Mid Name"  ngModel name="maidenName" type="text" class="ml-xs mr-xs" style="width: 100%;"></md-input>
-                <md-input dividerColor="primary" placeholder="Last Name (required)" required ngModel name="lastName" type="text" class="ml-xs mr-xs" style="width: 100%;"></md-input>
-              </div>
-              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <md-input placeholder="Admission Number (required)" required ngModel name="admNo" class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
-                <md-input placeholder="Emis Code" ngModel name="emisCode" class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
+                <md-input dividerColor="primary" placeholder="First Name (required)" [formControl]="form.controls['firstName']"  type="text" class="ml-xs mr-xs" style="width: 100%;"></md-input>
+                <small *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched" class="md-text-warn">Kindly include a first name.</small>
+
+                <md-input dividerColor="primary" placeholder="Mid Name"  [formControl]="form.controls['maidenName']"  type="text" class="ml-xs mr-xs" style="width: 100%;"></md-input>
+
+                <md-input dividerColor="primary" placeholder="Last Name (required)" [formControl]="form.controls['lastName']"  type="text" class="ml-xs mr-xs" style="width: 100%;"></md-input>
+                <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched" class="md-text-warn">Kindly include a last name.</small>
               </div>
 
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <div class="mb-1">
-                  <label>Gender</label>
-                  <md-radio-group>
-                    <md-radio-button value="ML" name="gender" >Male</md-radio-button>
-                    <md-radio-button value="FM" name="gender" >Female</md-radio-button>
-                  </md-radio-group>
-                </div>
+                <md-input placeholder="Admission Number (required)" [formControl]="form.controls['admNo']"  class="ml-xs mr-xs" type="text" style="width: 100%;"></md-input>
+                <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['admNo'].touched" class="md-text-warn">Kindly include student's admission no.</small>
+                <md-input placeholder="Emis Code" [formControl]="form.controls['emisCode']"  class="ml-xs mr-xs" type="text" style="width: 100%"></md-input>
+              </div>
+
+              <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
+
                 <span style="margin-right:80px;"></span>
-                <!--<small *ngIf="!form.controls['gender'].valid && form.controls['gender'].touched" class="md-text-warn">You must select a gender.</small>-->
-                <md-input placeholder="Birthday (required)" ngModel name="dateOfBirth" class="ml-xs mr-xs" type="date" style="width: 70%"></md-input>
-                <!--<small *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched" class="md-text-warn">You must include a date.</small>
-                <small *ngIf="form.controls['date'].errors?.date && form.controls['date'].touched" class="md-text-warn">You must include a valid date.</small>
-                -->
+                <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
+                <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
+                <small *ngIf="form.controls['dateOfBirth'].errors?.date && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
+
               </div>
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <md-select required ngModel name="className" placeholder="Class (required)" style="width: 30%" class="ml-xs mr-xs">
+                <md-select required [formControl]="form.controls['className']"  placeholder="Class (required)" style="width: 30%" class="ml-xs mr-xs">
                   <md-option *ngFor = "let name of schoolClasses" value="{{name.id}}">
                     {{name.class_name}}
                   </md-option>
                 </md-select>
-                <md-input placeholder="Previous Class" ngModel name="previousClass" class="ml-xs mr-xs" type="text" style="width: 40%"></md-input>
-                <md-select ngModel required name="notInSchool" placeholder="Been in school before?" style="width: 30%" class="ml-xs mr-xs">
+                <small *ngIf="form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
+
+                <md-input placeholder="Previous Class" [formControl]="form.controls['previousClass']" class="ml-xs mr-xs" type="text" style="width: 40%"></md-input>
+                <small *ngIf="form.controls['previousClass'].hasError('required') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input the previous class.</small>
+                <md-select ngModel [formControl]="form.controls['notInSchool']" placeholder="Been in school before?" style="width: 30%" class="ml-xs mr-xs">
                   <md-option value="True">Yes</md-option>
                   <md-option value="False">No</md-option>
                 </md-select>
+                <small *ngIf="form.controls['notInSchool'].hasError('required') && form.controls['notInSchool'].touched" class="md-text-warn">Kindly input a value.</small>
               </div>
 
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <md-select ngModel required name="modeOfTransport" placeholder="Mode of Transport" style="width: 50%" class="ml-xs mr-xs">
+                <md-select [formControl]="form.controls['modeOfTransport']"  placeholder="Mode of Transport" style="width: 50%" class="ml-xs mr-xs">
                   <md-option value="Personal Vehicle">Personal Vehicle</md-option>
                   <md-option value="School Bus">School Bus</md-option>
                   <md-option value="By Foot">By Foot</md-option>
                 </md-select>
-                <md-select ngModel  name="timeToSchool" placeholder="Time taken to reach school" style="width: 50%" class="ml-xs mr-xs">
+                <small *ngIf="form.controls['modeOfTransport'].hasError('required') && form.controls['modeOfTransport'].touched" class="md-text-warn">Kindly input the child's mode of transport.</small>
+
+                <md-select [formControl]="form.controls['timeToSchool']"  placeholder="Time taken to reach school" style="width: 50%" class="ml-xs mr-xs">
                   <md-option value="less than 1/2 hour">Less than 1/2 hour</md-option>
                   <md-option value="1 hour">1 hour</md-option>
                   <md-option value="more">More than 1 hour</md-option>
                 </md-select>
+                <small *ngIf="form.controls['timeToSchool'].hasError('required') && form.controls['timeToSchool'].touched" class="md-text-warn">Kindly input the child's time taken to school.</small>
               </div>
               <h6>Household Details</h6>
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
-                <md-select ngModel  name="stayWith" placeholder="Whom do you stay with?" style="width: 30%" class="ml-xs mr-xs">
+                <md-select [formControl]="form.controls['stayWith']"   placeholder="Whom do you stay with?" style="width: 30%" class="ml-xs mr-xs">
                   <md-option value="Parents">Parents</md-option>
                   <md-option value="Guardians">Guardians</md-option>
                   <md-option value="Alone">Alone</md-option>
                 </md-select>
-                <md-input  placeholder="Number of people in household" ngModel name="householdNumber" class="ml-xs mr-xs" type="text" style="width: 35%"></md-input>
-                <md-input  placeholder="Number of meals/day" ngModel name="mealsInDay" class="ml-xs mr-xs" type="text" style="width: 35%"></md-input>
+
+                <md-input  placeholder="Number of people in household" [formControl]="form.controls['householdNumber']" class="ml-xs mr-xs" type="text" style="width: 35%"></md-input>
+
+                <md-input  placeholder="Number of meals/day" [formControl]="form.controls['mealsInDay']" class="ml-xs mr-xs" type="text" style="width: 35%"></md-input>
+
+
               </div>
               <hr>
               <md-card-actions>
-                <button type="submit" [disabled]="!childregistration.valid" md-raised-button class="shadow-none">Save</button>
+                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
                 <button md-raised-button class="warn">Delete</button>
                 <button md-raised-button color="primary">Cancel</button>
               </md-card-actions>
