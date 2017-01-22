@@ -31,13 +31,14 @@
 
               <div  fxLayout="row"  fxLayoutAlign="start center" class="mb-2">
                 <div class="mb-1">
-                  <label>Gender</label>
-                  <md-radio-group>
-                    <md-radio-button [formControl]="form.controls['gender']" value="ML">Male</md-radio-button>
-                    <md-radio-button [formControl]="form.controls['gender']" value="FM">Female</md-radio-button>
-                  </md-radio-group>
+                  <md-select [formControl]="form.controls['gender']" placeholder="Gender (required)" class="ml-xs mr-xs" style="width: 100%">
+                    <md-option  value="ML">Male</md-option>
+                    <md-option  value="FM">Female</md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the student's gender.</small>
                 </div>
-                <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly select gender type.</small>
+                <!--<small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly select gender type.</small>
+                -->
 
                 <span style="margin-right:80px;"></span>
                 <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" class="ml-xs mr-xs" type="date" style="width: 100%"></md-input>
