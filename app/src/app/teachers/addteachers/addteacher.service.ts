@@ -54,14 +54,23 @@ export class AddTeacherService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/schools.json',options)
+    return this.http.get('http://uoosc.cloudapp.net/api/schools',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
 
-  private handleError(error: any){
-    console.log(error);
-    return Observable.throw(error);
+  private handleError(error: Response | any){
+    let errMsg: string;
+
+    if(error instanceof Response){
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    }else{
+      errMsg = error.message ? error.message: error.toString();
+    }
+    console.log(errMsg);
+    return Observable.throw(errMsg);
   }
 }

@@ -11,7 +11,7 @@ import { User } from './user';
 export class SigninService {
 
   //public handleError;
-
+  public err;
   constructor(
     private _router: Router,
     private http: Http){}
@@ -38,20 +38,17 @@ export class SigninService {
 
     return this.http.post(_signinUrl, user, options)
       .map((data: Response) => {
-
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        //login successful if there's a jwt token in response
         this.extractData  = data.json().access_token;
         let user = data.json();
       //  console.log(this.extractData, user.access_token);
 
         if(user && user.access_token){
-          //was in localStorage instead of JSON.stringify
-          //data.json().access_token
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem("user", JSON.stringify(user));
-          this._router.navigate(['home']);
         }else{
           localStorage.removeItem("user");
-          this._router.navigate(['signin']);
+          //this._router.navigate(['signin']);
         }
       })
       .catch(this.handleError);
@@ -59,7 +56,8 @@ export class SigninService {
 
 
   handleError(error: any){
-    console.error(error);
+    this.err = error.json();
+    console.log(error);
    return Observable.throw(error.json().error || 'Server error');
   }
   private extractData(res: Response) {

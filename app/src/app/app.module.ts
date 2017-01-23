@@ -5,10 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
 import { AuthGuard } from './authguard/auth.guard';
+import { SigninService } from './signin/signin.service';
+//import {AlertComponent} from './authguard/'
 import {ApiService} from './api.service';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
+
 
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
@@ -40,7 +43,8 @@ export function createTranslateLoader(http: Http) {
     FlexLayoutModule.forRoot(),
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    SigninService
   ],
   entryComponents: [  ],
   bootstrap: [AppComponent]

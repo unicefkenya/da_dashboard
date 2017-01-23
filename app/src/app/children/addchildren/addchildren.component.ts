@@ -1,6 +1,7 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {AppModule} from '../../app.module';
-import { FormsModule,NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 import { ChildRegistration } from './children';
 import { Response } from '@angular/http';
 import {AddChildrenService} from './addchildren.service';
@@ -19,8 +20,25 @@ export class AddChildrenComponent implements OnInit {
   rows = [];
 
   constructor(
-    private _childRegistrationService: AddChildrenService
+    private _childRegistrationService: AddChildrenService,
+    private fb: FormBuilder
   ){
+    this.form = this.fb.group({
+      firstName: [null, Validators.compose([Validators.required,])],
+      maidenName: [null],
+      lastName: [null, Validators.compose([Validators.required,])],
+      gender: [null, Validators.compose([Validators.required])],
+      admNo: [null, Validators.compose([Validators.required])],
+      emisCode: [null, Validators.compose([Validators.required])],
+      dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      className: [null, Validators.compose([Validators.required])],
+      notInSchool: [null, Validators.compose([Validators.required])],
+      modeOfTransport: [null, Validators.compose([Validators.required])],
+      timeToSchool: [null, Validators.compose([Validators.required])],
+      stayWith: [null],
+      householdNumber: [null],
+      mealsInDay: [null, Validators.compose([Validators.required])]
+    });
     this.fetch((data) => {
       this.rows = data;
     });
@@ -43,12 +61,17 @@ export class AddChildrenComponent implements OnInit {
   }
 
   public success;
+  public fail;
+  public empty;
   public schoolClasses;
   public submitted: boolean =  true;
   public school: ChildRegistration;
+  public form: FormGroup;
 
   ngOnInit(){
     //this.onSubmit;
+
+
     this.getSchoolClasses();
 
   }
@@ -94,10 +117,18 @@ export class AddChildrenComponent implements OnInit {
                   meals_per_day: registerChild.mealsInDay
           })
           .subscribe(
-            data => console.log(data),
-            
+            data => //console.log(data)
+            {
+              console.log("Added Child Successfully"),
+              this.success = "Added Child Successfully";
+              this.form.reset();
+            },
+            error =>{
+              this.empty = "This field is required";
+              this.fail = "Failed to save data";
+            }
           );
-          console.log("Added School Successfully");
+          console.log("Added Child Successfully");
           this.success = "Added Child Successfully";
 
         }
