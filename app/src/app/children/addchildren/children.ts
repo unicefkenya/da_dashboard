@@ -4,7 +4,7 @@ export class ChildRegistration {
     public maidenName: string,
     public lastName: string,
     public admNo: number,
-    public emisCode: number,
+    public enrolDate: string,
     public gender: string,
     public dateOfBirth: string,
     public className: number,
