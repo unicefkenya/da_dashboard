@@ -92,7 +92,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.getStats();
-    this.getWeeklySummary();
+    //this.getWeeklySummary(); commented till the api is fixed
   }
 
   // Shared chart options
