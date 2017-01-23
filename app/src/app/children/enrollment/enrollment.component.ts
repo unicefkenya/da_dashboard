@@ -15,11 +15,12 @@ export class EnrollmentComponent implements OnInit {
   public studentCount: any;
   public tmp: any;
   public students: any[];
-  public stats: any;
+  public total: any;
+  public males: any;
+  public females: any;
 
   private fetchEnrolled(){
     this.enrollmentService.fetchChildren().subscribe( data => {
-      //console.log(data.students);
 
       let items = [];
       for(let i = 0; i < data.students.length; i++){
@@ -32,17 +33,12 @@ export class EnrollmentComponent implements OnInit {
 
           items.push(this.tmp);
       }
+
       this.students = items;
-      console.log(this.students);
 
-      let statsTemp = {
-        "males" : data.males,
-        "females" : data.females,
-        "total" : data.total
-      };
-
-      this.stats = statsTemp;
-      console.log(this.stats);
+      this.males = data.males;
+      this.females = data.females;
+      this.total = data.total;
 
     });
   }
