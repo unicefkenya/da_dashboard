@@ -8,18 +8,27 @@
     [rowHeight]="'auto'">
     <ngx-datatable-column name="Student Names">
       <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['firstname']}}
+        {{row['studentname']}}
       </template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Dates Enrolled">
+    <ngx-datatable-column name="Student Code">
       <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <!-- {{row['date'] | date: 'MMMM dd'}} -->
+        {{row['studentcode']}}
+      </template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Gender">
+      <template let-row="row" let-value="value" ngx-datatable-cell-template>
         {{row['gender']}}
+      </template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Enrollment Date">
+      <template let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{row['enrollmentdate'] | date: 'dd MMM yyyy'}}
       </template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Last Attendance">
       <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['lastdate'] | date: 'MMMM dd'}}
+        {{row['lastdate'] | date: 'dd MMM yyyy'}}
       </template>
     </ngx-datatable-column>
   </ngx-datatable>
