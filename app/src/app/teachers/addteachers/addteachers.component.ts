@@ -135,6 +135,10 @@ export class AddTeachersComponent implements OnInit {
         }
   }
 
+  resetButton(){
+    this.form.reset();
+  }
+  
   showInput(){
     this.isVisible = this.isVisible ? false : true;
   }
