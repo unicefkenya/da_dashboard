@@ -19,6 +19,7 @@ export class SigninComponent implements OnInit {
   public errorMsg = '';
   public success;
   public fail;
+  public status;
   public form: FormGroup;
   public userLogin: User;
   returnUrl: string;
@@ -47,22 +48,23 @@ export class SigninComponent implements OnInit {
     var password = this.form.value.password;
 
     this.user = new User(email,password);
-
+    this.status  = true;
 
     this._signin.login(
       "username="+email+"&password="+password+"&grant_type=password&client_id=dnFhSdWfy2XjFqTzpSLMbYqRKOgGei2eG7hUnNDS"
     ).subscribe(
       data => //console.log(data),
       {
+        this.success = "Logged In Successfully";
         this.router.navigate([this.returnUrl]);
       },
       error => {
-        this.fail = "Wrong username/password combination";
+        this.fail = "Wrong Username/ Password combination";
+        this.form.reset();
       }
 
     );
-    console.log("Login Successfully");
-    this.success = "Logged In Successfully";
+    //console.log("Login Successfully");
 
   }
 

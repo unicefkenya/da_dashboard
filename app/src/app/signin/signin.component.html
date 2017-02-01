@@ -8,7 +8,12 @@
               <img src="assets/images/logo-dark.png" alt=""/>
               <p class="md-text-muted">Sign in to continue.</p>
             </div>
-            <small style="color: red;">{{fail}}</small>
+            <small *ngIf="fail" style="color: red;">{{fail}}</small>
+            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <div *ngIf="status">
+              <md-icon>refresh</md-icon>
+              Loading
+            </div>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
                 <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>
