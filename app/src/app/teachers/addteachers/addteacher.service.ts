@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
-//import {ApiService} from '../../api.service';
+import { BaseUrl} from '../../baseurl';
 
 
 
@@ -11,9 +11,11 @@ import { Observable } from 'rxjs/Rx';
 export class AddTeacherService {
   constructor(
     private http: Http,
-    private datePipe: DatePipe,
-    //private api: ApiService
+    private datePipe: DatePipe
   ){}
+
+
+  private baseApiUrl = BaseUrl.base_api_url;
 
   transformDate(date){
     this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -23,7 +25,7 @@ export class AddTeacherService {
 
     //console.log(this.api.api_url);
 
-    const _teacherRegistrationUrl = 'http://uoosc.cloudapp.net/api/teacher';
+    const _teacherRegistrationUrl = this.baseApiUrl+'api/teacher';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -54,7 +56,7 @@ export class AddTeacherService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/schools',options)
+    return this.http.get(this.baseApiUrl+'api/schools',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
