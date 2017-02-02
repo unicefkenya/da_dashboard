@@ -135,6 +135,10 @@ export class AddChildrenComponent implements OnInit {
         }
   }
 
+  resetButton(){
+    this.form.reset();
+  }
+  
   getSchoolClasses(){
 
     this._childRegistrationService.getClass()

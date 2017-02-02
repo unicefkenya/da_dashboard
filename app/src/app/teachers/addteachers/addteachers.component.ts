@@ -57,6 +57,7 @@ export class AddTeachersComponent implements OnInit {
   public date;
   public isVisible;
   public schoolName;
+  public currentDate = new Date();
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
   public form: FormGroup ;
@@ -68,14 +69,14 @@ export class AddTeachersComponent implements OnInit {
       gender: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
-      phoneNumber: [null, Validators.compose([Validators.required])],
+      phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.phone('nb-NO')])],
       birthday: [null, Validators.compose([Validators.required, CustomValidators.date])],
       teacher_type: [null, Validators.compose([Validators.required])],
       qualifications: [null, Validators.compose([Validators.required])],
       tsc_no: [null, Validators.compose([Validators.required])],
       bom_no: [null, Validators.compose([Validators.required])],
       dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date])],
-      joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
 
     });
     this.getSchoolNames();
@@ -133,6 +134,10 @@ export class AddTeachersComponent implements OnInit {
             }
           );
         }
+  }
+
+  resetButton(){
+    this.form.reset();
   }
 
   showInput(){

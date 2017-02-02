@@ -98,8 +98,8 @@
               <hr>
               <md-card-actions>
                 <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
-                <button md-raised-button class="warn">Delete</button>
-                <button md-raised-button color="primary">Cancel</button>
+                <!--<button md-raised-button class="warn">Delete</button>-->
+                <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
               </md-card-actions>
             </form>
           </md-card-content>
