@@ -16,7 +16,6 @@ private baseApiUrl = BaseUrl.base_api_url;
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-  
   getWeeklySummary(){
     return this.http.get(this.baseApiUrl+'api/attendance/weekly')
     .map((response: Response) => response.json())
