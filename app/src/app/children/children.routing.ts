@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 
 import { ChildrenComponent } from './children.component';
+import { EnrollmentComponent } from './enrollment/enrollment.component';
 import { AddChildrenComponent } from './addchildren/addchildren.component';
 
 
@@ -12,6 +13,9 @@ export const ChildrenRoutes: Routes = [{
   },{
     path: 'add-children',
     component: AddChildrenComponent
+  },{
+    path: 'enrollments',
+    component: EnrollmentComponent
   }
 ],
 }];
