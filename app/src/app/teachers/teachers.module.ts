@@ -8,11 +8,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TeachersRoutes } from './teachers.routing';
 import { AddTeachersComponent } from './addteachers/addteachers.component';
-import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(TeachersRoutes), MaterialModule, FlexLayoutModule, FormsModule,ReactiveFormsModule, NgxDatatableModule],
-  declarations: [ViewTeachersComponent, AddTeachersComponent]
+  declarations: [AddTeachersComponent]
 
 })
 
