@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+import { BaseUrl} from '../../baseurl';
 
 
 @Injectable()
@@ -11,11 +12,13 @@ export class AddSchoolService {
   ){}
 
   public err;
+  private baseApiUrl = BaseUrl.base_api_url;
+
   sendData(user: any){
 
     //console.log(myApiRoutes=>apiRoutes);
 
-    const _schoolRegistrationUrl = 'http://uoosc.cloudapp.net/api/school';
+    const _schoolRegistrationUrl = this.baseApiUrl+'api/school';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -46,7 +49,7 @@ export class AddSchoolService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/zones.json',options)
+    return this.http.get(this.baseApiUrl+'api/zones',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -58,7 +61,7 @@ export class AddSchoolService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/counties.json',options)
+    return this.http.get(this.baseApiUrl+'api/counties',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+import { BaseUrl} from '../../baseurl';
 
 
 
@@ -11,11 +12,13 @@ export class AddChildrenService {
     private http: Http
   ){}
 
+  //initialize baseApiUrl by calling BaseUrl constant. Make sure you've imported it
+  private baseApiUrl = BaseUrl.base_api_url;
+
   sendData(user: any){
 
-    //console.log(myApiRoutes=>apiRoutes);
-
-    const _childRegistrationUrl = 'http://uoosc.cloudapp.net/api/students';
+    //assign the url like below
+    const _childRegistrationUrl = this.baseApiUrl+'api/students';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -47,7 +50,7 @@ export class AddChildrenService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/classes.json',options)
+    return this.http.get(this.baseApiUrl+'api/classes',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
