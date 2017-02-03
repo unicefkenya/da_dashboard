@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
-import { ViewTeachersComponent } from './teachers/viewteachers/viewteachers.component';
 
 import { SharedModule }       from './shared/shared.module';
 export function createTranslateLoader(http: Http) {
@@ -28,8 +27,7 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
-    ViewTeachersComponent
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,
