@@ -12,7 +12,8 @@ import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(TeachersRoutes), MaterialModule, FlexLayoutModule, FormsModule,ReactiveFormsModule, NgxDatatableModule],
-  declarations: [ViewTeachersComponent, AddTeachersComponent]
+  declarations: [ViewTeachersComponent, AddTeachersComponent],
+  exports: [ ViewTeachersComponent ]
 
 })
 
