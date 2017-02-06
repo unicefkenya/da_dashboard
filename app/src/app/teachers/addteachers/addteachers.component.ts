@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Directive, EventEmitter, Input, Component, OnInit, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -11,11 +11,22 @@ import { TeacherRegistration } from './teacher';
 import { Response } from '@angular/http';
 import {AddTeacherService} from './addteacher.service';
 
+@Directive({
+  selector: '[focus]'
+})
+
+class FocusDirective{
+  private focusEmitterSubscription;
+  //event emitter as binded value
+
+}
+
 @Component({
   selector: 'add-school',
   templateUrl: './addteacher.component.html',
   styleUrls: ['./addteacher.component.scss'],
-  providers: [AddTeacherService, DatePipe]
+  providers: [AddTeacherService, DatePipe],
+  //directives: [FocusDirective]
 
 })
 
@@ -57,6 +68,7 @@ export class AddTeachersComponent implements OnInit {
   public date;
   public isVisible;
   public schoolName;
+  public t_type;
   public currentDate = new Date();
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
@@ -69,13 +81,13 @@ export class AddTeachersComponent implements OnInit {
       gender: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
-      phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.phone('nb-NO')])],
-      birthday: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.number])],
+      birthday: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       teacher_type: [null, Validators.compose([Validators.required])],
       qualifications: [null, Validators.compose([Validators.required])],
-      tsc_no: [null, Validators.compose([Validators.required])],
-      bom_no: [null, Validators.compose([Validators.required])],
-      dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      tsc_no: [null],
+      bom_no: [null],
+      dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
 
     });
@@ -142,6 +154,13 @@ export class AddTeachersComponent implements OnInit {
 
   showInput(){
     this.isVisible = this.isVisible ? false : true;
+  }
+
+  getTeacherType(){
+    var tsc = "TSC";
+    var bom = "BOM";
+    const teacherType = [tsc,bom];
+    console.log(teacherType);
   }
 
   getSchoolNames(){
