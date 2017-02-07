@@ -19,6 +19,8 @@ export class AddChildrenComponent implements OnInit {
   editing = {};
   rows = [];
 
+  public currentDate = new Date();
+
   constructor(
     private _childRegistrationService: AddChildrenService,
     private fb: FormBuilder
@@ -29,16 +31,16 @@ export class AddChildrenComponent implements OnInit {
       lastName: [null, Validators.compose([Validators.required,])],
       gender: [null, Validators.compose([Validators.required])],
       admNo: [null, Validators.compose([Validators.required])],
-      enrolDate: [null, Validators.compose([Validators.required, CustomValidators.date])],
-      dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date])],
+      enrolDate: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
+      dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       className: [null, Validators.compose([Validators.required])],
-      previousClass: [null, Validators.compose([Validators.required])],
+      previousClass: [null, Validators.compose([Validators.required, CustomValidators.number])],
       notInSchool: [null, Validators.compose([Validators.required])],
       modeOfTransport: [null, Validators.compose([Validators.required])],
       timeToSchool: [null, Validators.compose([Validators.required])],
       stayWith: [null],
       householdNumber: [null],
-      mealsInDay: [null, Validators.compose([Validators.required])]
+      mealsInDay: [null, Validators.compose([Validators.required, CustomValidators.number])]
     });
     this.fetch((data) => {
       this.rows = data;
@@ -138,7 +140,7 @@ export class AddChildrenComponent implements OnInit {
   resetButton(){
     this.form.reset();
   }
-  
+
   getSchoolClasses(){
 
     this._childRegistrationService.getClass()

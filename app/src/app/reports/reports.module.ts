@@ -14,8 +14,7 @@ import { TeachersReportComponent } from './teachers/teachersreport.component';
 
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ReportsRoutes), MdInputModule,
-  NgxDatatableModule, TeachersModule],
+  imports: [CommonModule, RouterModule.forChild(ReportsRoutes), MdInputModule, NgxDatatableModule, TeachersModule],
   declarations: [ SchoolsReportsComponent, TeachersReportComponent ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

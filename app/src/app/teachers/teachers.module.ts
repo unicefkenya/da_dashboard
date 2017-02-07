@@ -6,9 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 import { TeachersRoutes } from './teachers.routing';
 import { AddTeachersComponent } from './addteachers/addteachers.component';
-import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(TeachersRoutes), MaterialModule, FlexLayoutModule, FormsModule,ReactiveFormsModule, NgxDatatableModule],

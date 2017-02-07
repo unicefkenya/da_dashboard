@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+import { BaseUrl} from '../baseurl';
 
 import { User } from './user';
 
@@ -12,6 +13,8 @@ export class SigninService {
 
   //public handleError;
   public err;
+  private baseApiUrl = BaseUrl.base_api_url;
+
   constructor(
     private _router: Router,
     private http: Http){}
@@ -24,7 +27,7 @@ export class SigninService {
 
   login(user: any){
 
-    const _signinUrl = 'http://uoosc.cloudapp.net/o/token/';
+    const _signinUrl = this.baseApiUrl+'o/token/';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
