@@ -1,4 +1,4 @@
-import {Directive, EventEmitter, Input, Component, OnInit, ElementRef} from '@angular/core';
+import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -11,15 +11,11 @@ import { TeacherRegistration } from './teacher';
 import { Response } from '@angular/http';
 import {AddTeacherService} from './addteacher.service';
 
+/*
 @Directive({
   selector: '[focus]'
-})
+})*/
 
-class FocusDirective{
-  private focusEmitterSubscription;
-  //event emitter as binded value
-
-}
 
 @Component({
   selector: 'add-school',
@@ -61,6 +57,21 @@ export class AddTeachersComponent implements OnInit {
     this.editing[row.$$index + '-' + cell] = false;
     this.rows[row.$$index][cell] = event.target.value;
   }
+
+/*
+  visible: boolean = true;
+  @Output() open: EventEmitter<any> = new EventEmitter();
+  @Output() close: EventEmitter<any> = new EventEmitter();
+
+  toggle(){
+    this.visible = !this.visible;
+    if(this.visible) {
+      this.open.emit(null);
+    }else{
+      this.close.emit(null);
+    }
+  }
+*/
 
   public success;
   public fail;
