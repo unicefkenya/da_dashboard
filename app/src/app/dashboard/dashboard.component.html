@@ -127,7 +127,8 @@
           [options]="ComboChartOptions"
           [colors]="chartColors"
           [legend]="comboChartLegend"
-          [chartType]="barChartType"></canvas>
+          [chartType]="barChartType">
+        </canvas>
       </md-card-content>
 		</md-card>
 	</div>
@@ -174,46 +175,22 @@
 <div fxLayout="row"  fxLayoutWrap="wrap">
 
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
-    <ngx-datatable
-      class="material"
-      [rows]="attendanceSnapshot"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="0"
-      [rowHeight]="'auto'">
-      <ngx-datatable-column name="Children Status">
-        <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{row['title']}}
-        </template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Duration Analyse">
-        <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <!-- {{row['date'] | date: 'MMMM dd'}} -->
-          {{row['duration']}}
-        </template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Percentages (%)">
-        <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <md-progress-bar mode="determinate" value="{{row['progress']}}" color="{{row['color']}}"></md-progress-bar>
-        </template>
-      </ngx-datatable-column>
-    </ngx-datatable>
+    <md-card>
+      <md-card-content>
+        <canvas height="100" baseChart class="chart"
+          [datasets]="ComboChartData"
+          [labels]="comboChartLabels"
+          [options]="ComboChartOptions"
+          [colors]="chartColors"
+          [legend]="comboChartLegend"
+          [chartType]="barChartType"></canvas>
+      </md-card-content>
+    </md-card>
   </div>
 
   <div fxFlex.gt-sm="33.33%" fxFlex="100">
     <md-card>
-      <md-card-title>Activity Feeds</md-card-title>
-      <md-card-subtitle>Stories posted today</md-card-subtitle>
-      <hr>
-      <md-list>
-        <template let-item let-last="last" ngFor [ngForOf]="messages">
-          <md-list-item>
-            <img md-list-avatar src="{{item.photo}}" alt="">
-            <h3 md-line> {{item.from}} </h3>
-            <p md-line> {{item.subject}} - {{item.message}} </p>
-          </md-list-item>
-        </template>
-      </md-list>
+      pie (enrollment, Boys | Girls per month)
     </md-card>
   </div>
 </div>
