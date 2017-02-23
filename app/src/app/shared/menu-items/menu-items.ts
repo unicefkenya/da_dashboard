@@ -28,15 +28,6 @@ const MENUITEMS = [
     icon: 'dashboard'
   },
   {
-    state: 'notifications',
-    name: 'Notifications',
-    type: 'sub',
-    icon: 'notifications',
-    badge: [
-      {type: 'purple', value: '10'}
-    ]
-  },
-  {
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -72,26 +63,16 @@ const MENUITEMS = [
     name: 'Reports',
     type: 'sub',
     icon: 'format_line_spacing',
+    badge: [
+      {type: 'purple', value: '5'}
+    ],
     children: [
-      {state: 'overal', name: 'Overal Summary'},
-      {state: 'boys', name: 'Boys'},
-      {state: 'girls', name: 'Girls'},
-      {state: 'county', name: 'County Summary'},
-      {state: 'schools', name: 'Listed Schools'},
-      {state: 'teachers', name: 'Listed Teachers'},
+      {state: 'attendance', name: 'Overal Attendance'},
+      {state: 'enrollments', name: 'Enrollments'},
+      {state: 'boys', name: 'Boys Attendance'},
+      {state: 'girls', name: 'Girls Attendance'},
+      {state: 'dropouts', name: 'Children Dropouts'},
     ]
-  },
-  {
-    state: 'charts',
-    name: 'System Logs',
-    type: 'link',
-    icon: 'show_chart',
-  },
-  {
-    state: 'charts',
-    name: 'Activity Logs',
-    type: 'link',
-    icon: 'show_chart',
   },
   {
     state: 'reports',
@@ -100,8 +81,8 @@ const MENUITEMS = [
     icon: 'settings',
 
     children: [
-      {state: 'invoice', name: 'Change Password'},
-      {state: 'invoice', name: 'Profile'},
+      {state: 'changepassword', name: 'Change Password'},
+      {state: 'profile', name: 'Profile'},
 
     ]
   },{
