@@ -26,7 +26,7 @@
     </md-card>
   </div>
   <div fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100">
-    <md-card class="card-widget md-red">
+    <md-card class="card-widget md-indigo">
       <div md-card-widget>
         <div md-card-float-icon>
           <md-icon>notifications</md-icon>
@@ -39,7 +39,7 @@
     </md-card>
   </div>
   <div fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100">
-    <md-card class="card-widget md-indigo">
+    <md-card class="card-widget md-red">
       <div md-card-widget>
         <div md-card-float-icon>
           <md-icon>email</md-icon>
@@ -58,11 +58,13 @@
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
         Daily Attendance <span class="font-weight-bold md-text-primary"></span>
-        <span fxFlex></span>
+        <!--<span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card1" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
         </button>
+      -->
       </md-card-subtitle>
+      <!--
       <md-menu #card1="mdMenu" x-position="before">
         <button md-menu-item>
           <md-icon>settings</md-icon>
@@ -81,6 +83,7 @@
           Remove Panel
         </button>
       </md-menu>
+      -->
 			<md-card-content>
         <canvas height="200" baseChart class="chart"
           [datasets]="barChartData"
@@ -97,29 +100,7 @@
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
         Monthly Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
-        <span fxFlex></span>
-        <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
-          <md-icon>more_vert</md-icon>
-        </button>
       </md-card-subtitle>
-      <md-menu #card2="mdMenu" x-position="before">
-        <button md-menu-item>
-          <md-icon>settings</md-icon>
-          Settings
-        </button>
-        <button md-menu-item>
-          <md-icon>more</md-icon>
-          View More
-        </button>
-        <button md-menu-item>
-          <md-icon>notifications_off</md-icon>
-          Disable notifications
-        </button>
-        <button md-menu-item>
-          <md-icon>exit_to_app</md-icon>
-          Remove Panel
-        </button>
-      </md-menu>
 			<md-card-content>
         <canvas height="200" baseChart class="chart"
           [datasets]="ComboChartData"
@@ -136,29 +117,7 @@
 		<md-card>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
         Annual Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
-        <span fxFlex></span>
-        <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
-          <md-icon>more_vert</md-icon>
-        </button>
       </md-card-subtitle>
-      <md-menu #card2="mdMenu" x-position="before">
-        <button md-menu-item>
-          <md-icon>settings</md-icon>
-          Settings
-        </button>
-        <button md-menu-item>
-          <md-icon>more</md-icon>
-          View More
-        </button>
-        <button md-menu-item>
-          <md-icon>notifications_off</md-icon>
-          Disable notifications
-        </button>
-        <button md-menu-item>
-          <md-icon>exit_to_app</md-icon>
-          Remove Panel
-        </button>
-      </md-menu>
 			<md-card-content>
         <canvas height="200" baseChart class="chart"
           [datasets]="ComboChartData"
@@ -173,9 +132,13 @@
 </div>
 
 <div fxLayout="row"  fxLayoutWrap="wrap">
-
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
-    <md-card>
+  <md-card>
+    <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+      Monthly Enrollment Summary &nbsp;
+      <span class="font-weight-bold md-text-warn"></span>
+    </md-card-subtitle>
+
       <md-card-content>
         <canvas height="100" baseChart class="chart"
           [datasets]="ComboChartData"
@@ -188,9 +151,20 @@
     </md-card>
   </div>
 
-  <div fxFlex.gt-sm="33.33%" fxFlex="100">
+
+      <!-- pie -->
+  <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
     <md-card>
-      pie (enrollment, Boys | Girls per month)
+      <md-card-title>Total New Enrollment</md-card-title>
+      <md-card-subtitle>Boys/Girls</md-card-subtitle>
+      <md-card-content>
+        <canvas height="200" baseChart class="chart"
+          [data]="pieChartData"
+          [options]="doughnutOptions"
+          [colors]="doughnutChartColors"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"></canvas>
+      </md-card-content>
     </md-card>
   </div>
 </div>
