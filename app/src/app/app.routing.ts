@@ -6,10 +6,10 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AuthGuard } from './authguard/auth.guard';
 
 export const AppRoutes: Routes = [{
-  path: '',
-  redirectTo: 'signin',
-  pathMatch: 'full',
-}, {
+    path: '',
+    redirectTo: 'signin',
+    pathMatch: 'full',
+  }, {
   path: '',
   component: AdminLayoutComponent,
   children: [{
