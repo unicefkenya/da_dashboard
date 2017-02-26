@@ -11,6 +11,7 @@ import { AuthGuard } from '../authguard/auth.guard';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 
+
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(DashboardRoutes), MdIconModule, MdCardModule, MdButtonModule, MdListModule, MdProgressBarModule, MdMenuModule, ChartsModule, NgxDatatableModule, FlexLayoutModule],
   declarations: [DashboardComponent],

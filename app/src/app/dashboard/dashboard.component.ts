@@ -26,6 +26,26 @@ export class DashboardComponent {
 
   public attendanceSnapshot: any [];
 
+
+  // Doughnut
+  public doughnutChartColors: any[] = [{
+    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
+  }];
+  public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
+  public doughnutOptions: any = Object.assign({
+    elements: {
+      arc: {
+        borderWidth: 0
+      }
+    }
+  }, this.globalChartOptions);
+
+  // Pie
+  public pieChartLabels: string[] = ['Boys ', 'Girls '];
+  public pieChartData: number[] = [300, 500];
+  public pieChartType: string = 'pie';
+
+
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
   }
