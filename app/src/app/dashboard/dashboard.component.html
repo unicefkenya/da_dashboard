@@ -56,8 +56,9 @@
 <div fxLayout="row"  fxLayoutWrap="wrap">
 	<div fxFlex.gt-sm="33.33%" fxFlex="100">
 		<md-card>
+      <md-card-title>Daily Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Daily Attendance <span class="font-weight-bold md-text-primary"></span>
+        Aggregated Daily Attendance <span class="font-weight-bold md-text-primary"></span>
         <span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card1" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
@@ -95,8 +96,9 @@
 	</div>
 	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
+      <md-card-title>Monthly Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Monthly Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
+      Aggregated Monthly Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
         <span fxFlex></span>
         <button md-icon-button md-button-sm [md-menu-trigger-for]="card2" aria-label="Open card menu">
           <md-icon>more_vert</md-icon>
@@ -134,6 +136,7 @@
 	</div>
   <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
+      <md-card-title>Attendance per Gender</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
         Annual Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
         <span fxFlex></span>
@@ -176,8 +179,10 @@
 
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <md-card>
+      <md-card-title>Children Enrollment</md-card-title>
+      <md-card-subtitle>Children enrolled, in classes across the country</md-card-subtitle>
       <md-card-content>
-        <canvas height="100" baseChart class="chart"
+        <canvas height="150" baseChart class="chart"
           [datasets]="ComboChartData"
           [labels]="comboChartLabels"
           [options]="ComboChartOptions"
@@ -190,7 +195,16 @@
 
   <div fxFlex.gt-sm="33.33%" fxFlex="100">
     <md-card>
-      pie (enrollment, Boys | Girls per month)
+        <md-card-title>Enrollment per Gender</md-card-title>
+        <md-card-subtitle>Boys and Girls Enrolled in the past year</md-card-subtitle>
+        <md-card-content>
+          <canvas height="150" baseChart class="chart"
+            [data]="pieChartData"
+            [options]="doughnutOptions"
+            [colors]="doughnutChartColors"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"></canvas>
+        </md-card-content>
     </md-card>
   </div>
 </div>
