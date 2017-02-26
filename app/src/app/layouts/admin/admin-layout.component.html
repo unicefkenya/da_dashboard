@@ -6,19 +6,14 @@
     <div class="branding">
       <div class="logo"></div>
     </div>
-    <div class="search-bar" fxFlex>
-      <form class="search-form" fxShow="false" fxShow.gt-xs>
-        <md-icon>search</md-icon>
-        <input type="text" placeholder="Search" autofocus="true" />
-      </form>
-    </div>
+    <div fxFlex></div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
     </button>
-    <button (click)="end.toggle()" md-icon-button class="ml-xs overflow-visible">
+    <!-- <button (click)="end.toggle()" md-icon-button class="ml-xs overflow-visible">
       <md-icon>notifications</md-icon>
       <span class="notification-label">5</span>
-    </button>
+    </button> -->
     <button [md-menu-trigger-for]="user" md-icon-button class="ml-xs">
       <md-icon>person</md-icon>
     </button>
