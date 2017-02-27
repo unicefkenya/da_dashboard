@@ -34,6 +34,13 @@ export class DashboardComponent {
     this.fetch((data) => { this.rows = data; });
   }
 
+  ngOnInit(): void {
+    this.getStats();
+    //this.getWeeklySummary(); commented till the api is fixed
+    this.getAnnualAttendanceGender();
+    this.getAnnualEnrollmentGender();
+  }
+
   // Shimanyi > getStats()
   public getStats():void {
 
@@ -94,11 +101,7 @@ export class DashboardComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.getStats();
-    //this.getWeeklySummary(); commented till the api is fixed
-    this.getAnnualAttendanceGender();
-  }
+
 
   // Shared chart options
   public globalChartOptions: any = {
@@ -168,7 +171,8 @@ export class DashboardComponent {
 
   // Pie
   public pieChartLabels: string[] = ['Girls', 'Boys'];
-  public pieChartData: number[] = [ 300, 200];
+  public pieChartData: number[] = [];
+  public pieChartEnrollmentData: number[] = [];
   public pieChartType: string = 'pie';
 
   // combo chart
@@ -240,13 +244,21 @@ export class DashboardComponent {
     };
     req.send();
   }
+
+  // Doughnut
+  public doughnutChartColors: any[] = [{
+    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
+  }];
+  public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
+  public doughnutOptions: any = Object.assign({
+    elements: {
+      arc: {
+        borderWidth: 0
+      }
+    }
+  }, this.globalChartOptions);
+
   //Shimanyi - get Attendance per Gender
-
-  // Pie
-  // public pieChartLabels: string[] = ['Boys ', 'Girls '];
-  // public pieChartType: string = 'pie';
-  // public pieChartData: number[] = [];
-
   public getAnnualAttendanceGender(){
       this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
 
@@ -261,18 +273,21 @@ export class DashboardComponent {
     });
   }
 
+  public getAnnualEnrollmentGender(){
 
-  // Doughnut
-  public doughnutChartColors: any[] = [{
-    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
-  }];
-  public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
-  public doughnutOptions: any = Object.assign({
-    elements: {
-      arc: {
-        borderWidth: 0
-      }
-    }
-  }, this.globalChartOptions);
+      this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
+
+      console.log(data['males']);
+      //let students = [];
+      let enrolled = [];
+
+      enrolled.push(data['females']);
+      enrolled.push(data['males']);
+
+      this.pieChartEnrollmentData = enrolled;
+
+    });
+  }
+
 
 }
