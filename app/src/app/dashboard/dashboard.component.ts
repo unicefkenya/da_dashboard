@@ -115,51 +115,6 @@ export class DashboardComponent {
       }
     }
 
-  // Bar
-  public barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-  public barChartData: any[] = [{
-    //display data for boys ranging from class 1 to 8
-    data: [6, 5, 8, 8, 5, 5, 4,8],
-    label: 'Boys',
-    borderWidth: 0
-  }, {
-      //display data for girls ranging from class 1 to 8
-    data: [5, 4, 4, 2, 6, 2, 5,7],
-    label: 'Girls',
-    borderWidth: 0
-  }];
-  public barChartOptions: any = Object.assign({
-    scaleShowVerticalLines: false,
-    tooltips: {
-      mode: 'index',
-      intersect: false
-    },
-    responsive: true,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          defaultFontColor: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        stacked: true,
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-           defaultFontColor: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        stacked: true
-      }]
-    }
-  }, this.globalChartOptions);
-
   // Pie
   public pieChartLabels: string[] = ['Girls', 'Boys'];
   public pieChartData: number[] = [];
@@ -167,7 +122,7 @@ export class DashboardComponent {
   public pieChartType: string = 'pie';
 
   // monthly chart
-  public comboChartLabels: Array < any > = ['1', '2', '3', '4', '5', '6'];
+  public comboChartLabels: Array < any > = [];
   public chartColors: Array < any > = [{ // grey
     backgroundColor: "#7986cb",
     borderColor: "#3f51b5",
@@ -203,6 +158,21 @@ export class DashboardComponent {
     borderWidth: 1,
     type: 'bar',
   }];
+
+  public EnrolledComboChartLabels: Array < any > = [1,2,3,4,5,6,7,8];
+  public EnrolledComboChartData: Array < any > = [{
+    data: [123,232,143,124,235,126,237,128],
+    label: 'Absent Students',
+    borderWidth: 1,
+    type: 'line',
+    fill: false
+  }, {
+    data: [203,123,434,123,122,403,232,92],
+    label: 'Present Students',
+    borderWidth: 1,
+    type: 'bar',
+  }];
+
   public ComboChartOptions: any = Object.assign({
     animation: false,
     scales: {
@@ -280,41 +250,53 @@ export class DashboardComponent {
   public tmp;
   public totalAbsent;
   public totalPresent;
+  public month;
+  public objDate;
   public getMonthlyAttendance(){
+
     this.dashboardServices.getMonthlyAttendance().subscribe( data => {
-      console.log(data);
 
-    let Attendance = [2,3,4,5,3,7];
+      let subset = data.slice(Math.max(data.length - 6, 0));
 
-    //Attendance.push(data['absent_males']);
-    //Attendance.push(data['present_males']);
+      let columns:string[] = [];
 
-    this.ComboChartData = Attendance;
-    console.log(this.ComboChartData, 'sdsdsdas');
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].date);
 
-/*
-
-    for (let i = 0; i < data.length; i++){
-        this.tmp = {}
-        this.totalAbsent = 0;
-        this.totalPresent = 0;
-
-        this.tmp.absent_males = data[i].absent_males
-        this.tmp.absent_females = data[i].absent_females
-        this.tmp.present_males = data[i].present_males
-        this.tmp.present_females = data[i].present_females
+        //this.objDate = new Date(columns);
+          //this.month = this.objDate.getMonth();
       }
-
-      this.totalAbsent = (this.tmp.absent_males + this.tmp.absent_females);
-      this.totalPresent = (this.tmp.present_males + this.tmp.present_females);
-
-
-      Attendance.push(this.totalAbsent);
-      Attendance.push(this.totalPresent);
-
-      this.ComboChartData = Attendance;
-      console.log(this.ComboChartData, 'sdsdsdas');
+      //console.log(columns,this.month);
+      /*
+     const objDate = new Date(columns);
+      const month = objDate.getMonth();
       */
+      console.log(columns);
+      this.comboChartLabels = columns;
+
+
+    let Attendance:string[] = [];
+
+        for (let i = 0; i < data.length; i++){
+            this.tmp = {}
+            this.totalAbsent = 0;
+            this.totalPresent = 0;
+
+            this.tmp.absent_males = data[i].absent_males;
+            this.tmp.absent_females = data[i].absent_females;
+            this.tmp.present_males = data[i].present_males;
+            this.tmp.present_females = data[i].present_females;
+
+            this.totalAbsent = (this.tmp.absent_males + this.tmp.absent_females);
+            this.totalPresent = (this.tmp.present_males + this.tmp.present_females);
+
+            Attendance.push(this.totalAbsent);
+            Attendance.push(this.totalPresent);
+          }
+
+          this.ComboChartData = Attendance;
+          console.log(this.ComboChartData, 'sdsdsdas');
+
   });
   }
 
@@ -367,6 +349,8 @@ export class DashboardComponent {
       }]
     }
   }, this.globalChartOptions);
+
+
 
   public getSevenDaysAttendance(){
 
