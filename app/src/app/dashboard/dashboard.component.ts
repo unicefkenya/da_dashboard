@@ -235,19 +235,7 @@ export class DashboardComponent {
   public barChartLabels: string[] = [];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
-  public barChartData: any[] = [
-    {
-      //display data for boys ranging from class 1 to 7
-      data: [6, 5, 8, 8, 5, 5, 7],
-      label: 'Boys',
-      borderWidth: 0
-    }, {
-      //display data for girls ranging from class 1 to 7
-      data: [5, 4, 4, 2, 6, 2, 5],
-      label: 'Girls',
-      borderWidth: 0
-    }
-  ];
+  public barChartData: any[] = [{}];
   public barChartOptions: any = Object.assign({
     scaleShowVerticalLines: false,
     tooltips: {
@@ -282,6 +270,7 @@ export class DashboardComponent {
 
     this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
 
+      console.log(data);
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns:string[] = [];
@@ -294,8 +283,8 @@ export class DashboardComponent {
       console.log(columns);
       this.barChartLabels = columns;
 
-      let set: any[];
-      set = [{
+      //let set: any[];
+      this.barChartData = [{
         //display data for boys ranging from class 1 to 7
         data: [6, 5, 8, 8, 5, 5, 7],
         label: 'Boys',
@@ -305,13 +294,11 @@ export class DashboardComponent {
         data: [5, 4, 4, 2, 6, 2, 5],
         label: 'Girls',
         borderWidth: 0
-      }]
+      }];
 
-      this.barChartData = set;
 
       //console.log(set);
       //console.log(columns);
-
 
     });
   }
