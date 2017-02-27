@@ -238,6 +238,11 @@ export class DashboardComponent {
 
   //Norman - data for the last 6 months
   public objDate;
+  public monthNames;
+  public locale;
+  public month;
+  public dateGiven;
+
   public getMonthlyAttendance(){
 
     this.dashboardServices.getMonthlyAttendance().subscribe( data => {
@@ -249,20 +254,26 @@ export class DashboardComponent {
       let totalPresent: number [] = [];
 
       for(let i = 0; i < subset.length; i++){
+
+
         columns.push(subset[i].date);
         totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
         totalPresent.push(subset[i].present_males + subset[i].present_females);
 
-
-        //this.objDate = new Date(columns);
-          //this.month = this.objDate.getMonth();
+        /*
+        this.objDate = new Date(),
+            this.locale = "en-us",
+            columns = this.objDate.toLocaleString(this.locale, { month: "short" });
+        */
       }
+
+      console.log(columns);
+
       //console.log(columns,this.month);
       /*
      const objDate = new Date(columns);
       const month = objDate.getMonth();
       */
-      console.log(columns, totalAbsent, totalPresent);
       this.comboChartLabels = columns;
       this.comboChartData  = [{
         data: totalAbsent,
