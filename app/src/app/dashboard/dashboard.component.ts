@@ -123,6 +123,8 @@ export class DashboardComponent {
 
   // monthly chart
   public comboChartLabels: Array < any > = [];
+  public comboChartData: any[] = [{}];
+  public comboChartLegend: boolean = true;
   public chartColors: Array < any > = [{ // grey
     backgroundColor: "#7986cb",
     borderColor: "#3f51b5",
@@ -145,19 +147,7 @@ export class DashboardComponent {
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
   }];
-  public comboChartLegend: boolean = true;
-  public ComboChartData: Array < any > = [{
-    data: [],
-    label: 'Absent Students',
-    borderWidth: 1,
-    type: 'line',
-    fill: false
-  }, {
-    data: [],
-    label: 'Present Students',
-    borderWidth: 1,
-    type: 'bar',
-  }];
+
 
   public EnrolledComboChartLabels: Array < any > = [1,2,3,4,5,6,7,8];
   public EnrolledComboChartData: Array < any > = [{
@@ -247,10 +237,6 @@ export class DashboardComponent {
   }
 
   //Norman - data for the last 6 months
-  public tmp;
-  public totalAbsent;
-  public totalPresent;
-  public month;
   public objDate;
   public getMonthlyAttendance(){
 
@@ -259,9 +245,14 @@ export class DashboardComponent {
       let subset = data.slice(Math.max(data.length - 6, 0));
 
       let columns:string[] = [];
+      let totalAbsent: number [] = [];
+      let totalPresent: number [] = [];
 
       for(let i = 0; i < subset.length; i++){
         columns.push(subset[i].date);
+        totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
+        totalPresent.push(subset[i].present_males + subset[i].present_females);
+
 
         //this.objDate = new Date(columns);
           //this.month = this.objDate.getMonth();
@@ -271,32 +262,20 @@ export class DashboardComponent {
      const objDate = new Date(columns);
       const month = objDate.getMonth();
       */
-      console.log(columns);
+      console.log(columns, totalAbsent, totalPresent);
       this.comboChartLabels = columns;
-
-
-    let Attendance:string[] = [];
-
-        for (let i = 0; i < data.length; i++){
-            this.tmp = {}
-            this.totalAbsent = 0;
-            this.totalPresent = 0;
-
-            this.tmp.absent_males = data[i].absent_males;
-            this.tmp.absent_females = data[i].absent_females;
-            this.tmp.present_males = data[i].present_males;
-            this.tmp.present_females = data[i].present_females;
-
-            this.totalAbsent = (this.tmp.absent_males + this.tmp.absent_females);
-            this.totalPresent = (this.tmp.present_males + this.tmp.present_females);
-
-            Attendance.push(this.totalAbsent);
-            Attendance.push(this.totalPresent);
-          }
-
-          this.ComboChartData = Attendance;
-          console.log(this.ComboChartData, 'sdsdsdas');
-
+      this.comboChartData  = [{
+        data: totalAbsent,
+        label: 'Absent Students',
+        borderWidth: 1,
+        type: 'line',
+        fill: false
+      },{
+        data: totalPresent,
+        label: 'Present Students',
+        borderWidth: 1,
+        tupe: 'bar',
+      }];
   });
   }
 
