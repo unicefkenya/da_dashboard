@@ -21,5 +21,9 @@ private baseApiUrl = BaseUrl.base_api_url;
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-
+  getAnnualAttendanceGender(){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }

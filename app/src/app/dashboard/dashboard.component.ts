@@ -26,25 +26,9 @@ export class DashboardComponent {
 
   public attendanceSnapshot: any [];
 
-
-  // Doughnut
-  public doughnutChartColors: any[] = [{
-    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
-  }];
-  public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
-  public doughnutOptions: any = Object.assign({
-    elements: {
-      arc: {
-        borderWidth: 0
-      }
-    }
-  }, this.globalChartOptions);
-
-  // Pie
-  public pieChartLabels: string[] = ['Boys ', 'Girls '];
-  public pieChartData: number[] = [300, 500];
-  public pieChartType: string = 'pie';
-
+  //Annual Attendance per Gender
+  public boys: any;
+  public girls: any;
 
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
@@ -113,6 +97,7 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.getStats();
     //this.getWeeklySummary(); commented till the api is fixed
+    this.getAnnualAttendanceGender();
   }
 
   // Shared chart options
@@ -289,4 +274,41 @@ export class DashboardComponent {
     };
     req.send();
   }
+  //Shimanyi - get Attendance per Gender
+
+  // Pie
+  public pieChartLabels: string[] = ['Boys ', 'Girls '];
+  public pieChartType: string = 'pie';
+  public pieChartData: number[];
+
+  public getAnnualAttendanceGender(){
+      this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
+
+      let children = [];
+
+      children.push(data[0].present_males);
+      children.push(data[0].present_females);
+
+      //console.log(children);
+      this.pieChartData = children;
+
+    });
+  }
+
+
+  // Doughnut
+  public doughnutChartColors: any[] = [{
+    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
+  }];
+  public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
+  public doughnutOptions: any = Object.assign({
+    elements: {
+      arc: {
+        borderWidth: 0
+      }
+    }
+  }, this.globalChartOptions);
+
+
+
 }
