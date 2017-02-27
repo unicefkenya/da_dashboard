@@ -30,15 +30,18 @@ export class DashboardComponent {
   public boys: any;
   public girls: any;
 
+  //Last getSevenDaysAttendance
+  public
+
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
   }
 
   ngOnInit(): void {
     this.getStats();
-    //this.getWeeklySummary(); commented till the api is fixed
     this.getAnnualAttendanceGender();
     this.getAnnualEnrollmentGender();
+    this.getSevenDaysAttendance();
   }
 
   // Shimanyi > getStats()
@@ -101,8 +104,6 @@ export class DashboardComponent {
     });
   }
 
-
-
   // Shared chart options
   public globalChartOptions: any = {
       responsive: true,
@@ -111,63 +112,6 @@ export class DashboardComponent {
         position: 'bottom'
       }
     }
-
-  // Bar
-  public barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-  public barChartData: any[] = [{
-    //display data for boys ranging from class 1 to 8
-    data: [6, 5, 8, 8, 5, 5, 4,8],
-    label: 'Boys',
-    borderWidth: 0
-  }, {
-      //display data for girls ranging from class 1 to 8
-    data: [5, 4, 4, 2, 6, 2, 5,7],
-    label: 'Girls',
-    borderWidth: 0
-  }];
-  public barChartOptions: any = Object.assign({
-    scaleShowVerticalLines: false,
-    tooltips: {
-      mode: 'index',
-      intersect: false
-    },
-    responsive: true,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          defaultFontColor: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        stacked: true,
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-           defaultFontColor: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        stacked: true
-      }]
-    }
-  }, this.globalChartOptions);
-
-  // Doughnut
-  // public doughnutChartColors: any[] = [{
-  //   backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
-  // }];
-  // public doughnutOptions: any = Object.assign({
-  //   elements: {
-  //     arc: {
-  //       borderWidth: 0
-  //     }
-  //   }
-  // }, this.globalChartOptions);
 
   // Pie
   public pieChartLabels: string[] = ['Girls', 'Boys'];
@@ -266,8 +210,6 @@ export class DashboardComponent {
 
       children.push(data[0].present_males);
       children.push(data[0].present_females);
-
-      //console.log(children);
       this.pieChartData = children;
 
     });
@@ -277,14 +219,99 @@ export class DashboardComponent {
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
 
-      console.log(data['males']);
-      //let students = [];
       let enrolled = [];
 
       enrolled.push(data['females']);
       enrolled.push(data['males']);
 
       this.pieChartEnrollmentData = enrolled;
+
+    });
+  }
+
+  //Shimanyi - get Attendance for the last 7 days
+
+  // Bar
+  public barChartLabels: string[] = [];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+  public barChartData: any[] = [
+    {
+      //display data for boys ranging from class 1 to 7
+      data: [6, 5, 8, 8, 5, 5, 7],
+      label: 'Boys',
+      borderWidth: 0
+    }, {
+      //display data for girls ranging from class 1 to 7
+      data: [5, 4, 4, 2, 6, 2, 5],
+      label: 'Girls',
+      borderWidth: 0
+    }
+  ];
+  public barChartOptions: any = Object.assign({
+    scaleShowVerticalLines: false,
+    tooltips: {
+      mode: 'index',
+      intersect: false
+    },
+    responsive: true,
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+          defaultFontColor: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        },
+        stacked: true,
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+           defaultFontColor: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        },
+        stacked: true
+      }]
+    }
+  }, this.globalChartOptions);
+
+  public getSevenDaysAttendance(){
+
+    this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
+
+      let subset = data.slice(Math.max(data.length - 7, 0));
+
+      let columns:string[] = [];
+
+      let columnNames: string = '';
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].date);
+      }
+
+      console.log(columns);
+      this.barChartLabels = columns;
+
+      let set: any[];
+      set = [{
+        //display data for boys ranging from class 1 to 7
+        data: [6, 5, 8, 8, 5, 5, 7],
+        label: 'Boys',
+        borderWidth: 0
+      }, {
+        //display data for girls ranging from class 1 to 7
+        data: [5, 4, 4, 2, 6, 2, 5],
+        label: 'Girls',
+        borderWidth: 0
+      }]
+
+      this.barChartData = set;
+
+      //console.log(set);
+      //console.log(columns);
+
 
     });
   }
