@@ -273,32 +273,32 @@ export class DashboardComponent {
       console.log(data);
       let subset = data.slice(Math.max(data.length - 7, 0));
 
-      let columns:string[] = [];
+      let columns: string[] = [];
+      let totals: number[] = [];
+      let presents: number[] = [];
 
       let columnNames: string = '';
       for(let i = 0; i < subset.length; i++){
         columns.push(subset[i].date);
+        totals.push(subset[i].total);
+        presents.push((subset[i].present_females + subset[i].present_males));
       }
 
-      console.log(columns);
+      //console.log(totals);
       this.barChartLabels = columns;
-
-      //let set: any[];
       this.barChartData = [{
         //display data for boys ranging from class 1 to 7
-        data: [6, 5, 8, 8, 5, 5, 7],
-        label: 'Boys',
+        //presents
+        data: presents,
+        label: 'Children',
         borderWidth: 0
       }, {
         //display data for girls ranging from class 1 to 7
-        data: [5, 4, 4, 2, 6, 2, 5],
-        label: 'Girls',
+        //totals
+        data: totals,
+        label: 'Total Students',
         borderWidth: 0
       }];
-
-
-      //console.log(set);
-      //console.log(columns);
 
     });
   }
