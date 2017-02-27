@@ -30,6 +30,9 @@ export class DashboardComponent {
   public boys: any;
   public girls: any;
 
+  //Last getSevenDaysAttendance
+  public
+
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
   }
@@ -40,6 +43,7 @@ export class DashboardComponent {
     this.getAnnualAttendanceGender();
     this.getAnnualEnrollmentGender();
     this.getMonthlyAttendance();
+    this.getSevenDaysAttendance();
   }
 
   // Shimanyi > getStats()
@@ -101,8 +105,6 @@ export class DashboardComponent {
       ]
     });
   }
-
-
 
   // Shared chart options
   public globalChartOptions: any = {
@@ -255,8 +257,6 @@ export class DashboardComponent {
 
       children.push(data[0].present_males);
       children.push(data[0].present_females);
-
-      //console.log(children);
       this.pieChartData = children;
 
     });
@@ -266,8 +266,6 @@ export class DashboardComponent {
   public getAnnualEnrollmentGender(){
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
-
-      //let students = [];
       let enrolled = [];
 
       enrolled.push(data['females']);
@@ -277,6 +275,7 @@ export class DashboardComponent {
 
     });
   }
+
   //Norman - data for the last 6 months
   public tmp;
   public totalAbsent;
@@ -319,5 +318,92 @@ export class DashboardComponent {
   });
   }
 
+
+  //Shimanyi - get Attendance for the last 7 days
+
+  // Bar
+  public barChartLabels: string[] = [];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+  public barChartData: any[] = [
+    {
+      //display data for boys ranging from class 1 to 7
+      data: [6, 5, 8, 8, 5, 5, 7],
+      label: 'Boys',
+      borderWidth: 0
+    }, {
+      //display data for girls ranging from class 1 to 7
+      data: [5, 4, 4, 2, 6, 2, 5],
+      label: 'Girls',
+      borderWidth: 0
+    }
+  ];
+  public barChartOptions: any = Object.assign({
+    scaleShowVerticalLines: false,
+    tooltips: {
+      mode: 'index',
+      intersect: false
+    },
+    responsive: true,
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+          defaultFontColor: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        },
+        stacked: true,
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+           defaultFontColor: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        },
+        stacked: true
+      }]
+    }
+  }, this.globalChartOptions);
+
+  public getSevenDaysAttendance(){
+
+    this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
+
+      let subset = data.slice(Math.max(data.length - 7, 0));
+
+      let columns:string[] = [];
+
+      let columnNames: string = '';
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].date);
+      }
+
+      console.log(columns);
+      this.barChartLabels = columns;
+
+      let set: any[];
+      set = [{
+        //display data for boys ranging from class 1 to 7
+        data: [6, 5, 8, 8, 5, 5, 7],
+        label: 'Boys',
+        borderWidth: 0
+      }, {
+        //display data for girls ranging from class 1 to 7
+        data: [5, 4, 4, 2, 6, 2, 5],
+        label: 'Girls',
+        borderWidth: 0
+      }]
+
+      this.barChartData = set;
+
+      //console.log(set);
+      //console.log(columns);
+
+
+    });
+  }
 
 }
