@@ -39,6 +39,7 @@ export class DashboardComponent {
     //this.getWeeklySummary(); commented till the api is fixed
     this.getAnnualAttendanceGender();
     this.getAnnualEnrollmentGender();
+    this.getMonthlyAttendance();
   }
 
   // Shimanyi > getStats()
@@ -157,26 +158,14 @@ export class DashboardComponent {
     }
   }, this.globalChartOptions);
 
-  // Doughnut
-  // public doughnutChartColors: any[] = [{
-  //   backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
-  // }];
-  // public doughnutOptions: any = Object.assign({
-  //   elements: {
-  //     arc: {
-  //       borderWidth: 0
-  //     }
-  //   }
-  // }, this.globalChartOptions);
-
   // Pie
   public pieChartLabels: string[] = ['Girls', 'Boys'];
   public pieChartData: number[] = [];
   public pieChartEnrollmentData: number[] = [];
   public pieChartType: string = 'pie';
 
-  // combo chart
-  public comboChartLabels: Array < any > = ['1', '2', '3', '4', '5', '6', '7','8'];
+  // monthly chart
+  public comboChartLabels: Array < any > = ['1', '2', '3', '4', '5', '6'];
   public chartColors: Array < any > = [{ // grey
     backgroundColor: "#7986cb",
     borderColor: "#3f51b5",
@@ -201,14 +190,14 @@ export class DashboardComponent {
   }];
   public comboChartLegend: boolean = true;
   public ComboChartData: Array < any > = [{
-    data: [6, 5, 8, 8, 5, 5, 4,9],
-    label: 'Series A',
+    data: [],
+    label: 'Absent Students',
     borderWidth: 1,
     type: 'line',
     fill: false
   }, {
-    data: [5, 4, 4, 2, 6, 2, 5, 7],
-    label: 'Series B',
+    data: [],
+    label: 'Present Students',
     borderWidth: 1,
     type: 'bar',
   }];
@@ -273,12 +262,11 @@ export class DashboardComponent {
     });
   }
 
-
+//Norman - pie chart data for enrollment based on gender
   public getAnnualEnrollmentGender(){
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
 
-        console.log(data['males']);
       //let students = [];
       let enrolled = [];
 
@@ -288,6 +276,47 @@ export class DashboardComponent {
       this.pieChartEnrollmentData = enrolled;
 
     });
+  }
+  //Norman - data for the last 6 months
+  public tmp;
+  public totalAbsent;
+  public totalPresent;
+  public getMonthlyAttendance(){
+    this.dashboardServices.getMonthlyAttendance().subscribe( data => {
+      console.log(data);
+
+    let Attendance = [2,3,4,5,3,7];
+
+    //Attendance.push(data['absent_males']);
+    //Attendance.push(data['present_males']);
+
+    this.ComboChartData = Attendance;
+    console.log(this.ComboChartData, 'sdsdsdas');
+
+/*
+
+    for (let i = 0; i < data.length; i++){
+        this.tmp = {}
+        this.totalAbsent = 0;
+        this.totalPresent = 0;
+
+        this.tmp.absent_males = data[i].absent_males
+        this.tmp.absent_females = data[i].absent_females
+        this.tmp.present_males = data[i].present_males
+        this.tmp.present_females = data[i].present_females
+      }
+
+      this.totalAbsent = (this.tmp.absent_males + this.tmp.absent_females);
+      this.totalPresent = (this.tmp.present_males + this.tmp.present_females);
+
+
+      Attendance.push(this.totalAbsent);
+      Attendance.push(this.totalPresent);
+
+      this.ComboChartData = Attendance;
+      console.log(this.ComboChartData, 'sdsdsdas');
+      */
+  });
   }
 
 
