@@ -79,11 +79,9 @@
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input ng-show="isVisible"  placeholder="TSC Number"  [formControl]="form.controls['tsc_no']" type="text"></md-input>
-                  <small *ngIf="form.controls['tsc_no'].touched" class="md-text-warn">Kindly input teacher's tsc number.</small>
                 </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input ng-show="bomNo"  placeholder="BOM Number" [formControl]="form.controls['bom_no']" type="text"></md-input>
-                  <small *ngIf="form.controls['bom_no'].touched" class="md-text-warn">Kindly input teacher's bom number.</small>
                 </div>
               </div>
 

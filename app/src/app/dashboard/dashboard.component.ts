@@ -110,16 +110,18 @@ export class DashboardComponent {
     }
 
   // Bar
-  public barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7'];
+  public barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
   public barChartData: any[] = [{
-    data: [6, 5, 8, 8, 5, 5, 4],
-    label: 'Series A',
+    //display data for boys ranging from class 1 to 8
+    data: [6, 5, 8, 8, 5, 5, 4,8],
+    label: 'Boys',
     borderWidth: 0
   }, {
-    data: [5, 4, 4, 2, 6, 2, 5],
-    label: 'Series B',
+      //display data for girls ranging from class 1 to 8
+    data: [5, 4, 4, 2, 6, 2, 5,7],
+    label: 'Girls',
     borderWidth: 0
   }];
   public barChartOptions: any = Object.assign({
@@ -152,44 +154,25 @@ export class DashboardComponent {
     }
   }, this.globalChartOptions);
 
-  // Bubble Chart
-  public bubbleChartData: Array < any > = [{
-    data: [{
-      x: 6,
-      y: 5,
-      r: 15,
-    }, {
-      x: 5,
-      y: 4,
-      r: 10,
-    }, {
-      x: 8,
-      y: 4,
-      r: 6,
-    }, {
-      x: 8,
-      y: 4,
-      r: 6,
-    }, {
-      x: 5,
-      y: 14,
-      r: 14,
-    }, {
-      x: 5,
-      y: 6,
-      r: 8,
-    }, {
-      x: 4,
-      y: 2,
-      r: 10,
-    }],
-    label: 'Series A',
-    borderWidth: 1
-  }];
-  public bubbleChartType: string = 'bubble';
+  // Doughnut
+  // public doughnutChartColors: any[] = [{
+  //   backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
+  // }];
+  // public doughnutOptions: any = Object.assign({
+  //   elements: {
+  //     arc: {
+  //       borderWidth: 0
+  //     }
+  //   }
+  // }, this.globalChartOptions);
+
+  // Pie
+  public pieChartLabels: string[] = ['Girls', 'Boys'];
+  public pieChartData: number[] = [ 300, 200];
+  public pieChartType: string = 'pie';
 
   // combo chart
-  public comboChartLabels: Array < any > = ['1', '2', '3', '4', '5', '6', '7'];
+  public comboChartLabels: Array < any > = ['1', '2', '3', '4', '5', '6', '7','8'];
   public chartColors: Array < any > = [{ // grey
     backgroundColor: "#7986cb",
     borderColor: "#3f51b5",
@@ -214,13 +197,13 @@ export class DashboardComponent {
   }];
   public comboChartLegend: boolean = true;
   public ComboChartData: Array < any > = [{
-    data: [6, 5, 8, 8, 5, 5, 4],
+    data: [6, 5, 8, 8, 5, 5, 4,9],
     label: 'Series A',
     borderWidth: 1,
     type: 'line',
     fill: false
   }, {
-    data: [5, 4, 4, 2, 6, 2, 5],
+    data: [5, 4, 4, 2, 6, 2, 5, 7],
     label: 'Series B',
     borderWidth: 1,
     type: 'bar',
@@ -247,23 +230,6 @@ export class DashboardComponent {
     }
   }, this.globalChartOptions);
 
-  // newsfeed
-  messages: Object[] = [{
-    from: 'Ali Connors',
-    message: 'I will be in your neighborhood',
-    photo: 'assets/images/face3.jpg',
-    subject: 'Brunch this weekend?',
-  }, {
-    from: 'Trevor Hansen',
-    message: 'Wish I could but we have plans',
-    photo: 'assets/images/face6.jpg',
-    subject: 'Brunch this weekend?',
-  }, {
-    from: 'Sandra Adams',
-    message: 'Do you have Paris recommendations instead?',
-    photo: 'assets/images/face4.jpg',
-    subject: 'Brunch this weekend?',
-  }, ];
 
   // project table
   fetch(cb) {
@@ -277,9 +243,9 @@ export class DashboardComponent {
   //Shimanyi - get Attendance per Gender
 
   // Pie
-  public pieChartLabels: string[] = ['Boys ', 'Girls '];
-  public pieChartType: string = 'pie';
-  public pieChartData: number[] = [];
+  // public pieChartLabels: string[] = ['Boys ', 'Girls '];
+  // public pieChartType: string = 'pie';
+  // public pieChartData: number[] = [];
 
   public getAnnualAttendanceGender(){
       this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
