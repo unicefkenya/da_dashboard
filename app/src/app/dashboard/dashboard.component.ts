@@ -279,7 +279,7 @@ export class DashboardComponent {
   // Pie
   public pieChartLabels: string[] = ['Boys ', 'Girls '];
   public pieChartType: string = 'pie';
-  public pieChartData: number[];
+  public pieChartData: number[] = [];
 
   public getAnnualAttendanceGender(){
       this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
@@ -308,7 +308,5 @@ export class DashboardComponent {
       }
     }
   }, this.globalChartOptions);
-
-
 
 }
