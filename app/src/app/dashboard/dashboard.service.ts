@@ -41,7 +41,7 @@ private baseApiUrl = BaseUrl.base_api_url;
 
   //Shimanyi - getSevenDaysAttendance
   getSevenDaysAttendance(){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily/')
+    return this.http.get(this.baseApiUrl+'api/attendances/daily')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
