@@ -6,7 +6,12 @@
     <div class="branding">
       <div class="logo"></div>
     </div>
-    <div fxFlex></div>
+    <div class="search-bar" fxFlex>
+      <form class="search-form" fxShow="false" fxShow.gt-xs>
+        <md-icon>search</md-icon>
+        <input type="text" placeholder="Search school EMIS codes" autofocus="true" />
+      </form>
+    </div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
     </button>
