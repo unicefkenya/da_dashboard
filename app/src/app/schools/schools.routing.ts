@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 import { ViewSchoolsComponent } from './viewschools/viewschools.component';
 import { AddSchoolsComponent } from './addschool/addschools.component';
 
+
 export const SchoolsRoutes: Routes = [
   {
     path: '',
