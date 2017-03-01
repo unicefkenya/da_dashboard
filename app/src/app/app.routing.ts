@@ -44,7 +44,13 @@ export const AppRoutes: Routes = [{
     path: 'help',
     loadChildren: './dragndrop/dragndrop.module#DragndropModule',
     canActivate: [AuthGuard]
-  }]
+  }, {
+    path: 'search',
+    loadChildren: './search/search.module#SearchModule',
+    canActivate: []
+  }
+
+]
 }, {
   path: '',
   component: AuthLayoutComponent,
