@@ -324,4 +324,12 @@ export class SearchComponent {
     label: 'Series B'
   }];
   public radarChartType: string = 'radar';
+
+
+  //Shimanyi - Get top level School Data
+  public getSchoolData(): void {
+    
+  }
+
+
 }
