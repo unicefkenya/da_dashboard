@@ -259,21 +259,8 @@ export class DashboardComponent {
         columns.push(subset[i].date);
         totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
         totalPresent.push(subset[i].present_males + subset[i].present_females);
-
-        /*
-        this.objDate = new Date(),
-            this.locale = "en-us",
-            columns = this.objDate.toLocaleString(this.locale, { month: "short" });
-        */
       }
 
-      console.log(columns);
-
-      //console.log(columns,this.month);
-      /*
-     const objDate = new Date(columns);
-      const month = objDate.getMonth();
-      */
       this.comboChartLabels = columns;
       this.comboChartData  = [{
         data: totalAbsent,
@@ -334,7 +321,6 @@ export class DashboardComponent {
 
     this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
 
-      console.log(data);
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
@@ -348,17 +334,15 @@ export class DashboardComponent {
         presents.push((subset[i].present_females + subset[i].present_males));
       }
 
-      //console.log(totals);
       this.barChartLabels = columns;
       this.barChartData = [{
         //display data for boys ranging from class 1 to 7
         //presents
         data: presents,
-        label: 'Children',
+        label: 'Present Students',
         borderWidth: 0
       }, {
-        //display data for girls ranging from class 1 to 7
-        //totals
+        //absents
         data: absents,
         label: 'Absent Students',
         borderWidth: 0
