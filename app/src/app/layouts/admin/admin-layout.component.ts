@@ -57,6 +57,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   }
 
+
   ngOnDestroy() {
     this._router.unsubscribe();
     this.logout();
@@ -76,8 +77,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   }
 
   private getSchoolId(id){
-    this.form.reset();
+
     this.router.navigate(['/search', id]);
+    this.form.reset();
 
   }
 

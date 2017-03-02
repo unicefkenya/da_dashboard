@@ -14,10 +14,15 @@ export class SearchComponent {
   }
 
 
-
+  public sub;
+  
   ngOnInit():void{
-    let id=this.route.snapshot.params['id'];
-    this.getSchoolData(id);
+    this.sub = this.route.params.subscribe(params => {
+     let id = +params['id'];
+     this.getSchoolData(id);
+   });
+    //let id=this.route.snapshot.params['id'];
+
   }
 
 
@@ -343,6 +348,7 @@ export class SearchComponent {
   public schoolname;
   public schoolEmisCode;
   public county;
+  public zone;
   public errorSearch;
   //Shimanyi - Get top level School Data
   public getSchoolData(id){
@@ -355,6 +361,7 @@ export class SearchComponent {
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;
+        this.zone = data.zone;
 
       },
       error =>{
