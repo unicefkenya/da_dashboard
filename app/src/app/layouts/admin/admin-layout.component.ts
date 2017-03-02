@@ -24,7 +24,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   public search: Search;
   public form: FormGroup;
   public errorSearch;
-  
+
 
   today: number = Date.now();
   url: string;
@@ -75,7 +75,11 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     this._signin.logout();
   }
 
-  performSearch(search: Search, form){
+  private getSchoolData(id){
+    this.router.navigate(['/search', id]);
+  }
+
+  public performSearch(search: Search, form){
 
     this.search = new Search(search.searchText);
 
@@ -85,6 +89,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       (data)  => //console.log(data)
       {
         console.log(data, "Searched Successfully");
+        this.getSchoolData(data.id);
       },
       error =>{
 
@@ -92,4 +97,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+
 }
