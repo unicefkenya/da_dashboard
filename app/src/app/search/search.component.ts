@@ -1,12 +1,26 @@
-import { Component } from '@angular/core';
-
+import { Component,OnInit } from '@angular/core';
+import {AdminLayoutService} from '../layouts/admin/adminlayout.service';
+import {ActivatedRoute} from '@angular/router'
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
+  providers: [AdminLayoutService]
 })
 export class SearchComponent {
-  constructor() {}
+  constructor(private _adminLayoutService: AdminLayoutService,private route:ActivatedRoute) {
+
+
+  }
+
+
+
+  ngOnInit():void{
+    let id=this.route.snapshot.params['id'];
+    this.getSchoolData(id);
+  }
+
+
   public globalChartOptions: any = {
       responsive: true,
       legend: {
@@ -14,6 +28,7 @@ export class SearchComponent {
         position: 'bottom'
       }
     }
+
 
   // Bar
   public barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7'];
@@ -325,10 +340,23 @@ export class SearchComponent {
   }];
   public radarChartType: string = 'radar';
 
-
+  public school;
+  public errorSearch;
   //Shimanyi - Get top level School Data
-  public getSchoolData(): void {
-    
+  public getSchoolData(id){
+    this._adminLayoutService.sendSearch({search:id,"details":{
+      id:id
+    }}).subscribe(
+      (data)  => //console.log(data)
+      {
+        console.log(data.id, "Searched Successfully");
+        this.school=data
+      },
+      error =>{
+
+        this.errorSearch = 'Id  not found';
+      }
+    );
   }
 
 
