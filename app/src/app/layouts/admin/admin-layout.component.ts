@@ -73,24 +73,14 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     this._signin.logout();
   }
 
-  public schoolA;
   performSearch(search: Search, form){
     this.search = new Search(search.searchText);
-
 
     this._adminLayoutService.sendSearch({search:search.searchText,"details":{
       emis_code:search.searchText
     }}).subscribe(
       (data)  => //console.log(data)
       {
-        const school = [];
-        for (let emis_code in data){
-          console.log(data[emis_code]);
-          school.push(data[emis_code]);
-        }
-        this.schoolA = school;
-
-        //this.school = data.json().data;
         console.log(data, "Searched Successfully");
       },
       error =>{
