@@ -91,12 +91,6 @@ const MENUITEMS = [
     type: 'extTabLink',
     icon: 'local_library'
   }
-  ,{
-    state: 'search',
-    name: 'Search (tmp)',
-    type: 'link',
-    icon: ''
-  }
 ];
 
 @Injectable()

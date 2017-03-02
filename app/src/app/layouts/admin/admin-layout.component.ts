@@ -23,6 +23,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   public currentUser;
   public search: Search;
   public form: FormGroup;
+  public errorSearch;
+
 
   today: number = Date.now();
   url: string;
@@ -72,31 +74,27 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   logout(){
     this._signin.logout();
   }
-  public schoolA;
-  performSearch(search: Search, form){
-    this.search = new Search(search.searchText);
 
+  private getSchoolData(id){
+    this.router.navigate(['/search', id]);
+  }
+
+  public performSearch(search: Search, form){
+
+    this.search = new Search(search.searchText);
 
     this._adminLayoutService.sendSearch({search:search.searchText,"details":{
       emis_code:search.searchText
     }}).subscribe(
       (data)  => //console.log(data)
       {
-        const school = [];
-        for (let emis_code in data){
-          console.log(data[emis_code]);
-          school.push(data[emis_code]);
-        }
-        this.schoolA = school;
-
-        //this.school = data.json().data;
         console.log(data, "Searched Successfully");
+        this.getSchoolData(data.id);
       },
       error =>{
-        console.log('error');
+
+        this.errorSearch = 'Emis Code not found';
       }
     );
-
-      console.log(this.search);
   }
 }
