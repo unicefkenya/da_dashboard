@@ -340,7 +340,9 @@ export class SearchComponent {
   }];
   public radarChartType: string = 'radar';
 
-  public school;
+  public schoolname;
+  public schoolEmisCode;
+  public county;
   public errorSearch;
   //Shimanyi - Get top level School Data
   public getSchoolData(id){
@@ -350,7 +352,10 @@ export class SearchComponent {
       (data)  => //console.log(data)
       {
         console.log(data.id, "Searched Successfully");
-        this.school=data
+        this.schoolname=data.school_name;
+        this.schoolEmisCode = data.emis_code;
+        this.county = data.county;
+
       },
       error =>{
 

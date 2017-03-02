@@ -90,12 +90,11 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     }}).subscribe(
       (data)  => //console.log(data)
       {
-        console.log(data, "Searched Successfully");
-        this.getSchoolId(data.id);
+        console.log("Searched Successfully");
+        this.getSchoolId(data.emis_code);
 
       },
       error =>{
-
         this.errorSearch = 'Emis Code not found';
       }
     );
