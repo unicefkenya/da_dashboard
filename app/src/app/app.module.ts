@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
 import { AuthGuard } from './authguard/auth.guard';
@@ -34,6 +34,7 @@ export function createTranslateLoader(http: Http) {
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,

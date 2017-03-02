@@ -1,8 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { Subscription } from "rxjs";
 import { SigninService} from '../../signin/signin.service';
+import { Search } from './search';
+import {AdminLayoutService} from './adminlayout.service';
+
 
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -10,12 +15,14 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 @Component({
   selector: 'app-layout',
   templateUrl: './admin-layout.component.html',
-  providers: [SigninService]
+  providers: [SigninService, AdminLayoutService]
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   private _router:Subscription;
   public currentUser;
+  public search: Search;
+  public form: FormGroup;
 
   today: number = Date.now();
   url: string;
@@ -27,7 +34,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         public menuItems: MenuItems,
         private router: Router,
         private translate: TranslateService,
-        private _signin: SigninService ) {
+        private _adminLayoutService: AdminLayoutService,
+        private _signin: SigninService,
+        private fb: FormBuilder ) {
     let browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
     //gets the cuurrently saved user
@@ -39,7 +48,10 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       this.url = event.url;
       if (this.isOver()) this.sidemenu.close();
     });
-
+    this.form = this.fb.group({
+      searchText: [null]
+    });
+    //this.performSearch();
 
   }
 
@@ -60,17 +72,31 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   logout(){
     this._signin.logout();
   }
+  public schoolA;
+  performSearch(search: Search, form){
+    this.search = new Search(search.searchText);
 
-  addMenuItem(): void {
-    this.menuItems.add({
-      state: 'menu',
-      name: 'MENU',
-      type: 'sub',
-      icon: 'trending_flat',
-      children: [
-        {state: 'menu', name: 'MENU'},
-        {state: 'timelmenuine', name: 'MENU'}
-      ]
-    });
+
+    this._adminLayoutService.sendSearch({search:search.searchText,"details":{
+      emis_code:search.searchText
+    }}).subscribe(
+      (data)  => //console.log(data)
+      {
+        const school = [];
+        for (let emis_code in data){
+          console.log(data[emis_code]);
+          school.push(data[emis_code]);
+        }
+        this.schoolA = school;
+
+        //this.school = data.json().data;
+        console.log(data, "Searched Successfully");
+      },
+      error =>{
+        console.log('error');
+      }
+    );
+
+      console.log(this.search);
   }
 }
