@@ -23,6 +23,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   public currentUser;
   public search: Search;
   public form: FormGroup;
+  public errorSearch;
+  
 
   today: number = Date.now();
   url: string;
@@ -74,6 +76,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   }
 
   performSearch(search: Search, form){
+
     this.search = new Search(search.searchText);
 
     this._adminLayoutService.sendSearch({search:search.searchText,"details":{
@@ -84,10 +87,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         console.log(data, "Searched Successfully");
       },
       error =>{
-        console.log('error');
+
+        this.errorSearch = 'Emis Code not found';
       }
     );
-
-      console.log(this.search);
   }
 }
