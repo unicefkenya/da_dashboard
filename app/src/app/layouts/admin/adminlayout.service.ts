@@ -17,32 +17,12 @@ export class AdminLayoutService {
 
 
   sendSearch(user: any){
-    const _searchUrl = this.baseApiUrl+'api/schools'+user;
+    const _searchUrl = this.baseApiUrl+'api/schools/'+user.search;
 
-    return this.http.request(_searchUrl)
+    return this.http.get(_searchUrl)
         .map((res: Response) => res.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error')
       );
-
-    //const body = JSON.stringify(user);
-
-     //this is optional - angular2 already sends these
-     //const headers = new Headers();
-     /*
-    let token=localStorage.getItem("user");
-    let headers = new Headers({
-        'Content-Type': 'application/json',
-        'Authorization':'Bearer '+token
-    });
-
-    let options = new RequestOptions({headers: headers});
-    */
-
-    /*
-    return this.http.post(_searchUrl, body, options)
-      .map(this.extractData)
-      .catch(this.handleError);
-      */
   }
 
   private extractData(res: Response) {

@@ -72,6 +72,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   logout(){
     this._signin.logout();
   }
+
   public schoolA;
   performSearch(search: Search, form){
     this.search = new Search(search.searchText);
