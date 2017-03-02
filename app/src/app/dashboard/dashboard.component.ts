@@ -338,13 +338,13 @@ export class DashboardComponent {
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
-      let totals: number[] = [];
+      let absents: number[] = [];
       let presents: number[] = [];
 
       let columnNames: string = '';
       for(let i = 0; i < subset.length; i++){
         columns.push(subset[i].date);
-        totals.push(subset[i].total);
+        absents.push((subset[i].absent_males + subset[i].absent_females));
         presents.push((subset[i].present_females + subset[i].present_males));
       }
 
@@ -359,8 +359,8 @@ export class DashboardComponent {
       }, {
         //display data for girls ranging from class 1 to 7
         //totals
-        data: totals,
-        label: 'Total Students',
+        data: absents,
+        label: 'Absent Students',
         borderWidth: 0
       }];
 
