@@ -1,28 +1,42 @@
 import { Component,OnInit } from '@angular/core';
 import {AdminLayoutService} from '../layouts/admin/adminlayout.service';
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute} from '@angular/router';
+import { SearchService} from '../search/search.service';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
-  providers: [AdminLayoutService]
+  providers: [AdminLayoutService, SearchService]
 })
 export class SearchComponent {
-  constructor(private _adminLayoutService: AdminLayoutService,private route:ActivatedRoute) {
-
-
+  constructor(private _adminLayoutService: AdminLayoutService,private _searchServiceService, private route:ActivatedRoute) {
   }
 
 
   public sub;
-  
+
   ngOnInit():void{
+    //checks if the id param navigations have changed
     this.sub = this.route.params.subscribe(params => {
      let id = +params['id'];
      this.getSchoolData(id);
    });
-    //let id=this.route.snapshot.params['id'];
 
+  }
+
+  public getStats():void {
+
+    this._searchServiceService.getSchoolStats().subscribe(data => {
+      console.log(data, "dsdsd");
+      /*
+       this.schools = data.schools;
+       this.males = data.students.males;
+       this.females = data.students.females;
+       this.students = +(this.males+this.females);
+       this.teachers = data.teachers;*/
+
+    });
   }
 
 
@@ -355,9 +369,8 @@ export class SearchComponent {
     this._adminLayoutService.sendSearch({search:id,"details":{
       id:id
     }}).subscribe(
-      (data)  => //console.log(data)
+      (data)  =>
       {
-        console.log(data.id, "Searched Successfully");
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;

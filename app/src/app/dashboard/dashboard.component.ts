@@ -227,9 +227,8 @@ export class DashboardComponent {
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
       let enrolled = [];
-
-      enrolled.push(data['females']);
-      enrolled.push(data['males']);
+      enrolled.push(data[0].enrolled_females);
+      enrolled.push(data[0].enrolled_males);
 
       this.pieChartEnrollmentData = enrolled;
 
@@ -256,7 +255,7 @@ export class DashboardComponent {
       for(let i = 0; i < subset.length; i++){
 
 
-        columns.push(subset[i].date);
+        columns.push(subset[i].value);
         totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
         totalPresent.push(subset[i].present_males + subset[i].present_females);
       }
@@ -329,7 +328,7 @@ export class DashboardComponent {
 
       let columnNames: string = '';
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].date);
+        columns.push(subset[i].value);
         absents.push((subset[i].absent_males + subset[i].absent_females));
         presents.push((subset[i].present_females + subset[i].present_males));
       }

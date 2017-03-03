@@ -28,7 +28,7 @@ private baseApiUrl = BaseUrl.base_api_url;
   }
 
   getAnnualEnrollmentGender(){
-    return this.http.get(this.baseApiUrl+'api/students/enrolls')
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
