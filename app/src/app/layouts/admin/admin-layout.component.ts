@@ -90,9 +90,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     this._adminLayoutService.sendSearch({search:search.searchText,"details":{
       emis_code:search.searchText
     }}).subscribe(
-      (data)  => //console.log(data)
+      (data)  =>
       {
-        console.log("Searched Successfully");
+        console.log(data.emis_code, "Searched Successfully");
         this.getSchoolId(data.emis_code);
 
       },

@@ -10,7 +10,9 @@ import { SearchService} from '../search/search.service';
   providers: [AdminLayoutService, SearchService]
 })
 export class SearchComponent {
-  constructor(private _adminLayoutService: AdminLayoutService,private _searchServiceService, private route:ActivatedRoute) {
+  constructor(private _adminLayoutService: AdminLayoutService,
+              private _searchServiceService: SearchService,
+              private route:ActivatedRoute) {
   }
 
 
@@ -18,6 +20,7 @@ export class SearchComponent {
 
   ngOnInit():void{
     //checks if the id param navigations have changed
+
     this.sub = this.route.params.subscribe(params => {
      let id = +params['id'];
      this.getSchoolData(id);
