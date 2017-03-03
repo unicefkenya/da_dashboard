@@ -11,8 +11,8 @@ export class SearchService {
 
   private baseApiUrl = BaseUrl.base_api_url;
 
-  getSchoolStats(){
-    return this.http.get(this.baseApiUrl+'/api/statistics?=')
+  getSchoolStats(link){
+    return this.http.get(this.baseApiUrl+'/api/statistics?='+link)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

@@ -11,7 +11,7 @@ import { SearchService} from '../search/search.service';
 })
 export class SearchComponent {
   constructor(private _adminLayoutService: AdminLayoutService,
-              private _searchServiceService: SearchService,
+              private _searchService: SearchService,
               private route:ActivatedRoute) {
   }
 
@@ -27,19 +27,30 @@ export class SearchComponent {
    });
 
   }
-
-  public getStats():void {
-
-    this._searchServiceService.getSchoolStats().subscribe(data => {
-      console.log(data, "dsdsd");
-      /*
-       this.schools = data.schools;
-       this.males = data.students.males;
-       this.females = data.students.females;
-       this.students = +(this.males+this.females);
-       this.teachers = data.teachers;*/
-
-    });
+  public schools;
+  public males;
+  public females;
+  public students;
+  public teachers;
+  
+  public getStats(id):void {
+    this.errorSearch = '';
+    this._searchService.getSchoolStats({id,"details":{
+      id:id
+    }}).subscribe(
+      (data)  =>
+      {
+        console.log(data.emis_code, "Searched Successfully");
+        this.schools = data.schools;
+        this.males = data.students.males;
+        this.females = data.students.females;
+        this.students = +(this.males+this.females);
+        this.teachers = data.teachers;
+      },
+      error =>{
+        this.errorSearch = 'Emis Code not found';
+      }
+    );
   }
 
 
