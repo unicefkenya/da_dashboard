@@ -18,13 +18,25 @@ export class SearchService {
   }
 
   getSevenDaysAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/class?school='+id)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getMonthlyAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getChildrenEnrolled(id){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/class/school?school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAnnualAttendanceGender(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly?school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

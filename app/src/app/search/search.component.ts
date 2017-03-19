@@ -29,7 +29,9 @@ export class SearchComponent {
      this.getStats(schoolId);
      this.getSevenDaysAttendance(schoolId);
      this.getChildrenEnrolled(schoolId);
-     this.getAnnualEnrollmentGender(schoolId)
+     this.getAnnualEnrollmentGender(schoolId);
+     this.getAnnualAttendanceGender(schoolId);
+     this.getMonthlyAttendance(schoolId);
    });
 
   }
@@ -209,6 +211,19 @@ export class SearchComponent {
       }
     }, this.globalChartOptions);
 
+    //getting annual attendance based on gender
+    public getAnnualAttendanceGender(id){
+        this._searchService.getAnnualAttendanceGender(id).subscribe( data => {
+
+        let children = [];
+
+        children.push(data[0].present_males);
+        children.push(data[0].present_females);
+        this.pieChartData = children;
+
+      });
+    }
+
     //Norman - pie chart data for enrollment based on gender
       public getAnnualEnrollmentGender(id){
 
@@ -291,5 +306,38 @@ export class SearchComponent {
       });
     }
 
+    public getMonthlyAttendance(id){
+
+      this._searchService.getMonthlyAttendance(id).subscribe( data => {
+
+        let subset = data.slice(Math.max(data.length - 6, 0));
+
+        let columns:string[] = [];
+        let totalAbsent: number [] = [];
+        let totalPresent: number [] = [];
+
+        for(let i = 0; i < subset.length; i++){
+
+
+          columns.push(subset[i].value);
+          totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
+          totalPresent.push(subset[i].present_males + subset[i].present_females);
+        }
+
+        this.comboChartLabels = columns;
+        this.comboChartData  = [{
+          data: totalAbsent,
+          label: 'Absent Students',
+          borderWidth: 1,
+          type: 'line',
+          fill: false
+        },{
+          data: totalPresent,
+          label: 'Present Students',
+          borderWidth: 1,
+          tupe: 'bar',
+        }];
+    });
+    }
 
 }
