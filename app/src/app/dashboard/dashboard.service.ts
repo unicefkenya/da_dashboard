@@ -39,6 +39,12 @@ private baseApiUrl = BaseUrl.base_api_url;
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getChildrenEnrolled(){
+    return this.http.get(this.baseApiUrl+'api/attendances/class')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   //Shimanyi - getSevenDaysAttendance
   getSevenDaysAttendance(){
     return this.http.get(this.baseApiUrl+'api/attendances/daily')

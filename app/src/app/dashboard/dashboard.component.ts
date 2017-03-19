@@ -44,6 +44,7 @@ export class DashboardComponent {
     this.getAnnualEnrollmentGender();
     this.getMonthlyAttendance();
     this.getSevenDaysAttendance();
+    this.getChildrenEnrolled();
   }
 
   // Shimanyi > getStats()
@@ -149,19 +150,8 @@ export class DashboardComponent {
   }];
 
 
-  public EnrolledComboChartLabels: Array < any > = [1,2,3,4,5,6,7,8];
-  public EnrolledComboChartData: Array < any > = [{
-    data: [123,232,143,124,235,126,237,128],
-    label: 'Absent Students',
-    borderWidth: 1,
-    type: 'line',
-    fill: false
-  }, {
-    data: [203,123,434,123,122,403,232,92],
-    label: 'Present Students',
-    borderWidth: 1,
-    type: 'bar',
-  }];
+  public EnrolledComboChartLabels: Array < any > = [];
+  public EnrolledComboChartData: any[] = [{}];
 
   public ComboChartOptions: any = Object.assign({
     animation: false,
@@ -276,6 +266,38 @@ export class DashboardComponent {
   });
   }
 
+  //Norman - children newly enrolled in all the classes
+  public getChildrenEnrolled(){
+
+    this.dashboardServices.getChildrenEnrolled().subscribe( data => {
+
+      let subset = data.slice(Math.max(data.length - 8, 0));
+
+      let columns:string[] = [];
+      let totalAbsent: number [] = [];
+      let totalPresent: number [] = [];
+
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].value);
+        totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
+        totalPresent.push(subset[i].present_males + subset[i].present_females);
+      }
+
+      this.EnrolledComboChartLabels = columns;
+      this.EnrolledComboChartData  = [{
+        data: totalAbsent,
+        label: 'Absent Students',
+        borderWidth: 1,
+        type: 'line',
+        fill: false
+      },{
+        data: totalPresent,
+        label: 'Present Students',
+        borderWidth: 1,
+        type: 'bar',
+      }];
+  });
+  }
 
   //Shimanyi - get Attendance for the last 7 days
 

@@ -52,8 +52,8 @@ export class SchoolComponent implements OnInit{
 
   ngOnInit(){
     //this.onSubmit;
-    this.getSchoolCounties();
-    this.getSchoolConstituencies();
+    //this.getSchoolCounties();
+    //this.getSchoolConstituencies();
 
   }
 
@@ -63,8 +63,8 @@ export class SchoolComponent implements OnInit{
 
       //edit
     }else{
-      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.geo_cordinates,registerSchool.waterSource, registerSchool.headTeacherName, registerSchool.headTeacherPhone,registerSchool.constituency,registerSchool.county);
-
+      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.lat_geo_cordinates,registerSchool.long_geo_cordinates,registerSchool.waterSource, registerSchool.zone, registerSchool.county);
+      /*
       this._schoolRegistrationService.sendData({
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
@@ -80,8 +80,10 @@ export class SchoolComponent implements OnInit{
             data => console.log(data)
           );
         }
+        */
   }
-
+}
+/*
   getSchoolCounties(){
 
     this._schoolRegistrationService.getCounties()
@@ -117,6 +119,7 @@ export class SchoolComponent implements OnInit{
   }
 
 
+*/
 
 
 }

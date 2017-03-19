@@ -92,7 +92,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     }}).subscribe(
       (data)  =>
       {
-        console.log(data.emis_code, "Searched Successfully");
+        localStorage.setItem('schoolId', data.id);
         this.getSchoolId(data.emis_code);
 
       },
