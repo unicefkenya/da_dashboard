@@ -26,7 +26,6 @@
       &.active:hover .datatable-row-group {
         background-color: darken(md-color($primary), 2%);
         color: #FFF;
-
       }
 
       &.active:focus,
@@ -141,6 +140,7 @@
         justify-content: flex-start;
         align-items: center;
         align-content: center;
+        cursor: pointer;
         -webkit-box-pack: start;
         -webkit-box-align: center;
         .datatable-body-cell-label {

@@ -24,7 +24,7 @@ export class SearchComponent {
     this.sub = this.route.params.subscribe(params => {
      let id = +params['id'];
      let schoolId = localStorage.getItem('schoolId');
-     console.log(schoolId);
+     //console.log(schoolId);
      this.getSchoolData(id);
      this.getStats(schoolId);
      this.getSevenDaysAttendance(schoolId);
@@ -242,7 +242,7 @@ export class SearchComponent {
     public getChildrenEnrolled(id){
 
       this._searchService.getChildrenEnrolled(id).subscribe( data => {
-        console.log(data, "sdsdasdsd");
+        //console.log(data, "sdsdasdsd");
         let subset = data.slice(Math.max(data.length - 8, 0));
 
         let columns:string[] = [];

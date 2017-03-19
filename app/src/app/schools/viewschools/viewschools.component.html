@@ -7,5 +7,9 @@
   [rowHeight]="50"
   [scrollbarV]="true"
   [scrollbarH]="true"
-  [rows]="schools">
+  [rows]="schools"
+  [selected]="selected"
+  [selectionType]="'single'"
+  (activate)="onActivate($event)"
+  (select)='onSelect($event)'>
 </ngx-datatable>
