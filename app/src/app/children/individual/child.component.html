@@ -5,9 +5,9 @@
         <md-card-content>
           <div  fxLayout="row">
             <div fxFlex="55">
-              <h4 class="ma-0">Gerald <b>Morris</b></h4>
-              <p><small>Emis Code: </small>211290232</p>
-              <p><small>Class: </small>6</p>
+              <h4 class="ma-0">{{firstname}}&nbsp;<b>{{childname}}</b></h4>
+              <p><small>Emis Code: </small>{{emiscode}}</p>
+              <p><small>{{class_}}</small></p>
               <p><small>Date Enrolled: </small>1997/12/01</p>
               <button md-raised-button color="primary">Edit Profile</button>
             </div>
@@ -32,15 +32,15 @@
           <div  fxLayout="row" class="text-xs-center">
             <div fxFlex="33">
               <small>School</small>
-              <h2 class="mt-0"><b>Juja Primary School</b></h2>
+              <h2 class="mt-0"><b>{{school}}</b></h2>
             </div>
             <div fxFlex="33">
               <small>Enrollment</small>
-              <h2 class="mt-0"><b>New</b></h2>
+              <h2 class="mt-0"><b>{{enrolled}}</b></h2>
             </div>
             <div fxFlex="33">
               <small>Student</small>
-              <h2 class="mt-0"><b>Unicef</b></h2>
+              <h2 class="mt-0"><b>{{childType}}</b></h2>
             </div>
           </div>
         </md-card-content>
@@ -59,44 +59,61 @@
                 <div class="pr-1" fxFlex>
                   <div  fxLayout="column" class="mb-1">
                     <span class="text-md">Date Of Birth</span>
-                    <strong>1997/06/01</strong>
+                    <strong>{{dob}}</strong>
                   </div>
 
                   <div  fxLayout="column" class="mb-1">
                     <span class="text-md">Gender</span>
-                    <strong>Male</strong>
+                    <strong>{{gender}}</strong>
                   </div>
 
                   <div  fxLayout="column" class="mb-1">
                     <span class="text-md">Time taken to reach school</span>
-                    <strong>Less than 30 minutes</strong>
+                    <strong>{{time_to_school}}</strong>
                   </div>
 
                   <div  fxLayout="column">
                     <span class="text-md">Mode of Transport to school</span>
-                    <strong>School Bus</strong>
+                    <strong>{{mode_of_transport}}</strong>
                   </div>
-
                 </div>
                 <div class="pl-1" fxFlex>
                   <div  fxLayout="column" class="mb-1">
                     <span class="text-md">Stay with</span>
-                    <strong>Parents</strong>
+                    <strong>{{staywith}}</strong>
                   </div>
 
                   <div  fxLayout="column" class="mb-1">
                     <span class="text-md">Number of people in household</span>
-                    <strong>6</strong>
+                    <strong>{{household}}</strong>
                   </div>
 
                   <div  fxLayout="column" class="mb-1">
                     <span class="text-md">Meals per day</span>
-                    <strong>3</strong>
+                    <strong>{{meals}}</strong>
                   </div>
                 </div>
               </div>
             </md-card-content>
             <hr>
+          </md-tab>
+          <md-tab>
+            <template md-tab-label>Guardian Information</template>
+            <md-card-content>
+              <h6 class="mt-0 mb-1">Contact Deatails</h6>
+              <div  fxLayout="row" layout-align="center">
+                <div class="pr-1" fxFlex>
+                  <div  fxLayout="column" class="mb-1">
+                    <span class="text-md">Parent / Guardian Name:</span>
+                    <strong>{{guardian}}</strong>
+                  </div>
+                  <div  fxLayout="column" class="mb-1">
+                    <span class="text-md">Phonenumber: </span>
+                    <strong>{{phone}}</strong>
+                  </div>
+                </div>
+              </div>
+            </md-card-content>
           </md-tab>
         </md-tab-group>
       </md-card>

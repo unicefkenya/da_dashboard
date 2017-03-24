@@ -8,7 +8,7 @@ export class ViewSchoolsService {
   constructor( private http: Http){}
 
   fetchSchools(){
-    return this.http.get('http://uoosc.cloudapp.net/api/school.json')
+    return this.http.get('http://uoosc.cloudapp.net/api/school')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

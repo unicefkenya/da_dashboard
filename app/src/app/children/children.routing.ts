@@ -18,7 +18,7 @@ export const ChildrenRoutes: Routes = [{
     path: 'enrollments',
     component: EnrollmentComponent
   }, {
-    path: 'child',
+    path: 'child/:id',
     component: ChildComponent
   }
 ],
