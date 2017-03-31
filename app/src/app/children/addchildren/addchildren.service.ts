@@ -37,6 +37,28 @@ export class AddChildrenService {
 
   }
 
+  editData(user: any){
+
+    //assign the url like below
+    const _childRegistrationUrl = this.baseApiUrl+'api/students';
+    const body = JSON.stringify(user);
+
+     //this is optional - angular2 already sends these
+     //const headers = new Headers();
+    let token=localStorage.getItem("user");
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.put(_childRegistrationUrl, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };
