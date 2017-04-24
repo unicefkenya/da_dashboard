@@ -6,12 +6,18 @@
           <form  (ngSubmit)="onSubmit()">
             <div class="text-xs-center pb-1">
               <img src="assets/images/logo-dark.png" alt=""/>
-              <p class="md-text-muted">Sign in with your app id to continue.</p>
+              <p class="md-text-muted">Sign in to continue.</p>
+            </div>
+            <small *ngIf="fail" style="color: red;">{{fail}}</small>
+            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <div *ngIf="status">
+              <md-icon>refresh</md-icon>
+              Loading
             </div>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
-                <md-input placeholder="Email" [formControl]="form.controls['email']" style="width: 100%"></md-input>
-                <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">Email is required.</small>
+                <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>
+                <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">Username is required.</small>
               </div>
               <div class="pb-1">
                 <md-input type="password"  placeholder="Password" [formControl]="form.controls['password']" style="width: 100%"></md-input>
@@ -23,7 +29,7 @@
               <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
             </div>
             <div class="pt-1 pb-1 text-xs-center">
-              <a [routerLink]="['/session/forgot']">Forgot password?</a>
+              <a href="#">Forgot password?</a>
             </div>
           </form>
         </md-card-content>

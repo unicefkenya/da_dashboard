@@ -7,18 +7,20 @@
       <div class="logo"></div>
     </div>
     <div class="search-bar" fxFlex>
-      <form class="search-form" fxShow="false" fxShow.gt-xs>
+      <form [formGroup]="form" (ngSubmit)="performSearch(form.value);" class="search-form" fxShow="false" fxShow.gt-xs>
         <md-icon>search</md-icon>
-        <input type="text" placeholder="Search" autofocus="true" />
+        <input [formControl]="form.controls['searchText']"   type="text"  placeholder="Search School Emis Code" autofocus="true" />
       </form>
     </div>
+    <div><h6 style="color:#FFEB3B; margin-bottom:40px;">{{errorSearch}}</h6></div>
+    <div fxFlex></div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
     </button>
-    <button (click)="end.toggle()" md-icon-button class="ml-xs overflow-visible">
+    <!-- <button (click)="end.toggle()" md-icon-button class="ml-xs overflow-visible">
       <md-icon>notifications</md-icon>
       <span class="notification-label">5</span>
-    </button>
+    </button> -->
     <button [md-menu-trigger-for]="user" md-icon-button class="ml-xs">
       <md-icon>person</md-icon>
     </button>
@@ -78,63 +80,6 @@
           </md-nav-list>
         </md-list-item>
       </md-nav-list>
-    </md-sidenav>
-    <md-sidenav #end align="end" class="chat-panel" mode="over" opened="false">
-      <md-tab-group [selectedIndex]="1" md-stretch-tabs>
-        <md-tab>
-          <template md-tab-label>Notifications</template>
-          <div class="scroll">
-            <md-nav-list>
-              <md-list-item>
-                <md-icon md-list-avatar class="md-text-primary">people</md-icon>
-                <h4 md-line>Social</h4>
-                <p md-line>Ligula Purus Adipiscing</p>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar class="md-text-warn">local_offer</md-icon>
-                <h4 md-line>Promotions</h4>
-                <p md-line>Etiam Ligula Dapibus</p>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar class="md-text-accent">info</md-icon>
-                <h4 md-line>Updates</h4>
-                <p md-line>Sollicitudin Euismod Fringilla</p>
-              </md-list-item>
-
-              <md-list-item>
-                <md-icon md-list-avatar class="md-indigo">delete_sweep</md-icon>
-                <h4 md-line>Removed 6 items from task list</h4>
-                <span class="text-md md-text-muted" md-line>{{ 1427207139000 | date: 'fullDate' }}</span>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>check_circle</md-icon>
-                <h4 md-line>Completed 2 projects</h4>
-                <span class="text-md md-text-muted" md-line>{{ 1427412725000 | date: 'fullDate' }}</span>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>notifications_paused</md-icon>
-                <h4 md-line>Muted notifications</h4>
-                <span class="text-md md-text-muted" md-line>{{ 1427546580000 | date: 'fullDate' }}</span>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>person_add</md-icon>
-                <h4 md-line>Added Joel to contact list</h4>
-                <span class="text-md md-text-muted" md-line>{{ 1428275520000 | date: 'fullDate' }}</span>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>phone_missed</md-icon>
-                <h4 md-line>Missed live call from Ellie</h4>
-                <span class="text-md md-text-muted" md-line>{{ 1428830580000 | date: 'fullDate' }}</span>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>group_add</md-icon>
-                <h4 md-line>You've been added to HR group</h4>
-                <span class="text-md md-text-muted" md-line>{{ 1429363920000 | date: 'fullDate' }}</span>
-              </md-list-item>
-            </md-nav-list>
-          </div>
-        </md-tab>
-      </md-tab-group>
     </md-sidenav>
     <router-outlet></router-outlet>
   </md-sidenav-layout>

@@ -28,22 +28,6 @@ const MENUITEMS = [
     icon: 'dashboard'
   },
   {
-    state: 'notifications',
-    name: 'Notifications',
-    type: 'sub',
-    icon: 'notifications',
-    badge: [
-      {type: 'purple', value: '10'}
-    ]
-  },
-  {
-    state: 'reports',
-    name: 'Attendance',
-    type: 'link',
-    icon: 'book'
-  },
-
-  {
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -59,6 +43,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'people',
     children: [
+      {state: 'add-teachers', name: 'Add Teachers'},
       {state: 'view-teachers', name: 'View Teachers'},
     ]
   },
@@ -68,34 +53,26 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'face',
     children: [
+      {state: 'add-children', name: 'Add Children'},
+      {state: 'enrollments', name: 'Enrollments'},
       {state: 'view-children', name: 'View Children'},
     ]
   },
   {
-    state: 'tables',
+    state: 'reports',
     name: 'Reports',
     type: 'sub',
     icon: 'format_line_spacing',
+    badge: [
+      {type: 'purple', value: '5'}
+    ],
     children: [
-      {state: 'fullscreen', name: 'Overal Summary'},
-      {state: 'editing', name: 'Boys'},
-      {state: 'filter', name: 'Girls'},
-      {state: 'paging', name: 'County Summary'},
-      {state: 'sorting', name: 'Listed Schools'},
-      {state: 'pinning', name: 'Listed Teachers'},
+      {state: 'attendance', name: 'Overal Attendance'},
+      {state: 'enrollments', name: 'Enrollments'},
+      {state: 'boys', name: 'Boys Attendance'},
+      {state: 'girls', name: 'Girls Attendance'},
+      {state: 'dropouts', name: 'Children Dropouts'},
     ]
-  },
-  {
-    state: 'charts',
-    name: 'System Logs',
-    type: 'link',
-    icon: 'show_chart',
-  },
-  {
-    state: 'charts',
-    name: 'Activity Logs',
-    type: 'link',
-    icon: 'show_chart',
   },
   {
     state: 'reports',
@@ -104,8 +81,8 @@ const MENUITEMS = [
     icon: 'settings',
 
     children: [
-      {state: 'invoice', name: 'Change Password'},
-      {state: 'invoice', name: 'Profile'},
+      {state: 'changepassword', name: 'Change Password'},
+      {state: 'profile', name: 'Profile'},
 
     ]
   },{

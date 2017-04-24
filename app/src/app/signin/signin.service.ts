@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+import { BaseUrl} from '../baseurl';
 
 import { User } from './user';
 
@@ -11,6 +12,8 @@ import { User } from './user';
 export class SigninService {
 
   //public handleError;
+  public err;
+  private baseApiUrl = BaseUrl.base_api_url;
 
   constructor(
     private _router: Router,
@@ -24,7 +27,7 @@ export class SigninService {
 
   login(user: any){
 
-    const _signinUrl = 'http://uoosc.cloudapp.net/o/token/';
+    const _signinUrl = this.baseApiUrl+'o/token/';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
@@ -37,16 +40,27 @@ export class SigninService {
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(_signinUrl, user, options)
-      .map((data) => {
-        console.log(data.json().access_token);
+      .map((data: Response) => {
+        //login successful if there's a jwt token in response
         this.extractData  = data.json().access_token;
-        localStorage.setItem("user",data.json().access_token)
+        let user = data.json();
+      //  console.log(this.extractData, user.access_token);
+
+        if(user && user.access_token){
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem("user", JSON.stringify(user));
+        }else{
+          localStorage.removeItem("user");
+          //this._router.navigate(['signin']);
+        }
       })
       .catch(this.handleError);
   }
 
+
   handleError(error: any){
-    console.error(error);
+    this.err = error.json();
+    console.log(error);
    return Observable.throw(error.json().error || 'Server error');
   }
   private extractData(res: Response) {

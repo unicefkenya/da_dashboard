@@ -8,7 +8,7 @@ export class ChildrenService {
   constructor( private http: Http){}
 
   fetchChildren(){
-    return this.http.get('http://uoosc.cloudapp.net/api/students.json')
+    return this.http.get('http://uoosc.cloudapp.net/api/students')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

@@ -1,21 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
-import { AuthGuard } from './authguard/authguard.service';
+import { AuthGuard } from './authguard/auth.guard';
+import { SigninService } from './signin/signin.service';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
-import { SharedModule }       from './shared/shared.module';
 
+
+import { SharedModule }       from './shared/shared.module';
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }
@@ -31,6 +34,7 @@ export function createTranslateLoader(http: Http) {
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
@@ -41,7 +45,8 @@ export function createTranslateLoader(http: Http) {
     FlexLayoutModule.forRoot(),
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    SigninService
   ],
   entryComponents: [  ],
   bootstrap: [AppComponent]

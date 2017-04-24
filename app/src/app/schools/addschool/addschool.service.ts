@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+import { BaseUrl} from '../../baseurl';
 
 
 @Injectable()
@@ -10,18 +11,22 @@ export class AddSchoolService {
     private http: Http
   ){}
 
+  public err;
+  private baseApiUrl = BaseUrl.base_api_url;
+
   sendData(user: any){
 
     //console.log(myApiRoutes=>apiRoutes);
 
-    const _schoolRegistrationUrl = 'http://uoosc.cloudapp.net/api/school';
+    const _schoolRegistrationUrl = this.baseApiUrl+'api/school';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
      //const headers = new Headers();
-
+    let token=localStorage.getItem("user");
     let headers = new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
     });
 
     let options = new RequestOptions({headers: headers});
@@ -37,12 +42,6 @@ export class AddSchoolService {
     return body.data || { };
   }
 
-  getUsers(){
-    return this.http.get('http://uoosc.cloudapp.net/api/users.json')
-      .map((response: Response) => response.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
   getConstituencies(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
@@ -50,19 +49,34 @@ export class AddSchoolService {
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get('http://uoosc.cloudapp.net/api/zones.json',options)
+    return this.http.get(this.baseApiUrl+'api/zones',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getCounties(){
-    return this.http.get('http://uoosc.cloudapp.net/api/counties.json')
+    let token=localStorage.getItem("user");
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.baseApiUrl+'api/counties',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  private handleError(error: any){
-    console.log(error);
-    return Observable.throw(error);
+  private handleError(error: Response | any){
+    let errMsg: string;
+
+    if(error instanceof Response){
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    }else{
+      errMsg = error.message ? error.message: error.toString();
+    }
+    console.log(errMsg);
+    return Observable.throw(errMsg);
   }
 }
