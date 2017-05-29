@@ -76,6 +76,12 @@ const MENUITEMS = [
   },
   {
     state: 'reports',
+    name: 'Import',
+    type: 'link',
+    icon: 'backup'
+  },
+  {
+    state: 'reports',
     name: 'Settings',
     type: 'sub',
     icon: 'settings',
