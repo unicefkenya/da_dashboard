@@ -24,6 +24,7 @@
     "@angular/router": "3.4.1",
     "@swimlane/ngx-datatable": "4.1.0",
     "angular-calendar": "0.4.4",
+    "angular2": "^2.0.0-beta.21",
     "angular2-google-maps": "0.17.0",
     "angular2-tree-component": "2.5.1",
     "chart.js": "2.4.0",
@@ -46,10 +47,11 @@
     "zone.js": "0.7.4"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.1",
     "@angular/compiler-cli": "2.4.1",
     "@types/jasmine": "2.5.40",
     "@types/node": "6.0.55",
-    "angular-cli": "1.0.0-beta.24",
+    "angular2-in-memory-web-api": "0.0.21",
     "codelyzer": "2.0.0-beta.4",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.7.0",
@@ -62,7 +64,6 @@
     "ts-node": "2.0.0",
     "tslint": "4.2.0",
     "typescript": "2.0.10",
-    "webdriver-manager": "11.1.0",
-    "angular2-in-memory-web-api": "0.0.21"
+    "webdriver-manager": "11.1.0"
   }
 }
