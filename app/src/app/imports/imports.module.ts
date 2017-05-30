@@ -7,14 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
+import { AuthGuard } from '../authguard/auth.guard';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ImportsRoutes } from './imports.routing';
 import { ImportsComponent } from './imports.component';
 
+
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ImportsRoutes),ChartsModule, MdToolbarModule, MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdButtonToggleModule, MdListModule, MdGridListModule, MdMenuModule, MdSidenavModule, MdProgressBarModule, MdTabsModule,MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ImportsComponent]
+  declarations: [ImportsComponent],
+  providers: [AuthGuard]
 })
 
-export class ChildrenModule {}
+export class ImportsModule {}

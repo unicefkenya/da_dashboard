@@ -29,7 +29,7 @@ export const AppRoutes: Routes = [{
     loadChildren: './teachers/teachers.module#TeachersModule',
     canActivate: [AuthGuard]
   }, {
-    path: 'import',
+    path: 'imports',
     loadChildren: './imports/imports.module#ImportsModule',
     canActivate: [AuthGuard]
   },{

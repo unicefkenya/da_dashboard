@@ -1,12 +1,10 @@
 import { Routes } from "@angular/router";
 
-import { ImportsComponent } from './children.component';
+import { ImportsComponent } from './imports.component';
+import { AuthGuard } from '../authguard/auth.guard';
 
 export const ImportsRoutes: Routes = [{
   path: '',
-  children: [{
-    path: 'add-import',
-    component: ImportsComponent
-  }
-],
+  component: ImportsComponent,
+  canActivate: [AuthGuard]
 }];

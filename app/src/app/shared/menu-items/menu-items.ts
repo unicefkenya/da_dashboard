@@ -75,7 +75,7 @@ const MENUITEMS = [
     ]
   },
   {
-    state: 'reports',
+    state: 'imports',
     name: 'Import',
     type: 'link',
     icon: 'backup'
