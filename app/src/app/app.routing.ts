@@ -52,6 +52,10 @@ export const AppRoutes: Routes = [{
     path: 'search/:id',
     loadChildren: './search/search.module#SearchModule',
     canActivate: [AuthGuard]
+  }, {
+    path: 'profile',
+    loadChildren: './social/social.module#SocialModule',
+    canActivate: [AuthGuard]
   }
 
 ]
