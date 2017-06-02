@@ -2,7 +2,8 @@ import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ImportsService} from './imports.service';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
-
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 
 
 @Component({
@@ -15,8 +16,12 @@ import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 })
 
 export class ImportsComponent implements OnInit {
-
-  constructor(){}
+  public form: FormGroup;
+  constructor(private fb: FormBuilder){
+    this.form = this.fb.group({
+      dataType: [null, Validators.compose([Validators.required,])]
+    });
+  }
 
   ngOnInit(): void {
 
