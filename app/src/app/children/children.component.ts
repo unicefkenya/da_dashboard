@@ -20,7 +20,7 @@ export class ChildrenComponent implements OnInit {
 
   columns = [
     { name: 'Emiscode' },
-    { name: 'Name' },
+    { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Gender' },
     { name: 'Attendance' },
     { name: 'Class' },
