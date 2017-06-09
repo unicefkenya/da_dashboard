@@ -31,7 +31,7 @@ const MENUITEMS = [
     state: 'partners',
     name: 'Partners',
     type: 'sub',
-    icon: 'people',
+    icon: 'extension',
     children: [
       {state: 'add-partners', name: 'Add Partners'},
       {state: 'view-partners', name: 'View Partners'},
@@ -41,7 +41,7 @@ const MENUITEMS = [
     state: 'counties',
     name: 'Counties',
     type: 'link',
-    icon: 'people'
+    icon: 'my_location'
   },
   {
     state: 'schools',
@@ -57,7 +57,7 @@ const MENUITEMS = [
     state: 'classes',
     name: 'Classes',
     type: 'sub',
-    icon: 'people',
+    icon: 'store',
     children: [
       {state: 'add-class', name: 'Add Class'},
       {state: 'view-class', name: 'View Classes'},
