@@ -17,6 +17,8 @@ export class ReportsComponent implements OnInit {
   dt:any;
   children: any[];
   selected: any[];
+  rows =[];
+  temp =[];
 
   columns = [
     { name: 'Emiscode' },
@@ -28,6 +30,12 @@ export class ReportsComponent implements OnInit {
   ];
 
   constructor( private reportsService: ReportsService,private router: Router,) {
+    this.fetch((data) => {
+      // cache our list
+      this.temp = [...data];
+      // push our inital complete list
+      this.rows = data;
+    });
   }
 
   fetchChildren(): void {
@@ -65,6 +73,32 @@ export class ReportsComponent implements OnInit {
  onActivate(event) {
    //console.log('Activate Event', event);
  }
+
+
+
+ //filterng the table
+  updateFilter(event) {
+    let val = event.target.value;
+    // filter our data
+    let temp = this.temp.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.rows = temp;
+  }
+
+ //sorting the table
+  fetch(cb) {
+     const req = new XMLHttpRequest();
+     req.open('GET', `assets/data/company.json`);
+
+     req.onload = () => {
+       let data = JSON.parse(req.response);
+       cb(data);
+     };
+
+     req.send();
+   }
 
   ngOnInit(): void {
     this.fetchChildren()

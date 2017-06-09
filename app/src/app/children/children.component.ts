@@ -31,6 +31,9 @@ export class ChildrenComponent implements OnInit {
 
   constructor( private childrenService: ChildrenService,private router: Router,) {
     this.fetch((data) => {
+      // cache our list
+      this.temp = [...data];
+      // push our inital complete list
       this.rows = data;
     });
   }

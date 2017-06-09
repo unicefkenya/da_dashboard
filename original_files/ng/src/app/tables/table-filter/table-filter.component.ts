@@ -15,7 +15,7 @@ export class TableFilterComponent {
     { name: 'Company' },
     { name: 'Gender' }
   ];
-  
+
   constructor() {
     this.fetch((data) => {
       // cache our list

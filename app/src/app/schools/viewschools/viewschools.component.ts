@@ -12,9 +12,14 @@ export class ViewSchoolsComponent implements OnInit {
 
   constructor(private schoolService: ViewSchoolsService,private router: Router, ) {
     this.fetch((data) => {
+      // cache our list
+      this.temp = [...data];
+      // push our inital complete list
       this.rows = data;
     });
   }
+
+
 
   temp = [];
   rows = [];
