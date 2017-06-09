@@ -17,6 +17,8 @@ export class ChildrenComponent implements OnInit {
   dt:any;
   children: any[];
   selected: any[];
+  temp = [];
+  rows = [];
 
   columns = [
     { name: 'Emiscode' },
@@ -28,6 +30,9 @@ export class ChildrenComponent implements OnInit {
   ];
 
   constructor( private childrenService: ChildrenService,private router: Router,) {
+    this.fetch((data) => {
+      this.rows = data;
+    });
   }
 
   fetchChildren(): void {
@@ -55,6 +60,30 @@ export class ChildrenComponent implements OnInit {
    this.getChildId(this.selected[0].id);
    //this.router.navigate(['/children/child', this.selected[0].id]);
  }
+
+//filtering the table
+ updateFilter(event) {
+   let val = event.target.value;
+   // filter our data
+   let temp = this.temp.filter(function(d) {
+     return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+   });
+   // update the rows
+   this.rows = temp;
+ }
+
+ //sorting the table
+  fetch(cb) {
+     const req = new XMLHttpRequest();
+     req.open('GET', `assets/data/company.json`);
+
+     req.onload = () => {
+       let data = JSON.parse(req.response);
+       cb(data);
+     };
+
+     req.send();
+   }
 
  private getChildId(id){
 

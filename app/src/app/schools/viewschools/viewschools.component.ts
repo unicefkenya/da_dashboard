@@ -10,8 +10,14 @@ import { ViewSchoolsService } from './viewschools.service';
 })
 export class ViewSchoolsComponent implements OnInit {
 
-  constructor(private schoolService: ViewSchoolsService,private router: Router, ) { }
+  constructor(private schoolService: ViewSchoolsService,private router: Router, ) {
+    this.fetch((data) => {
+      this.rows = data;
+    });
+  }
 
+  temp = [];
+  rows = [];
   dt:any;
   schools: any[];
   selected: any[];
@@ -52,6 +58,30 @@ export class ViewSchoolsComponent implements OnInit {
    localStorage.setItem('schoolId', this.selected[0].id);
    this.router.navigate(['/search', this.selected[0].emiscode]);
  }
+
+//filterng the table
+ updateFilter(event) {
+   let val = event.target.value;
+   // filter our data
+   let temp = this.temp.filter(function(d) {
+     return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+   });
+   // update the rows
+   this.rows = temp;
+ }
+
+//sorting the table
+ fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
+
+    req.onload = () => {
+      let data = JSON.parse(req.response);
+      cb(data);
+    };
+
+    req.send();
+  }
 
  onActivate(event) {
    //console.log('Activate Event', event);

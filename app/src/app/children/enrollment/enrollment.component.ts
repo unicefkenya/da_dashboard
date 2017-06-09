@@ -10,8 +10,14 @@ import { EnrollmentService } from './enrollment.service';
 })
 export class EnrollmentComponent implements OnInit {
 
-  constructor(private enrollmentService: EnrollmentService){}
+  constructor(private enrollmentService: EnrollmentService){
+    this.fetch((data) => {
+      this.rows = data;
+    });
+  }
 
+  public temp = [];
+  public rows = [];
   public studentCount: any;
   public tmp: any;
   public students: any[];
@@ -42,6 +48,31 @@ export class EnrollmentComponent implements OnInit {
 
     });
   }
+
+  //filtering the table
+   updateFilter(event) {
+     let val = event.target.value;
+     // filter our data
+     let temp = this.temp.filter(function(d) {
+       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+     });
+     // update the rows
+     this.rows = temp;
+   }
+
+   //sorting the table
+    fetch(cb) {
+       const req = new XMLHttpRequest();
+       req.open('GET', `assets/data/company.json`);
+
+       req.onload = () => {
+         let data = JSON.parse(req.response);
+         cb(data);
+       };
+
+       req.send();
+     }
+
 
   ngOnInit(): void {
     this.fetchEnrolled();

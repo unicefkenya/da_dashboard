@@ -40,6 +40,7 @@
   </div>
 </div>
 
+<md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 100%" class="mb-1 ml-1 mr-1"></md-input>
 <div fxFlex.gt-sm="100%" fxFlex="100">
   <ngx-datatable
     class="material"

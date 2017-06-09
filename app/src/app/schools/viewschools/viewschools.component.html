@@ -1,13 +1,4 @@
-<!--
-<div class="search-bar" fxFlex>
-  <form [formGroup]="form" (ngSubmit)="performSearch(form.value);" class="search-form" fxShow="false" fxShow.gt-xs>
-    <md-icon>search</md-icon>
-    <input [formControl]="form.controls['searchText']"   type="text"  placeholder="Search School Emis Code" autofocus="true" />
-  </form>
-</div>
-<div><h6 style="color:#FFEB3B; margin-bottom:40px;">{{errorSearch}}</h6></div>
-
--->
+<md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 100%" class="mb-1 ml-1 mr-1"></md-input>
 <ngx-datatable
   class="material fullscreen"
   [columns]="columns"
