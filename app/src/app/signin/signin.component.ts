@@ -25,6 +25,11 @@ export class SigninComponent implements OnInit {
   returnUrl: string;
   loading =false;
 
+  //access levels
+  public partner;
+  public school;
+  public admin = "unicef";
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -55,8 +60,15 @@ export class SigninComponent implements OnInit {
     ).subscribe(
       data => //console.log(data),
       {
+
+        console.log("Logged In", email, data);
         this.success = "Logged In Successfully";
-        this.router.navigate([this.returnUrl]);
+
+        if(email == 'unicef'){
+          this.router.navigate([this.returnUrl]);
+        }else{
+          this.router.navigate(['/view-schools']);
+        }
       },
       error => {
         this.fail = "Wrong Username/ Password combination";
