@@ -28,6 +28,22 @@ const MENUITEMS = [
     icon: 'dashboard'
   },
   {
+    state: 'partners',
+    name: 'Partners',
+    type: 'sub',
+    icon: 'people',
+    children: [
+      {state: 'add-partners', name: 'Add Partners'},
+      {state: 'view-partners', name: 'View Partners'},
+    ]
+  },
+  {
+    state: 'counties',
+    name: 'Counties',
+    type: 'link',
+    icon: 'people'
+  },
+  {
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -35,6 +51,16 @@ const MENUITEMS = [
     children: [
       {state: 'add-schools', name: 'Add Schools'},
       {state: 'view-schools', name: 'View Schools'}
+    ]
+  },
+  {
+    state: 'classes',
+    name: 'Classes',
+    type: 'sub',
+    icon: 'people',
+    children: [
+      {state: 'add-class', name: 'Add Class'},
+      {state: 'view-class', name: 'View Classes'},
     ]
   },
   {

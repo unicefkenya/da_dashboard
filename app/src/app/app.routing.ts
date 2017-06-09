@@ -17,6 +17,19 @@ export const AppRoutes: Routes = [{
     loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuard]
   }, {
+    path: 'classes',
+    loadChildren: './classes/classes.module#ClassesModule',
+    canActivate: [AuthGuard]
+  },{
+    path: 'partners',
+    loadChildren: './partners/partners.module#PartnersModule',
+    canActivate: [AuthGuard]
+  },{
+    path: 'counties',
+    loadChildren: './counties/counties.module#CountiesModule',
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'children',
     loadChildren: './children/children.module#ChildrenModule',
     canActivate: [AuthGuard]
