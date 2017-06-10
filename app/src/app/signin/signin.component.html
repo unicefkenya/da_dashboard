@@ -3,6 +3,9 @@
     <div class="session-wrapper">
       <md-card>
         <md-card-content>
+          <div *ngIf="load == true" class="loader">
+            Loading...
+          </div>
           <form  (ngSubmit)="onSubmit()">
             <div class="text-xs-center pb-1">
               <img src="assets/images/logo-dark.png" alt=""/>
@@ -10,10 +13,6 @@
             </div>
             <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <small *ngIf="success" style="color: green;">{{success}}</small>
-            <div *ngIf="status">
-              <md-icon>refresh</md-icon>
-              Loading
-            </div>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
                 <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>

@@ -24,6 +24,8 @@ export class SigninComponent implements OnInit {
   public userLogin: User;
   returnUrl: string;
   loading =false;
+  load:boolean;
+
 
   //access levels
   public partner;
@@ -54,6 +56,7 @@ export class SigninComponent implements OnInit {
 
     this.user = new User(email,password);
     this.status  = true;
+    this.load = true;
 
     this._signin.login(
       "username="+email+"&password="+password+"&grant_type=password&client_id=dnFhSdWfy2XjFqTzpSLMbYqRKOgGei2eG7hUnNDS"
@@ -63,7 +66,7 @@ export class SigninComponent implements OnInit {
 
         console.log("Logged In", email, data);
         this.success = "Logged In Successfully";
-
+        this.load = false;
         if(email == 'unicef'){
           this.router.navigate([this.returnUrl]);
         }else{
@@ -71,6 +74,7 @@ export class SigninComponent implements OnInit {
         }
       },
       error => {
+        this.load = false;
         this.fail = "Wrong Username/ Password combination";
         this.form.reset();
       }
