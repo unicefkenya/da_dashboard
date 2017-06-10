@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 
-import { AddPartnerComponent } from './addpartner/addpartner.component';
-import { ViewPartnersComponent } from './viewpartners/viewpartners.component';
+import { AddpartnerComponent } from './addpartner/addpartner.component';
+import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
 
 
 export const PartnersRoutes: Routes = [
@@ -9,10 +9,10 @@ export const PartnersRoutes: Routes = [
     path: '',
     children: [{
       path: 'view-partners',
-      component: ViewPartnersComponent
+      component: ViewpartnersComponent
     },{
       path: 'add-partner',
-      component: AddPartnerComponent
+      component: AddpartnerComponent
     }
   ],
   }

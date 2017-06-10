@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ClassService} from './class.service';
-import { Class } from './class';
+//import { Class } from './class';
 
 
 
@@ -12,4 +12,6 @@ import { Class } from './class';
   providers: [ClassService]
 
 })
-export class ClassComponent implements OnInit {}
+export class ClassComponent implements OnInit {
+  ngOnInit(){}
+}

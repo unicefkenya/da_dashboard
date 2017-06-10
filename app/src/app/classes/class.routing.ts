@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 
-import { AddClassComponent } from './addclass/addclass.component';
-import { ViewClassesComponent } from './viewclasses/viewclasses.component';
+import { AddclassComponent } from './addclass/addclass.component';
+import { ViewclassesComponent } from './viewclasses/viewclasses.component';
 
 
 export const ClassesRoutes: Routes = [
@@ -9,10 +9,10 @@ export const ClassesRoutes: Routes = [
     path: '',
     children: [{
       path: 'view-classes',
-      component: ViewClassesComponent
+      component: ViewclassesComponent
     },{
       path: 'add-class',
-      component: AddClassComponent
+      component: AddclassComponent
     }
   ],
   }

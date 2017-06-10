@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { ViewpartnersService} from './addpartner.service';
+import { ViewpartnersService} from './viewpartners.service';
 //import { Partner } from './partner';
 
 
@@ -12,4 +12,6 @@ import { ViewpartnersService} from './addpartner.service';
   providers: [ViewpartnersService]
 
 })
-export class ViewpartnersComponent implements OnInit {}
+export class ViewpartnersComponent implements OnInit {
+  ngOnInit(){}
+}

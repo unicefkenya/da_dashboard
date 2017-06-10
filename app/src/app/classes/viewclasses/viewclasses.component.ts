@@ -12,4 +12,6 @@ import { ViewclassesService} from './viewclasses.service';
   providers: [ViewclassesService]
 
 })
-export class ViewclassesComponent {}
+export class ViewclassesComponent implements OnInit{
+  ngOnInit(){}
+}

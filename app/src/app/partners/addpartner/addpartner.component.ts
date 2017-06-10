@@ -12,4 +12,6 @@ import { AddpartnerService} from './addpartner.service';
   providers: [AddpartnerService]
 
 })
-export class AddpartnerComponent {}
+export class AddpartnerComponent implements OnInit{
+  ngOnInit(){}
+}

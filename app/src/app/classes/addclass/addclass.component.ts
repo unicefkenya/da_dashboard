@@ -12,4 +12,6 @@ import { AddclassService} from './addclass.service';
   providers: [AddclassService]
 
 })
-export class AddclassComponent {}
+export class AddclassComponent implements OnInit {
+  ngOnInit(){}
+}

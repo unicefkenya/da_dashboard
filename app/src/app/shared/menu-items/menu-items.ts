@@ -33,7 +33,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'extension',
     children: [
-      {state: 'add-partners', name: 'Add Partners'},
+      {state: 'add-partner', name: 'Add Partners'},
       {state: 'view-partners', name: 'View Partners'},
     ]
   },
@@ -60,7 +60,7 @@ const MENUITEMS = [
     icon: 'store',
     children: [
       {state: 'add-class', name: 'Add Class'},
-      {state: 'view-class', name: 'View Classes'},
+      {state: 'view-classes', name: 'View Classes'},
     ]
   },
   {
