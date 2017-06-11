@@ -11,6 +11,7 @@ export class ImportsService {
 
 private baseApiUrl = BaseUrl.base_api_url;
 
+/*
 //send Import data
 sendSchoolsData(user: any){
 
@@ -31,7 +32,7 @@ sendSchoolsData(user: any){
     .map(this.extractData)
     .catch(this.handleError);
 
-}
+}*/
 
 //students
 sendStudentsData(user: any){

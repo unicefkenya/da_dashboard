@@ -19,7 +19,6 @@ export class SigninComponent implements OnInit {
   public errorMsg = '';
   public success;
   public fail;
-  public status;
   public form: FormGroup;
   public userLogin: User;
   returnUrl: string;
@@ -55,7 +54,6 @@ export class SigninComponent implements OnInit {
     var password = this.form.value.password;
 
     this.user = new User(email,password);
-    this.status  = true;
     this.load = true;
 
     this._signin.login(

@@ -3,22 +3,6 @@
   <md-card-subtitle>Upload excel files in the correct format</md-card-subtitle>
 
   <md-card-content>
-    <div fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="start">
-      <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100"  class="pr-1">
-        <h6 class="mt-0" style="padding-left: 55%;">Data Type</h6>
-      </div>
-      <div fxFlex.gt-sm="80" fxFlex.gt-xs="50" fxFlex="100">
-        <div fxLayout="column"  class="mb-2 ml-xs mr-xs">
-          <md-select ngModel [formControl]="form.controls['dataType']" placeholder="Choose data for import">
-            <md-option value="Teachers">Schools</md-option>
-            <md-option value="Children">Children</md-option>
-            <md-option value="NewlyEnrolled">Newly Enrolled</md-option>
-            <md-option value="Teachers">Teachers</md-option>
-          </md-select>
-          <small *ngIf="form.controls['dataType'].hasError('required') && form.controls['dataType'].touched" class="md-text-warn">Kindly input the data type.</small>
-        </div>
-      </div>
-    </div>
     <div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="start">
       <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100"  class="pr-1" style="margin-top: 50px;">
         <h6 class="mt-0">Select files</h6>
