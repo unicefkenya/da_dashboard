@@ -20,7 +20,10 @@ export class ChildrenComponent implements OnInit {
   selected: any[];
   rows = [];
   temp = [];
-  tableOffset = 1;
+  count: number = 0;
+  offset: number = 0;
+  limit: number = 100;
+  tableOffset:number = 0;
 
   columns = [
     { name: 'Emiscode' },
@@ -34,7 +37,7 @@ export class ChildrenComponent implements OnInit {
   constructor( private childrenService: ChildrenService,private router: Router) {
   }
 
-  fetchChildren(): void {
+  fetchChildren(offset,limit): void {
     this.childrenService.fetchChildren().subscribe(data => {
       this.loading = false;
       let childs =[]
@@ -48,8 +51,24 @@ export class ChildrenComponent implements OnInit {
         this.dt.id = data[i].id
         childs.push(this.dt)
       }
+
       this.children = childs;
       this.selected = [];
+
+      /*
+      //pagination
+      this.count = data.length;
+
+      const start = offset * limit;
+      const end = start + limit;
+      console.log("Sadas",this.children);
+      for (let i = start; i < end; i++) {
+        this.children[i] = data[i];
+      }
+
+
+      console.log('Page Results', start, end);
+      */
     });
   }
 
@@ -81,17 +100,19 @@ export class ChildrenComponent implements OnInit {
     });
     // update the rows
     this.children = temp;
-
     // Whenever the filter changes, always go back to the first page
     this.tableOffset = 0;
-
   }
 
-
-
+/*
+  onPage(event) {
+    console.log('Page Event', event);
+    this.fetchChildren(event.offset, event.limit);
+  }
+*/
   ngOnInit(): void {
     this.loading = true;
-    this.fetchChildren();
+    this.fetchChildren(this.offset, this.limit);
   }
 
 }
