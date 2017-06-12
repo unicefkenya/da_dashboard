@@ -14,6 +14,7 @@ import { Children } from './children';
 })
 export class ChildrenComponent implements OnInit {
 
+  loading:boolean;
   dt:any;
   children: any[];
   selected: any[];
@@ -29,7 +30,7 @@ export class ChildrenComponent implements OnInit {
 
   ];
 
-  constructor( private childrenService: ChildrenService,private router: Router,) {
+  constructor( private childrenService: ChildrenService,private router: Router) {
     this.fetch((data) => {
       // cache our list
       this.temp = [...data];
@@ -40,7 +41,7 @@ export class ChildrenComponent implements OnInit {
 
   fetchChildren(): void {
     this.childrenService.fetchChildren().subscribe(data => {
-
+      this.loading = false;
       let childs =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
@@ -99,7 +100,9 @@ export class ChildrenComponent implements OnInit {
  }
 
   ngOnInit(): void {
-    this.fetchChildren()
+
+    this.loading = true;
+    this.fetchChildren();
   }
 
 }

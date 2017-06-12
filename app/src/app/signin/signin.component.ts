@@ -65,11 +65,8 @@ export class SigninComponent implements OnInit {
         console.log("Logged In", email, data);
         this.success = "Logged In Successfully";
         this.load = false;
-        if(email == 'unicef'){
-          this.router.navigate([this.returnUrl]);
-        }else{
-          this.router.navigate(['/view-schools']);
-        }
+        this.router.navigate([this.returnUrl]);
+
       },
       error => {
         this.load = false;

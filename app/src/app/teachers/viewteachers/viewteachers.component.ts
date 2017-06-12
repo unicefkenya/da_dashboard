@@ -9,10 +9,19 @@ import { ViewTeachersService } from './viewteachers.service';
 })
 export class ViewTeachersComponent implements OnInit {
 
-  constructor(private teachersService: ViewTeachersService) { }
-
+  constructor(private teachersService: ViewTeachersService) {
+    this.fetch((data) => {
+      // cache our list
+      this.temp = [...data];
+      // push our inital complete list
+      this.rows = data;
+    });
+  }
+  loading:boolean;
   teachers : any[];
   tmp :any;
+  temp = [];
+  rows = [];
 
   columns = [
     { name: 'Name' },
@@ -24,7 +33,7 @@ export class ViewTeachersComponent implements OnInit {
 
   fetchTeachers(): void{
     this.teachersService.fetchTeachers().subscribe( data=> {
-
+      this.loading = false;
       let items = [];
       for (let i = 0; i < data.length; i++){
         this.tmp = {}
@@ -42,7 +51,33 @@ export class ViewTeachersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.fetchTeachers();
   }
+
+  //filtering the table
+   updateFilter(event) {
+     let val = event.target.value;
+     // filter our data
+     let temp = this.temp.filter(function(d) {
+       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+     });
+     // update the rows
+     this.rows = temp;
+   }
+
+   //sorting the table
+    fetch(cb) {
+       const req = new XMLHttpRequest();
+       req.open('GET', `assets/data/company.json`);
+
+       req.onload = () => {
+         let data = JSON.parse(req.response);
+         cb(data);
+       };
+
+       req.send();
+   }
+
 
 }

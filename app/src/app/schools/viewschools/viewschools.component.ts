@@ -20,7 +20,7 @@ export class ViewSchoolsComponent implements OnInit {
   }
 
 
-
+  loading: boolean;
   temp = [];
   rows = [];
   dt:any;
@@ -38,7 +38,7 @@ export class ViewSchoolsComponent implements OnInit {
   fetchSchools(): void {
     this.schoolService.fetchSchools().subscribe(data => {
       //console.log(data);
-
+      this.loading = false;
       let items =[];
       for (let i = 0; i < data.length; i++){
         this.dt = {}
@@ -93,7 +93,7 @@ export class ViewSchoolsComponent implements OnInit {
  }
 
   ngOnInit(): void {
-
+    this.loading = true;
     this.fetchSchools();
   }
 

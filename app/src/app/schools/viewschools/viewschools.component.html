@@ -1,3 +1,7 @@
+<div *ngIf="loading == true" class="loader">
+  Loading...
+</div>
+<div *ngIf="loading == false">
 <md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
 <ngx-datatable
   class="material fullscreen"
@@ -14,3 +18,4 @@
   (activate)="onActivate($event)"
   (select)='onSelect($event)'>
 </ngx-datatable>
+</div>

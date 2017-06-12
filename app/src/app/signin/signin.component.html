@@ -11,8 +11,8 @@
               <img src="assets/images/logo-dark.png" alt=""/>
               <p class="md-text-muted">Sign in to continue.</p>
             </div>
-            <small *ngIf="fail" style="color: red;">{{fail}}</small>
-            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <small *ngIf="load == false" style="color: red;">{{fail}}</small>
+            <small *ngIf="load == true" style="color: green;">{{success}}</small>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
                 <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>
