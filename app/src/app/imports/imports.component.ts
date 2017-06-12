@@ -10,8 +10,6 @@ import {importStudent} from './importStudent';
 import {BaseUrl} from '../baseurl';
 
 
-// const URL = '/api/';
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
   selector: 'app-imports',
@@ -25,6 +23,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 
 export class ImportsComponent implements OnInit {
+
 
   public form: FormGroup;
   public submitted;
@@ -53,23 +52,27 @@ export class ImportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log(this.baseApiUrl+'api/students/import');
   }
 
   public token=localStorage.getItem("user");
 
   public uploader:FileUploader = new FileUploader({
             url: this.baseApiUrl+'api/students/import',
+            headers: [
+              {name: 'Content-Type', value:'multipart/form-data'}
+            ],
+            itemAlias: 'file',
+            disableMultipart: true,
             authToken: 'Authorization',
             authTokenHeader: this.token
           });
-
 
 /*
 public uploader:FileUploader = new FileUploader({
           url: 'https://evening-anchorage-3159.herokuapp.com/api/',
         });
-  */
+*/
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
 

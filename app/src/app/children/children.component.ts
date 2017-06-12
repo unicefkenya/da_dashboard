@@ -20,11 +20,7 @@ export class ChildrenComponent implements OnInit {
   selected: any[];
   rows = [];
   temp = [];
-  //temp2 = this.rows;
-  table ={
-    offset: 0,
-  }
-
+  tableOffset = 1;
 
   columns = [
     { name: 'Emiscode' },
@@ -85,10 +81,13 @@ export class ChildrenComponent implements OnInit {
     });
     // update the rows
     this.children = temp;
-    console.log(temp);
+
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.tableOffset = 0;
+
   }
+
+
 
   ngOnInit(): void {
     this.loading = true;
