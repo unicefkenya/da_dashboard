@@ -19,7 +19,6 @@ export class ViewSchoolsComponent implements OnInit {
     });
   }
 
-
   loading: boolean;
   temp = [];
   rows = [];
