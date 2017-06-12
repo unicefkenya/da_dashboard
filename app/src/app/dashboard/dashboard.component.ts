@@ -203,6 +203,7 @@ export class DashboardComponent {
   public getAnnualAttendanceGender(){
       this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
 
+      data = data.results;
       let children = [];
 
       children.push(data[0].present_males);
@@ -216,11 +217,12 @@ export class DashboardComponent {
   public getAnnualEnrollmentGender(){
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
-      let enrolled = [];
-      enrolled.push(data[0].enrolled_females);
-      enrolled.push(data[0].enrolled_males);
+        data = data.results;
+        let enrolled = [];
+        enrolled.push(data[0].enrolled_females);
+        enrolled.push(data[0].enrolled_males);
 
-      this.pieChartEnrollmentData = enrolled;
+        this.pieChartEnrollmentData = enrolled;
 
     });
   }
@@ -235,15 +237,16 @@ export class DashboardComponent {
   public getMonthlyAttendance(){
 
     this.dashboardServices.getMonthlyAttendance().subscribe( data => {
-
+      data = data.results;
       let subset = data.slice(Math.max(data.length - 6, 0));
 
-      let columns:string[] = [];
+      let columns:Date [] = [];
       let totalAbsent: number [] = [];
       let totalPresent: number [] = [];
 
       for(let i = 0; i < subset.length; i++){
 
+        let dates = new Date(subset[i].value);
 
         columns.push(subset[i].value);
         totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
@@ -252,25 +255,25 @@ export class DashboardComponent {
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalAbsent,
-        label: 'Absent Students',
+        data: totalPresent,
+        label: 'Present Students',
         borderWidth: 1,
         type: 'line',
         fill: false
       },{
-        data: totalPresent,
-        label: 'Present Students',
+        data: totalAbsent,
+        label: 'Absent Students',
         borderWidth: 1,
         tupe: 'bar',
       }];
-  });
+    });
   }
 
   //Norman - children newly enrolled in all the classes
   public getChildrenEnrolled(){
 
     this.dashboardServices.getChildrenEnrolled().subscribe( data => {
-
+      data = data.results;
       let subset = data.slice(Math.max(data.length - 8, 0));
 
       let columns:string[] = [];
@@ -341,7 +344,7 @@ export class DashboardComponent {
   public getSevenDaysAttendance(){
 
     this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
-
+      data = data.results;
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
