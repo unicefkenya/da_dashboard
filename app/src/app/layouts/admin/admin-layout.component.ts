@@ -55,6 +55,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     });
     //this.performSearch();
 
+    console.log(this.currentUser);
+
   }
 
 

@@ -5,6 +5,7 @@ import { MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarMod
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MaterialModule } from '@angular/material';
 
 import {CapitalizePipe} from "../pipes/capitalize.pipe";
 
@@ -14,7 +15,7 @@ import { ViewSchoolsComponent } from './viewschools/viewschools.component';
 
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(SchoolsRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
+  imports: [MaterialModule, CommonModule, RouterModule.forChild(SchoolsRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
   declarations: [ AddSchoolsComponent, ViewSchoolsComponent,CapitalizePipe]
 })
 

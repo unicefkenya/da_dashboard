@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 })
 export class TableFilterComponent {
   rows = [];
-
   temp = [];
 
   columns = [
@@ -15,7 +14,7 @@ export class TableFilterComponent {
     { name: 'Company' },
     { name: 'Gender' }
   ];
-  
+
   constructor() {
     this.fetch((data) => {
       // cache our list

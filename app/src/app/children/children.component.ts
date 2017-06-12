@@ -14,25 +14,33 @@ import { Children } from './children';
 })
 export class ChildrenComponent implements OnInit {
 
+  loading:boolean;
   dt:any;
-  children: any[];
+  children: any[] = this.rows;
   selected: any[];
+  rows = [];
+  temp = [];
+  //temp2 = this.rows;
+  table ={
+    offset: 0,
+  }
+
 
   columns = [
     { name: 'Emiscode' },
-    { name: 'Name' },
+    { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Gender' },
     { name: 'Attendance' },
     { name: 'Class' },
 
   ];
 
-  constructor( private childrenService: ChildrenService,private router: Router,) {
+  constructor( private childrenService: ChildrenService,private router: Router) {
   }
 
   fetchChildren(): void {
     this.childrenService.fetchChildren().subscribe(data => {
-
+      this.loading = false;
       let childs =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
@@ -54,20 +62,37 @@ export class ChildrenComponent implements OnInit {
    localStorage.setItem('childId', this.selected[0].id);
    this.getChildId(this.selected[0].id);
    //this.router.navigate(['/children/child', this.selected[0].id]);
- }
+   }
 
- private getChildId(id){
+   private getChildId(id){
 
-   this.router.navigate(['/children/child', id]);
+     this.router.navigate(['/children/child', id]);
 
- }
+   }
 
- onActivate(event) {
-   //console.log('Activate Event', event);
- }
+   onActivate(event) {
+     //console.log('Activate Event', event);
+   }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+    this.rows = [...this.children];
+    this.temp = [...this.rows];
+
+    // filter our data
+    const temp = this.rows.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.children = temp;
+    console.log(temp);
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
 
   ngOnInit(): void {
-    this.fetchChildren()
+    this.loading = true;
+    this.fetchChildren();
   }
 
 }

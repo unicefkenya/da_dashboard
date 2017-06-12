@@ -28,6 +28,22 @@ const MENUITEMS = [
     icon: 'dashboard'
   },
   {
+    state: 'partners',
+    name: 'Partners',
+    type: 'sub',
+    icon: 'extension',
+    children: [
+      {state: 'add-partner', name: 'Add Partners'},
+      {state: 'view-partners', name: 'View Partners'},
+    ]
+  },
+  {
+    state: 'counties',
+    name: 'Counties',
+    type: 'link',
+    icon: 'my_location'
+  },
+  {
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -35,6 +51,16 @@ const MENUITEMS = [
     children: [
       {state: 'add-schools', name: 'Add Schools'},
       {state: 'view-schools', name: 'View Schools'}
+    ]
+  },
+  {
+    state: 'classes',
+    name: 'Classes',
+    type: 'sub',
+    icon: 'store',
+    children: [
+      {state: 'add-class', name: 'Add Class'},
+      {state: 'view-classes', name: 'View Classes'},
     ]
   },
   {
@@ -73,6 +99,12 @@ const MENUITEMS = [
       {state: 'girls', name: 'Girls Attendance'},
       {state: 'dropouts', name: 'Children Dropouts'},
     ]
+  },
+  {
+    state: 'imports',
+    name: 'Import',
+    type: 'link',
+    icon: 'backup'
   },
   {
     state: 'reports',

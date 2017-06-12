@@ -17,6 +17,19 @@ export const AppRoutes: Routes = [{
     loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuard]
   }, {
+    path: 'classes',
+    loadChildren: './classes/class.module#ClassModule',
+    canActivate: [AuthGuard]
+  },{
+    path: 'partners',
+    loadChildren: './partners/partners.module#PartnersModule',
+    canActivate: [AuthGuard]
+  },{
+    path: 'counties',
+    loadChildren: './counties/county.module#CountyModule',
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'children',
     loadChildren: './children/children.module#ChildrenModule',
     canActivate: [AuthGuard]
@@ -29,6 +42,10 @@ export const AppRoutes: Routes = [{
     loadChildren: './teachers/teachers.module#TeachersModule',
     canActivate: [AuthGuard]
   }, {
+    path: 'imports',
+    loadChildren: './imports/imports.module#ImportsModule',
+    canActivate: [AuthGuard]
+  },{
     path: 'reports',
     loadChildren: './reports/reports.module#ReportsModule',
     canActivate: [AuthGuard]
@@ -47,6 +64,10 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'search/:id',
     loadChildren: './search/search.module#SearchModule',
+    canActivate: [AuthGuard]
+  }, {
+    path: 'profile',
+    loadChildren: './social/social.module#SocialModule',
     canActivate: [AuthGuard]
   }
 

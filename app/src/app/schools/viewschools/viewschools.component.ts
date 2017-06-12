@@ -10,8 +10,18 @@ import { ViewSchoolsService } from './viewschools.service';
 })
 export class ViewSchoolsComponent implements OnInit {
 
-  constructor(private schoolService: ViewSchoolsService,private router: Router, ) { }
+  constructor(private schoolService: ViewSchoolsService,private router: Router, ) {
+    this.fetch((data) => {
+      // cache our list
+      this.temp = [...data];
+      // push our inital complete list
+      this.rows = data;
+    });
+  }
 
+  loading: boolean;
+  temp = [];
+  rows = [];
   dt:any;
   schools: any[];
   selected: any[];
@@ -27,7 +37,7 @@ export class ViewSchoolsComponent implements OnInit {
   fetchSchools(): void {
     this.schoolService.fetchSchools().subscribe(data => {
       //console.log(data);
-
+      this.loading = false;
       let items =[];
       for (let i = 0; i < data.length; i++){
         this.dt = {}
@@ -53,12 +63,36 @@ export class ViewSchoolsComponent implements OnInit {
    this.router.navigate(['/search', this.selected[0].emiscode]);
  }
 
+//filterng the table
+ updateFilter(event) {
+   let val = event.target.value;
+   // filter our data
+   let temp = this.temp.filter(function(d) {
+     return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+   });
+   // update the rows
+   this.rows = temp;
+ }
+
+//sorting the table
+ fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
+
+    req.onload = () => {
+      let data = JSON.parse(req.response);
+      cb(data);
+    };
+
+    req.send();
+  }
+
  onActivate(event) {
    //console.log('Activate Event', event);
  }
 
   ngOnInit(): void {
-
+    this.loading = true;
     this.fetchSchools();
   }
 

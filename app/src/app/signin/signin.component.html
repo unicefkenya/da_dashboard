@@ -3,17 +3,20 @@
     <div class="session-wrapper">
       <md-card>
         <md-card-content>
+          <div *ngIf="load == true" class="">
+            <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:12%; margin-right: auto; margin-left:auto;">
+              <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+                <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+              </svg>
+            </md-progress-spinner>
+          </div>
           <form  (ngSubmit)="onSubmit()">
             <div class="text-xs-center pb-1">
               <img src="assets/images/logo-dark.png" alt=""/>
               <p class="md-text-muted">Sign in to continue.</p>
             </div>
-            <small *ngIf="fail" style="color: red;">{{fail}}</small>
-            <small *ngIf="success" style="color: green;">{{success}}</small>
-            <div *ngIf="status">
-              <md-icon>refresh</md-icon>
-              Loading
-            </div>
+            <small *ngIf="load == false" style="color: red;">{{fail}}</small>
+            <small *ngIf="load == true" style="color: green;">{{success}}</small>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
                 <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>

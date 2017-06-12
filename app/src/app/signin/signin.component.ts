@@ -19,11 +19,17 @@ export class SigninComponent implements OnInit {
   public errorMsg = '';
   public success;
   public fail;
-  public status;
   public form: FormGroup;
   public userLogin: User;
   returnUrl: string;
   loading =false;
+  load:boolean;
+
+
+  //access levels
+  public partner;
+  public school;
+  public admin = "unicef";
 
   constructor(
     private fb: FormBuilder,
@@ -48,17 +54,22 @@ export class SigninComponent implements OnInit {
     var password = this.form.value.password;
 
     this.user = new User(email,password);
-    this.status  = true;
+    this.load = true;
 
     this._signin.login(
       "username="+email+"&password="+password+"&grant_type=password&client_id=dnFhSdWfy2XjFqTzpSLMbYqRKOgGei2eG7hUnNDS"
     ).subscribe(
       data => //console.log(data),
       {
+
+        console.log("Logged In", email, data);
         this.success = "Logged In Successfully";
+        this.load = false;
         this.router.navigate([this.returnUrl]);
+
       },
       error => {
+        this.load = false;
         this.fail = "Wrong Username/ Password combination";
         this.form.reset();
       }
