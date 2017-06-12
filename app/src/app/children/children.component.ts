@@ -16,10 +16,15 @@ export class ChildrenComponent implements OnInit {
 
   loading:boolean;
   dt:any;
-  children: any[];
+  children: any[] = this.rows;
   selected: any[];
-  temp = [];
   rows = [];
+  temp = [];
+  //temp2 = this.rows;
+  table ={
+    offset: 0,
+  }
+
 
   columns = [
     { name: 'Emiscode' },
@@ -31,12 +36,6 @@ export class ChildrenComponent implements OnInit {
   ];
 
   constructor( private childrenService: ChildrenService,private router: Router) {
-    this.fetch((data) => {
-      // cache our list
-      this.temp = [...data];
-      // push our inital complete list
-      this.rows = data;
-    });
   }
 
   fetchChildren(): void {
@@ -63,44 +62,35 @@ export class ChildrenComponent implements OnInit {
    localStorage.setItem('childId', this.selected[0].id);
    this.getChildId(this.selected[0].id);
    //this.router.navigate(['/children/child', this.selected[0].id]);
- }
-
-//filtering the table
- updateFilter(event) {
-   let val = event.target.value;
-   // filter our data
-   let temp = this.temp.filter(function(d) {
-     return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-   });
-   // update the rows
-   this.rows = temp;
- }
-
- //sorting the table
-  fetch(cb) {
-     const req = new XMLHttpRequest();
-     req.open('GET', `assets/data/company.json`);
-
-     req.onload = () => {
-       let data = JSON.parse(req.response);
-       cb(data);
-     };
-
-     req.send();
    }
 
- private getChildId(id){
+   private getChildId(id){
 
-   this.router.navigate(['/children/child', id]);
+     this.router.navigate(['/children/child', id]);
 
- }
+   }
 
- onActivate(event) {
-   //console.log('Activate Event', event);
- }
+   onActivate(event) {
+     //console.log('Activate Event', event);
+   }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+    this.rows = [...this.children];
+    this.temp = [...this.rows];
+
+    // filter our data
+    const temp = this.rows.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.children = temp;
+    console.log(temp);
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
 
   ngOnInit(): void {
-
     this.loading = true;
     this.fetchChildren();
   }
