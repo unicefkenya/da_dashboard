@@ -48,7 +48,7 @@ export class SigninService {
 
         if(user && user.access_token){
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("user", JSON.stringify(user.access_token));
         }else{
           localStorage.removeItem("user");
           //this._router.navigate(['signin']);
