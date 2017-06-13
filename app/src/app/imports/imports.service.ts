@@ -11,49 +11,28 @@ export class ImportsService {
 
 private baseApiUrl = BaseUrl.base_api_url;
 
-/*
-//send Import data
-sendSchoolsData(user: any){
-
-  const schoolsImport = this.baseApiUrl+'api/schools/import';
-  const body = JSON.stringify(user);
-
-   //this is optional - angular2 already sends these
-   //const headers = new Headers();
-  let token=localStorage.getItem("user");
-  let headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization':'Bearer '+token
-  });
-
-  let options = new RequestOptions({headers: headers});
-
-  return this.http.post(schoolsImport, body, options)
-    .map(this.extractData)
-    .catch(this.handleError);
-
-}*/
-
-//students
-sendStudentsData(user: any){
-
-  const studentsImport = this.baseApiUrl+'api/students/import';
-  const body = user;
-
-   //this is optional - angular2 already sends these
-   //const headers = new Headers();
-  let token=localStorage.getItem("user");
-  let headers = new Headers({
-      'Content-Type': 'multipart/form-data',
-      'Authorization':'Bearer '+token
-  });
-
-  let options = new RequestOptions({headers: headers});
-
-  return this.http.post(studentsImport, body, options)
-    .map(this.extractData)
-    .catch(this.handleError);
-
+//data importing
+sendStudentsData(data: any){
+  return Observable.fromPromise(new Promise((resolve, reject) => {
+    const studentsImport = this.baseApiUrl+'api/students/import';
+    let loadstart;
+    let progress;
+    let load;
+    let token=localStorage.getItem("user");
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                resolve(xhr.response);
+            } else {
+                reject(xhr.response)
+            }
+        }
+    }
+    xhr.open("POST", studentsImport, true)
+    xhr.setRequestHeader("Authorization", "Bearer "+JSON.parse(token));
+    xhr.send(data);
+    }))
 }
 
 private extractData(res: Response) {

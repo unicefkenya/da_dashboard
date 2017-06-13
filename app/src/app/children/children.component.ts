@@ -23,7 +23,9 @@ export class ChildrenComponent implements OnInit {
   count: number = 0;
   offset: number = 0;
   limit: number = 100;
-  tableOffset:number = 0;
+  table = {
+    offset: 0
+  };
 
   columns = [
     { name: 'Emiscode' },
@@ -52,7 +54,9 @@ export class ChildrenComponent implements OnInit {
         this.dt.id = data[i].id
         childs.push(this.dt)
       }
-
+      //cache our data
+      this.temp = [...childs];
+      //our initial data
       this.children = childs;
       this.selected = [];
 
@@ -92,18 +96,17 @@ export class ChildrenComponent implements OnInit {
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
-    this.rows = [...this.children];
-    this.temp = [...this.rows];
 
     // filter our data
-    const temp = this.rows.filter(function(d) {
+    const temp = this.temp.filter(function(d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
     this.children = temp;
     // Whenever the filter changes, always go back to the first page
-    this.tableOffset = 0;
+    this.table.offset = 0;
   }
+
 
 /*
   onPage(event) {

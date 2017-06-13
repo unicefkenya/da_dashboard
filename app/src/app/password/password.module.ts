@@ -8,13 +8,12 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 import { PasswordRoutes } from './password.routing';
-import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(PasswordRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ ChangepasswordComponent,ForgotpasswordComponent]
+  declarations: [ ForgotpasswordComponent]
 })
 
 export class PasswordModule {}

@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@an
 import { CustomValidators } from 'ng2-validation';
 
 import { Response } from '@angular/http';
-import { AddPartnerService} from '../addpartner/addpartner.service';
+import { AddpartnerService} from '../addpartner/addpartner.service';
 import { PartnerRegistration} from '../partners';
 
 /*
@@ -20,7 +20,7 @@ import { PartnerRegistration} from '../partners';
   selector: 'add-school',
   templateUrl: './addpartner.component.html',
   styleUrls: ['./addpartner.component.scss'],
-  providers: [AddPartnerService],
+  providers: [AddpartnerService],
 
 })
 
@@ -30,7 +30,7 @@ export class AddPartnerComponent implements OnInit {
   rows = [];
 
   constructor(
-    private partnerService: AddPartnerService,
+    private partnerService: AddpartnerService,
     public _router: Router,
     private fb: FormBuilder
   ){}
@@ -55,7 +55,7 @@ export class AddPartnerComponent implements OnInit {
       partner_name: [null, Validators.compose([Validators.required])],
       phone: [null, Validators.compose([Validators.required])],
       email: [null, Validators.compose([Validators.required])],
-      
+
     });
   }
 
@@ -74,7 +74,7 @@ export class AddPartnerComponent implements OnInit {
 
               	name: registerPartner.partner_name,
               	phone: registerPartner.phone,
-              	email: registerPartner.email 
+              	email: registerPartner.email
 
           }).subscribe(
             data => //console.log(data)

@@ -8,14 +8,20 @@
 <div *ngIf="loading == false">
 <md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
 <ngx-datatable
-  class="material"
+  class="material fullscreen"
   [rows]="teachers"
   [columns]="columns"
   [sortType]="'multi'"
   [columnMode]="'force'"
   [headerHeight]="50"
-  [footerHeight]="50"
+  [footerHeight]="0"
   [rowHeight]="50"
-  [scrollbarV]="true">
+  [scrollbarV]="true"
+  [scrollbarH]="true"
+  [limit]="100"
+  [selected]="selected"
+  [selectionType]="'single'"
+  (activate)="onActivate($event)"
+  (select)='onSelect($event)'>>
 </ngx-datatable>
 </div>

@@ -12,12 +12,11 @@ import { FullcalendarComponent } from './fullcalendar/fullcalendar.component';
 import { MailComponent } from './mail/mail.component';
 import { MediaComponent } from './media/media.component';
 import { ChatComponent } from './chat/chat.component';
-import { SocialComponent } from '../social/social.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [CommonModule, SharedModule, RouterModule.forChild(AppsRoutes), MdToolbarModule, MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdButtonToggleModule, MdListModule, MdGridListModule, MdMenuModule, MdSidenavModule, MdProgressBarModule, MdTabsModule, CalendarModule, FlexLayoutModule, ChartsModule],
-  declarations: [FullcalendarComponent, MailComponent, MediaComponent, ChatComponent, SocialComponent],
+  declarations: [FullcalendarComponent, MailComponent, MediaComponent, ChatComponent],
   providers: [
     CalendarEventTitle,
     CalendarDateFormatter
