@@ -44,7 +44,7 @@ export class DashboardComponent {
     this.getAnnualEnrollmentGender();
     this.getMonthlyAttendance();
     this.getSevenDaysAttendance();
-    this.getChildrenEnrolled();
+    this.getEnrollmentGraph();
   }
 
   // Shimanyi > getStats()
@@ -57,7 +57,6 @@ export class DashboardComponent {
        this.females = data.students.females;
        this.students = +(this.males+this.females);
        this.teachers = data.teachers;
-
     });
   }
 
@@ -276,33 +275,25 @@ export class DashboardComponent {
     });
   }
 
-  //Norman - children newly enrolled in all the classes
-  public getChildrenEnrolled(){
+  //Norman - children enrollment in all the classes
+  public getEnrollmentGraph(){
 
-    this.dashboardServices.getChildrenEnrolled().subscribe( data => {
+    this.dashboardServices.getEnrollmentGraph().subscribe( data => {
       data = data.results;
       let subset = data.slice(Math.max(data.length - 8, 0));
 
       let columns:string[] = [];
-      let totalAbsent: number [] = [];
-      let totalPresent: number [] = [];
+      let enrollments: number [] = [];
 
       for(let i = 0; i < subset.length; i++){
         columns.push(subset[i].value);
-        totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
-        totalPresent.push(subset[i].present_males + subset[i].present_females);
+        enrollments.push(subset[i].total);
       }
 
       this.EnrolledComboChartLabels = columns;
       this.EnrolledComboChartData  = [{
-        data: totalAbsent,
-        label: 'Absent Students',
-        borderWidth: 1,
-        type: 'line',
-        fill: false
-      },{
-        data: totalPresent,
-        label: 'Present Students',
+        data: enrollments,
+        label: 'Students',
         borderWidth: 1,
         type: 'bar',
       }];
