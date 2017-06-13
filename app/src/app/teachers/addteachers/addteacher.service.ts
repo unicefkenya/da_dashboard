@@ -14,7 +14,6 @@ export class AddTeacherService {
     private datePipe: DatePipe
   ){}
 
-
   private baseApiUrl = BaseUrl.base_api_url;
 
   transformDate(date){

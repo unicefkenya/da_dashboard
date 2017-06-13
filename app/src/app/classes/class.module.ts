@@ -7,13 +7,13 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ClassesRoutes } from './class.routing';
-import { AddclassComponent } from './addclass/addclass.component';
-import { ViewclassesComponent } from './viewclasses/viewclasses.component';
+import { AddClassComponent } from './addclass/addclass.component';
+import { ViewClassesComponent } from './viewclasses/viewclasses.component';
 
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ClassesRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ AddclassComponent, ViewclassesComponent]
+  declarations: [ AddClassComponent, ViewClassesComponent]
 })
 
 export class ClassModule {}

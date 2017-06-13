@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { ViewclassesService} from './viewclasses.service';
+import { ViewClassesService} from './viewclasses.service';
 //import { Partner } from './partner';
 
 
@@ -9,9 +9,9 @@ import { ViewclassesService} from './viewclasses.service';
   selector: 'app-viewclasses',
   templateUrl: './viewclasses.component.html',
   styleUrls: ['./viewclasses.component.scss'],
-  providers: [ViewclassesService]
+  providers: [ViewClassesService]
 
 })
-export class ViewclassesComponent implements OnInit{
+export class ViewClassesComponent implements OnInit{
   ngOnInit(){}
 }
