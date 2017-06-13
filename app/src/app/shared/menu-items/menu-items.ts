@@ -12,6 +12,7 @@ export interface ChildrenItems {
 }
 
 export interface Menu {
+  usertype: string;
   state: string;
   name: string;
   type: string;
@@ -22,12 +23,14 @@ export interface Menu {
 
 const MENUITEMS = [
   {
+    usertype: 'all',
     state: 'home',
     name: 'Home',
     type: 'link',
     icon: 'dashboard'
   },
   {
+    usertype: 'admin',
     state: 'partners',
     name: 'Partners',
     type: 'sub',
@@ -38,12 +41,14 @@ const MENUITEMS = [
     ]
   },
   {
+    usertype: 'admin',
     state: 'counties',
     name: 'Counties',
     type: 'link',
     icon: 'my_location'
   },
   {
+    usertype: 'partners',
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -54,6 +59,7 @@ const MENUITEMS = [
     ]
   },
   {
+    usertype: 'schools',
     state: 'classes',
     name: 'Classes',
     type: 'sub',
@@ -64,6 +70,7 @@ const MENUITEMS = [
     ]
   },
   {
+    usertype: 'schools',
     state: 'teachers',
     name: 'Teachers',
     type: 'sub',
@@ -74,6 +81,7 @@ const MENUITEMS = [
     ]
   },
   {
+    usertype: 'admin',
     state: 'children',
     name: 'Children',
     type: 'sub',
@@ -85,6 +93,7 @@ const MENUITEMS = [
     ]
   },
   {
+    usertype: 'partners',
     state: 'reports',
     name: 'Reports',
     type: 'sub',
@@ -101,12 +110,14 @@ const MENUITEMS = [
     ]
   },
   {
+    usertype: 'partners',
     state: 'imports',
     name: 'Import',
     type: 'link',
     icon: 'backup'
   },
   {
+    usertype: 'all',
     state: 'reports',
     name: 'Settings',
     type: 'sub',
@@ -118,6 +129,7 @@ const MENUITEMS = [
 
     ]
   },{
+    usertype: 'all',
     state: 'help',
     name: 'Help',
     type: 'extTabLink',
@@ -127,7 +139,7 @@ const MENUITEMS = [
 
 @Injectable()
 export class MenuItems {
-  getAll(): Menu[] {
+  getadmin(): Menu[] {
     return MENUITEMS;
   }
 
