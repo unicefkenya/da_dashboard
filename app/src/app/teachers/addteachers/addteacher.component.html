@@ -69,8 +69,10 @@
                 </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-select [formControl]="form.controls['qualifications']"  placeholder="Qualifications (required)">
-                    <md-option  value="COL">College</md-option>
                     <md-option  value="UNI">University</md-option>
+                    <md-option  value="COL">College</md-option>
+                    <md-option  value="CERT">Certificate</md-option>
+                    <md-option  value="UT">Untrained</md-option>
                   </md-select>
                   <small *ngIf="form.controls['qualifications'].hasError('required') && form.controls['qualifications'].touched" class="md-text-warn">Kindly input the teacher's qualifications.</small>
                 </div>
