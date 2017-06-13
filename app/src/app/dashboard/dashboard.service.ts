@@ -12,7 +12,7 @@ export class DashboardService {
   private baseApiUrl = BaseUrl.base_api_url;
 
   getStats(){
-    return this.http.get(this.baseApiUrl+'/api/statistics')
+    return this.http.get(this.baseApiUrl+'api/statistics')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

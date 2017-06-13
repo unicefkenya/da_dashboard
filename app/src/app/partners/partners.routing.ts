@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 
-import { AddpartnerComponent } from './addpartner/addpartner.component';
+import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
 
 
@@ -12,7 +12,7 @@ export const PartnersRoutes: Routes = [
       component: ViewpartnersComponent
     },{
       path: 'add-partner',
-      component: AddpartnerComponent
+      component: AddPartnerComponent
     }
   ],
   }

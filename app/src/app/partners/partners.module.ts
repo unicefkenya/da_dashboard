@@ -8,13 +8,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 import { PartnersRoutes } from './partners.routing';
-import { AddpartnerComponent } from './addpartner/addpartner.component';
+import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
 
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(PartnersRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ AddpartnerComponent, ViewpartnersComponent]
+  declarations: [ AddPartnerComponent, ViewpartnersComponent]
 })
 
 export class PartnersModule {}
