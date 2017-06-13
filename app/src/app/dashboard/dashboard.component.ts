@@ -240,15 +240,22 @@ export class DashboardComponent {
       data = data.results;
       let subset = data.slice(Math.max(data.length - 6, 0));
 
-      let columns:Date [] = [];
+      let columns:String [] = [];
       let totalAbsent: number [] = [];
       let totalPresent: number [] = [];
+      let refine: any;
+
+      let months: string [] = 
+      ["Jan", "Feb", "Mar", 
+      "Apr", "May", "Jun", "Jul", "Aug", "Sep", 
+      "Oct", "Nov", "Dec", ];
 
       for(let i = 0; i < subset.length; i++){
+ 
+        let splitted = subset[i].value.split("/"); 
+        let month = splitted[1] - 1;
+        columns.push(months[month]);
 
-        let dates = new Date(subset[i].value);
-
-        columns.push(subset[i].value);
         totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
         totalPresent.push(subset[i].present_males + subset[i].present_females);
       }
@@ -256,13 +263,13 @@ export class DashboardComponent {
       this.comboChartLabels = columns;
       this.comboChartData  = [{
         data: totalPresent,
-        label: 'Present Students',
+        label: 'Presents',
         borderWidth: 1,
         type: 'line',
         fill: false
       },{
         data: totalAbsent,
-        label: 'Absent Students',
+        label: 'Absents',
         borderWidth: 1,
         tupe: 'bar',
       }];
