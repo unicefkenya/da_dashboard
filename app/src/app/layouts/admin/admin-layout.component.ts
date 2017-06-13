@@ -23,7 +23,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   public currentUser;
   public search: Search;
   public form: FormGroup;
-  public errorSearch;
+  public userType;
 
 
   today: number = Date.now();
@@ -50,12 +50,18 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       this.url = event.url;
       if (this.isOver()) this.sidemenu.close();
     });
+    /*
     this.form = this.fb.group({
       searchText: [null]
     });
     //this.performSearch();
+    */
+    this._adminLayoutService.getUserType(this.currentUser).subscribe(data => {
+      console.log(data.type);
+      this.userType =  data.type;
+    })
 
-    console.log(this.currentUser);
+    //console.log(this.currentUser);
 
   }
 
@@ -77,7 +83,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   logout(){
     this._signin.logout();
   }
-
+/*
   private getSchoolId(id){
 
     this.router.navigate(['/search', id]);
@@ -103,4 +109,5 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       }
     );
   }
+  */
 }

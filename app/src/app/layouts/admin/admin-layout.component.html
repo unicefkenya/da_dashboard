@@ -45,12 +45,11 @@
       </button>
     </md-menu>
   </md-toolbar>
-
   <md-sidenav-layout class="app-inner">
     <md-sidenav #sidemenu class="sidebar-panel" [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()">
       <md-nav-list class="navigation accordion">
-        <md-list-item class="accordion-link" *ngFor="let menuitem of menuItems.getAll()" group="{{menuitem.state}}">
-          <a class="accordion-toggle relative" md-ripple [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+        <md-list-item class="accordion-link" *ngFor="let menuitem of menuItems.getadmin()" group="{{menuitem.state}}">
+          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.type === 'link' && menuitem.usertype === userType || menuitem.usertype === 'all' " [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -62,7 +61,7 @@
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
-          <a class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
+          <a class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink' && menuitem.usertype === 'all'  ">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>

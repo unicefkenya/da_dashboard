@@ -42,6 +42,20 @@ export class AdminLayoutService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getUserType(user){
+      //assign the url like below
+      const _userTypeUrl = this.baseApiUrl+'api/user-type';
+      let headers = new Headers({
+          'Content-Type': 'application/json',
+          'Authorization':'Bearer '+user
+      });
+
+      let options = new RequestOptions({headers: headers});
+
+      return this.http.get(_userTypeUrl, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
 
   private handleError(error: Response | any){
     let errMsg: string;
