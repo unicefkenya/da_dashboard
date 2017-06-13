@@ -24,6 +24,7 @@ export interface Menu {
 const MENUITEMS = [
   {
     usertype: 'all',
+    access: 'all',
     state: 'home',
     name: 'Home',
     type: 'link',
@@ -48,7 +49,7 @@ const MENUITEMS = [
     icon: 'my_location'
   },
   {
-    usertype: 'partners',
+    usertype: 'partner',
     state: 'schools',
     name: 'Schools',
     type: 'sub',
@@ -59,7 +60,7 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'schools',
+    usertype: 'teacher',
     state: 'classes',
     name: 'Classes',
     type: 'sub',
@@ -70,7 +71,7 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'schools',
+    usertype: 'teacher',
     state: 'teachers',
     name: 'Teachers',
     type: 'sub',
@@ -81,7 +82,7 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'partners',
+    usertype: 'partner',
     state: 'children',
     name: 'Children',
     type: 'sub',
@@ -110,7 +111,7 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'partners',
+    usertype: 'partner',
     state: 'imports',
     name: 'Import',
     type: 'link',
@@ -119,6 +120,7 @@ const MENUITEMS = [
   {
     usertype: 'all',
     state: 'reports',
+    access: 'all',
     name: 'Settings',
     type: 'sub',
     icon: 'settings',
@@ -130,6 +132,7 @@ const MENUITEMS = [
     ]
   },{
     usertype: 'all',
+    access: 'all',
     state: 'help',
     name: 'Help',
     type: 'link',

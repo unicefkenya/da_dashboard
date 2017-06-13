@@ -24,6 +24,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   public search: Search;
   public form: FormGroup;
   public userType;
+  public allAccess = 'all';
 
 
   today: number = Date.now();
