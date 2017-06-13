@@ -58,7 +58,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     //this.performSearch();
     */
     this._adminLayoutService.getUserType(this.currentUser).subscribe(data => {
-      console.log(data.type);
+      console.log(data);
       this.userType =  data.type;
     })
 
