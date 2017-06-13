@@ -5,7 +5,7 @@
   <md-card-content>
     <div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="start">
       <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100"  class="pr-1" style="margin-top: 50px;">
-        <h6 class="mt-0">Select files</h6>
+        <h6 class="mt-0">Select a file</h6>
         <!--
         <div ng2FileDrop
           [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
@@ -25,15 +25,16 @@
 
         <div class="clearfix mb-1"></div>
         -->
-
-        <p>Single</p>
-        <input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+        <form [formGroup]="form">
+        <input fromControlName="file" type="file" class="form-control" name="file" ng2FileSelect [uploader]="uploader" />
+        </form>
+          <button (click)="Importupload()">My Upload</button>
       </div>
       <div fxFlex.gt-sm="80" fxFlex.gt-xs="50" fxFlex="100">
-        <h6 class="mt-0"  fxLayout="row">
+        <!-- <h6 class="mt-0"  fxLayout="row">
           <span fxFlex>Upload queue</span>
           <span>Queue length: {{ uploader?.queue?.length }}</span>
-        </h6>
+        </h6> -->
 
         <ngx-datatable
           class="material ml-0 mr-0"
@@ -66,6 +67,7 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="action" [flexGrow]="2">
             <template let-row="row" ngx-datatable-cell-template>
+          
               <button md-raised-button md-button-sm color="primary" type="button"
                 (click)="row.upload()" [disabled]="row.isReady || row.isUploading || row.isSuccess">Upload</button>
               <button md-raised-button md-button-sm color="warn" type="button"

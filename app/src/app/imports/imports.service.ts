@@ -38,13 +38,13 @@ sendSchoolsData(user: any){
 sendStudentsData(user: any){
 
   const studentsImport = this.baseApiUrl+'api/students/import';
-  const body = JSON.stringify(user);
+  const body = user;
 
    //this is optional - angular2 already sends these
    //const headers = new Headers();
   let token=localStorage.getItem("user");
   let headers = new Headers({
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
       'Authorization':'Bearer '+token
   });
 

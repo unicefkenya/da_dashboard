@@ -38,7 +38,7 @@ export class ImportsComponent implements OnInit {
     private fb: FormBuilder)
     {
     this.form = this.fb.group({
-
+      "file":""
     });
 
     this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
@@ -54,6 +54,12 @@ export class ImportsComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.baseApiUrl+'api/students/import');
   }
+  Importupload(){
+
+    this._importService.sendStudentsData(this.form.value).subscribe(data=>{
+      console.log(data);
+    })
+   }
 
   public token=localStorage.getItem("user");
 
@@ -68,11 +74,11 @@ export class ImportsComponent implements OnInit {
             authTokenHeader: this.token
           });
 
-/*
-public uploader:FileUploader = new FileUploader({
-          url: 'https://evening-anchorage-3159.herokuapp.com/api/',
-        });
-*/
+
+// public uploader:FileUploader = new FileUploader({
+//           url: 'https://evening-anchorage-3159.herokuapp.com/api/',
+//         });
+
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
 

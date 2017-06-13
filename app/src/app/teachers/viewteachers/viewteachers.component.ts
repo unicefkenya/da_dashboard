@@ -33,6 +33,7 @@ export class ViewTeachersComponent implements OnInit {
 
   fetchTeachers(): void{
     this.teachersService.fetchTeachers().subscribe( data=> {
+      data = data.results;
       this.loading = false;
       let items = [];
       for (let i = 0; i < data.length; i++){
