@@ -44,7 +44,7 @@ export class DashboardComponent {
     this.getAnnualEnrollmentGender();
     this.getMonthlyAttendance();
     this.getSevenDaysAttendance();
-    this.getChildrenEnrolled();
+    this.getEnrollmentGraph();
   }
 
   // Shimanyi > getStats()
@@ -57,7 +57,6 @@ export class DashboardComponent {
        this.females = data.students.females;
        this.students = +(this.males+this.females);
        this.teachers = data.teachers;
-
     });
   }
 
@@ -203,6 +202,7 @@ export class DashboardComponent {
   public getAnnualAttendanceGender(){
       this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
 
+      data = data.results;
       let children = [];
 
       children.push(data[0].present_males);
@@ -216,11 +216,12 @@ export class DashboardComponent {
   public getAnnualEnrollmentGender(){
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
-      let enrolled = [];
-      enrolled.push(data[0].enrolled_females);
-      enrolled.push(data[0].enrolled_males);
+        data = data.results;
+        let enrolled = [];
+        enrolled.push(data[0].enrolled_females);
+        enrolled.push(data[0].enrolled_males);
 
-      this.pieChartEnrollmentData = enrolled;
+        this.pieChartEnrollmentData = enrolled;
 
     });
   }
@@ -235,64 +236,64 @@ export class DashboardComponent {
   public getMonthlyAttendance(){
 
     this.dashboardServices.getMonthlyAttendance().subscribe( data => {
-
+      data = data.results;
       let subset = data.slice(Math.max(data.length - 6, 0));
 
-      let columns:string[] = [];
+      let columns:String [] = [];
       let totalAbsent: number [] = [];
       let totalPresent: number [] = [];
+      let refine: any;
+
+      let months: string [] = 
+      ["Jan", "Feb", "Mar", 
+      "Apr", "May", "Jun", "Jul", "Aug", "Sep", 
+      "Oct", "Nov", "Dec", ];
 
       for(let i = 0; i < subset.length; i++){
+ 
+        let splitted = subset[i].value.split("/"); 
+        let month = splitted[1] - 1;
+        columns.push(months[month]);
 
-
-        columns.push(subset[i].value);
         totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
         totalPresent.push(subset[i].present_males + subset[i].present_females);
       }
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalAbsent,
-        label: 'Absent Students',
+        data: totalPresent,
+        label: 'Presents',
         borderWidth: 1,
         type: 'line',
         fill: false
       },{
-        data: totalPresent,
-        label: 'Present Students',
+        data: totalAbsent,
+        label: 'Absents',
         borderWidth: 1,
         tupe: 'bar',
       }];
-  });
+    });
   }
 
-  //Norman - children newly enrolled in all the classes
-  public getChildrenEnrolled(){
+  //Norman - children enrollment in all the classes
+  public getEnrollmentGraph(){
 
-    this.dashboardServices.getChildrenEnrolled().subscribe( data => {
-
+    this.dashboardServices.getEnrollmentGraph().subscribe( data => {
+      data = data.results;
       let subset = data.slice(Math.max(data.length - 8, 0));
 
       let columns:string[] = [];
-      let totalAbsent: number [] = [];
-      let totalPresent: number [] = [];
+      let enrollments: number [] = [];
 
       for(let i = 0; i < subset.length; i++){
         columns.push(subset[i].value);
-        totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
-        totalPresent.push(subset[i].present_males + subset[i].present_females);
+        enrollments.push(subset[i].total);
       }
 
       this.EnrolledComboChartLabels = columns;
       this.EnrolledComboChartData  = [{
-        data: totalAbsent,
-        label: 'Absent Students',
-        borderWidth: 1,
-        type: 'line',
-        fill: false
-      },{
-        data: totalPresent,
-        label: 'Present Students',
+        data: enrollments,
+        label: 'Students',
         borderWidth: 1,
         type: 'bar',
       }];
@@ -341,7 +342,7 @@ export class DashboardComponent {
   public getSevenDaysAttendance(){
 
     this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
-
+      data = data.results;
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
