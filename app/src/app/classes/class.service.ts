@@ -11,7 +11,7 @@ export class ClassService {
   constructor(
     private http: Http,
   ){}
-  
+
   private baseApiUrl = BaseUrl.base_api_url;
 
   getSchools(){
@@ -26,7 +26,7 @@ export class ClassService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   sendData(user: any){
-    
+
     const _teacherRegistrationUrl = this.baseApiUrl+'api/stream';
     const body = JSON.stringify(user);
 
@@ -44,7 +44,7 @@ export class ClassService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-  
+
   private handleError(error: Response | any){
     let errMsg: string;
 

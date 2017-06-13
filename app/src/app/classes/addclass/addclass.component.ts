@@ -59,7 +59,7 @@ export class AddClassComponent implements OnInit {
       class_id: [null, Validators.compose([Validators.required])],
       class_name: [null, Validators.compose([Validators.required])],
       teacher: [null, Validators.compose([Validators.required])],
-      
+
     });
     this.getClasses();
   }
@@ -80,7 +80,7 @@ export class AddClassComponent implements OnInit {
               	class_name: registerClass.class_name,
               	_class: registerClass.class_id,
               	teacher: registerClass.teacher,
-              	school:  this.school 
+              	school:  this.school
 
           }).subscribe(
             data => //console.log(data)
