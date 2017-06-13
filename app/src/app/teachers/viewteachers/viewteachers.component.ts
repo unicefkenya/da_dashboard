@@ -9,44 +9,47 @@ import { ViewTeachersService } from './viewteachers.service';
 })
 export class ViewTeachersComponent implements OnInit {
 
-  constructor(private teachersService: ViewTeachersService) {
-    this.fetch((data) => {
-      // cache our list
-      this.temp = [...data];
-      // push our inital complete list
-      this.rows = data;
-    });
-  }
+  constructor(private teachersService: ViewTeachersService) {  }
   loading:boolean;
   teachers : any[];
+  selected: any[];
   tmp :any;
   temp = [];
   rows = [];
+  table = {
+    offset: 0
+  };
 
   columns = [
     { name: 'Name' },
-    { name: 'Type' },
+    { name: 'Phone Number' },
     { name: 'Gender' },
-    { name: 'Birthdate' }
+    { name: 'Qualifications' },
+    { name: 'Teacher Type' }
 
   ];
 
   fetchTeachers(): void{
     this.teachersService.fetchTeachers().subscribe( data=> {
+      console.log(data.results[0].teacher_type);
       data = data.results;
       this.loading = false;
       let items = [];
       for (let i = 0; i < data.length; i++){
         this.tmp = {}
         this.tmp.name = data[i].name
-        this.tmp.type = data[i].type
+        this.tmp.phone_no = data[i].phone_no
         this.tmp.gender = data[i].gender
-        this.tmp.birthdate = data[i].date_of_birth
-
+        this.tmp.qualifications = data[i].qualifications
+        this.tmp.teachertype = data[i].teacher_type
         items.push(this.tmp);
       }
 
+      //cache our data
+      this.temp = [...items];
+      //our initial data
       this.teachers = items;
+      this.selected = [];
 
     });
   }
@@ -55,30 +58,35 @@ export class ViewTeachersComponent implements OnInit {
     this.loading = true;
     this.fetchTeachers();
   }
-
-  //filtering the table
-   updateFilter(event) {
-     let val = event.target.value;
-     // filter our data
-     let temp = this.temp.filter(function(d) {
-       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-     });
-     // update the rows
-     this.rows = temp;
+  onSelect({ selected }) {
+   //console.log('Select Event', selected, this.selected,this.selected[0].id);
+   //localStorage.setItem('childId', this.selected[0].id);
+   //this.getChildId(this.selected[0].id);
+   //this.router.navigate(['/children/child', this.selected[0].id]);
    }
 
-   //sorting the table
-    fetch(cb) {
-       const req = new XMLHttpRequest();
-       req.open('GET', `assets/data/company.json`);
+   private getChildId(id){
 
-       req.onload = () => {
-         let data = JSON.parse(req.response);
-         cb(data);
-       };
+     //this.router.navigate(['/children/child', id]);
 
-       req.send();
    }
+
+   onActivate(event) {
+     //console.log('Activate Event', event);
+   }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.teachers = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
 
 
 }
