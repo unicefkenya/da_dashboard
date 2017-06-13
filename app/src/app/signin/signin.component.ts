@@ -69,8 +69,6 @@ export class SigninComponent implements OnInit {
         this.load = false;
         this.router.navigate([this.returnUrl]);
         
-
-
       },
       error => {
         this.load = false;

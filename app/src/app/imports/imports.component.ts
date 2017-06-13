@@ -30,15 +30,17 @@ export class ImportsComponent implements OnInit {
   public studentDataType : importStudent;
   public empty;
   public fail;
+  public myfile:any
   public success;
+  file:File;
   private baseApiUrl = BaseUrl.base_api_url;
 
   constructor(
-    private _importService: ImportsService,
+    private _importService: ImportsService,private http:Http,
     private fb: FormBuilder)
     {
     this.form = this.fb.group({
-      "file":""
+      myfile: [null, Validators.compose([Validators.required,])],
     });
 
     this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
@@ -47,19 +49,41 @@ export class ImportsComponent implements OnInit {
 
 
     this.uploader.onErrorItem = (item:any, response:any, status:any, headers:any)=>{
-        console.log('error', response, status);
+        console.log('error', status);
     };
   }
 
   ngOnInit(): void {
     console.log(this.baseApiUrl+'api/students/import');
   }
-  Importupload(){
 
-    this._importService.sendStudentsData(this.form.value).subscribe(data=>{
-      console.log(data);
+
+  public uploadFile;
+  Importupload(event){
+    let myfile=event.srcElement.files[0]
+    console.log(myfile);
+
+      const studentsImport = this.baseApiUrl+'api/students/import';
+    //  const body = user;
+       //this is optional - angular2 already sends these
+       //const headers = new Headers();
+
+      let token=localStorage.getItem("user");
+    let fd=new FormData()
+    fd.append("file",myfile)
+
+    // this._importService.sendStudentsData(fd).subscribe(data=>{
+    //   console.log(data);
+    // })
+    // this.http.post("http://oosc.cloudapp.net/api/students/import",fd).subscribe(data=>{
+    //   console.log(data);
+    // })
+    this._importService.sendStudentsData(fd).subscribe(data=>{
+
+    },error=>{
+      console.log(error)
     })
-   }
+  }
 
   public token=localStorage.getItem("user");
 
@@ -69,12 +93,15 @@ export class ImportsComponent implements OnInit {
               {name: 'Content-Type', value:'multipart/form-data'}
             ],
             itemAlias: 'file',
-            disableMultipart: true,
+            disableMultipart: false,
             authToken: 'Authorization',
             authTokenHeader: this.token
           });
-
-
+  upload(){
+    this._importService.sendStudentsData({file:this.uploader}).subscribe(data=>{
+      console.log(data);
+    });
+  }
 // public uploader:FileUploader = new FileUploader({
 //           url: 'https://evening-anchorage-3159.herokuapp.com/api/',
 //         });

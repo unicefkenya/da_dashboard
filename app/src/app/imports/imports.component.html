@@ -25,10 +25,13 @@
 
         <div class="clearfix mb-1"></div>
         -->
-        <form [formGroup]="form">
-        <input fromControlName="file" type="file" class="form-control" name="file" ng2FileSelect [uploader]="uploader" />
+        <form [formGroup]="form"  method="post"  enctype="multipart/form-data">
+        <!--<input fromControlName="file" type="file" name="file" class="form-control" name="file" ng2FileSelect [uploader]="uploader" />
+        -->myfile
+        <input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" (change)="Importupload($event)"  name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+
         </form>
-          <button (click)="Importupload()">My Upload</button>
+
       </div>
       <div fxFlex.gt-sm="80" fxFlex.gt-xs="50" fxFlex="100">
         <!-- <h6 class="mt-0"  fxLayout="row">
@@ -67,7 +70,7 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="action" [flexGrow]="2">
             <template let-row="row" ngx-datatable-cell-template>
-          
+
               <button md-raised-button md-button-sm color="primary" type="button"
                 (click)="row.upload()" [disabled]="row.isReady || row.isUploading || row.isSuccess">Upload</button>
               <button md-raised-button md-button-sm color="warn" type="button"
