@@ -51,6 +51,7 @@ const MENUITEMS = [
   {
     usertype: 'partner',
     state: 'schools',
+    access: 'admin',
     name: 'Schools',
     type: 'sub',
     icon: 'home',
@@ -85,6 +86,7 @@ const MENUITEMS = [
     usertype: 'partner',
     state: 'children',
     name: 'Children',
+    access: 'admin',
     type: 'sub',
     icon: 'face',
     children: [
