@@ -7,7 +7,7 @@ import { BaseUrl} from '../../baseurl';
 
 
 @Injectable()
-export class AddPartnerService {
+export class AddpartnerService {
   constructor(
     private http: Http,
   ){}

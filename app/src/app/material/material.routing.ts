@@ -15,7 +15,6 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { MenuComponent } from './menu/menu.component';
 import { SliderComponent } from './slider/slider.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
-import { DialogComponent } from './dialog/dialog.component';
 import { SelectComponent } from './select/select.component';
 
 export const MaterialRoutes: Routes = [
@@ -66,9 +65,6 @@ export const MaterialRoutes: Routes = [
     }, {
       path: 'snackbar',
       component: SnackbarComponent
-    }, {
-      path: 'dialog',
-      component: DialogComponent
     }, {
       path: 'select',
       component: SelectComponent
