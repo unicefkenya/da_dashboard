@@ -81,7 +81,7 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'admin',
+    usertype: 'partners',
     state: 'children',
     name: 'Children',
     type: 'sub',
@@ -93,7 +93,7 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'partners',
+    usertype: 'admin',
     state: 'reports',
     name: 'Reports',
     type: 'sub',
@@ -132,7 +132,7 @@ const MENUITEMS = [
     usertype: 'all',
     state: 'help',
     name: 'Help',
-    type: 'extTabLink',
+    type: 'link',
     icon: 'local_library'
   }
 ];
