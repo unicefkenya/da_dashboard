@@ -73,10 +73,7 @@ export class AddChildrenComponent implements OnInit {
 
   ngOnInit(){
     //this.onSubmit;
-
-
     this.getSchoolClasses();
-
   }
 
   onSubmit(registerChild: ChildRegistration){

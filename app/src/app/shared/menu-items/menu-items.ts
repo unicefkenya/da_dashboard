@@ -113,7 +113,7 @@ const MENUITEMS = [
     icon: 'settings',
 
     children: [
-      {state: 'changepassword', name: 'Change Password'},
+      {state: 'change-password', name: 'Change Password'},
       {state: 'profile', name: 'Profile'},
 
     ]
