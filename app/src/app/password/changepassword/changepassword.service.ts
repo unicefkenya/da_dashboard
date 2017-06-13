@@ -24,7 +24,6 @@ export class ChangepasswordService {
      //this is optional - angular2 already sends these
      //const headers = new Headers();
     let token=localStorage.getItem("user");
-    console.log(JSON.parse(token));
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+JSON.parse(token)
