@@ -14,14 +14,14 @@
             <div fxFlex="45">
               <figure>
                 <div class="text-xs-center">
-                  <h4 style="color: red">30%</h4>
+                  <h4 style="color: green">{{percentAttendance}} %</h4>
                   <div class="text-md mt10">Attendance record</div>
                 </div>
                 <div class="ma-xs">
-                  <md-progress-bar mode="determinate" value="40"></md-progress-bar>
+                  <md-progress-bar mode="determinate" value="{{percentAttendance}}"></md-progress-bar>
                 </div>
                 <div  class="text-xs-center"><small>Status:</small>&nbsp;&nbsp;
-                  High chance of dropping out
+                  Overall attendance percentage
                 </div>
               </figure>
             </div>

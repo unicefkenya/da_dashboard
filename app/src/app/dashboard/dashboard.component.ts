@@ -205,8 +205,8 @@ export class DashboardComponent {
       data = data.results;
       let children = [];
 
-      children.push(data[0].present_males);
       children.push(data[0].present_females);
+      children.push(data[0].present_males);
       this.pieChartData = children;
 
     });
@@ -244,14 +244,14 @@ export class DashboardComponent {
       let totalPresent: number [] = [];
       let refine: any;
 
-      let months: string [] = 
-      ["Jan", "Feb", "Mar", 
-      "Apr", "May", "Jun", "Jul", "Aug", "Sep", 
+      let months: string [] =
+      ["Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul", "Aug", "Sep",
       "Oct", "Nov", "Dec", ];
 
       for(let i = 0; i < subset.length; i++){
- 
-        let splitted = subset[i].value.split("/"); 
+
+        let splitted = subset[i].value.split("/");
         let month = splitted[1] - 1;
         columns.push(months[month]);
 

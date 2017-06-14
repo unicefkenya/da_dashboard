@@ -45,10 +45,10 @@ export class SearchComponent {
     this._searchService.getSchoolStats(id).subscribe(
       (data)  =>
       {
-        this.males = (data[0].enrolled_males+data[0].old_males);
-        this.females = (data[0].enrolled_females+data[0].old_females);
-        this.totalStudents = data[0].total;
-        this.enrolledStudents = (data[0].enrolled_males+data[0].enrolled_females);
+        this.males = (data.results[0].enrolled_males+data.results[0].old_males);
+        this.females = (data.results[0].enrolled_females+data.results[0].old_females);
+        this.totalStudents = data.results[0].total;
+        this.enrolledStudents = (data.results[0].enrolled_males+data.results[0].enrolled_females);
       },
       error =>{
         this.errorSearch = 'Emis Code not found';
@@ -217,8 +217,8 @@ export class SearchComponent {
 
         let children = [];
 
-        children.push(data[0].present_males);
-        children.push(data[0].present_females);
+        children.push(data.results[0].present_males);
+        children.push(data.results[0].present_females);
         this.pieChartData = children;
 
       });
@@ -229,8 +229,8 @@ export class SearchComponent {
 
           this._searchService.getSchoolStats(id).subscribe( data => {
           let enrolled = [];
-          enrolled.push(data[0].enrolled_females);
-          enrolled.push(data[0].enrolled_males);
+          enrolled.push(data.results[0].enrolled_females);
+          enrolled.push(data.results[0].enrolled_males);
 
           this.pieChartEnrollmentData = enrolled;
 
@@ -251,8 +251,8 @@ export class SearchComponent {
 
         for(let i = 0; i < subset.length; i++){
           columns.push(subset[i].value);
-          totalStudents.push(subset[i].total);
-          totalEnrolledStudents.push(subset[i].enrolled_males+subset[i].enrolled_females);
+          totalStudents.push(subset.results[i].total);
+          totalEnrolledStudents.push(subset.results[i].enrolled_males+subset.results[i].enrolled_females);
         }
 
         this.EnrolledComboChartLabels = columns;
@@ -285,8 +285,8 @@ export class SearchComponent {
         let columnNames: string = '';
         for(let i = 0; i < subset.length; i++){
           columns.push(subset[i].value);
-          absents.push((subset[i].absent_males + subset[i].absent_females));
-          presents.push((subset[i].present_females + subset[i].present_males));
+          absents.push((subset.results[i].absent_males + subset.results[i].absent_females));
+          presents.push((subset.results[i].present_females + subset.results[i].present_males));
         }
 
         this.barChartLabels = columns;
@@ -320,8 +320,8 @@ export class SearchComponent {
 
 
           columns.push(subset[i].value);
-          totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
-          totalPresent.push(subset[i].present_males + subset[i].present_females);
+          totalAbsent.push(subset.results[i].absent_males + subset.results[i].absent_females );
+          totalPresent.push(subset.results[i].present_males + subset.results[i].present_females);
         }
 
         this.comboChartLabels = columns;

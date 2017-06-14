@@ -20,6 +20,7 @@ export class ChildComponent {
   public success;
   public fail;
   public empty;
+  public percentAttendance:any=0
   public schoolClasses;
   public submitted: boolean =  true;
   public school: ChildRegistration;
@@ -53,6 +54,7 @@ export class ChildComponent {
      //console.log(schoolId);
      this.getChildData(childId);
      this.getSchoolClasses();
+     this.childAttendance(childId);
    });
 }
   public firstname;
@@ -108,7 +110,7 @@ export class ChildComponent {
         }
 
         if(data.not_in_school_before = "false"){
-          this.childType = "Unicef";
+          this.childType = "OOSC";
         }
 
         if(data.date_of_birth = "null"){
@@ -136,6 +138,18 @@ export class ChildComponent {
     );
   }
 
+  public childAttendance(id){
+    this.childService.fetchChildAttendance(id).subscribe(
+      (data)  =>
+      {
+        console.log(data.results[0]);
+        let present=data.results[0]["present"]
+        let total=data.results[0]["total"]
+        let per=Math.round(present/total*100)
+        this.percentAttendance=per
+        console.log(per);
+      });
+  }
   getSchoolClasses(){
 
     this._childRegistrationService.getClass()
