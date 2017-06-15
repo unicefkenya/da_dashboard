@@ -25,6 +25,14 @@ export class ChildComponent {
   public submitted: boolean =  true;
   public school: ChildRegistration;
 
+  public globalChartOptions: any = {
+    responsive: true,
+    legend: {
+      display: false,
+      position: 'bottom'
+    }
+  }
+
   constructor(private childService: ChildService,private route:ActivatedRoute,private fb: FormBuilder,  private _childRegistrationService: AddChildrenService) {
     this.form = this.fb.group({
       firstName: [null, Validators.compose([Validators.required,])],
@@ -55,6 +63,7 @@ export class ChildComponent {
      this.getChildData(childId);
      this.getSchoolClasses();
      this.childAttendance(childId);
+     this.dailyChildAttendance(childId);
    });
 }
   public firstname;
@@ -145,11 +154,83 @@ export class ChildComponent {
         console.log(data.results[0]);
         let present=data.results[0]["present"]
         let total=data.results[0]["total"]
-        let per=Math.round(present/total*100)
-        this.percentAttendance=per
-        console.log(per);
+        if(total !=0 && present !=0){
+          let per=Math.round(present/total*100)
+            this.percentAttendance=per
+            console.log(per);
+        }
       });
   }
+
+  //
+    public dailyChildAttendance(id){
+      console.log("hello")
+      this.childService.fetchDailyAttendance(id).subscribe(
+        (data)  =>
+        {
+
+          data=data.results;
+
+          let present:any[]
+          let absent:any[]
+          let labels:any[]
+          //for(let i=0;i<data.length;i++)
+          for(let d in data){
+            labels.push(d["value"])
+            console.log(d)
+            if(d["present"]=1){
+              present.push(1)
+              absent.push(0)
+            }
+            else{
+              absent.push(1)
+              present.push(0)
+            }
+
+          }
+          this.barChartLabels=labels
+          this.barChartData = [{
+            data: present,
+            label: 'Present',
+            borderWidth: 0
+          }, {
+            data: absent,
+            label: 'Absent',
+            borderWidth: 0
+          }];
+          console.log("data gh",this.barChartData);
+
+        });
+    }
+
+  // Bar
+  public barChartLabels: string[];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+  public barChartData: any[]
+  public barChartOptions: any = Object.assign({
+    scaleShowVerticalLines: false,
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        },
+        position: 'left',
+        ticks: {
+          beginAtZero: true,
+          suggestedMax: 9
+        }
+      }]
+    }
+  }, this.globalChartOptions);
+
   getSchoolClasses(){
 
     this._childRegistrationService.getClass()

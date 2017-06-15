@@ -28,7 +28,7 @@ export class SearchComponent {
      this.getSchoolData(id);
      this.getStats(schoolId);
      this.getSevenDaysAttendance(schoolId);
-     this.getChildrenEnrolled(schoolId);
+     this.getEnrollmentGraph(schoolId);
      this.getAnnualEnrollmentGender(schoolId);
      this.getAnnualAttendanceGender(schoolId);
      this.getMonthlyAttendance(schoolId);
@@ -243,6 +243,7 @@ export class SearchComponent {
 
       this._searchService.getChildrenEnrolled(id).subscribe( data => {
         //console.log(data, "sdsdasdsd");
+        data=data.results
         let subset = data.slice(Math.max(data.length - 8, 0));
 
         let columns:string[] = [];
@@ -251,8 +252,8 @@ export class SearchComponent {
 
         for(let i = 0; i < subset.length; i++){
           columns.push(subset[i].value);
-          totalStudents.push(subset.results[i].total);
-          totalEnrolledStudents.push(subset.results[i].enrolled_males+subset.results[i].enrolled_females);
+          totalStudents.push(subset[i].total);
+          totalEnrolledStudents.push(subset[i].enrolled_males+subset[i].enrolled_females);
         }
 
         this.EnrolledComboChartLabels = columns;
@@ -271,11 +272,34 @@ export class SearchComponent {
     });
     }
 
+    public getEnrollmentGraph(id){
+
+      this._searchService.getEnrollmentGraph(id).subscribe( data => {
+        data = data.results;
+        let subset = data.slice(Math.max(data.length - 8, 0));
+
+        let columns:string[] = [];
+        let enrollments: number [] = [];
+
+        for(let i = 0; i < subset.length; i++){
+          columns.push(subset[i].value);
+          enrollments.push(subset[i].total);
+        }
+
+        this.EnrolledComboChartLabels = columns;
+        this.EnrolledComboChartData  = [{
+          data: enrollments,
+          label: 'Students',
+          borderWidth: 1,
+          type: 'bar',
+        }];
+    });
+    }
 
     public getSevenDaysAttendance(id){
 
       this._searchService.getSevenDaysAttendance(id).subscribe( data => {
-
+        data=data.results
         let subset = data.slice(Math.max(data.length - 8, 0));
 
         let columns: string[] = [];
@@ -285,8 +309,8 @@ export class SearchComponent {
         let columnNames: string = '';
         for(let i = 0; i < subset.length; i++){
           columns.push(subset[i].value);
-          absents.push((subset.results[i].absent_males + subset.results[i].absent_females));
-          presents.push((subset.results[i].present_females + subset.results[i].present_males));
+          absents.push((subset[i].absent_males + subset[i].absent_females));
+          presents.push((subset[i].present_females + subset[i].present_males));
         }
 
         this.barChartLabels = columns;
@@ -309,7 +333,7 @@ export class SearchComponent {
     public getMonthlyAttendance(id){
 
       this._searchService.getMonthlyAttendance(id).subscribe( data => {
-
+        data=data.results
         let subset = data.slice(Math.max(data.length - 6, 0));
 
         let columns:string[] = [];
@@ -320,8 +344,8 @@ export class SearchComponent {
 
 
           columns.push(subset[i].value);
-          totalAbsent.push(subset.results[i].absent_males + subset.results[i].absent_females );
-          totalPresent.push(subset.results[i].present_males + subset.results[i].present_females);
+          totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
+          totalPresent.push(subset[i].present_males + subset[i].present_females);
         }
 
         this.comboChartLabels = columns;

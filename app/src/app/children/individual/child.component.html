@@ -266,6 +266,25 @@
               </div>
             </md-card-content>
           </md-tab>
+          <md-tab>
+            <template md-tab-label>Attendance Record</template>
+
+            <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
+              <md-card>
+                <md-card-title>Bar</md-card-title>
+                <md-card-subtitle>Basic</md-card-subtitle>
+                <md-card-content>
+                  <canvas height="200" baseChart class="chart"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"></canvas>
+                </md-card-content>
+              </md-card>
+            </div>
+          </md-tab>
         </md-tab-group>
       </md-card>
     </div>
