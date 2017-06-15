@@ -51,6 +51,7 @@ const MENUITEMS = [
   {
     usertype: 'partner',
     state: 'schools',
+    accessibility: 'teacher',
     access: 'admin',
     name: 'Schools',
     type: 'sub',
@@ -96,16 +97,17 @@ const MENUITEMS = [
     ]
   },
   {
-    usertype: 'admin',
+    usertype: 'partner',
     state: 'reports',
     name: 'Reports',
+    access: 'admin',
     type: 'sub',
     icon: 'format_line_spacing',
     badge: [
       {type: 'purple', value: '5'}
     ],
     children: [
-      {state: 'attendance', name: 'Overal Attendance'},
+      {state: 'attendance', name: 'Overall Attendance'},
       {state: 'enrollments', name: 'Enrollments'},
       {state: 'boys', name: 'Boys Attendance'},
       {state: 'girls', name: 'Girls Attendance'},

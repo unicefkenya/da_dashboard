@@ -73,7 +73,7 @@
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
-          <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin'">
+          <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -87,13 +87,13 @@
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
-          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin'">
+          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
             <md-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
               <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.access === 'all'">
-            <md-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
+            <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
               <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
