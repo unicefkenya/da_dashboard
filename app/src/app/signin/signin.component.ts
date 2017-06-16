@@ -76,7 +76,6 @@ export class SigninComponent implements OnInit {
                 this.schoolId = localStorage.getItem("schoolId");
                 this.router.navigate(['/school', schoolId]);
               }else{
-                console.log("why not:?");
                 this.router.navigate([this.returnUrl]);
               }
           });

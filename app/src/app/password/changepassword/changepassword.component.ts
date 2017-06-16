@@ -4,7 +4,7 @@ import { ChangepasswordService} from './changepassword.service';
 //import { Partner } from './partner';
 
 
-import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule,AbstractControl } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { ChangePassword } from './changepassword';
 
@@ -21,6 +21,7 @@ export class ChangepasswordComponent implements OnInit {
   public changePsd: ChangepasswordService;
   public form: FormGroup;
   public psd: ChangePassword;
+  public error: boolean;
   public success;
   public fail;
   public empty;
@@ -34,7 +35,9 @@ export class ChangepasswordComponent implements OnInit {
         oldPassword: [null, Validators.compose([Validators.required,])],
         newPassword: [null, Validators.compose([Validators.required])],
         confirmPassword: [null, Validators.compose([Validators.required])],
-      });
+      }, {
+      validator: this.MatchPassword // your validation method
+    });
     }
 
   ngOnInit(){}
@@ -58,15 +61,34 @@ export class ChangepasswordComponent implements OnInit {
     .subscribe(
       data => //console.log(data)
       {
+        console.log(data);
         console.log("Changed Password Successfully"),
+        this.error = true;
+        console.log(this.error);
         this.success = "Changed Password Successfully";
         this.form.reset();
       },
       error =>{
-        this.fail = "Failed to change password";
+        this.error = false;
+        console.log(this.error);
+        this.fail = "Failed to change password. "+error;
       }
     );
 
     }
   }
+
+  //confirmPassword
+  MatchPassword(AC: AbstractControl) {
+    let oldPassword = AC.get('oldPassword').value; //value of the old password
+   let password = AC.get('newPassword').value; // value of the new password
+   let confirmPassword = AC.get('confirmPassword').value; // value of the confirm password
+    if(password != confirmPassword) {
+        //console.log('false');
+        AC.get('confirmPassword').setErrors( {MatchPassword: true} )
+    } else {
+        //console.log('true');
+        return null
+    }
+}
 }
