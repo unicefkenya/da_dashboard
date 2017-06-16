@@ -23,15 +23,14 @@ export class SearchComponent {
 
     this.sub = this.route.params.subscribe(params => {
      let id = +params['id'];
-     let schoolId = localStorage.getItem('schoolId');
      //console.log(schoolId);
      this.getSchoolData(id);
-     this.getStats(schoolId);
-     this.getSevenDaysAttendance(schoolId);
-     this.getEnrollmentGraph(schoolId);
-     this.getAnnualEnrollmentGender(schoolId);
-     this.getAnnualAttendanceGender(schoolId);
-     this.getMonthlyAttendance(schoolId);
+     this.getStats(id);
+     this.getSevenDaysAttendance(id);
+     this.getEnrollmentGraph(id);
+     this.getAnnualEnrollmentGender(id);
+     this.getAnnualAttendanceGender(id);
+     this.getMonthlyAttendance(id);
    });
 
   }
@@ -39,29 +38,25 @@ export class SearchComponent {
   public females;
   public totalStudents;
   public enrolledStudents;
-
-  public getStats(id):void {
-    this.errorSearch = '';
-    this._searchService.getSchoolStats(id).subscribe(
-      (data)  =>
-      {
-        this.males = (data.results[0].enrolled_males+data.results[0].old_males);
-        this.females = (data.results[0].enrolled_females+data.results[0].old_females);
-        this.totalStudents = data.results[0].total;
-        this.enrolledStudents = (data.results[0].enrolled_males+data.results[0].enrolled_females);
-      },
-      error =>{
-        this.errorSearch = 'Emis Code not found';
-      }
-    );
-  }
-
   public schoolname;
   public schoolEmisCode;
   public county;
   public zone;
   public errorSearch;
 
+  public getStats(id):void {
+    this.errorSearch = '';
+    this._searchService.getSchoolStats(id).subscribe(
+      (data)  =>
+      {
+        console.log(data.results[0]);
+        this.males = (data.results[0].enrolled_males+data.results[0].old_males);
+        this.females = (data.results[0].enrolled_females+data.results[0].old_females);
+        this.totalStudents = data.results[0].total;
+        this.enrolledStudents = (data.results[0].enrolled_males+data.results[0].enrolled_females);
+      }
+    );
+  }
   //Shimanyi - Get top level School Data
   public getSchoolData(id){
     this._adminLayoutService.sendSearch({search:id,"details":{
@@ -69,6 +64,7 @@ export class SearchComponent {
     }}).subscribe(
       (data)  =>
       {
+        console.log(data)
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;

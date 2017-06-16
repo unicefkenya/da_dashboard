@@ -59,7 +59,7 @@ export class ViewSchoolsComponent implements OnInit {
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
    localStorage.setItem('schoolId', this.selected[0].id);
-   this.router.navigate(['/search', this.selected[0].emiscode]);
+   this.router.navigate(['/school', this.selected[0].id]);
  }
 
  updateFilter(event) {

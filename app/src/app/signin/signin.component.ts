@@ -66,24 +66,20 @@ export class SigninComponent implements OnInit {
         //console.log("Logged In", email, user);
         this.success = "Logged In Successfully";
         this.token = JSON.parse(localStorage.getItem('user'));
-        this._signin.getUserType(this.token).subscribe(data => {
-          //console.log(data.info.profile.school);
-          localStorage.setItem("user-type", data.type);
-          //localStorage.setItem("school", data.info.profile.school);
-          this.nav =  data.type;
-
-          this.load = false;
-          if(this.nav == "teacher"){
-            //this.schoolId = localStorage.getItem("schoolId");
-            this.router.navigate(['/search', this.schoolId]);
-          }else{
-            this.router.navigate([this.returnUrl]);
-          }
-
-        });
-
-
-
+          this._signin.getUserType(this.token).subscribe(data => {
+            localStorage.setItem("user-type", data.type);
+            this.nav =  data.type;
+            this.load = false;
+              if(this.nav == "teacher"){
+                let schoolId = data.info.profile.school;
+                localStorage.setItem("schoolId", schoolId);
+                this.schoolId = localStorage.getItem("schoolId");
+                this.router.navigate(['/school', schoolId]);
+              }else{
+                console.log("why not:?");
+                this.router.navigate([this.returnUrl]);
+              }
+          });
       },
       error => {
         this.load = false;
