@@ -61,16 +61,16 @@ export class ChangepasswordComponent implements OnInit {
     .subscribe(
       data => //console.log(data)
       {
-        console.log(data);
+        //console.log(data);
         console.log("Changed Password Successfully"),
         this.error = true;
-        console.log(this.error);
+        //console.log(this.error);
         this.success = "Changed Password Successfully";
         this.form.reset();
       },
       error =>{
         this.error = false;
-        console.log(this.error);
+        //console.log(this.error);
         this.fail = "Failed to change password. "+error;
       }
     );
