@@ -63,7 +63,7 @@ export class ChildComponent {
      this.getChildData(childId);
      this.getSchoolClasses();
      this.childAttendance(childId);
-     this.dailyChildAttendance(childId);
+     //this.dailyChildAttendance(childId);
    });
 }
   public firstname;

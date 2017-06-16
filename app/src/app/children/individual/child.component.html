@@ -8,7 +8,7 @@
               <h4 class="ma-0">{{firstname}}&nbsp;<b>{{childname}}</b></h4>
               <p><small>Emis Code: </small>{{emiscode}}</p>
               <p><small>{{class_}}</small></p>
-              <p><small>Date Enrolled: </small>1997/12/01</p>
+              <p><small>Date Enrolled: </small>{{enrolDate}}</p>
               <button md-raised-button color="primary" (click)="editProfile = true">Edit Profile</button>
             </div>
             <div fxFlex="45">
@@ -203,7 +203,7 @@
       <md-card>
         <md-tab-group>
           <md-tab>
-            <template md-tab-label>Bio</template>
+            <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Bio</template>
             <md-card-content>
               <h6 class="mt-0 mb-1">Basic Information</h6>
               <div  fxLayout="row" layout-align="center">
@@ -249,7 +249,7 @@
             <hr>
           </md-tab>
           <md-tab>
-            <template md-tab-label>Guardian Information</template>
+            <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Guardian Information</template>
             <md-card-content>
               <h6 class="mt-0 mb-1">Contact Deatails</h6>
               <div  fxLayout="row" layout-align="center">
@@ -267,7 +267,7 @@
             </md-card-content>
           </md-tab>
           <md-tab>
-            <template md-tab-label>Attendance Record</template>
+            <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Attendance Record</template>
 
             <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
               <md-card>
