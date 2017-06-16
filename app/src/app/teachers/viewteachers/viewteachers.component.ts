@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { ViewTeachersService } from './viewteachers.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ViewTeachersService } from './viewteachers.service';
 })
 export class ViewTeachersComponent implements OnInit {
 
-  constructor(private teachersService: ViewTeachersService) {  }
+  constructor(private teachersService: ViewTeachersService,private router: Router) {  }
   loading:boolean;
   teachers : any[];
   selected: any[];
@@ -60,14 +61,14 @@ export class ViewTeachersComponent implements OnInit {
   }
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
-   //localStorage.setItem('teacherId', this.selected[0].id);
-   //this.getTeacherId(this.selected[0].id);
+   localStorage.setItem('teacherId', this.selected[0].id);
+   this.getTeacherId(this.selected[0].id);
    //this.router.navigate(['/teacher', this.selected[0].id]);
    }
 
    private getTeacherId(id){
 
-     //this.router.navigate(['/children/child', id]);
+     this.router.navigate(['/teachers/teacher', id]);
 
    }
 
