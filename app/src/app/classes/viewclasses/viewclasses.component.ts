@@ -44,7 +44,6 @@ export class ViewClassesComponent implements OnInit{
         this.dt.id = data[i].id
         allClasses.push(this.dt)
       }
-      console.log(data[0].id);
       //cache our data
       this.temp = [...allClasses];
       //our initial data
