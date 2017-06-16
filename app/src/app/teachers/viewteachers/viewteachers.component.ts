@@ -31,7 +31,7 @@ export class ViewTeachersComponent implements OnInit {
 
   fetchTeachers(): void{
     this.teachersService.fetchTeachers().subscribe( data=> {
-      console.log(data.results[0].teacher_type);
+      //console.log(data.results[0].teacher_type);
       data = data.results;
       this.loading = false;
       let items = [];
@@ -60,12 +60,12 @@ export class ViewTeachersComponent implements OnInit {
   }
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
-   //localStorage.setItem('childId', this.selected[0].id);
-   //this.getChildId(this.selected[0].id);
-   //this.router.navigate(['/children/child', this.selected[0].id]);
+   //localStorage.setItem('teacherId', this.selected[0].id);
+   //this.getTeacherId(this.selected[0].id);
+   //this.router.navigate(['/teacher', this.selected[0].id]);
    }
 
-   private getChildId(id){
+   private getTeacherId(id){
 
      //this.router.navigate(['/children/child', id]);
 

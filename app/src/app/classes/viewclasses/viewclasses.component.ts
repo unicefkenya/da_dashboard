@@ -68,15 +68,13 @@ export class ViewClassesComponent implements OnInit{
   }
 
   onSelect({ selected }) {
-   //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('classId', this.selected[0].id);
    this.getClassId(this.selected[0].id);
-   //this.router.navigate(['/children/child', this.selected[0].id]);
    }
 
    private getClassId(id){
      console.log('yes');
-     //this.router.navigate(['/class', id]);
+     this.router.navigate(['/classes/class', id]);
 
    }
 

@@ -41,7 +41,7 @@ export class ClassService {
 
 
     getClassId(id){
-      return this.http.get(this.baseApiUrl+'/api/steams/'+id)
+      return this.http.get(this.baseApiUrl+'/api/streams/'+id)
         .map((response: Response) => response.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
