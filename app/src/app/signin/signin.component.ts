@@ -69,6 +69,7 @@ export class SigninComponent implements OnInit {
           this._signin.getUserType(this.token).subscribe(data => {
             localStorage.setItem("user-type", data.type);
             this.nav =  data.type;
+            console.log(this.nav);
             this.load = false;
               if(this.nav == "teacher"){
                 let schoolId = data.info.profile.school;

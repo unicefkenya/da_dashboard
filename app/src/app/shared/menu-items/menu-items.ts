@@ -25,10 +25,21 @@ const MENUITEMS = [
   {
     usertype: 'all',
     access: 'all',
+    accessibilitylink: 'teacher',
+    id: localStorage.getItem('schoolId'),
     state: 'home',
     name: 'Home',
     type: 'link',
     icon: 'dashboard'
+    /*
+    access: 'admin',
+    accessibility: 'teacher',
+    id: localStorage.getItem('schoolId'),
+    state: 'home',
+    name: 'Home',
+    type: 'link',
+    icon: 'dashboard'
+    */
   },
   {
     usertype: 'admin',

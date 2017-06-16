@@ -10,7 +10,7 @@ import { TeachersService} from './teachers.service';
   providers: [TeachersService]
 })
 export class TeachersComponent implements OnInit{
-  constructor(private teachersService: TeachersService,private router: Router) {  }
+  //constructor(private teachersService: TeachersService,private router: Router) {  }
 
   ngOnInit(){}
 }

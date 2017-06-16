@@ -58,7 +58,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       localStorage.setItem("user-type", data.type);
       //localStorage.setItem("school", data.info.profile.school);
       this.userType =  data.type;
-      
+
     })
 
   }

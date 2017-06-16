@@ -6,15 +6,6 @@
     <div class="branding">
       <div class="logo"></div>
     </div>
-    <!-- Search Bar
-    <div class="search-bar" fxFlex>
-      <form [formGroup]="form" (ngSubmit)="performSearch(form.value);" class="search-form" fxShow="false" fxShow.gt-xs>
-        <md-icon>search</md-icon>
-        <input [formControl]="form.controls['searchText']"   type="text"  placeholder="Search School Emis Code" autofocus="true" />
-      </form>
-    </div>
-    <div><h6 style="color:#FFEB3B; margin-bottom:40px;">{{errorSearch}}</h6></div>
-  -->
     <div fxFlex></div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
@@ -49,6 +40,7 @@
     <md-sidenav #sidemenu class="sidebar-panel" [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()">
       <md-nav-list class="navigation accordion">
         <md-list-item class="accordion-link" *ngFor="let menuitem of menuItems.getadmin()" group="{{menuitem.state}}">
+          <!--Link-->
           <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.type === 'link' && menuitem.usertype === userType" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
@@ -61,18 +53,31 @@
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
+
+          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType && menuitem.access != 'all' && menuitem.type === 'link'" [routerLink]="['/school', menuitem.id]">
+            <md-icon>{{ menuitem.icon }}</md-icon>
+            <span>{{ menuitem.name | translate }}</span>
+            <span fxFlex></span>
+            <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+          </a>
+          <!--End-->
+          <!--Ext Link Start-->
           <a class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" *ngIf="menuitem.type === 'extLink'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
+          <!--End-->
+          <!--Ext Tab Link-->
           <a class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
+          <!--End-->
+          <!--Sub Start-->
           <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
@@ -87,6 +92,16 @@
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
+
+          <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType && menuitem.access != 'all'">
+            <md-icon>{{ menuitem.icon }}</md-icon>
+            <span>{{ menuitem.name | translate }}</span>
+            <span fxFlex></span>
+            <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+            <md-icon class="menu-caret">arrow_drop_down</md-icon>
+          </a>
+          <!--End-->
+          <!--Sub Child Start-->
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
             <md-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
               <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
@@ -97,6 +112,13 @@
               <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
+
+          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType  && menuitem.access != 'all'">
+            <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
+            </md-list-item>
+          </md-nav-list>
+          <!--End-->
         </md-list-item>
       </md-nav-list>
     </md-sidenav>

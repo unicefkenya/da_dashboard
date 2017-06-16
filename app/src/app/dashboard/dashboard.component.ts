@@ -30,8 +30,7 @@ export class DashboardComponent {
   public boys: any;
   public girls: any;
 
-  //Last getSevenDaysAttendance
-  public
+
 
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
