@@ -2,7 +2,7 @@ import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef} from
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
 
-import { ClassesRoutes } from '../class.routing';
+import { ClassRoutes } from '../class.routing';
 import {AppModule} from '../../app.module';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';

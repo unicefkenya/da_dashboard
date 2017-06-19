@@ -12,9 +12,44 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./child.component.scss'],
   providers: [ChildService, AddChildrenService]
 })
-export class ChildComponent {
+export class ChildComponent implements OnInit{
+
+
+    constructor(private childService: ChildService,private route:ActivatedRoute,private fb: FormBuilder,  private _childRegistrationService: AddChildrenService) {
+      this.form = this.fb.group({
+        firstName: [null, Validators.compose([Validators.required,])],
+        maidenName: [null],
+        lastName: [null, Validators.compose([Validators.required,])],
+        gender: [null, Validators.compose([Validators.required])],
+        admNo: [null, Validators.compose([Validators.required])],
+        enrolDate: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
+        dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
+        className: [null, Validators.compose([Validators.required])],
+        previousClass: [null, Validators.compose([Validators.required, CustomValidators.number])],
+        notInSchool: [null, Validators.compose([Validators.required])],
+        modeOfTransport: [null, Validators.compose([Validators.required])],
+        timeToSchool: [null, Validators.compose([Validators.required])],
+        stayWith: [null],
+        householdNumber: [null],
+        mealsInDay: [null, Validators.compose([Validators.required, CustomValidators.number])]
+      });
+    }
+
+    ngOnInit():void{
+      //checks if the id param navigations have changed
+
+      this.sub = this.route.params.subscribe(params => {
+       let childId = +params['id'];
+       //console.log(schoolId);
+       this.getChildData(childId);
+       this.getSchoolClasses();
+       this.childAttendance(childId);
+       this.dailyChildAttendance(childId);
+     });
+  }
 
   editProfile:boolean = false;
+  public sub;
   public form: FormGroup;
   public currentDate = new Date();
   public success;
@@ -32,40 +67,29 @@ export class ChildComponent {
       position: 'bottom'
     }
   }
+  public lineChartColors: Array < any > = [{ // grey
+    backgroundColor: "#7986cb",
+    borderColor: "#3f51b5",
+    pointBackgroundColor: "#3f51b5",
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }, { // dark grey
+    backgroundColor: "#eeeeee",
+    borderColor: "#e0e0e0",
+    pointBackgroundColor: "#e0e0e0",
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(77,83,96,1)'
+  }, { // grey
+    backgroundColor: 'rgba(148,159,177,0.2)',
+    borderColor: 'rgba(148,159,177,1)',
+    pointBackgroundColor: 'rgba(148,159,177,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }];
 
-  constructor(private childService: ChildService,private route:ActivatedRoute,private fb: FormBuilder,  private _childRegistrationService: AddChildrenService) {
-    this.form = this.fb.group({
-      firstName: [null, Validators.compose([Validators.required,])],
-      maidenName: [null],
-      lastName: [null, Validators.compose([Validators.required,])],
-      gender: [null, Validators.compose([Validators.required])],
-      admNo: [null, Validators.compose([Validators.required])],
-      enrolDate: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
-      dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
-      className: [null, Validators.compose([Validators.required])],
-      previousClass: [null, Validators.compose([Validators.required, CustomValidators.number])],
-      notInSchool: [null, Validators.compose([Validators.required])],
-      modeOfTransport: [null, Validators.compose([Validators.required])],
-      timeToSchool: [null, Validators.compose([Validators.required])],
-      stayWith: [null],
-      householdNumber: [null],
-      mealsInDay: [null, Validators.compose([Validators.required, CustomValidators.number])]
-    });
-  }
-
-  public sub;
-  ngOnInit():void{
-    //checks if the id param navigations have changed
-
-    this.sub = this.route.params.subscribe(params => {
-     let childId = +params['id'];
-     //console.log(schoolId);
-     this.getChildData(childId);
-     this.getSchoolClasses();
-     this.childAttendance(childId);
-     //this.dailyChildAttendance(childId);
-   });
-}
   public firstname;
   public midname;
   public lastname;
@@ -151,26 +175,97 @@ export class ChildComponent {
     this.childService.fetchChildAttendance(id).subscribe(
       (data)  =>
       {
-        console.log(data.results[0]);
         let present=data.results[0]["present"]
         let total=data.results[0]["total"]
         if(total !=0 && present !=0){
           let per=Math.round(present/total*100)
             this.percentAttendance=per
-            console.log(per);
         }
       });
   }
 
-  //
+
+    // Bar
+    public barChartLabels: string[] = [];
+    public barChartType: string = 'bar';
+    public barChartLegend: boolean = true;
+    public barChartData: any[] = [{}];
+
+    public barChartOptions: any = Object.assign({
+      scaleShowVerticalLines: false,
+      scales: {
+        xAxes: [{
+          gridLines: {
+            color: 'rgba(0,0,0,0.02)',
+            zeroLineColor: 'rgba(0,0,0,0.02)'
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            color: 'rgba(0,0,0,0.02)',
+            zeroLineColor: 'rgba(0,0,0,0.02)'
+          },
+          position: 'left',
+          ticks: {
+            beginAtZero: true,
+            suggestedMax: 9
+          }
+        }]
+      }
+    }, this.globalChartOptions);
+
     public dailyChildAttendance(id){
-      console.log("hello")
       this.childService.fetchDailyAttendance(id).subscribe(
         (data)  =>
         {
 
           data=data.results;
+          console.log(data);
+          //let subset = data.slice(Math.max(data.length - 7, 0));
 
+                let columns: string[] = [];
+                let absents: number[] = [];
+                let presents: number[] = [];
+
+                let columnNames: string = '';
+                /*
+                for(let i = 0; i < subset.length; i++){
+                  columns.push(subset[i].value);
+                  absents.push((subset[i].absent_males + subset[i].absent_females));
+                  presents.push((subset[i].present_females + subset[i].present_males));
+                }
+                */
+                for(let i=0; i< data.length; i++){
+                  columns.push(data[i].value)
+                  //console.log(d)
+
+                  if(data[i].present=1){
+                    presents.push(1);
+                    absents.push(0);
+                  }
+                  else{
+                    absents.push(1);
+                    presents.push(0);
+                  }
+                                  }
+                this.barChartLabels = columns;
+
+                this.barChartData = [{
+                  //display data for boys ranging from class 1 to 7
+                  //presents
+                  data: presents,
+                  label: 'Present Days',
+                  borderWidth: 0
+                }, {
+                  //absents
+                  data: absents,
+                  label: 'Absent Days',
+                  borderWidth: 0
+                }];
+              });
+            }
+
+/*
           let present:any[]
           let absent:any[]
           let labels:any[]
@@ -201,35 +296,9 @@ export class ChildComponent {
           console.log("data gh",this.barChartData);
 
         });
-    }
+        }
+        */
 
-  // Bar
-  public barChartLabels: string[];
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-  public barChartData: any[]
-  public barChartOptions: any = Object.assign({
-    scaleShowVerticalLines: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        position: 'left',
-        ticks: {
-          beginAtZero: true,
-          suggestedMax: 9
-        }
-      }]
-    }
-  }, this.globalChartOptions);
 
   getSchoolClasses(){
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { DashboardService } from './dashboard.service';
   styleUrls: ['./dashboard.component.scss'],
   providers:[ DashboardService ]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
 
   rows = [];
 
