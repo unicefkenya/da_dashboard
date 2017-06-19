@@ -11,6 +11,8 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+import { EditProfileDialog } from './children/individual/child.component';
+
 
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
@@ -27,7 +29,8 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    EditProfileDialog
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,7 @@ export function createTranslateLoader(http: Http) {
     AuthGuard,
     SigninService
   ],
-  entryComponents: [  ],
+  entryComponents: [ EditProfileDialog ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
