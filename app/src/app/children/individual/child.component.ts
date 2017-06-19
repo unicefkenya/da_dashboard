@@ -42,7 +42,7 @@ export class ChildComponent implements OnInit{
        let childId = +params['id'];
        //console.log(schoolId);
        this.getChildData(childId);
-       this.getSchoolClasses();
+       //this.getSchoolClasses();
        this.childAttendance(childId);
        this.dailyChildAttendance(childId);
      });
@@ -114,6 +114,8 @@ export class ChildComponent implements OnInit{
   public attendancePercentage;
   public childStatus;
   public inSchool;
+  public nonattendant;
+  public attendant;
 
   public getChildData(id){
     this.childService.fetchChild(id).subscribe(
@@ -208,7 +210,7 @@ export class ChildComponent implements OnInit{
           position: 'left',
           ticks: {
             beginAtZero: true,
-            suggestedMax: 9
+            suggestedMax: 5
           }
         }]
       }
@@ -220,86 +222,47 @@ export class ChildComponent implements OnInit{
         {
 
           data=data.results;
-          console.log(data);
-          //let subset = data.slice(Math.max(data.length - 7, 0));
+          if(data != ""){
+              this.attendant = data;
+              let columns: string[] = [];
+              let absents: number[] = [];
+              let presents: number[] = [];
+              let subset = data.slice(Math.max(data.length - 4, 0));
 
-                let columns: string[] = [];
-                let absents: number[] = [];
-                let presents: number[] = [];
+              for(let i=0; i< subset.length; i++){
 
-                let columnNames: string = '';
-                /*
-                for(let i = 0; i < subset.length; i++){
-                  columns.push(subset[i].value);
-                  absents.push((subset[i].absent_males + subset[i].absent_females));
-                  presents.push((subset[i].present_females + subset[i].present_males));
+                columns.push(new Date(subset[i].value).toLocaleString('en-us', {  weekday: 'short' }));
+
+                if(subset[i].present=1){
+                  presents.push(1);
+                  absents.push(0);
                 }
-                */
-                for(let i=0; i< data.length; i++){
-                  columns.push(data[i].value)
-                  //console.log(d)
+                else{
+                  absents.push(1);
+                  presents.push(0);
+                }
+              }
+              this.barChartLabels = columns;
 
-                  if(data[i].present=1){
-                    presents.push(1);
-                    absents.push(0);
-                  }
-                  else{
-                    absents.push(1);
-                    presents.push(0);
-                  }
-                                  }
-                this.barChartLabels = columns;
-
-                this.barChartData = [{
-                  //display data for boys ranging from class 1 to 7
-                  //presents
-                  data: presents,
-                  label: 'Present Days',
-                  borderWidth: 0
-                }, {
-                  //absents
-                  data: absents,
-                  label: 'Absent Days',
-                  borderWidth: 0
-                }];
-              });
+              this.barChartData = [{
+                //display data for boys ranging from class 1 to 7
+                //presents
+                data: presents,
+                label: 'Present',
+                borderWidth: 0
+              }, {
+                //absents
+                data: absents,
+                label: 'Absent',
+                borderWidth: 0
+              }];
+            }else{
+              this.nonattendant = "hasn't been coming to school";
             }
+          });
 
+            }
 /*
-          let present:any[]
-          let absent:any[]
-          let labels:any[]
-          //for(let i=0;i<data.length;i++)
-          for(let d in data){
-            labels.push(d["value"])
-            console.log(d)
-            if(d["present"]=1){
-              present.push(1)
-              absent.push(0)
-            }
-            else{
-              absent.push(1)
-              present.push(0)
-            }
-
-          }
-          this.barChartLabels=labels
-          this.barChartData = [{
-            data: present,
-            label: 'Present',
-            borderWidth: 0
-          }, {
-            data: absent,
-            label: 'Absent',
-            borderWidth: 0
-          }];
-          console.log("data gh",this.barChartData);
-
-        });
-        }
-        */
-
-
   getSchoolClasses(){
 
     this._childRegistrationService.getClass()
@@ -315,7 +278,7 @@ export class ChildComponent implements OnInit{
       (err) => console.log(err),
       ()=>console.log("Done")
     );
-  }
+  }*/
 
   onSubmit(registerChild: ChildRegistration){
     if(!this.submitted){

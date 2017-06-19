@@ -270,9 +270,16 @@
             <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Attendance Record</template>
 
             <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
-              <md-card>
-                <md-card-title>Bar</md-card-title>
-                <md-card-subtitle>Basic</md-card-subtitle>
+              <md-card *ngIf="nonattendant">
+                <md-card-title>No data to display</md-card-title>
+                <md-card-subtitle>Attendance for the past 5 days</md-card-subtitle>
+                <md-card-content>
+                  {{firstname}} {{childname}} {{nonattendant}}
+                </md-card-content>
+              </md-card>
+              <md-card *ngIf="attendant">
+                <md-card-title>{{firstname}} {{childname}}</md-card-title>
+                <md-card-subtitle>Attendance for the past 5 days</md-card-subtitle>
                 <md-card-content>
                   <canvas height="200" baseChart class="chart"
                     [datasets]="barChartData"
