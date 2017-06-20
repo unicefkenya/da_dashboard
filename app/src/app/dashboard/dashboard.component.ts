@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit{
   public femalesAbscent: any;
   public childrenPresent: any;
   public childrenAbscent: any;
-
+  noNewlyEnrolled: string;
   public attendanceSnapshot: any [];
 
   //Annual Attendance per Gender
@@ -207,7 +207,6 @@ export class DashboardComponent implements OnInit{
       children.push(data[0].present_females);
       children.push(data[0].present_males);
       this.pieChartData = children;
-
     });
   }
 
@@ -215,12 +214,17 @@ export class DashboardComponent implements OnInit{
   public getAnnualEnrollmentGender(){
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
+
         data = data.results;
         let enrolled = [];
         enrolled.push(data[0].enrolled_females);
         enrolled.push(data[0].enrolled_males);
 
-        this.pieChartEnrollmentData = enrolled;
+        if(this.pieChartEnrollmentData = [0,0]){
+          this.noNewlyEnrolled = 'No newly enrolled student';
+        }else{
+          this.pieChartEnrollmentData = enrolled;
+        }
 
     });
   }
