@@ -10,9 +10,14 @@ export class ViewSchoolsService {
 
     private baseApiUrl = BaseUrl.base_api_url;
 
-  fetchSchools(){
-    return this.http.get(this.baseApiUrl+'/api/school')
+  fetchSchools(page){
+      return this.http.get(this.baseApiUrl+'/api/school?page='+page)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  fetchPartnerSchools(id,page){
+    return this.http.get(this.baseApiUrl+'/api/school?page='+page+'&partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 }

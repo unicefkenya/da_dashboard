@@ -29,7 +29,7 @@ export class ChildrenComponent implements OnInit {
   };
 
   partnerId:number;
-XMLHttpRequest
+
   columns = [
     { name: 'Emiscode' },
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
