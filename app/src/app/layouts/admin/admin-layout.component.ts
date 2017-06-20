@@ -10,6 +10,7 @@ import {AdminLayoutService} from './adminlayout.service';
 
 
 
+
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
@@ -51,18 +52,14 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       this.url = event.url;
       if (this.isOver()) this.sidemenu.close();
     });
-    /*
-    this.form = this.fb.group({
-      searchText: [null]
-    });
-    //this.performSearch();
-    */
-    this._adminLayoutService.getUserType(this.currentUser).subscribe(data => {
-      console.log(data);
-      this.userType =  data.type;
-    })
 
-    //console.log(this.currentUser);
+    this._adminLayoutService.getUserType(this.currentUser).subscribe(data => {
+      //console.log(data.info.profile.school);
+      localStorage.setItem("user-type", data.type);
+      //localStorage.setItem("school", data.info.profile.school);
+      this.userType =  data.type;
+
+    })
 
   }
 
@@ -82,6 +79,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
 
   logout(){
+    localStorage.clear();
     this._signin.logout();
   }
 /*

@@ -23,10 +23,13 @@ export class ChildrenComponent implements OnInit {
   count: number = 0;
   offset: number = 0;
   limit: number = 100;
+  page:number=1
   table = {
     offset: 0
   };
 
+  partnerId:number;
+XMLHttpRequest
   columns = [
     { name: 'Emiscode' },
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
@@ -39,11 +42,19 @@ export class ChildrenComponent implements OnInit {
   constructor( private childrenService: ChildrenService,private router: Router) {
   }
 
+  //admin
   fetchChildren(offset,limit): void {
-    this.childrenService.fetchChildren().subscribe(data => {
+    this.childrenService.fetchChildren(this.page).subscribe(data => {
+      //start and end for pagination
+      const start = offset * limit;
+      const end = start + limit;
+       this.count =data.count
       data = data.results;
       this.loading = false;
+
       let childs =[]
+      let rows=[]
+      //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
         this.dt.emiscode=data[i].emis_code
@@ -55,25 +66,63 @@ export class ChildrenComponent implements OnInit {
         childs.push(this.dt)
       }
       //cache our data
-      this.temp = [...childs];
-      //our initial data
-      this.children = childs;
+      //this.temp = childs;
+      let row=[...rows]
+      this.temp=[...childs];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = childs[j];
+        j++;
+      }
+      //this.temp=row
+      this.children=row;
+
       this.selected = [];
 
-      /*
-      //pagination
-      this.count = data.length;
+      console.log('Page Results',this.children,this.count, start, end);
 
+    });
+  }
+
+  //individual partners
+  fetchPartnerChildren(id,offset,limit): void {
+    this.childrenService.fetchPartnerChildren(id,this.page).subscribe(data => {
+      //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
-      console.log("Sadas",this.children);
-      for (let i = start; i < end; i++) {
-        this.children[i] = data[i];
+       this.count =data.count
+      data = data.results;
+      this.loading = false;
+
+      let childs =[]
+      let rows=[]
+      //  this.count = data.length;
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        this.dt.emiscode=data[i].emis_code
+        this.dt.name=data[i].student_name
+        this.dt.gender=data[i].gender
+        this.dt.attendance=data[i].last_attendance
+        this.dt.class=data[i].class_name
+        this.dt.id = data[i].id
+        childs.push(this.dt)
       }
+      //cache our data
+      //this.temp = childs;
+      let row=[...rows]
+      this.temp=[...childs];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = childs[j];
+        j++;
+      }
+      //this.temp=row
+      this.children=row;
 
+      this.selected = [];
 
-      console.log('Page Results', start, end);
-      */
+      console.log('Page Results',this.children,this.count, start, end);
+
     });
   }
 
@@ -102,21 +151,30 @@ export class ChildrenComponent implements OnInit {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
-    this.children = temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+      this.children = temp;
+      // Whenever the filter changes, always go back to the first page
+      this.table.offset = this.page;
+
+    console.log('Filter event', event);
   }
 
 
-/*
+
   onPage(event) {
-    console.log('Page Event', event);
+    console.log(event.offset);
+    this.page=event.offset+1
     this.fetchChildren(event.offset, event.limit);
   }
-*/
+
   ngOnInit(): void {
     this.loading = true;
-    this.fetchChildren(this.offset, this.limit);
+    this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    if(this.partnerId){
+      this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
+    }else{
+      this.fetchChildren(this.offset, this.limit);
+    }
+
   }
 
 }

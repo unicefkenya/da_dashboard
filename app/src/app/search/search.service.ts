@@ -41,5 +41,11 @@ export class SearchService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getEnrollmentGraph(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/class?school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 
 }

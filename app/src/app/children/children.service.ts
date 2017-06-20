@@ -10,8 +10,20 @@ export class ChildrenService {
 
   constructor( private http: Http){}
 
-  fetchChildren(){
-    return this.http.get(this.baseApiUrl+'api/students')
+  fetchChildren(page){
+    return this.http.get(this.baseApiUrl+'api/students?page='+page)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  fetchAChild(name){
+    return this.http.get(this.baseApiUrl+'api/students?name='+name)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  fetchPartnerChildren(id,page){
+    return this.http.get(this.baseApiUrl+'api/students?page='+page+'&partner='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

@@ -1,4 +1,4 @@
-<div fxLayout="row"  fxLayoutWrap="wrap">
+<div *ngIf="userType == 'teacher'" fxLayout="row"  fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="40%" fxFlex.gt-xs="50" fxFlex="100">
     <md-card class="card-widget md-white">
       <div md-card-widget>
@@ -31,12 +31,12 @@
      </div>
     </md-card>
   </div>
-  <div fxFlex.gt-sm="20%" fxFlex.gt-xs="50" fxFlex="100">
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
     <md-card class="card-widget md-white">
       <div md-card-widget>
         <div class="pl-0" layout-align="center">
             <h6 md-card-widget-title>
-              <b>Zone:</b> {{zone}}
+              <b>Sub-county:</b> {{zone}}
             </h6>
        </div>
      </div>
@@ -170,8 +170,8 @@
 <div fxLayout="row"  fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <md-card>
-      <md-card-title>Children Enrollment</md-card-title>
-      <md-card-subtitle>Children enrolled, in classes across the country</md-card-subtitle>
+      <md-card-title>Enrollments</md-card-title>
+      <md-card-subtitle>Children enrolled in classes</md-card-subtitle>
       <md-card-content>
         <canvas height="120" baseChart class="chart"
           [datasets]="EnrolledComboChartData"

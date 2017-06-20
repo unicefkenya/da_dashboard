@@ -25,6 +25,27 @@ export class ClassService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+
+  getClassses(){
+    let token=localStorage.getItem("user");
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.baseApiUrl+'api/streams',options)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
+    getClassId(id){
+      return this.http.get(this.baseApiUrl+'/api/streams/'+id)
+        .map((response: Response) => response.json())
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
   sendData(user: any){
 
     const _teacherRegistrationUrl = this.baseApiUrl+'api/stream';
@@ -51,7 +72,7 @@ export class ClassService {
     if(error instanceof Response){
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errMsg = error.statusText;
     }else{
       errMsg = error.message ? error.message: error.toString();
     }

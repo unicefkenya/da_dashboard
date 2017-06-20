@@ -30,8 +30,8 @@ export class SigninComponent implements OnInit {
   public partner;
   public school;
   public token;
-  public admin = "unicef";
-
+  public nav;
+  public schoolId;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -65,10 +65,25 @@ export class SigninComponent implements OnInit {
 
         //console.log("Logged In", email, user);
         this.success = "Logged In Successfully";
-        this.token = localStorage.getItem('user');
-        this.load = false;
-        this.router.navigate([this.returnUrl]);
-        
+        this.token = JSON.parse(localStorage.getItem('user'));
+          this._signin.getUserType(this.token).subscribe(data => {
+            localStorage.setItem("user-type", data.type);
+            this.nav =  data.type;
+            console.log(this.nav, data);
+            this.load = false;
+              if(this.nav == "teacher"){
+                let schoolId = data.info.profile.school;
+                localStorage.setItem("schoolId", schoolId);
+                this.schoolId = localStorage.getItem("schoolId");
+                this.router.navigate(['/school', schoolId]);
+              }else if(this.nav == "partner"){
+                let partnerId = data.info.id;
+                localStorage.setItem("partnerId", partnerId);
+                this.router.navigate([this.returnUrl]);
+              }else{
+                this.router.navigate([this.returnUrl]);
+              }
+          });
       },
       error => {
         this.load = false;

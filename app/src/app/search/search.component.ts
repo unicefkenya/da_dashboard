@@ -23,15 +23,14 @@ export class SearchComponent {
 
     this.sub = this.route.params.subscribe(params => {
      let id = +params['id'];
-     let schoolId = localStorage.getItem('schoolId');
      //console.log(schoolId);
      this.getSchoolData(id);
-     this.getStats(schoolId);
-     this.getSevenDaysAttendance(schoolId);
-     this.getChildrenEnrolled(schoolId);
-     this.getAnnualEnrollmentGender(schoolId);
-     this.getAnnualAttendanceGender(schoolId);
-     this.getMonthlyAttendance(schoolId);
+     this.getStats(id);
+     this.getSevenDaysAttendance(id);
+     this.getEnrollmentGraph(id);
+     this.getAnnualEnrollmentGender(id);
+     this.getAnnualAttendanceGender(id);
+     this.getMonthlyAttendance(id);
    });
 
   }
@@ -39,29 +38,25 @@ export class SearchComponent {
   public females;
   public totalStudents;
   public enrolledStudents;
-
-  public getStats(id):void {
-    this.errorSearch = '';
-    this._searchService.getSchoolStats(id).subscribe(
-      (data)  =>
-      {
-        this.males = (data[0].enrolled_males+data[0].old_males);
-        this.females = (data[0].enrolled_females+data[0].old_females);
-        this.totalStudents = data[0].total;
-        this.enrolledStudents = (data[0].enrolled_males+data[0].enrolled_females);
-      },
-      error =>{
-        this.errorSearch = 'Emis Code not found';
-      }
-    );
-  }
-
   public schoolname;
   public schoolEmisCode;
   public county;
   public zone;
   public errorSearch;
 
+  public getStats(id):void {
+    this.errorSearch = '';
+    this._searchService.getSchoolStats(id).subscribe(
+      (data)  =>
+      {
+        console.log(data.results[0]);
+        this.males = (data.results[0].enrolled_males+data.results[0].old_males);
+        this.females = (data.results[0].enrolled_females+data.results[0].old_females);
+        this.totalStudents = data.results[0].total;
+        this.enrolledStudents = (data.results[0].enrolled_males+data.results[0].enrolled_females);
+      }
+    );
+  }
   //Shimanyi - Get top level School Data
   public getSchoolData(id){
     this._adminLayoutService.sendSearch({search:id,"details":{
@@ -69,6 +64,7 @@ export class SearchComponent {
     }}).subscribe(
       (data)  =>
       {
+        console.log(data)
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;
@@ -217,8 +213,8 @@ export class SearchComponent {
 
         let children = [];
 
-        children.push(data[0].present_males);
-        children.push(data[0].present_females);
+        children.push(data.results[0].present_males);
+        children.push(data.results[0].present_females);
         this.pieChartData = children;
 
       });
@@ -229,8 +225,8 @@ export class SearchComponent {
 
           this._searchService.getSchoolStats(id).subscribe( data => {
           let enrolled = [];
-          enrolled.push(data[0].enrolled_females);
-          enrolled.push(data[0].enrolled_males);
+          enrolled.push(data.results[0].enrolled_females);
+          enrolled.push(data.results[0].enrolled_males);
 
           this.pieChartEnrollmentData = enrolled;
 
@@ -243,6 +239,7 @@ export class SearchComponent {
 
       this._searchService.getChildrenEnrolled(id).subscribe( data => {
         //console.log(data, "sdsdasdsd");
+        data=data.results
         let subset = data.slice(Math.max(data.length - 8, 0));
 
         let columns:string[] = [];
@@ -271,11 +268,34 @@ export class SearchComponent {
     });
     }
 
+    public getEnrollmentGraph(id){
+
+      this._searchService.getEnrollmentGraph(id).subscribe( data => {
+        data = data.results;
+        let subset = data.slice(Math.max(data.length - 8, 0));
+
+        let columns:string[] = [];
+        let enrollments: number [] = [];
+
+        for(let i = 0; i < subset.length; i++){
+          columns.push(subset[i].value);
+          enrollments.push(subset[i].total);
+        }
+
+        this.EnrolledComboChartLabels = columns;
+        this.EnrolledComboChartData  = [{
+          data: enrollments,
+          label: 'Students',
+          borderWidth: 1,
+          type: 'bar',
+        }];
+    });
+    }
 
     public getSevenDaysAttendance(id){
 
       this._searchService.getSevenDaysAttendance(id).subscribe( data => {
-
+        data=data.results
         let subset = data.slice(Math.max(data.length - 8, 0));
 
         let columns: string[] = [];
@@ -309,7 +329,7 @@ export class SearchComponent {
     public getMonthlyAttendance(id){
 
       this._searchService.getMonthlyAttendance(id).subscribe( data => {
-
+        data=data.results
         let subset = data.slice(Math.max(data.length - 6, 0));
 
         let columns:string[] = [];
