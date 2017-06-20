@@ -24,8 +24,8 @@ export class ChildService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  fetchDailyAttendance(id){
-    return this.http.get(this.baseApiUrl+'/api/attendances/daily?student='+id)
+  fetchWeeklyAttendance(id){
+    return this.http.get(this.baseApiUrl+'/api/attendances/weekly?student='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

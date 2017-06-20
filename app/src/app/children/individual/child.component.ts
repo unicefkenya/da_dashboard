@@ -109,7 +109,7 @@ export class ChildComponent implements OnInit{
   public guardian;
   public phone;
   public previousClass;
-
+  row: number [] = [];
   public attendancePercentage;
   public childStatus;
   public inSchool;
@@ -210,50 +210,49 @@ export class ChildComponent implements OnInit{
           position: 'left',
           ticks: {
             beginAtZero: true,
-            suggestedMax: 5
+            suggestedMax: this.row
           }
         }]
       }
     }, this.globalChartOptions);
 
     public dailyChildAttendance(id){
-      this.childService.fetchDailyAttendance(id).subscribe(
+      this.childService.fetchWeeklyAttendance(id).subscribe(
         (data)  =>
         {
 
           data=data.results;
           if(data != ""){
               this.attendant = data;
+              console.log(data);
               let columns: string[] = [];
               let absents: number[] = [];
               let presents: number[] = [];
-              let subset = data.slice(Math.max(data.length - 4, 0));
+
+              let subset = data.slice(Math.max(data.length - 3, 0));
 
               for(let i=0; i< subset.length; i++){
 
-                columns.push(new Date(subset[i].value).toLocaleString('en-us', {  weekday: 'short' }));
+                let date = new Date(subset[i].value);
 
-                if(subset[i].present=1){
-                  presents.push(1);
-                  absents.push(0);
-                }
-                else{
-                  absents.push(1);
-                  presents.push(0);
-                }
+                columns.push(date.toLocaleDateString());
+                this.row = subset[i].total;
+                presents.push(subset[i].present);
+                absents.push(subset[i].absent);
               }
+
               this.barChartLabels = columns;
 
               this.barChartData = [{
                 //display data for boys ranging from class 1 to 7
                 //presents
                 data: presents,
-                label: 'Present',
+                label: 'Present Number of Days',
                 borderWidth: 0
               }, {
                 //absents
                 data: absents,
-                label: 'Absent',
+                label: 'Absent Number of Days',
                 borderWidth: 0
               }];
             }else{

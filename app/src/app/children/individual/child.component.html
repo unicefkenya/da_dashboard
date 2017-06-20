@@ -16,7 +16,7 @@
               <figure>
                 <div class="text-xs-center">
                   <h4 style="color: green">{{percentAttendance}} %</h4>
-                  <div class="text-md mt10">Attendance record</div>
+                  <div class="text-md mt10">Monthly Attendance record</div>
                 </div>
                 <div class="ma-xs">
                   <md-progress-bar mode="determinate" value="{{percentAttendance}}"></md-progress-bar>
@@ -30,7 +30,7 @@
 
         <!--edit profile modal -->
 
-        
+
           <div  fxLayout="row" class="text-xs-center">
             <div fxFlex="33">
               <small>School</small>
@@ -118,19 +118,19 @@
             </md-card-content>
           </md-tab>
           <md-tab>
-            <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Attendance Record</template>
+            <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Monthly Attendance Record</template>
 
             <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
               <md-card *ngIf="nonattendant">
                 <md-card-title>No data to display</md-card-title>
-                <md-card-subtitle>Attendance for the past 5 days</md-card-subtitle>
+                <md-card-subtitle>Attendance for the last 4 weeks</md-card-subtitle>
                 <md-card-content>
                   {{firstname}} {{childname}} {{nonattendant}}
                 </md-card-content>
               </md-card>
               <md-card *ngIf="attendant">
                 <md-card-title>{{firstname}} {{childname}}</md-card-title>
-                <md-card-subtitle>Attendance for the past 5 days</md-card-subtitle>
+                <md-card-subtitle>Attendance for the past 4 weeks</md-card-subtitle>
                 <md-card-content>
                   <canvas height="200" baseChart class="chart"
                     [datasets]="barChartData"
