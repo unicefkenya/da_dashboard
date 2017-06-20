@@ -23,10 +23,11 @@ export class ChildrenComponent implements OnInit {
   count: number = 0;
   offset: number = 0;
   limit: number = 100;
+  page:number=1
   table = {
     offset: 0
   };
-
+XMLHttpRequest
   columns = [
     { name: 'Emiscode' },
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
@@ -40,10 +41,16 @@ export class ChildrenComponent implements OnInit {
   }
 
   fetchChildren(offset,limit): void {
-    this.childrenService.fetchChildren().subscribe(data => {
+    this.childrenService.fetchChildren(this.page).subscribe(data => {
+      //start and end for pagination
+      const start = offset * limit;
+      const end = start + limit;
+       this.count =data.count
       data = data.results;
       this.loading = false;
       let childs =[]
+      let rows=[]
+      //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
         this.dt.emiscode=data[i].emis_code
@@ -55,27 +62,24 @@ export class ChildrenComponent implements OnInit {
         childs.push(this.dt)
       }
       //cache our data
-      this.temp = [...childs];
-      //our initial data
-      this.children = childs;
+    //  this.temp = childs;
+      let row=[...rows]
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = childs[j];
+        j++;
+      }
+      this.temp=row
+      this.children=row
+
       this.selected = [];
 
-      /*
-      //pagination
-      this.count = data.length;
+      console.log('Page Results',this.children,this.count, start, end);
 
-      const start = offset * limit;
-      const end = start + limit;
-      console.log("Sadas",this.children);
-      for (let i = start; i < end; i++) {
-        this.children[i] = data[i];
-      }
-
-
-      console.log('Page Results', start, end);
-      */
     });
   }
+
+
 
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
@@ -91,7 +95,7 @@ export class ChildrenComponent implements OnInit {
    }
 
    onActivate(event) {
-     //console.log('Activate Event', event);
+     console.log('Activate Event', event);
    }
 
   updateFilter(event) {
@@ -108,12 +112,13 @@ export class ChildrenComponent implements OnInit {
   }
 
 
-/*
+
   onPage(event) {
     console.log('Page Event', event);
+    this.page=event.offset+1
     this.fetchChildren(event.offset, event.limit);
   }
-*/
+
   ngOnInit(): void {
     this.loading = true;
     this.fetchChildren(this.offset, this.limit);
