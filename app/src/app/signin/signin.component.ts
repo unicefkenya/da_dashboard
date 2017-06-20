@@ -69,13 +69,17 @@ export class SigninComponent implements OnInit {
           this._signin.getUserType(this.token).subscribe(data => {
             localStorage.setItem("user-type", data.type);
             this.nav =  data.type;
-            console.log(this.nav);
+            console.log(this.nav, data);
             this.load = false;
               if(this.nav == "teacher"){
                 let schoolId = data.info.profile.school;
                 localStorage.setItem("schoolId", schoolId);
                 this.schoolId = localStorage.getItem("schoolId");
                 this.router.navigate(['/school', schoolId]);
+              }else if(this.nav == "partner"){
+                let partnerId = data.info.id;
+                localStorage.setItem("partnerId", partnerId);
+                this.router.navigate([this.returnUrl]);
               }else{
                 this.router.navigate([this.returnUrl]);
               }
