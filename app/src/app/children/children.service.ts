@@ -11,7 +11,7 @@ export class ChildrenService {
   constructor( private http: Http){}
 
   fetchChildren(page){
-    return this.http.get(this.baseApiUrl+'api/students?page_size=1100&page='+page)
+    return this.http.get(this.baseApiUrl+'api/students?page='+page)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
