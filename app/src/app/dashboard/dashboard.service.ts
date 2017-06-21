@@ -16,13 +16,33 @@ export class DashboardService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getPartnerStats(id){
+    return this.http.get(this.baseApiUrl+'api/statistics?partner='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getWeeklySummary(){
     return this.http.get(this.baseApiUrl+'api/attendance/weekly')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getPartnerWeeklySummary(id){
+    return this.http.get(this.baseApiUrl+'api/attendance/weekly?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAnnualAttendanceGender(){
     return this.http.get(this.baseApiUrl+'api/attendances/yearly')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getPartnerAnnualAttendanceGender(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly?partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -33,11 +53,24 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getPartnerAnnualEnrollmentGender(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getMonthlyAttendance(){
     return this.http.get(this.baseApiUrl+'api/attendances/monthly')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getPartnerMonthlyAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 
   //Shimanyi - getSevenDaysAttendance
   getSevenDaysAttendance(){
@@ -45,8 +78,20 @@ export class DashboardService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+  getPartnerSevenDaysAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getEnrollmentGraph(){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/class')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  
+  getPartnerEnrollmentGraph(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/class?partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
