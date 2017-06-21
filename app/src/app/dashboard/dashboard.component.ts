@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit{
   //Annual Attendance per Gender
   public boys: any;
   public girls: any;
-
+  partnerId:number;
 
 
   constructor(private dashboardServices: DashboardService) {
@@ -37,13 +37,25 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getStats();
-    //this.getWeeklySummary(); commented till the api is fixed
-    this.getAnnualAttendanceGender();
-    this.getAnnualEnrollmentGender();
-    this.getMonthlyAttendance();
-    this.getSevenDaysAttendance();
-    this.getEnrollmentGraph();
+    this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    if(this.partnerId){
+      this.getPartnerStats(this.partnerId);
+      //this.getWeeklySummary(); commented till the api is fixed
+      this.getPartnerAnnualAttendanceGender(this.partnerId);
+      this.getPartnerAnnualEnrollmentGender(this.partnerId);
+      this.getPartnerMonthlyAttendance(this.partnerId);
+      this.getPartnerSevenDaysAttendance(this.partnerId);
+      this.getPartnerEnrollmentGraph(this.partnerId);
+    }else{
+      this.getStats();
+      //this.getWeeklySummary(); commented till the api is fixed
+      this.getAnnualAttendanceGender();
+      this.getAnnualEnrollmentGender();
+      this.getMonthlyAttendance();
+      this.getSevenDaysAttendance();
+      this.getEnrollmentGraph();
+    }
+
   }
 
   // Shimanyi > getStats()
@@ -58,10 +70,69 @@ export class DashboardComponent implements OnInit{
        this.teachers = data.teachers;
     });
   }
+  // Partner > getStats()
+  public getPartnerStats(id):void {
+
+    this.dashboardServices.getPartnerStats(id).subscribe(data => {
+
+       this.schools = data.schools;
+       this.males = data.students.males;
+       this.females = data.students.females;
+       this.students = +(this.males+this.females);
+       this.teachers = data.teachers;
+
+
+    });
+  }
 
   // Shimanyi > getWeeklySummary()
   public getWeeklySummary(){
     this.dashboardServices.getWeeklySummary().subscribe( data => {
+      this.malesPresent   = data.present.males;
+      this.malesAbscent   = data.absent.males;
+      this.femalesPresent = data.present.females;
+      this.femalesAbscent = data.absent.females;
+      this.childrenPresent = data.present.total + "%";
+      this.childrenAbscent = data.absent.total;
+
+      this.attendanceSnapshot = [
+        {
+          "title": "Girls Present",
+          "duration":"1 week",
+          "progress": this.femalesPresent,
+          "color":"primary"
+        }, {
+          "title": "Boys Present ",
+          "duration":"1 week",
+          "progress": this.malesPresent,
+          "color":"primary"
+        }, {
+          "title": "Children Present",
+          "duration":"1 week",
+          "progress": this.childrenPresent,
+          "color":"primary"
+        },{
+          "title": "Girls Absent",
+          "duration":"1 week",
+          "progress": this.femalesAbscent,
+          "color":"accent"
+        }, {
+          "title": "Males Abscent",
+          "duration":"1 week",
+          "progress": this.childrenAbscent,
+          "color":"accent"
+        },  {
+          "title": "Children Abscent",
+          "duration":"1 week",
+          "progress": this.malesAbscent,
+          "color":"warn"
+        }
+      ]
+    });
+  }
+
+  public getPartnerWeeklySummary(id){
+    this.dashboardServices.getPartnerWeeklySummary(id).subscribe( data => {
       this.malesPresent   = data.present.males;
       this.malesAbscent   = data.absent.males;
       this.femalesPresent = data.present.females;
@@ -209,11 +280,39 @@ export class DashboardComponent implements OnInit{
       this.pieChartData = children;
     });
   }
+  public getPartnerAnnualAttendanceGender(id){
+      this.dashboardServices.getPartnerAnnualAttendanceGender(id).subscribe( data => {
+
+      data = data.results;
+      let children = [];
+
+      children.push(data[0].present_females);
+      children.push(data[0].present_males);
+      this.pieChartData = children;
+    });
+  }
 
 //Norman - pie chart data for enrollment based on gender
   public getAnnualEnrollmentGender(){
 
       this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
+
+        data = data.results;
+        let enrolled = [];
+        enrolled.push(data[0].enrolled_females);
+        enrolled.push(data[0].enrolled_males);
+
+        if(this.pieChartEnrollmentData = [0,0]){
+          this.noNewlyEnrolled = 'No newly enrolled student';
+        }else{
+          this.pieChartEnrollmentData = enrolled;
+        }
+
+    });
+  }
+  public getPartnerAnnualEnrollmentGender(id){
+
+      this.dashboardServices.getPartnerAnnualEnrollmentGender(id).subscribe( data => {
 
         data = data.results;
         let enrolled = [];
@@ -278,10 +377,76 @@ export class DashboardComponent implements OnInit{
     });
   }
 
+  public getPartnerMonthlyAttendance(id){
+
+    this.dashboardServices.getPartnerMonthlyAttendance(id).subscribe( data => {
+      data = data.results;
+      let subset = data.slice(Math.max(data.length - 6, 0));
+
+      let columns:String [] = [];
+      let totalAbsent: number [] = [];
+      let totalPresent: number [] = [];
+      let refine: any;
+
+      let months: string [] =
+      ["Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+      "Oct", "Nov", "Dec", ];
+
+      for(let i = 0; i < subset.length; i++){
+
+        let splitted = subset[i].value.split("/");
+        let month = splitted[1] - 1;
+        columns.push(months[month]);
+
+        totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
+        totalPresent.push(subset[i].present_males + subset[i].present_females);
+      }
+
+      this.comboChartLabels = columns;
+      this.comboChartData  = [{
+        data: totalPresent,
+        label: 'Presents',
+        borderWidth: 1,
+        type: 'line',
+        fill: false
+      },{
+        data: totalAbsent,
+        label: 'Absents',
+        borderWidth: 1,
+        tupe: 'bar',
+      }];
+    });
+  }
+
   //Norman - children enrollment in all the classes
   public getEnrollmentGraph(){
 
     this.dashboardServices.getEnrollmentGraph().subscribe( data => {
+      data = data.results;
+      let subset = data.slice(Math.max(data.length - 8, 0));
+
+      let columns:string[] = [];
+      let enrollments: number [] = [];
+
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].value);
+        enrollments.push(subset[i].total);
+      }
+
+      this.EnrolledComboChartLabels = columns;
+      this.EnrolledComboChartData  = [{
+        data: enrollments,
+        label: 'Students',
+        borderWidth: 1,
+        type: 'bar',
+      }];
+  });
+  }
+
+  public getPartnerEnrollmentGraph(id){
+
+    this.dashboardServices.getPartnerEnrollmentGraph(id).subscribe( data => {
       data = data.results;
       let subset = data.slice(Math.max(data.length - 8, 0));
 
@@ -345,6 +510,39 @@ export class DashboardComponent implements OnInit{
   public getSevenDaysAttendance(){
 
     this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
+      data = data.results;
+      let subset = data.slice(Math.max(data.length - 7, 0));
+
+      let columns: string[] = [];
+      let absents: number[] = [];
+      let presents: number[] = [];
+
+      let columnNames: string = '';
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].value);
+        absents.push((subset[i].absent_males + subset[i].absent_females));
+        presents.push((subset[i].present_females + subset[i].present_males));
+      }
+
+      this.barChartLabels = columns;
+      this.barChartData = [{
+        //display data for boys ranging from class 1 to 7
+        //presents
+        data: presents,
+        label: 'Present Students',
+        borderWidth: 0
+      }, {
+        //absents
+        data: absents,
+        label: 'Absent Students',
+        borderWidth: 0
+      }];
+
+    });
+  }
+  public getPartnerSevenDaysAttendance(id){
+
+    this.dashboardServices.getPartnerSevenDaysAttendance(id).subscribe( data => {
       data = data.results;
       let subset = data.slice(Math.max(data.length - 7, 0));
 
