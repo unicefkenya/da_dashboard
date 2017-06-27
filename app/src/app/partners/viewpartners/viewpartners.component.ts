@@ -28,12 +28,9 @@ export class ViewpartnersComponent implements OnInit {
   };
 
   columns = [
-    { name: 'Emiscode' },
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
-    { name: 'Gender' },
-    { name: 'Attendance' },
-    { name: 'Class' },
-
+    { name: 'Email' },
+    { name: 'Phonenumber' }
   ];
 
   constructor( private partnersService: ViewpartnersService,private router: Router) {
@@ -42,6 +39,7 @@ export class ViewpartnersComponent implements OnInit {
   //admin
   fetchpartners(offset,limit): void {
     this.partnersService.fetchPartners(this.page).subscribe(data => {
+      
       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
@@ -49,26 +47,24 @@ export class ViewpartnersComponent implements OnInit {
       data = data.results;
       this.loading = false;
 
-      let childs =[]
+      let partner =[]
       let rows=[]
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.emiscode=data[i].emis_code
-        this.dt.name=data[i].student_name
-        this.dt.gender=data[i].gender
-        this.dt.attendance=data[i].last_attendance
-        this.dt.class=data[i].class_name
+        this.dt.name=data[i].name
+        this.dt.email=data[i].email
+        this.dt.phone=data[i].phone
         this.dt.id = data[i].id
-        childs.push(this.dt)
+        partner.push(this.dt)
       }
       //cache our data
       //this.temp = childs;
       let row=[...rows]
-      this.temp=[...childs];
+      this.temp=[...partner];
       let j=0
       for (let i = start; i < end; i++) {
-        row[i] = childs[j];
+        row[i] = partner[j];
         j++;
       }
       //this.temp=row
