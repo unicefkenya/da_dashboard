@@ -76,7 +76,7 @@
 		<md-card>
       <md-card-title>Monthly Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-      Attendance Summary &nbsp;<b>Bar:</b>&nbsp; Absents,&nbsp;<b>Line:</b>&nbsp; Presents &nbsp; <span class="font-weight-bold md-text-warn"></span>
+      Aggregated: &nbsp;<b>BAR -</b>&nbsp; Absents |&nbsp;<b>LINE - </b>&nbsp; Presents &nbsp; <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
 			<md-card-content>
         <canvas height="260" baseChart class="chart"
@@ -114,7 +114,7 @@
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <md-card>
       <md-card-title>Enrollments</md-card-title>
-      <md-card-subtitle>Children enrolled, in classes across the country</md-card-subtitle>
+      <md-card-subtitle>Children enrolled per class in partner's schools</md-card-subtitle>
       <md-card-content>
         <canvas height="120" baseChart class="chart"
           [datasets]="EnrolledComboChartData"

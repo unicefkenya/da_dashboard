@@ -10,7 +10,7 @@
               <p><small>{{class_}}</small></p>
               <p><small>Date Enrolled: </small>{{enrolDate}}</p>
               <!--<button md-raised-button color="primary" (click)="editProfile = true">Edit Profile</button>-->
-              <button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Profile</button>
+              <button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Student</button>
             </div>
             <div fxFlex="45">
               <figure>
@@ -98,7 +98,7 @@
           <md-tab>
             <template md-tab-label fxFlex.gt-sm="20" fxFlex.gt-xs="50">Guardian Information</template>
             <md-card-content>
-              <h6 class="mt-0 mb-1">Contact Deatails</h6>
+              <h6 class="mt-0 mb-1">Contact Details</h6>
               <div  fxLayout="row" layout-align="center">
                 <div class="pr-1" fxFlex>
                   <div  fxLayout="column" class="mb-1">
@@ -118,7 +118,7 @@
 
             <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
               <md-card *ngIf="nonattendant">
-                <md-card-title>No data to display</md-card-title>
+                <md-card-title>No Data to Display</md-card-title>
                 <md-card-subtitle>Attendance for the last 4 weeks</md-card-subtitle>
                 <md-card-content>
                   {{firstname}} {{childname}} {{nonattendant}}
