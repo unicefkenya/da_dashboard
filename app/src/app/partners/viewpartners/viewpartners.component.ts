@@ -28,7 +28,7 @@ export class ViewpartnersComponent implements OnInit {
   };
 
   columns = [
-    { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
+    { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Email' },
     { name: 'Phonenumber' }
   ];
@@ -39,7 +39,7 @@ export class ViewpartnersComponent implements OnInit {
   //admin
   fetchpartners(offset,limit): void {
     this.partnersService.fetchPartners(this.page).subscribe(data => {
-      
+
       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
@@ -52,7 +52,7 @@ export class ViewpartnersComponent implements OnInit {
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.name=data[i].name
+        this.dt.organization=data[i].name
         this.dt.email=data[i].email
         this.dt.phone=data[i].phone
         this.dt.id = data[i].id
@@ -79,13 +79,13 @@ export class ViewpartnersComponent implements OnInit {
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('partnerId', this.selected[0].id);
-   //this.getPartnerId(this.selected[0].id);
+   this.getPartnerId(this.selected[0].id);
    //this.router.navigate(['/partners/child', this.selected[0].id]);
    }
 
-   private getChildId(id){
-
-     this.router.navigate(['/partners/child', id]);
+   private getPartnerId(id){
+     console.log('show partner')
+     //this.router.navigate(['/partners/child', id]);
 
    }
 

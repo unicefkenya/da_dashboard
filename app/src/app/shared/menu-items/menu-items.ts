@@ -107,7 +107,7 @@ const MENUITEMS = [
       {state: 'view-children', name: 'View Children'},
     ]
   },
-  {
+  /*{
     usertype: 'partner',
     state: 'reports',
     name: 'Reports',
@@ -124,7 +124,7 @@ const MENUITEMS = [
       {state: 'girls', name: 'Girls Attendance'},
       {state: 'dropouts', name: 'Children Dropouts'},
     ]
-  },
+  },*/
   {
     usertype: 'partner',
     state: 'imports',
