@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit{
   public childrenPresent: any;
   public childrenAbscent: any;
   noNewlyEnrolled: string;
+  noAttendanceGender: string;
   public attendanceSnapshot: any [];
 
   //Annual Attendance per Gender
@@ -38,14 +39,15 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+
     if(this.partnerId){
       this.getPartnerStats(this.partnerId);
-      //this.getWeeklySummary(); commented till the api is fixed
       this.getPartnerAnnualAttendanceGender(this.partnerId);
       this.getPartnerAnnualEnrollmentGender(this.partnerId);
       this.getPartnerMonthlyAttendance(this.partnerId);
       this.getPartnerSevenDaysAttendance(this.partnerId);
       this.getPartnerEnrollmentGraph(this.partnerId);
+
     }else{
       this.getStats();
       //this.getWeeklySummary(); commented till the api is fixed
@@ -278,6 +280,7 @@ export class DashboardComponent implements OnInit{
       children.push(data[0].present_females);
       children.push(data[0].present_males);
       this.pieChartData = children;
+
     });
   }
   public getPartnerAnnualAttendanceGender(id){
@@ -301,12 +304,8 @@ export class DashboardComponent implements OnInit{
         let enrolled = [];
         enrolled.push(data[0].enrolled_females);
         enrolled.push(data[0].enrolled_males);
+        this.pieChartEnrollmentData = enrolled;
 
-        if(this.pieChartEnrollmentData = [0,0]){
-          this.noNewlyEnrolled = 'No newly enrolled student';
-        }else{
-          this.pieChartEnrollmentData = enrolled;
-        }
 
     });
   }
@@ -319,12 +318,10 @@ export class DashboardComponent implements OnInit{
         enrolled.push(data[0].enrolled_females);
         enrolled.push(data[0].enrolled_males);
 
-        if(this.pieChartEnrollmentData = [0,0]){
+        this.pieChartEnrollmentData = enrolled;
+        if(this.pieChartEnrollmentData == [0,0]){
           this.noNewlyEnrolled = 'No newly enrolled student';
-        }else{
-          this.pieChartEnrollmentData = enrolled;
         }
-
     });
   }
 
