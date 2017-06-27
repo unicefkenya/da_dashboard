@@ -12,14 +12,20 @@ export class ViewTeachersComponent implements OnInit {
 
   constructor(private teachersService: ViewTeachersService,private router: Router) {  }
   loading:boolean;
-  teachers : any[];
+  teachers : any[] = this.rows;
   selected: any[];
   tmp :any;
-  temp = [];
   rows = [];
+  temp = [];
+  count: number = 0;
+  offset: number = 0;
+  limit: number = 100;
+  page:number=1
   table = {
     offset: 0
   };
+
+  schoolId: number;
 
   columns = [
     { name: 'Name' },
@@ -30,12 +36,17 @@ export class ViewTeachersComponent implements OnInit {
 
   ];
 
-  fetchTeachers(): void{
-    this.teachersService.fetchTeachers().subscribe( data=> {
-      //console.log(data.results[0].teacher_type);
+  fetchTeachers(id,offset,limit): void{
+    this.teachersService.fetchTeachers(id,this.page).subscribe( data=> {
+      //start and end for pagination
+      const start = offset * limit;
+      const end = start + limit;
+       this.count =data.count
       data = data.results;
       this.loading = false;
+
       let items = [];
+      let rows=[];
       for (let i = 0; i < data.length; i++){
         this.tmp = {}
         this.tmp.name = data[i].name
@@ -47,17 +58,34 @@ export class ViewTeachersComponent implements OnInit {
       }
 
       //cache our data
+      let row=[...rows]
       this.temp = [...items];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = items[j];
+        j++;
+      }
       //our initial data
       this.teachers = items;
       this.selected = [];
+      console.log('Page Results',this.teachers,this.count, start, end);
 
     });
   }
 
+  onPage(event) {
+    console.log(event.offset);
+    this.page=event.offset+1
+
+    this.fetchTeachers(this.schoolId,event.offset, event.limit);
+
+  }
+
+
   ngOnInit(): void {
     this.loading = true;
-    this.fetchTeachers();
+    this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
+    this.fetchTeachers(this.schoolId,this.offset, this.limit);
   }
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);

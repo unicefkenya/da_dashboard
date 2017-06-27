@@ -79,7 +79,7 @@ export class ChildrenComponent implements OnInit {
 
       this.selected = [];
 
-      console.log('Page Results',this.children,this.count, start, end);
+      //console.log('Page Results',this.children,this.count, start, end);
 
     });
   }
@@ -121,7 +121,7 @@ export class ChildrenComponent implements OnInit {
 
       this.selected = [];
 
-      console.log('Page Results',this.children,this.count, start, end);
+      //console.log('Page Results',this.children,this.count, start, end);
 
     });
   }
