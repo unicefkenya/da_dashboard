@@ -70,7 +70,7 @@ export class ViewSchoolsComponent implements OnInit {
 
       this.selected = [];
 
-      console.log('Page Results',this.schools,this.count, start, end);
+      //console.log('Page Results',this.schools,this.count, start, end);
 
     });
   }
@@ -110,7 +110,7 @@ export class ViewSchoolsComponent implements OnInit {
 
         this.selected = [];
 
-        console.log('Page Results',this.schools,this.count, start, end);
+        //console.log('Page Results',this.schools,this.count, start, end);
 
       });
     }
@@ -135,7 +135,15 @@ export class ViewSchoolsComponent implements OnInit {
    this.table.offset = 0;
  }
 
-
+ onPage(event) {
+   console.log(event.offset);
+   this.page=event.offset+1
+   if(this.partnerId){
+     this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
+   }else{
+     this.fetchSchools(event.offset,event.limit);
+   }
+ }
 
  onActivate(event) {
    //console.log('Activate Event', event);

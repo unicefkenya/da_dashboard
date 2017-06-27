@@ -11,17 +11,20 @@
 <ngx-datatable
   class="material fullscreen"
   [columns]="columns"
+  [sortType]="'multi'"
   [columnMode]="'force'"
   [headerHeight]="50"
-  [footerHeight]="0"
-  [rowHeight]="50"
-  [scrollbarV]="true"
-  [scrollbarH]="true"
-  [limit]="100"
+  [footerHeight]="50"
+  [rowHeight]="auto"
   [rows]="schools"
   [selected]="selected"
   [selectionType]="'single'"
-  (activate)="onActivate($event)"
+  [externalPaging]="true"
+  [count]="count"
+  [offset]="offset"
+  [limit]="limit"
+  (page)='onPage($event)'
+  (activate)='onActivate($event)'
   (select)='onSelect($event)'>
 </ngx-datatable>
 </div>

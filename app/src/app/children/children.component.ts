@@ -163,7 +163,11 @@ export class ChildrenComponent implements OnInit {
   onPage(event) {
     console.log(event.offset);
     this.page=event.offset+1
-    this.fetchChildren(event.offset, event.limit);
+    if(this.partnerId){
+      this.fetchPartnerChildren(this.partnerId,event.offset, event.limit);
+    }else{
+      this.fetchChildren(event.offset, event.limit);
+    }
   }
 
   ngOnInit(): void {
