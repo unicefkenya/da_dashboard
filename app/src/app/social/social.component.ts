@@ -8,6 +8,11 @@ import {SocialService} from './social.service';
   providers: [SocialService]
 })
 export class SocialComponent implements OnInit {
+  email: any;
+  name:any;
+  phone:any;
+  error:any;
+  usertype: any;
 
   images: any[] = [];
   num: number = 1;
@@ -33,18 +38,29 @@ export class SocialComponent implements OnInit {
 
   id:number;
   ngOnInit(){
-    this.id = JSON.parse(localStorage.getItem("partnerId"));
-    this.fetchUserDetails(this.id);
+    this.usertype = localStorage.getItem('user-type');
+
+    if(this.usertype == 'partner'){
+      this.id = JSON.parse(localStorage.getItem("partnerId"));
+      this.fetchUserDetails(this.id);
+    }else{
+      console.log(this.usertype);
+      console.log("Is a school");
+    }
   }
 
   fetchUserDetails(id){
     this._socialService.fetchUserProfile(id)
            .subscribe(
                 (res)=>{
-                  console.log(res);
+
+                  this.email = res.email;
+                  this.name = res.name;
+                  this.phone = res.phone;
                 },
-              (err) => console.log(err),
-              ()=>console.log("Done")
+              (err) => {
+                this.error = err;
+              },
             );
   }
 

@@ -10,8 +10,8 @@
         <md-tab>
           <template md-tab-label>Child Registration</template>
           <md-card-content>
-            <small style="color: green;">{{success}}</small>
-            <small style="color: red;">{{fail}}</small>
+            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">

@@ -23,6 +23,7 @@ export class SearchComponent {
 
     this.sub = this.route.params.subscribe(params => {
      let id = +params['id'];
+     //sconsole.log(id);
      //console.log(schoolId);
      this.getSchoolData(id);
      this.getStats(id);

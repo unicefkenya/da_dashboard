@@ -11,7 +11,7 @@ export class SocialService {
   constructor( private http: Http){}
 
   fetchUserProfile(id){
-    return this.http.get(this.baseApiUrl+'api/partners?id='+id)
+    return this.http.get(this.baseApiUrl+'api/partners/'+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
