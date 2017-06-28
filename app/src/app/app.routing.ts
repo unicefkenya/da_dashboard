@@ -4,6 +4,7 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 import { AuthGuard } from './authguard/auth.guard';
+import { Adminaccess } from './authguard/adminaccess';
 
 export const AppRoutes: Routes = [{
     path: '',
@@ -23,7 +24,7 @@ export const AppRoutes: Routes = [{
   },{
     path: 'partners',
     loadChildren: './partners/partners.module#PartnersModule',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, Adminaccess],
   },{
     path: 'counties',
     loadChildren: './counties/county.module#CountyModule',
