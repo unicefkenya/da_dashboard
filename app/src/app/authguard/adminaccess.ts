@@ -11,7 +11,8 @@ export class Adminaccess implements CanActivate {
             return true;
           }
           else{
-            console.log('Cannot access page');
+            //console.log('Cannot access page');
+            this.router.navigate(['404']);
             return false;
           }
         }

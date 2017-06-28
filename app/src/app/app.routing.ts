@@ -28,7 +28,7 @@ export const AppRoutes: Routes = [{
   },{
     path: 'counties',
     loadChildren: './counties/county.module#CountyModule',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, Adminaccess]
   },
   {
     path: 'children',
@@ -69,6 +69,10 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'profile',
     loadChildren: './social/social.module#SocialModule',
+    canActivate: [AuthGuard]
+  },{
+    path: '404',
+    loadChildren: './not-found/not-found.module#NotFoundModule',
     canActivate: [AuthGuard]
   }
 
