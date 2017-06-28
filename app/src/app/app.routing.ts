@@ -5,6 +5,7 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 import { AuthGuard } from './authguard/auth.guard';
 import { Adminaccess } from './authguard/adminaccess';
+import { Schoolaccess } from './authguard/schoolaccess';
 
 export const AppRoutes: Routes = [{
     path: '',
@@ -20,7 +21,7 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'classes',
     loadChildren: './classes/class.module#ClassModule',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, Schoolaccess]
   },{
     path: 'partners',
     loadChildren: './partners/partners.module#PartnersModule',
@@ -41,7 +42,7 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'teachers',
     loadChildren: './teachers/teachers.module#TeachersModule',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, Schoolaccess]
   }, {
     path: 'imports',
     loadChildren: './imports/imports.module#ImportsModule',
