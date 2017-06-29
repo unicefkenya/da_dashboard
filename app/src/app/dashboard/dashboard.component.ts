@@ -64,8 +64,8 @@ export class DashboardComponent implements OnInit{
   public getStats():void {
 
     this.dashboardServices.getStats().subscribe(data => {
-
-       this.schools = data.schools;
+      
+       this.schools = data.active_schools;
        this.males = data.students.males;
        this.females = data.students.females;
        this.students = +(this.males+this.females);
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit{
 
     this.dashboardServices.getPartnerStats(id).subscribe(data => {
 
-       this.schools = data.schools;
+       this.schools = data.active_schools;
        this.males = data.students.males;
        this.females = data.students.females;
        this.students = +(this.males+this.females);

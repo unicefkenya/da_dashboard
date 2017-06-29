@@ -106,7 +106,7 @@ export class AddSchoolsComponent implements OnInit {
   resetButton(){
     this.form.reset();
   }
-  
+
   getSchoolCounties(){
 
     this._schoolRegistrationService.getCounties()

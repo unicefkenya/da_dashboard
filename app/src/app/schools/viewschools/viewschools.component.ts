@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ViewSchoolsService } from './viewschools.service';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+import { Search } from '../../search';
 
 @Component({
   selector: 'app-viewschools',
@@ -10,9 +13,15 @@ import { ViewSchoolsService } from './viewschools.service';
 })
 export class ViewSchoolsComponent implements OnInit {
 
-  constructor(private schoolService: ViewSchoolsService,private router: Router, ) {
-  }
+  constructor(private schoolService: ViewSchoolsService,private router: Router, private fb: FormBuilder ) {
 
+  }
+  public form: FormGroup;
+  public submitted: boolean =  true;
+  public search: Search;
+  success:string;
+  empty: string;
+  fail: string;
   loading: boolean;
   temp = [];
   rows = [];
@@ -135,6 +144,26 @@ export class ViewSchoolsComponent implements OnInit {
    this.table.offset = 0;
  }
 
+ searchSchool(search: Search){
+   if(!this.submitted){
+
+     //edit
+   }else{
+     console.log(this.partnerId);
+     this.schoolService.searchData(this.partnerId, search.search)
+         .subscribe(
+           data => //console.log(data)
+           {
+             console.log(data);
+           },
+           error =>{
+             this.empty = "This field is required";
+             this.fail = "Failed to save data";
+           }
+         );
+       }
+ }
+
  onPage(event) {
    console.log(event.offset);
    this.page=event.offset+1
@@ -151,6 +180,11 @@ export class ViewSchoolsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.form = this.fb.group({
+      search: [null, Validators.compose([Validators.required,])],
+    });
+
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     if(this.partnerId){
       this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);
