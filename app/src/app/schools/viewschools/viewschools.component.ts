@@ -171,7 +171,6 @@ export class ViewSchoolsComponent implements OnInit {
                  {
                    console.log(data);
                    let items =[];
-                   let rowss = [];
                    for (let i = 0; i < data.results.length; i++){
                      this.dt = {}
                      this.dt.schoolcode = data.results[i].school_code
@@ -183,16 +182,9 @@ export class ViewSchoolsComponent implements OnInit {
 
                    }
 
-                   let rowSchool=[rowss]
                    this.temp=[items];
-                   let j=0
-                   for (let i = 0; i < data.results.length; i++) {
-                     rowSchool[i] = items[j];
-                     j++;
-                   }
-                   //initial data
                    this.schools=items;
-                   console.log(this.temp);
+                   console.log(items);
                  },
                  error =>{
                    this.empty = "This field is required";
@@ -204,7 +196,6 @@ export class ViewSchoolsComponent implements OnInit {
  }
 
  onPage(event) {
-   console.log(event.offset);
    this.page=event.offset+1
    if(this.partnerId){
      this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
