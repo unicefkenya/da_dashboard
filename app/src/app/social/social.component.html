@@ -6,18 +6,16 @@
           <div  fxLayout="row">
             <div fxFlex="100">
               <p>
-                <small><b>Name: </b> {{name}}</small>
+                <small><b>User: </b> {{name}}</small>
               </p>
               <p>
-                <small><b>User: </b> {{usertype}}</small>
+                <small><b>User Type: </b> {{usertype}}</small>
               </p>
               <h3><b>Contact Details</b></h3>
-              <small><b>Email:</b> {{email}}</small>
-              <p *ngIf="phone">
-                <small class="block mt-xs mb-xs"><b>Phone:</b> {{phone}}</small>
-              </p>
+              <small class="block mt-xs mb-xs"><b>Email:</b> {{email}}</small>
               <p>
-                <small class="block mt-xs mb-xs"><b>Phone:</b> N/A</small>
+                <small *ngIf="phone != null" class="block mt-xs mb-xs"><b>Phone:</b> {{phone}}</small>
+                <small *ngIf="phone == null" class="block mt-xs mb-xs"><b>Phone:</b> N/A</small>
               </p>
               <!--<button md-raised-button color="primary">Edit Profile</button>-->
             </div>

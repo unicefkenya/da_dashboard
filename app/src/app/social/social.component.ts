@@ -13,6 +13,10 @@ export class SocialComponent implements OnInit {
   phone:any;
   error:any;
   usertype: any;
+  admin: any;
+  county: any;
+  subcounty: any;
+  emiscode: any;
 
   images: any[] = [];
   num: number = 1;
@@ -42,15 +46,60 @@ export class SocialComponent implements OnInit {
 
     if(this.usertype == 'partner'){
       this.id = JSON.parse(localStorage.getItem("partnerId"));
-      this.fetchUserDetails(this.id);
-    }else{
+      this.fetchPartnerDetails(this.id);
+    }
+    else if(this.usertype == 'admin'){
+      this.admin = 'Unicef';
+      this.phone = 'N/A';
+      this.email = 'N/A';
+      this.name = 'Unicef';
+    }
+    else{
       console.log(this.usertype);
+      this.id = JSON.parse(localStorage.getItem("schoolId"));
+      this.fetchSchoolDetails(this.id);
       console.log("Is a school");
     }
   }
 
-  fetchUserDetails(id){
+  fetchPartnerDetails(id){
     this._socialService.fetchUserProfile(id)
+           .subscribe(
+                (res)=>{
+
+                  this.email = res.email;
+                  this.name = res.name;
+                  this.phone = res.phone;
+                  console.log(this.phone);
+                },
+              (err) => {
+                this.error = err;
+              },
+            );
+  }
+
+  fetchSchoolDetails(id){
+    this._socialService.fetchSchoolProfile(id)
+           .subscribe(
+                (res)=>{
+                  console.log(res);
+                  let data = res.results;
+                  this.email = data[0].email;
+                  this.name = data[0].school_name;
+                  this.phone = data[0].phone_no;
+                  this.county = data[0].county;
+                  this.subcounty = data[0].zone;
+                  this.emiscode = data[0].emis_code;
+
+                },
+              (err) => {
+                this.error = err;
+              },
+            );
+  }
+
+  fetchAdminDetails(){
+    this._socialService.fetchAdminDetails()
            .subscribe(
                 (res)=>{
 

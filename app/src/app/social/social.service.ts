@@ -16,4 +16,16 @@ export class SocialService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  fetchSchoolProfile(id){
+    return this.http.get(this.baseApiUrl+'api/schools?id='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  fetchAdminDetails(){
+    return this.http.get(this.baseApiUrl+'api/partners/')
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 }
