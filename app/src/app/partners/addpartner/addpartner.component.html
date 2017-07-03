@@ -10,31 +10,31 @@
         <md-tab>
           <template md-tab-label>Partner Registration</template>
           <md-card-content>
-            <small style="color: green;">{{success}}</small>
-            <small style="color: red;">{{fail}}</small>
+            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <div  fxLayout="row">
                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Partner Name (required)"  [formControl]="form.controls['partner_name']" type="text"></md-input>
-                  <small *ngIf="form.controls['partner_name'].hasError('required') && form.controls['partner_name'].touched" class="md-text-warn">Include Partner name</small>
+                  <small *ngIf="form.controls['partner_name'].hasError('required') && form.controls['partner_name'].touched" class="md-text-warn">Include partner name</small>
                 </div>
               </div>
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Email Address (required)"  [formControl]="form.controls['email']" type="text"></md-input>
-                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">Include Partner email address</small>
+                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">Include partner email address</small>
                 </div>
               </div>
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Last Name (required)"  [formControl]="form.controls['phone']" type="text"></md-input>
+                  <md-input  placeholder="Phonenumber (required)"  [formControl]="form.controls['phone']" type="text"></md-input>
                   <small *ngIf="form.controls['phone'].hasError('required') && form.controls['phone'].touched" class="md-text-warn">Include partner Phone number</small>
                 </div>
               </div>
-              
+
               <md-card-actions>
                 <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
-               
+
                 <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
               </md-card-actions>
             </form>

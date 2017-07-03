@@ -17,6 +17,12 @@ export class SearchService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getSchoolData(id){
+    return this.http.get(this.baseApiUrl+'api/schools?id='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getSevenDaysAttendance(id){
     return this.http.get(this.baseApiUrl+'api/attendances/daily?school='+id)
     .map((response: Response) => response.json())

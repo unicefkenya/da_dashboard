@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { SessionRoutes } from './session.routing';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { ErrorComponent } from './error/error.component';
 //import { ForgotComponent } from './forgot/forgot.component';
 import { LockscreenComponent } from './lockscreen/lockscreen.component';
@@ -15,7 +14,7 @@ import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(SessionRoutes), MdIconModule, MdCardModule, MdInputModule, MdCheckboxModule, MdButtonModule, FlexLayoutModule, FormsModule, ReactiveFormsModule],
-  declarations: [NotFoundComponent, ErrorComponent, LockscreenComponent, SigninComponent, SignupComponent]
+  declarations: [ ErrorComponent, LockscreenComponent, SigninComponent, SignupComponent]
 })
 
 export class SessionModule {}

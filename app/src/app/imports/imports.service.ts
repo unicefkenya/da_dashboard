@@ -6,8 +6,10 @@ import {BaseUrl} from '../baseurl';
 
 @Injectable()
 export class ImportsService {
+  progress:any;
+  constructor(private http: Http) {
 
-  constructor(private http: Http) { }
+  }
 
 private baseApiUrl = BaseUrl.base_api_url;
 
@@ -29,9 +31,10 @@ sendStudentsData(data: any){
             }
         }
     }
-    xhr.open("POST", studentsImport, true)
+    xhr.open("POST", studentsImport, true);
     xhr.setRequestHeader("Authorization", "Bearer "+JSON.parse(token));
     xhr.send(data);
+    
     }))
 }
 

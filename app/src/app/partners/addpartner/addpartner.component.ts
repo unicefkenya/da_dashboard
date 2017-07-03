@@ -79,13 +79,13 @@ export class AddPartnerComponent implements OnInit {
           }).subscribe(
             data => //console.log(data)
             {
-              console.log("Added Classes Successfully"),
-              this.success = "Added Classes Successfully";
+              console.log("Added Partner Successfully"),
+              this.success = "Added Partner Successfully";
               this.resetButton();
             },
             error => {
               this.empty = "This field is required";
-              this.fail = "Failed to save data";
+              this.fail = error;
             }
           );
         }

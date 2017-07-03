@@ -4,25 +4,20 @@
       <md-card>
         <md-card-content>
           <div  fxLayout="row">
-            <div fxFlex="55">
-              <h4 class="ma-0">Gerald <b>Morris</b></h4>
-              <small>gerald@morris.com</small>
-              <p class="mt-xs mb-xs">Human Resources Manager</p>
-              <a href="javascript:;" class="block mt-xs mb-xs">email@contact.com</a>
-              <a href="javascript:;" class="block mt-xs mb-xs">www.example.com</a>
-              <button md-raised-button color="primary">Edit Profile</button>
-            </div>
-            <div fxFlex="45">
-              <figure>
-                <div class="text-xs-center">
-                  <img src="assets/images/avatar.jpg" alt="" class="radius-circle">
-                  <div class="text-md mt10">Account Usage</div>
-                </div>
-                <div class="ma-xs">
-                  <md-progress-bar mode="determinate" value="40"></md-progress-bar>
-                </div>
-                <div  class="text-xs-center"><small>234Gb of 879Gb</small></div>
-              </figure>
+            <div fxFlex="100">
+              <p>
+                <small><b>User: </b> {{name}}</small>
+              </p>
+              <p>
+                <small><b>User Type: </b> {{usertype}}</small>
+              </p>
+              <h3><b>Contact Details</b></h3>
+              <small class="block mt-xs mb-xs"><b>Email:</b> {{email}}</small>
+              <p>
+                <small *ngIf="phone != null" class="block mt-xs mb-xs"><b>Phone:</b> {{phone}}</small>
+                <small *ngIf="phone == null" class="block mt-xs mb-xs"><b>Phone:</b> N/A</small>
+              </p>
+              <!--<button md-raised-button color="primary">Edit Profile</button>-->
             </div>
           </div>
         </md-card-content>

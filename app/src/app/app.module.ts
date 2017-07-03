@@ -5,6 +5,8 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
 import { AuthGuard } from './authguard/auth.guard';
+import { Adminaccess } from './authguard/adminaccess';
+import { Schoolaccess } from './authguard/schoolaccess';
 import { SigninService } from './signin/signin.service';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
@@ -49,6 +51,8 @@ export function createTranslateLoader(http: Http) {
   ],
   providers: [
     AuthGuard,
+    Adminaccess,
+    Schoolaccess,
     SigninService
   ],
   entryComponents: [ EditProfileDialog ],

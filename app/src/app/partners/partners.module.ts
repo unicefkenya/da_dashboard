@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule } from "@angular/material";
+import { MaterialModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 
 import { PartnersRoutes } from './partners.routing';
 import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
+import { PartnersComponent } from './partners.component';
 
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(PartnersRoutes), MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ AddPartnerComponent, ViewpartnersComponent]
+  imports: [CommonModule, RouterModule.forChild(PartnersRoutes), MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,ChartsModule,NgxDatatableModule],
+  declarations: [ AddPartnerComponent, ViewpartnersComponent, PartnersComponent]
 })
 
 export class PartnersModule {}

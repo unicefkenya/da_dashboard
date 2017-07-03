@@ -20,7 +20,7 @@
         </div>
         <div class="pl-0">
           <h5 md-card-widget-title> {{ students }} </h5>
-          <p>Enrollments</p>
+          <p>All Children</p>
         </div>
       </div>
     </md-card>
@@ -76,7 +76,7 @@
 		<md-card>
       <md-card-title>Monthly Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-      Aggregated: &nbsp;<b>BAR -</b>&nbsp; Absents |&nbsp;<b>LINE - </b>&nbsp; Presents &nbsp; <span class="font-weight-bold md-text-warn"></span>
+      Aggregated: &nbsp;<b>BAR -</b>&nbsp; Presents |&nbsp;<b>LINE - </b>&nbsp; Absents &nbsp; <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
 			<md-card-content>
         <canvas height="260" baseChart class="chart"
@@ -97,6 +97,7 @@
         Annual Attendance per Gender &nbsp; <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
 			<md-card-content>
+        <small *ngIf=noAttendanceGender>{{noAttendanceGender}}</small>
         <canvas height="260" baseChart class="chart"
           [data]="pieChartData"
           [options]="doughnutOptions"

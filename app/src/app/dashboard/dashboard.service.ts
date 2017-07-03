@@ -17,6 +17,12 @@ export class DashboardService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getPartner(id){
+    return this.http.get(this.baseApiUrl+'api/partners/'+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  
   getPartnerStats(id){
     return this.http.get(this.baseApiUrl+'api/statistics?partner='+id)
       .map((response: Response) => response.json())
@@ -89,7 +95,7 @@ export class DashboardService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-  
+
   getPartnerEnrollmentGraph(id){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/class?partner='+id)
     .map((response: Response) => response.json())

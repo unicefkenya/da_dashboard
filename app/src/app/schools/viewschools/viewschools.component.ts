@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ViewSchoolsService } from './viewschools.service';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+import { Search } from '../../search';
 
 @Component({
   selector: 'app-viewschools',
@@ -10,9 +13,15 @@ import { ViewSchoolsService } from './viewschools.service';
 })
 export class ViewSchoolsComponent implements OnInit {
 
-  constructor(private schoolService: ViewSchoolsService,private router: Router, ) {
-  }
+  constructor(private schoolService: ViewSchoolsService,private router: Router, private fb: FormBuilder ) {
 
+  }
+  public form: FormGroup;
+  public submitted: boolean =  true;
+  public search: Search;
+  success:string;
+  empty: string;
+  fail: string;
   loading: boolean;
   temp = [];
   rows = [];
@@ -70,7 +79,7 @@ export class ViewSchoolsComponent implements OnInit {
 
       this.selected = [];
 
-      console.log('Page Results',this.schools,this.count, start, end);
+      //console.log('Page Results',this.schools,this.count, start, end);
 
     });
   }
@@ -110,7 +119,7 @@ export class ViewSchoolsComponent implements OnInit {
 
         this.selected = [];
 
-        console.log('Page Results',this.schools,this.count, start, end);
+        //console.log('Page Results',this.schools,this.count, start, end);
 
       });
     }
@@ -135,7 +144,65 @@ export class ViewSchoolsComponent implements OnInit {
    this.table.offset = 0;
  }
 
+ searchSchool(search: Search){
+   if(!this.submitted){
 
+     //edit
+   }else{
+       console.log(this.partnerId);
+       if(this.partnerId){
+         this.schoolService.searchPartnerData(this.partnerId, search.search)
+             .subscribe(
+               data => //console.log(data)
+               {
+                 console.log(data);
+                 let res =data.results;
+                 this.schools = res;
+               },
+               error =>{
+                 this.empty = "This field is required";
+                 this.fail = "Failed to save data";
+               }
+             );
+         }else{
+           this.schoolService.searchData(search.search)
+               .subscribe(
+                 data => //console.log(data)
+                 {
+                   console.log(data);
+                   let items =[];
+                   for (let i = 0; i < data.results.length; i++){
+                     this.dt = {}
+                     this.dt.schoolcode = data.results[i].school_code
+                     this.dt.name = data.results[i].school_name
+                     this.dt.emiscode = data.results[i].emis_code
+                     this.dt.level = data.results[i].level
+                     this.dt.id = data.results[i].id
+                     items.push(this.dt)
+
+                   }
+
+                   this.temp=[items];
+                   this.schools=items;
+                   console.log(items);
+                 },
+                 error =>{
+                   this.empty = "This field is required";
+                   this.fail = "Failed to save data";
+                 }
+               );
+         }
+       }
+ }
+
+ onPage(event) {
+   this.page=event.offset+1
+   if(this.partnerId){
+     this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
+   }else{
+     this.fetchSchools(event.offset,event.limit);
+   }
+ }
 
  onActivate(event) {
    //console.log('Activate Event', event);
@@ -143,6 +210,11 @@ export class ViewSchoolsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.form = this.fb.group({
+      search: [null, Validators.compose([Validators.required,])],
+    });
+
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     if(this.partnerId){
       this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);

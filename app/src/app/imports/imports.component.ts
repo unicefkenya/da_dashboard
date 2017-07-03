@@ -58,6 +58,7 @@ export class ImportsComponent implements OnInit {
   }
 
   Importupload(event){
+    console.log("sdsdsd");
     let myfile=event.srcElement.files[0]
     const studentsImport = this.baseApiUrl+'api/students/import';
     let token=localStorage.getItem("user");
@@ -65,11 +66,16 @@ export class ImportsComponent implements OnInit {
     fd.append("file",myfile);
     this._importService.sendStudentsData(fd).subscribe(data=>{
       console.log(data);
+      console.log(this._importService.progress);
       this.success = "Data Imported Successfully";
     },error=>{
       console.log(error)
-      this.fail = "Data Not Imported"+error
+      this.fail = "Data Not Imported: "+error
     })
+  }
+
+  Progressupload(event){
+
   }
 
 }

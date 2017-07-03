@@ -16,12 +16,12 @@ export class AddpartnerService {
 
   sendData(user: any){
 
-    const _teacherRegistrationUrl = this.baseApiUrl+'api/partner';
+    const _teacherRegistrationUrl = this.baseApiUrl+'api/partners';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
      //const headers = new Headers();
-    let token=localStorage.getItem("user");
+    let token=JSON.parse(localStorage.getItem("user"));
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
@@ -59,7 +59,7 @@ export class AddpartnerService {
     if(error instanceof Response){
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errMsg = body.detail;
     }else{
       errMsg = error.message ? error.message: error.toString();
     }
