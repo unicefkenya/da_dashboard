@@ -149,18 +149,57 @@ export class ViewSchoolsComponent implements OnInit {
 
      //edit
    }else{
-     console.log(this.partnerId);
-     this.schoolService.searchData(this.partnerId, search.search)
-         .subscribe(
-           data => //console.log(data)
-           {
-             console.log(data);
-           },
-           error =>{
-             this.empty = "This field is required";
-             this.fail = "Failed to save data";
-           }
-         );
+       console.log(this.partnerId);
+       if(this.partnerId){
+         this.schoolService.searchPartnerData(this.partnerId, search.search)
+             .subscribe(
+               data => //console.log(data)
+               {
+                 console.log(data);
+                 let res =data.results;
+                 this.schools = res;
+               },
+               error =>{
+                 this.empty = "This field is required";
+                 this.fail = "Failed to save data";
+               }
+             );
+         }else{
+           this.schoolService.searchData(search.search)
+               .subscribe(
+                 data => //console.log(data)
+                 {
+                   console.log(data);
+                   let items =[];
+                   let rowss = [];
+                   for (let i = 0; i < data.results.length; i++){
+                     this.dt = {}
+                     this.dt.schoolcode = data.results[i].school_code
+                     this.dt.name = data.results[i].school_name
+                     this.dt.emiscode = data.results[i].emis_code
+                     this.dt.level = data.results[i].level
+                     this.dt.id = data.results[i].id
+                     items.push(this.dt)
+
+                   }
+
+                   let rowSchool=[rowss]
+                   this.temp=[items];
+                   let j=0
+                   for (let i = 0; i < data.results.length; i++) {
+                     rowSchool[i] = items[j];
+                     j++;
+                   }
+                   //initial data
+                   this.schools=items;
+                   console.log(this.temp);
+                 },
+                 error =>{
+                   this.empty = "This field is required";
+                   this.fail = "Failed to save data";
+                 }
+               );
+         }
        }
  }
 

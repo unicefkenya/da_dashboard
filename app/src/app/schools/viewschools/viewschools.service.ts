@@ -21,7 +21,14 @@ export class ViewSchoolsService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  searchData(id,school){
+  searchData(school){
+
+    return this.http.get(this.baseApiUrl+'/api/school?school_name='+school)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  searchPartnerData(id,school){
 
     return this.http.get(this.baseApiUrl+'/api/school?school_name='+school+'&partner='+id)
     .map((response: Response) => response.json())
