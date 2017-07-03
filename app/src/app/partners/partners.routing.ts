@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 
 import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
+import { PartnersComponent } from './partners.component';
 
 
 export const PartnersRoutes: Routes = [
@@ -13,6 +14,9 @@ export const PartnersRoutes: Routes = [
     },{
       path: 'add-partner',
       component: AddPartnerComponent
+    }, {
+      path: 'partner/:id',
+      component: PartnersComponent
     }
   ],
   }

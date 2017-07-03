@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit{
   public getStats():void {
 
     this.dashboardServices.getStats().subscribe(data => {
-      
+
        this.schools = data.active_schools;
        this.males = data.students.males;
        this.females = data.students.females;
@@ -360,16 +360,16 @@ export class DashboardComponent implements OnInit{
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalPresent,
-        label: 'Presents',
+        data: totalAbsent,
+        label: 'Absents',
         borderWidth: 1,
         type: 'line',
         fill: false
       },{
-        data: totalAbsent,
-        label: 'Absents',
+        data: totalPresent,
+        label: 'Presents',
         borderWidth: 1,
-        tupe: 'bar',
+        type: 'bar',
       }];
     });
   }
@@ -402,16 +402,16 @@ export class DashboardComponent implements OnInit{
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalPresent,
-        label: 'Presents',
+        data: totalAbsent,
+        label: 'Absents',
         borderWidth: 1,
         type: 'line',
         fill: false
       },{
-        data: totalAbsent,
-        label: 'Absents',
+        data: totalPresent,
+        label: 'Presents',
         borderWidth: 1,
-        tupe: 'bar',
+        type: 'bar',
       }];
     });
   }

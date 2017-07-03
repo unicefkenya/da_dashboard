@@ -77,15 +77,14 @@ export class ViewpartnersComponent implements OnInit {
     });
   }
   onSelect({ selected }) {
-   //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('partnerId', this.selected[0].id);
-   this.getPartnerId(this.selected[0].id);
+   this.navigatePartner(this.selected[0].id);
    //this.router.navigate(['/partners/child', this.selected[0].id]);
    }
 
-   private getPartnerId(id){
-     console.log('show partner')
-     //this.router.navigate(['/partners/child', id]);
+   private navigatePartner(id){
+     //console.log('show partner')
+     this.router.navigate(['partners/partner/', id]);
 
    }
 
