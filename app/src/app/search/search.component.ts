@@ -26,6 +26,7 @@ export class SearchComponent {
      //sconsole.log(id);
      //console.log(schoolId);
      this.getSchoolData(id);
+     this.fetchSchool(id);
      this.getStats(id);
      this.getSevenDaysAttendance(id);
      this.getEnrollmentGraph(id);
@@ -79,6 +80,20 @@ export class SearchComponent {
     );
   }
 
+//get school name
+public fetchSchool(id){
+  this._searchService.getSchoolData(id).subscribe(
+    (data)  =>
+    {
+      console.log(data);
+      let res = data.results;
+      this.schoolname=res[0].school_name;
+      this.schoolEmisCode = res[0].emis_code;
+      this.county = res[0].county;
+      this.zone = res[0].zone;
+    }
+  );
+}
 
 
     // Shared chart options

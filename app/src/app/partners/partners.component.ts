@@ -20,6 +20,9 @@ export class PartnersComponent implements OnInit{
     public females: any;
     public teachers: any;
     public schools: any;
+    public partnerName;
+    public partnerEmail;
+    public partnerPhone;
 
     public malesPresent: any;
     public malesAbscent: any;
@@ -45,14 +48,24 @@ export class PartnersComponent implements OnInit{
     ngOnInit(): void {
       this.sub = this.route.params.subscribe(params => {
        let partnerId = +params['id'];
-       this.getPartnerStats(this.partnerId);
-       this.getPartnerAnnualAttendanceGender(this.partnerId);
-       this.getPartnerAnnualEnrollmentGender(this.partnerId);
-       this.getPartnerMonthlyAttendance(this.partnerId);
-       this.getPartnerSevenDaysAttendance(this.partnerId);
-       this.getPartnerEnrollmentGraph(this.partnerId);
+
+       this.getPartnerStats(partnerId);
+       this.getPartnerAnnualAttendanceGender(partnerId);
+       this.getPartnerAnnualEnrollmentGender(partnerId);
+       this.getPartnerMonthlyAttendance(partnerId);
+       this.getPartnerSevenDaysAttendance(partnerId);
+       this.getPartnerEnrollmentGraph(partnerId);
+       this.getPartner(partnerId);
      });
 
+    }
+
+    public getPartner(id):void{
+      this.dashboardServices.getPartner(id).subscribe(data => {
+        this.partnerName = data.name;
+        this.partnerEmail = data.email;
+        this.partnerPhone = data.phone;
+      })
     }
 
     // Partner > getStats()
