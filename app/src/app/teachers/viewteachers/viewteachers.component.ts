@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ViewTeachersService } from './viewteachers.service';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+import { Search } from '../../search';
 
 @Component({
   selector: 'app-viewteachers',
@@ -10,7 +13,14 @@ import { ViewTeachersService } from './viewteachers.service';
 })
 export class ViewTeachersComponent implements OnInit {
 
-  constructor(private teachersService: ViewTeachersService,private router: Router) {  }
+  constructor(private teachersService: ViewTeachersService,private router: Router,private fb: FormBuilder) {  }
+
+  public form: FormGroup;
+  public submitted: boolean =  true;
+  public search: Search;
+  success:string;
+  empty: string;
+  fail: string;
   loading:boolean;
   teachers : any[] = this.rows;
   selected: any[];
@@ -68,10 +78,46 @@ export class ViewTeachersComponent implements OnInit {
       //our initial data
       this.teachers = items;
       this.selected = [];
-      console.log('Page Results',this.teachers,this.count, start, end);
 
     });
   }
+
+
+      searchSchool(search: Search){
+        if(!this.submitted){
+
+          //edit
+        }else{
+            if(this.schoolId){
+              this.teachersService.searchTeacherData(this.schoolId, search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+
+                      let items = [];
+                      let rows=[];
+                      for (let i = 0; i < data.length; i++){
+                        this.tmp = {}
+                        this.tmp.name = data[i].name
+                        this.tmp.phone_no = data[i].phone_no
+                        this.tmp.gender = data[i].gender
+                        this.tmp.qualifications = data[i].qualifications
+                        this.tmp.teachertype = data[i].teacher_type
+                        items.push(this.tmp);
+                      }
+
+                      this.temp=[items];
+                      this.teachers=items;
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+              }
+            }
+      }
+
 
   onPage(event) {
     console.log(event.offset);
@@ -84,6 +130,10 @@ export class ViewTeachersComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.form = this.fb.group({
+      search: [null, Validators.compose([Validators.required,])],
+    });
+
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     this.fetchTeachers(this.schoolId,this.offset, this.limit);
   }

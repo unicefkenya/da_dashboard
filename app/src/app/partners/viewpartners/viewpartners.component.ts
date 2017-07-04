@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ViewpartnersService} from './viewpartners.service';
-//import { Partner } from './partner';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+import { Search } from '../../search';
 
 
 
@@ -13,6 +15,12 @@ import { ViewpartnersService} from './viewpartners.service';
 
 })
 export class ViewpartnersComponent implements OnInit {
+  public form: FormGroup;
+  public submitted: boolean =  true;
+  public search: Search;
+  success:string;
+  empty: string;
+  fail: string;
   loading:boolean;
   dt:any;
   partners: any[] = this.rows;
@@ -26,14 +34,14 @@ export class ViewpartnersComponent implements OnInit {
   table = {
     offset: 0
   };
-
+  partnerId:number;
   columns = [
     { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Email' },
     { name: 'Phonenumber' }
   ];
 
-  constructor( private partnersService: ViewpartnersService,private router: Router) {
+  constructor( private partnersService: ViewpartnersService,private router: Router,private fb: FormBuilder) {
   }
 
   //admin
@@ -76,6 +84,43 @@ export class ViewpartnersComponent implements OnInit {
 
     });
   }
+
+
+    searchSchool(search: Search){
+      if(!this.submitted){
+
+        //edit
+      }else{
+        this.partnersService.searchData(search.search)
+            .subscribe(
+              data => //console.log(data)
+              {
+
+                let partner =[]
+                let rows=[]
+                //  this.count = data.length;
+                for (let i = 0;i < data.length;i++){
+                  this.dt = {}
+                  this.dt.organization=data[i].name
+                  this.dt.email=data[i].email
+                  this.dt.phone=data[i].phone
+                  this.dt.id = data[i].id
+                  partner.push(this.dt)
+                }
+
+                this.temp=[partner];
+                this.partners=partner;
+                console.log(partner);
+              },
+              error =>{
+                this.empty = "This field is required";
+                this.fail = "Failed to save data";
+              }
+            );
+      }
+    }
+
+
   onSelect({ selected }) {
    localStorage.setItem('partnerId', this.selected[0].id);
    this.navigatePartner(this.selected[0].id);
@@ -85,7 +130,6 @@ export class ViewpartnersComponent implements OnInit {
    private navigatePartner(id){
      //console.log('show partner')
      this.router.navigate(['partners/partner/', id]);
-
    }
 
    onActivate(event) {
@@ -117,6 +161,10 @@ export class ViewpartnersComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.form = this.fb.group({
+      search: [null, Validators.compose([Validators.required,])],
+    });
+
     this.fetchpartners(this.offset, this.limit);
 
   }
