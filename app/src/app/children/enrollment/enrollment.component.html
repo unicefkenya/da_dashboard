@@ -1,78 +1,70 @@
-<div fxLayout="row"  fxLayoutWrap="wrap">
-  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
-    <md-card class="card-widget md-teal">
-      <div md-card-widget>
-        <div md-card-float-icon>
-          <md-icon>local_offer</md-icon>
-        </div>
-        <div class="pl-0">
-          <h5 md-card-widget-title>{{ total }}</h5>
-          <p>Total Enrollments</p>
-        </div>
-      </div>
-    </md-card>
-  </div>
-  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
-    <md-card class="card-widget md-purple">
-      <div md-card-widget>
-        <div md-card-float-icon>
-          <md-icon>phone</md-icon>
-        </div>
-        <div class="pl-0">
-          <h5 md-card-widget-title> {{ males }} </h5>
-          <p>Boys Enrolled</p>
-        </div>
-      </div>
-    </md-card>
-  </div>
-  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
-    <md-card class="card-widget md-red">
-      <div md-card-widget>
-        <div md-card-float-icon>
-          <md-icon>notifications</md-icon>
-        </div>
-        <div class="pl-0">
-          <h5 md-card-widget-title>{{females}}</h5>
-          <p>Girls Enrolled</p>
-        </div>
-      </div>
-    </md-card>
-  </div>
+<div *ngIf="loading == true" class="positioning">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
 </div>
-
+<div *ngIf="loading == false">
 <md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 100%" class="mb-1 ml-1 mr-1"></md-input>
-<div fxFlex.gt-sm="100%" fxFlex="100">
+  <div fxLayout="row"  fxLayoutWrap="wrap">
+    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-teal">
+        <div md-card-widget>
+          <div md-card-float-icon>
+            <md-icon>local_offer</md-icon>
+          </div>
+          <div class="pl-0">
+            <h5 md-card-widget-title>{{ count }}</h5>
+            <p>Total Enrollments</p>
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-purple">
+        <div md-card-widget>
+          <div md-card-float-icon>
+            <md-icon>phone</md-icon>
+          </div>
+          <div class="pl-0">
+            <h5 md-card-widget-title> {{ males }} </h5>
+            <p>Boys Enrolled</p>
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-red">
+        <div md-card-widget>
+          <div md-card-float-icon>
+            <md-icon>notifications</md-icon>
+          </div>
+          <div class="pl-0">
+            <h5 md-card-widget-title>{{females}}</h5>
+            <p>Girls Enrolled</p>
+          </div>
+        </div>
+      </md-card>
+    </div>
+  </div>
   <ngx-datatable
-    class="material"
-    [rows]="students"
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
     [columnMode]="'force'"
     [headerHeight]="50"
-    [footerHeight]="0"
-    [rowHeight]="'auto'">
-    <ngx-datatable-column name="Student Names">
-      <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['studentname']}}
-      </template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Student Code">
-      <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['studentcode']}}
-      </template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Gender">
-      <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['gender']}}
-      </template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Enrollment Date">
-      <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['enrollmentdate'] | date: 'dd MMM yyyy'}}
-      </template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Last Attendance">
-      <template let-row="row" let-value="value" ngx-datatable-cell-template>
-        {{row['lastdate'] | date: 'dd MMM yyyy'}}
-      </template>
-    </ngx-datatable-column>
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="children"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (page)='onPage($event)'
+    (activate)='onActivate($event)'
+    (select)='onSelect($event)'>
   </ngx-datatable>
 </div>
