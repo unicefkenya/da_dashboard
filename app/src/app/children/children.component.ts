@@ -145,7 +145,7 @@ export class ChildrenComponent implements OnInit {
 
           //edit
         }else{
-            console.log(this.partnerId);
+
             if(this.partnerId){
               this.childrenService.searchPartnerData(this.partnerId, search.search)
                   .subscribe(

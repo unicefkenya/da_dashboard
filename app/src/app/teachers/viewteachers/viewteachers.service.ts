@@ -21,4 +21,13 @@ private baseApiUrl = BaseUrl.base_api_url;
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  searchTeacherData(id,name){
+
+    return this.http.get(this.baseApiUrl+'/api/teachers?name='+name+'&school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
 }

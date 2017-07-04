@@ -6,7 +6,17 @@
   </md-progress-spinner>
 </div>
 <div *ngIf="loading == false">
-<md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+<md-card>
+  <md-card-content>
+    <form [formGroup]="form" (ngSubmit)="searchSchool(form.value);">
+      <md-input placeholder="Search by name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+      <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the child's name.</small>
+      <md-card-actions>
+        <button type="submit" md-raised-button class="shadow-none">Search</button>
+      </md-card-actions>
+    </form>
+  </md-card-content>
+</md-card>
 <ngx-datatable
   class="material fullscreen"
   [rows]="teachers"
