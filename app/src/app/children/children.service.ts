@@ -27,4 +27,16 @@ export class ChildrenService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  searchData(name){
+    return this.http.get(this.baseApiUrl+'/api/students?name='+name)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  searchPartnerData(id,name){
+    return this.http.get(this.baseApiUrl+'/api/students?name='+name+'&partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }

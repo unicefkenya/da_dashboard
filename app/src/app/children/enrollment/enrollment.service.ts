@@ -51,7 +51,7 @@ export class EnrollmentService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  searchPartnerData(id,school){
+  searchPartnerData(id,name){
     return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name+'&partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));

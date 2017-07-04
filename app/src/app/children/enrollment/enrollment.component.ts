@@ -14,12 +14,12 @@ import { Search } from '../../search';
 
 export class EnrollmentComponent implements OnInit {
 
-  public form: FormGroup;
-  public submitted: boolean =  true;
-  public search: Search;
-  success:string;
-  empty: string;
-  fail: string
+    public form: FormGroup;
+    public submitted: boolean =  true;
+    public search: Search;
+    success:string;
+    empty: string;
+    fail: string;
     loading:boolean;
     dt:any;
     children: any[] = this.rows;
@@ -172,9 +172,25 @@ export class EnrollmentComponent implements OnInit {
                 .subscribe(
                   data => //console.log(data)
                   {
-                    console.log(data);
-                    let res =data.results;
-                    this.children = res;
+                    let res = data.results;
+                    let childs =[];
+                    let rows=[]
+                    for (let i = 0; i < data.results.length; i++){
+                      this.dt = {}
+                      this.dt.emiscode=res[i].emis_code
+                      this.dt.name=res[i].student_name
+                      this.dt.gender=res[i].gender
+                      this.dt.attendance=res[i].last_attendance
+                      this.dt.school = res[i].school_name
+                      this.dt.class=res[i].class_name
+                      this.dt.id = res[i].id
+                      childs.push(this.dt)
+
+                    }
+
+                    this.temp=[childs];
+                    this.children=childs;
+                    console.log(childs);
                   },
                   error =>{
                     this.empty = "This field is required";

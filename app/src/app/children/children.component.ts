@@ -3,6 +3,10 @@ import { Router, NavigationEnd } from '@angular/router';
 import { ChildrenService} from './children.service';
 import { Children } from './children';
 
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+import { Search } from '../search';
+
 
 
 @Component({
@@ -14,6 +18,12 @@ import { Children } from './children';
 })
 export class ChildrenComponent implements OnInit {
 
+  public form: FormGroup;
+  public submitted: boolean =  true;
+  public search: Search;
+  success:string;
+  empty: string;
+  fail: string;
   loading:boolean;
   dt:any;
   children: any[] = this.rows;
@@ -40,7 +50,7 @@ export class ChildrenComponent implements OnInit {
 
   ];
 
-  constructor( private childrenService: ChildrenService,private router: Router) {
+  constructor( private childrenService: ChildrenService,private router: Router,private fb: FormBuilder) {
   }
 
   //admin
@@ -129,6 +139,77 @@ export class ChildrenComponent implements OnInit {
     });
   }
 
+
+      searchSchool(search: Search){
+        if(!this.submitted){
+
+          //edit
+        }else{
+            console.log(this.partnerId);
+            if(this.partnerId){
+              this.childrenService.searchPartnerData(this.partnerId, search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+                      let res = data.results;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+
+                      }
+
+                      this.temp=[childs];
+                      this.children=childs;
+                      console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+              }else{
+                this.childrenService.searchData(search.search)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+
+                        let res = data.results;
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.temp=[childs];
+                        this.children=childs;
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+            }
+      }
+
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('childId', this.selected[0].id);
@@ -175,6 +256,10 @@ export class ChildrenComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.form = this.fb.group({
+      search: [null, Validators.compose([Validators.required,])],
+    });
+
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     if(this.partnerId){
       this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
