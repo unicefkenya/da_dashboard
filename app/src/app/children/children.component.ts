@@ -35,6 +35,7 @@ export class ChildrenComponent implements OnInit {
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Gender' },
     { name: 'Attendance' },
+    {name: 'School'},
     { name: 'Class' },
 
   ];
@@ -61,6 +62,7 @@ export class ChildrenComponent implements OnInit {
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
         this.dt.attendance=data[i].last_attendance
+        this.dt.school = data[i].school_name
         this.dt.class=data[i].class_name
         this.dt.id = data[i].id
         childs.push(this.dt)
@@ -103,6 +105,7 @@ export class ChildrenComponent implements OnInit {
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
         this.dt.attendance=data[i].last_attendance
+        this.dt.school = data[i].school_name
         this.dt.class=data[i].class_name
         this.dt.id = data[i].id
         childs.push(this.dt)

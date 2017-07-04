@@ -43,4 +43,17 @@ export class EnrollmentService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  searchData(name){
+
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  searchPartnerData(id,school){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name+'&partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }

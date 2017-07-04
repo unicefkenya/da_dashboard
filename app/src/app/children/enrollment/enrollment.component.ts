@@ -1,6 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { EnrollmentService } from './enrollment.service';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+import { Search } from '../../search';
 
 @Component({
   selector: 'app-enrollment',
@@ -11,6 +14,12 @@ import { EnrollmentService } from './enrollment.service';
 
 export class EnrollmentComponent implements OnInit {
 
+  public form: FormGroup;
+  public submitted: boolean =  true;
+  public search: Search;
+  success:string;
+  empty: string;
+  fail: string
     loading:boolean;
     dt:any;
     children: any[] = this.rows;
@@ -34,11 +43,12 @@ export class EnrollmentComponent implements OnInit {
       { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
       { name: 'Gender' },
       { name: 'Attendance' },
+      { name: 'School' },
       { name: 'Class' },
 
     ];
 
-  constructor(private enrollmentService: EnrollmentService, private router: Router){}
+  constructor(private enrollmentService: EnrollmentService, private router: Router,private fb: FormBuilder){}
 
   //admin
   fetchChildren(offset,limit): void {
@@ -59,6 +69,7 @@ export class EnrollmentComponent implements OnInit {
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
         this.dt.attendance=data[i].last_attendance
+        this.dt.school = data[i].school_name
         this.dt.class=data[i].class_name
         this.dt.id = data[i].id
         childs.push(this.dt)
@@ -102,6 +113,7 @@ export class EnrollmentComponent implements OnInit {
           this.dt.name=data[i].student_name
           this.dt.gender=data[i].gender
           this.dt.attendance=data[i].last_attendance
+          this.dt.school = data[i].school_name
           this.dt.class=data[i].class_name
           this.dt.id = data[i].id
           childs.push(this.dt)
@@ -147,6 +159,60 @@ export class EnrollmentComponent implements OnInit {
       this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
         this.females = data.count;
       });
+    }
+
+    searchSchool(search: Search){
+      if(!this.submitted){
+
+        //edit
+      }else{
+          console.log(this.partnerId);
+          if(this.partnerId){
+            this.enrollmentService.searchPartnerData(this.partnerId, search.search)
+                .subscribe(
+                  data => //console.log(data)
+                  {
+                    console.log(data);
+                    let res =data.results;
+                    this.children = res;
+                  },
+                  error =>{
+                    this.empty = "This field is required";
+                    this.fail = "Failed to save data";
+                  }
+                );
+            }else{
+              this.enrollmentService.searchData(search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+                      let res = data.results;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+
+                      }
+
+                      this.temp=[childs];
+                      this.children=childs;
+                      console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+            }
+          }
     }
 
     onSelect({ selected }) {
@@ -195,8 +261,12 @@ export class EnrollmentComponent implements OnInit {
 
     ngOnInit(): void {
       this.loading = true;
-      this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+      this.form = this.fb.group({
+        search: [null, Validators.compose([Validators.required,])],
+      });
 
+
+      this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
       if(this.partnerId){
         this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
         this.fetchPartnerBoyChildTotal(this.partnerId);
