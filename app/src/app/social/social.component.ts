@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SocialService} from './social.service';
 
+
 @Component({
   selector: 'app-social',
   templateUrl: './social.component.html',
@@ -48,7 +49,7 @@ export class SocialComponent implements OnInit {
       this.id = JSON.parse(localStorage.getItem("partnerId"));
       this.fetchPartnerDetails(this.id);
     }
-    else if(this.usertype == 'admin'){
+    else if (this.usertype == 'admin'){
       this.admin = 'Unicef';
       this.phone = 'N/A';
       this.email = 'N/A';
@@ -100,17 +101,36 @@ export class SocialComponent implements OnInit {
 
   fetchAdminDetails(){
     this._socialService.fetchAdminDetails()
-           .subscribe(
-                (res)=>{
+     .subscribe(
+          (res)=>{
 
-                  this.email = res.email;
-                  this.name = res.name;
-                  this.phone = res.phone;
-                },
-              (err) => {
-                this.error = err;
-              },
-            );
+            this.email = res.email;
+            this.name = res.name;
+            this.phone = res.phone;
+          },
+        (err) => {
+          this.error = err;
+        },
+      );
+  }
+  editAccount() {
+
+    // Get the data from the service
+    console.log('here');
+    this._socialService.fetchAdminDetails()
+     .subscribe(
+          (res)=>{
+
+            this.email = res.email;
+            this.phone = res.phone;
+          },
+        (err) => {
+          this.error = err;
+        },
+      );
+
+     console.log(this.email);
+     console.log(this.phone);
   }
 
 }
