@@ -39,10 +39,8 @@ export class EnrollmentComponent implements OnInit {
     partnerId:number;
 
     columns = [
-      { name: 'Emiscode' },
       { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
       { name: 'Gender' },
-      { name: 'Attendance' },
       { name: 'School' },
       { name: 'Class' },
 
@@ -65,10 +63,8 @@ export class EnrollmentComponent implements OnInit {
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.emiscode=data[i].emis_code
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
-        this.dt.attendance=data[i].last_attendance
         this.dt.school = data[i].school_name
         this.dt.class=data[i].class_name
         this.dt.id = data[i].id
@@ -109,10 +105,8 @@ export class EnrollmentComponent implements OnInit {
         //  this.count = data.length;
         for (let i = 0;i < data.length;i++){
           this.dt = {}
-          this.dt.emiscode=data[i].emis_code
           this.dt.name=data[i].student_name
           this.dt.gender=data[i].gender
-          this.dt.attendance=data[i].last_attendance
           this.dt.school = data[i].school_name
           this.dt.class=data[i].class_name
           this.dt.id = data[i].id

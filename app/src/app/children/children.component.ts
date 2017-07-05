@@ -41,10 +41,8 @@ export class ChildrenComponent implements OnInit {
   partnerId:number;
 
   columns = [
-    { name: 'Emiscode' },
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Gender' },
-    { name: 'Attendance' },
     {name: 'School'},
     { name: 'Class' },
 
@@ -68,10 +66,8 @@ export class ChildrenComponent implements OnInit {
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.emiscode=data[i].emis_code
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
-        this.dt.attendance=data[i].last_attendance
         this.dt.school = data[i].school_name
         this.dt.class=data[i].class_name
         this.dt.id = data[i].id
@@ -111,10 +107,8 @@ export class ChildrenComponent implements OnInit {
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.emiscode=data[i].emis_code
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
-        this.dt.attendance=data[i].last_attendance
         this.dt.school = data[i].school_name
         this.dt.class=data[i].class_name
         this.dt.id = data[i].id
@@ -128,12 +122,12 @@ export class ChildrenComponent implements OnInit {
       for (let i = start; i < end; i++) {
         row[i] = childs[j];
         j++;
-      }
       //this.temp=row
       this.children=row;
+    }
 
-      this.selected = [];
 
+    this.selected = [];
       //console.log('Page Results',this.children,this.count, start, end);
 
     });
