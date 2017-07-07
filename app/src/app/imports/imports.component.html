@@ -10,10 +10,16 @@
       <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
         <h6 class="mt-0">Select a file</h6>
         <form [formGroup]="form"  method="post"  enctype="multipart/form-data">
-          <input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" (change)="Importupload($event)"  name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
 
+          <!--original<input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" (change)="Importupload($event)"  name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          -->
+          <input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" #myfile name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <br><br>
+          You need to <b>Verify</b> the data before importing.
+          <button md-raised-button md-button-sm class="shadow-none"  type="button" (click)="Verifyupload()">Verify</button>
+          <br>
           <div class="mb-1" style="margin-top: 10px;">
-            <button md-raised-button md-button-sm color="primary" type="button">Upload</button>
+            <button md-raised-button md-button-sm color="primary" (click)="Importupload()" type="button">Upload</button>
             <button md-raised-button md-button-sm color="warn" (click)="AbortImport($event)" type="button">Cancel</button>
             <button md-raised-button md-button-sm color="accent" type="button">Remove</button>
           </div>

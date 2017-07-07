@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy,ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ImportsService} from './imports.service';
 import { FileUploader,FileSelectDirective, FileDropDirective, } from 'ng2-file-upload/ng2-file-upload';
@@ -24,13 +24,13 @@ import {BaseUrl} from '../baseurl';
 
 export class ImportsComponent implements OnInit {
 
-
+  @ViewChild('myfile') myfile;
   public form: FormGroup;
   public submitted;
   public studentDataType : importStudent;
   public empty;
   public fail;
-  public myfile:any
+  public importfile:any
   public success;
   public importAbort;
 
@@ -57,13 +57,60 @@ export class ImportsComponent implements OnInit {
     this.importAbort = "Aborted";
   }
 
+
+    Importupload(event){
+      let myfile = this.myfile.nativeElement.files[0];
+      console.log(myfile);
+
+      let fd=new FormData();
+      fd.append("file",myfile);
+      console.log(fd);
+      this._importService.sendImportStudentsData(fd).subscribe(data=>
+      {
+        console.log(data);
+        let message = JSON.parse(data[0].total_fails);
+        console.log("fails", message);
+
+        this.success = "Data Imported Successfully";
+      },error=>{
+        console.log(error)
+        this.fail = "Data Not Imported: "+error
+      })
+    }
+
+
+    Verifyupload(event){
+      let myfile = this.myfile.nativeElement.files[0];
+      console.log(myfile);
+
+      let fd=new FormData();
+      fd.append("file",myfile);
+      console.log(fd);
+      this._importService.sendVerifyStudentsData(fd).subscribe(data=>
+      {
+        console.log(data);
+        let message = data['total_fails'];
+        console.log("fails", message);
+
+        this.success = "Data Imported Successfully";
+      },error=>{
+        console.log(error)
+        this.fail = "Data Not Imported: "+error
+      })
+    }
+
+/* original
   Importupload(event){
-    console.log("sdsdsd");
-    let myfile=event.srcElement.files[0]
-    const studentsImport = this.baseApiUrl+'api/students/import';
-    let token=localStorage.getItem("user");
+    let myfile=event.srcElement.files[0];
+    //this.importfile = this.myfile.nativeElement.files;
+    //console.log(this.myfile);
+    console.log(myfile);
+
     let fd=new FormData();
+
     fd.append("file",myfile);
+    console.log(fd);
+
     this._importService.sendStudentsData(fd).subscribe(data=>{
       console.log(data);
       console.log(this._importService.progress);
@@ -72,7 +119,7 @@ export class ImportsComponent implements OnInit {
       console.log(error)
       this.fail = "Data Not Imported: "+error
     })
-  }
+  }*/
 
   Progressupload(event){
 

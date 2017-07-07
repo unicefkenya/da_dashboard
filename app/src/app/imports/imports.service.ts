@@ -14,7 +14,30 @@ export class ImportsService {
 private baseApiUrl = BaseUrl.base_api_url;
 
 //data importing
-sendStudentsData(data: any){
+sendVerifyStudentsData(data: any){
+  return Observable.fromPromise(new Promise((resolve, reject) => {
+    const studentsImport = this.baseApiUrl+'api/students/import?verfiy=true';
+    let loadstart;
+    let progress;
+    let load;
+    let token=localStorage.getItem("user");
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                resolve(xhr.response);
+            } else {
+                reject(xhr.response)
+            }
+        }
+    }
+    xhr.open("POST", studentsImport, true);
+    xhr.setRequestHeader("Authorization", "Bearer "+JSON.parse(token));
+    xhr.send(data);
+    }))
+}
+
+sendImportStudentsData(data: any){
   return Observable.fromPromise(new Promise((resolve, reject) => {
     const studentsImport = this.baseApiUrl+'api/students/import';
     let loadstart;
@@ -34,7 +57,6 @@ sendStudentsData(data: any){
     xhr.open("POST", studentsImport, true);
     xhr.setRequestHeader("Authorization", "Bearer "+JSON.parse(token));
     xhr.send(data);
-    
     }))
 }
 

@@ -103,7 +103,7 @@ const MENUITEMS = [
     icon: 'face',
     children: [
       {state: 'add-children', name: 'Add Children'},
-      {state: 'enrollments', name: 'Enrollments'},
+      {state: 'enrollments', name: 'New Enrollments'},
       {state: 'view-children', name: 'View Children'},
     ]
   },
@@ -119,7 +119,7 @@ const MENUITEMS = [
     ],
     children: [
       {state: 'attendance', name: 'Overall Attendance'},
-      {state: 'enrollments', name: 'Enrollments'},
+      {state: 'enrollments', name: 'New Enrollments'},
       {state: 'boys', name: 'Boys Attendance'},
       {state: 'girls', name: 'Girls Attendance'},
       {state: 'dropouts', name: 'Children Dropouts'},
