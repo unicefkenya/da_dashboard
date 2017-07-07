@@ -7,6 +7,7 @@ import {BaseUrl} from '../baseurl';
 @Injectable()
 export class ImportsService {
   progress:any;
+  xhr;
   constructor(private http: Http) {
 
   }
@@ -58,6 +59,12 @@ sendImportStudentsData(data: any){
     xhr.setRequestHeader("Authorization", "Bearer "+JSON.parse(token));
     xhr.send(data);
     }))
+}
+
+abortImport(){
+  let xhr = new XMLHttpRequest();
+  xhr.onabort = function(){}
+  xhr.abort();
 }
 
 private extractData(res: Response) {

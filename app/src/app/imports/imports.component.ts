@@ -33,6 +33,7 @@ export class ImportsComponent implements OnInit {
   public importfile:any
   public success;
   public importAbort;
+  abort: any;
 
   file:File;
   private baseApiUrl = BaseUrl.base_api_url;
@@ -50,11 +51,14 @@ export class ImportsComponent implements OnInit {
 
   }
 
-  AbortImport(event){
-    let xhr = new XMLHttpRequest();
-    xhr.abort();
-    console.log("Aborted");
-    this.importAbort = "Aborted";
+  AbortImport(){
+    this.abort = this._importService.abortImport();
+    console.log(this.abort);
+    if(this.abort){
+      console.log('Aborted');
+    }else{
+      console.log('Inatudanganya');
+    }
   }
 
 
@@ -71,7 +75,7 @@ export class ImportsComponent implements OnInit {
         let message = JSON.parse(data[0].total_fails);
         console.log("fails", message);
 
-        this.success = "Data Imported Successfully";
+        //this.success = "Data Imported Successfully";
       },error=>{
         console.log(error)
         this.fail = "Data Not Imported: "+error
@@ -92,10 +96,10 @@ export class ImportsComponent implements OnInit {
         let message = data['total_fails'];
         console.log("fails", message);
 
-        this.success = "Data Imported Successfully";
+        //this.success = "Data Verified Successfully";
       },error=>{
         console.log(error)
-        this.fail = "Data Not Imported: "+error
+        //this.fail = "Data Contains Errors: "+error
       })
     }
 
