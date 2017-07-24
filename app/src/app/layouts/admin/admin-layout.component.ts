@@ -26,7 +26,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public userType;
   public allAccess = 'all';
-
+  welcomeName: string;
 
   today: number = Date.now();
   url: string;
@@ -59,8 +59,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       //localStorage.setItem("school", data.info.profile.school);
       this.userType =  data.type;
 
-    })
-
+    });
+    this.welcomeName = localStorage.getItem("welcomeName");
   }
 
 

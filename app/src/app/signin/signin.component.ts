@@ -73,11 +73,13 @@ export class SigninComponent implements OnInit {
               if(this.nav == "teacher"){
                 let schoolId = data.info.profile.school;
                 localStorage.setItem("schoolId", schoolId);
+                localStorage.setItem("welcomeName", data.info.profile.name);
                 this.schoolId = localStorage.getItem("schoolId");
                 this.router.navigate(['/school', schoolId]);
               }else if(this.nav == "partner"){
                 let partnerId = data.info.id;
                 localStorage.setItem("partnerId", partnerId);
+                localStorage.setItem("welcomeName", data.info.name);
                 this.router.navigate([this.returnUrl]);
               }else{
                 this.router.navigate([this.returnUrl]);

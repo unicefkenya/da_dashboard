@@ -6,7 +6,9 @@
     <div class="branding">
       <div class="logo"></div>
     </div>
-    <div fxFlex></div>
+    <div fxFlex *ngIf="userType == 'admin'">Welcome Unicef</div>
+    <div fxFlex *ngIf="userType == 'partner'">Welcome {{welcomeName}}</div>
+    <div fxFlex *ngIf="userType == 'teacher'">Welcome {{welcomeName}}</div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
     </button>
