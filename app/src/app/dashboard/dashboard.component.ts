@@ -39,8 +39,9 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    let partnerName = JSON.parse(localStorage.getItem("welcomeName"));
 
-    if(this.partnerId){
+    if(this.partnerId && partnerName){
       this.getPartnerStats(this.partnerId);
       this.getPartnerAnnualAttendanceGender(this.partnerId);
       this.getPartnerAnnualEnrollmentGender(this.partnerId);
