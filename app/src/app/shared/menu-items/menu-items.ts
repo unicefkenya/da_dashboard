@@ -52,13 +52,13 @@ const MENUITEMS = [
       {state: 'view-partners', name: 'View Partners'},
     ]
   },
-  {
+  /*{
     usertype: 'admin',
     state: 'counties',
     name: 'Counties',
     type: 'link',
     icon: 'my_location'
-  },
+  },*/
   {
     usertype: 'partner',
     state: 'schools',
@@ -107,7 +107,7 @@ const MENUITEMS = [
       {state: 'view-children', name: 'View Children'},
     ]
   },
-  {
+  /*{
     usertype: 'partner',
     state: 'reports',
     name: 'Reports',
@@ -124,7 +124,7 @@ const MENUITEMS = [
       {state: 'girls', name: 'Girls Attendance'},
       {state: 'dropouts', name: 'Children Dropouts'},
     ]
-  },
+  },*/
   {
     usertype: 'partner',
     state: 'imports',
@@ -145,14 +145,14 @@ const MENUITEMS = [
       {state: 'profile', name: 'Profile'},
 
     ]
-  },{
+  }/*,{
     usertype: 'all',
     access: 'all',
     state: 'help',
     name: 'Help',
     type: 'link',
     icon: 'local_library'
-  }
+  }*/
 ];
 
 @Injectable()

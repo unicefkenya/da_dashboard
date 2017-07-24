@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit{
   public boys: any;
   public girls: any;
   partnerId:number;
-
+  partnerName: string;
 
   constructor(private dashboardServices: DashboardService) {
     this.fetch((data) => { this.rows = data; });
@@ -39,9 +39,8 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
-    let partnerName = JSON.parse(localStorage.getItem("welcomeName"));
-
-    if(this.partnerId && partnerName){
+    this.partnerName = localStorage.getItem("welcomeName");
+    if(this.partnerId && this.partnerName){
       this.getPartnerStats(this.partnerId);
       this.getPartnerAnnualAttendanceGender(this.partnerId);
       this.getPartnerAnnualEnrollmentGender(this.partnerId);

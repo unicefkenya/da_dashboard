@@ -20,18 +20,18 @@
       <md-icon>person</md-icon>
     </button>
     <md-menu #user="mdMenu" x-position="before">
-      <button md-menu-item>
+      <!--<button md-menu-item>
         <md-icon>settings</md-icon>
         Settings
-      </button>
+      </button>-->
       <a [routerLink]="['/profile']" md-menu-item>
         <md-icon>account_box</md-icon>
         Profile
       </a>
-      <button md-menu-item>
+      <!--<button md-menu-item>
         <md-icon>notifications_off</md-icon>
         Disable notifications
-      </button>
+      </button>-->
       <button (click) = "logout()" md-menu-item>
         <md-icon>exit_to_app</md-icon>
         Sign Out

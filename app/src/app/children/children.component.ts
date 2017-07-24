@@ -255,7 +255,8 @@ export class ChildrenComponent implements OnInit {
     });
 
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
-    if(this.partnerId){
+    let partnerName = localStorage.getItem("welcomeName");
+    if(this.partnerId && partnerName){
       this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
     }else{
       this.fetchChildren(this.offset, this.limit);

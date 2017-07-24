@@ -216,7 +216,8 @@ export class ViewSchoolsComponent implements OnInit {
     });
 
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
-    if(this.partnerId){
+    let partnerName = localStorage.getItem("welcomeName");
+    if(this.partnerId && partnerName){
       this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);
     }else{
       this.fetchSchools(this.offset,this.limit);
