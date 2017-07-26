@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { EnrollmentService } from './enrollment.service';
+import {ViewpartnersService} from '../../partners/viewpartners/viewpartners.service'
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { Search } from '../../search';
@@ -9,7 +10,7 @@ import { Search } from '../../search';
   selector: 'app-enrollment',
   templateUrl: './enrollment.component.html',
   styleUrls: ['./enrollment.component.scss'],
-  providers: [EnrollmentService],
+  providers: [EnrollmentService,ViewpartnersService],
 })
 
 export class EnrollmentComponent implements OnInit {
@@ -46,8 +47,25 @@ export class EnrollmentComponent implements OnInit {
 
     ];
 
-  constructor(private enrollmentService: EnrollmentService, private router: Router,private fb: FormBuilder){}
+  constructor(private enrollmentService: EnrollmentService, private partnerService: ViewpartnersService, private router: Router,private fb: FormBuilder){}
+  partner:any;
+  allpartners = [];
+  //fetch partners
+  fetchPartners(){
+    this.partnerService.fetchAllPartners()
+      .subscribe(
+        (res)=>{
+          for (let i = 0; i < res.results.length; i++){
+            this.partner = {};
+            this.partner.name = res.results[i].name;
+            this.partner.id = res.results[i].id;
+            this.allpartners.push(this.partner);
+          }
+        },
+      (err) => console.log(err)
+    );
 
+  }
   //admin
   fetchChildren(offset,limit): void {
     this.enrollmentService.fetchChildren(this.page).subscribe(data => {
@@ -155,11 +173,12 @@ export class EnrollmentComponent implements OnInit {
       });
     }
 
-    searchSchool(search: Search){
+    searchChild(search: Search){
       if(!this.submitted){
 
         //edit
       }else{
+
           console.log(this.partnerId);
           if(this.partnerId){
             this.enrollmentService.searchPartnerData(this.partnerId, search.search)
@@ -192,6 +211,7 @@ export class EnrollmentComponent implements OnInit {
                   }
                 );
             }else{
+              console.log(search.search);
               this.enrollmentService.searchData(search.search)
                   .subscribe(
                     data => //console.log(data)
@@ -260,7 +280,6 @@ export class EnrollmentComponent implements OnInit {
 
 
     onPage(event) {
-      console.log(event.offset);
       this.page=event.offset+1
       if(this.partnerId){
         this.fetchPartnerChildren(this.partnerId,event.offset, event.limit);
@@ -272,9 +291,12 @@ export class EnrollmentComponent implements OnInit {
     ngOnInit(): void {
       this.loading = true;
       this.form = this.fb.group({
-        search: [null, Validators.compose([Validators.required,])],
+        search: [null],
+        partner: [null],
+        gender: [null],
       });
 
+      this.fetchPartners();
 
       this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
       let partnerName = localStorage.getItem("welcomeName");

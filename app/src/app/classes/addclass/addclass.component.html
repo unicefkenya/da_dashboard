@@ -15,28 +15,19 @@
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
-                  
                   <md-select [formControl]="form.controls['class_id']" placeholder="Choose Class (required)">
                     <md-option *ngFor = "let i of generic_classes" value="{{i}}">
                       {{i}}
                     </md-option>
                   </md-select>
                   <small *ngIf="form.controls['class_id'].hasError('required') && form.controls['class_id'].touched" class="md-text-warn"></small>
-
-                </div>
-              </div>
-              <div  fxLayout="row"> 
-                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Enter Stream name (required)" [formControl]="form.controls['class_name']"  type="text"></md-input>
-
-                  <small *ngIf="form.controls['class_name'].hasError('required') && form.controls['class_name'].touched" class="md-text-warn">Enter Class name (e.g. 7R)</small>
                 </div>
               </div>
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Add Class Teacher (required)" [formControl]="form.controls['teacher']"  type="text"></md-input>
+                  <md-input  placeholder="Enter Stream name (required)" [formControl]="form.controls['class_name']"  type="text"></md-input>
 
-                    <small *ngIf="form.controls['teacher'].hasError('required') && form.controls['teacher'].touched" class="md-text-warn">Pick a class teacher</small>
+                  <small *ngIf="form.controls['class_name'].hasError('required') && form.controls['class_name'].touched" class="md-text-warn">Enter Class name (e.g. 7R)</small>
                 </div>
               </div>
               <!-- <hr> -->

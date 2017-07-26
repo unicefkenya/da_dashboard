@@ -48,7 +48,7 @@ export class ClassService {
 
   sendData(user: any){
 
-    const _teacherRegistrationUrl = this.baseApiUrl+'api/stream';
+    const _teacherRegistrationUrl = this.baseApiUrl+'api/streams';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these

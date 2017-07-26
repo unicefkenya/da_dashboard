@@ -15,6 +15,12 @@ export class ViewpartnersService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+  //used in enrollment component
+  fetchAllPartners(){
+    return this.http.get(this.baseApiUrl+'api/partners')
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   fetchAPartner(name){
     return this.http.get(this.baseApiUrl+'api/students?name='+name)

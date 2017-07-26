@@ -45,7 +45,7 @@ export class AddClassComponent implements OnInit {
   public empty;
   public date;
   public isVisible;
-  public school = 1;
+  public school = JSON.parse(localStorage.getItem('schoolId'));
   public t_type;
   public currentDate = new Date();
   public submitted: boolean =  true;
@@ -57,29 +57,27 @@ export class AddClassComponent implements OnInit {
     //this.onSubmit;
     this.form = this.fb.group({
       class_id: [null, Validators.compose([Validators.required])],
-      class_name: [null, Validators.compose([Validators.required])],
-      teacher: [null, Validators.compose([Validators.required])],
+      class_name: [null, Validators.compose([Validators.required])]
 
     });
     this.getClasses();
+
   }
 
   onSubmit(registerClass: ClassRegistration, form){
-
+    
     if(!this.submitted){
 
     }else{
       this.rclass = new ClassRegistration(
                         registerClass.class_id,
-                        registerClass.class_name,
-                        registerClass.teacher
+                        registerClass.class_name
                       );
 
       this.classService.sendData({
 
               	class_name: registerClass.class_name,
               	_class: registerClass.class_id,
-              	teacher: registerClass.teacher,
               	school:  this.school
 
           }).subscribe(

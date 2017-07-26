@@ -8,9 +8,28 @@
 <div *ngIf="loading == false">
   <md-card>
     <md-card-content>
-      <form [formGroup]="form" (ngSubmit)="searchSchool(form.value);">
-        <md-input placeholder="Search by name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
-        <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the child's name.</small>
+      <form [formGroup]="form" (ngSubmit)="searchChild(form.value);">
+        <md-input placeholder="Search by name"  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+        <br>
+        <div  fxLayout="row">
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+            Search by Gender
+            <md-checkbox [formControl]="form.controls['gender']">
+              Male
+            </md-checkbox>
+            <md-checkbox [formControl]="form.controls['gender']">
+              Female
+            </md-checkbox>
+          </div>
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+            Search by Partner
+            <md-select  placeholder="Partner" [formControl]="form.controls['partner']" class="mb-2">
+              <md-option *ngFor = "let name of allpartners" value="{{name.name}}">
+                {{name.name}}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
         <md-card-actions>
           <button type="submit" md-raised-button class="shadow-none">Search</button>
         </md-card-actions>

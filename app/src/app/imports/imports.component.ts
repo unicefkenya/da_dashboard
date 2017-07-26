@@ -92,8 +92,9 @@ export class ImportsComponent implements OnInit {
       console.log(fd);
       this._importService.sendVerifyStudentsData(fd).subscribe(data=>
       {
-        console.log(data);
-        let message = data['total_fails'];
+
+
+        let message = data;
         console.log("fails", message);
 
         //this.success = "Data Verified Successfully";
