@@ -90,41 +90,26 @@ export class ImportsComponent implements OnInit {
       let fd=new FormData();
       fd.append("file",myfile);
       console.log(fd);
-      this._importService.sendVerifyStudentsData(fd).subscribe(data=>
+      this._importService.sendVerifyStudentsData(fd).toPromise()
+      .then((res)=>{
+        //let data = JSON.parse(res);
+        console.log(res);
+        //console.log(res."errors");
+        //return res =>res.json()
+      })
+      /*this._importService.sendVerifyStudentsData(fd).subscribe(data=>
       {
 
 
-        let message = data;
+        let message = self.data.errors;
         console.log("fails", message);
 
         //this.success = "Data Verified Successfully";
       },error=>{
         console.log(error)
         //this.fail = "Data Contains Errors: "+error
-      })
+      })*/
     }
-
-/* original
-  Importupload(event){
-    let myfile=event.srcElement.files[0];
-    //this.importfile = this.myfile.nativeElement.files;
-    //console.log(this.myfile);
-    console.log(myfile);
-
-    let fd=new FormData();
-
-    fd.append("file",myfile);
-    console.log(fd);
-
-    this._importService.sendStudentsData(fd).subscribe(data=>{
-      console.log(data);
-      console.log(this._importService.progress);
-      this.success = "Data Imported Successfully";
-    },error=>{
-      console.log(error)
-      this.fail = "Data Not Imported: "+error
-    })
-  }*/
 
   Progressupload(event){
 

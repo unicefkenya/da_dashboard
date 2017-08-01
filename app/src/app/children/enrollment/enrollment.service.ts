@@ -43,7 +43,7 @@ export class EnrollmentService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-
+  //searching by name
   searchData(name){
 
     return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name)
@@ -53,6 +53,55 @@ export class EnrollmentService {
 
   searchPartnerData(id,name){
     return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name+'&partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  //searching by Gender
+  searchDataGender(gender){
+
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&gender='+gender)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  searchPartnerDataGender(id,gender){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&gender='+gender+'&partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  //searching by gender and name
+  searchPartnerDataGenderName(id,gender,name){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&gender='+gender+'&partner='+id+'name='+name)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  searchDataGenderName(gender,name){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&gender='+gender+'name='+name)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  //searching by Partner
+  searchAPartnerData(id){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  //search by name and partner
+  searchDataNamePartner(id,name){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&partner='+id+'name='+name)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  //search by gender and partner
+  searchDataGenderPartner(id,gender){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&partner='+id+'gender='+gender)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  //search by name,gender,partner
+  searchDataNameGenderPartner(id,gender,name){
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&partner='+id+'gender='+gender+'name='+name)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

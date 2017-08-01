@@ -1,7 +1,7 @@
 export class Search {
   constructor(
     public search: string,
-    public gender: string,
-    public partner: string
+    public partner: string,
+    public gender: string
   ){}
 }
