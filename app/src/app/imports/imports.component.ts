@@ -127,21 +127,12 @@ export class ImportsComponent implements OnInit {
         let items =[];
         let rows = [];
         for (let i = 0; i < re.errors.length; i++){
-          let errmessage = re.errors[i].error_message.length;
+          let errmessage = re.errors[i].error_message;
           console.log(re.errors[i].error_message);
           this.dt = {}
           this.dt.rownumber = re.errors[i].row_number
-            for(let j = 0; j< errmessage; j++){
-              this.ds = {}
-              this.ds.firstname = errmessage[j].fstname
-              this.ds.lastname = errmessage[j].lstname
-              this.ds.gender = errmessage[j].gender
-              this.ds.class = errmessage[j].class
-              rows.push(this.ds)
-            }
-          this.dt.errror = rows
+          this.dt.error=this.errorMessage(re.errors[i].error_message)
           items.push(this.dt)
-          console.log(this.dt.error);
         }
         //initial data
         this.errors=items;
@@ -149,6 +140,20 @@ export class ImportsComponent implements OnInit {
       })
 
     }
+
+  errorMessage(error_message){
+    if(error_message.fstname){
+      return "First Name: "+error_message.fstname[0]
+    }
+    else if(error_message.gender){
+      return "Gender: "+error_message.gender[0]
+    }
+    else if(error_message.clas){
+      return "Class: "+error_message.clas[0]
+    }
+
+
+  }
 
   Progressupload(event){
 

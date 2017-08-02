@@ -18,8 +18,7 @@ private baseApiUrl = BaseUrl.base_api_url;
 sendVerifyStudentsData(data: any){
 
   return Observable.fromPromise(new Promise((resolve, reject) => {
-    //const studentsImport = this.baseApiUrl+'api/students/import?verfiy=true';
-    const studentsImport = 'https://oosc.herukoapp.com/api/students/import?verfiy=true';
+    const studentsImport = this.baseApiUrl+'api/students/import?verfiy=true';
     let loadstart;
     let progress;
     let load;
