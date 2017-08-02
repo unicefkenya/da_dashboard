@@ -54,7 +54,10 @@ export class ImportsComponent implements OnInit {
   total_fails:any;
   success_percentage:any;
   errorDiv:boolean;
+  uploadDiv:boolean;
   duplicateData: any;
+  verifySuccess:any;
+
   constructor(
     private _importService: ImportsService,private http:Http,
     private fb: FormBuilder)
@@ -64,6 +67,7 @@ export class ImportsComponent implements OnInit {
     });
 
     this.errorDiv = false;
+    this.uploadDiv = false;
   }
 
   ngOnInit(): void {
@@ -90,9 +94,15 @@ export class ImportsComponent implements OnInit {
       console.log(fd);
       this._importService.sendImportStudentsData(fd).subscribe(data=>
       {
-        console.log(data);
-        let message = JSON.parse(data[0].total_fails);
-        console.log("fails", message);
+        let res=data as any
+        this.uploadDiv = true;
+        this.errorDiv = false;
+        this.total_fails = res.total_fails;
+        this.total_success = res.total_success;
+        this.success_percentage =res.success_percentage;
+        console.log(res);
+        //let message = JSON.parse(data[0].total_fails);
+        //console.log("fails", message);
 
         //this.success = "Data Imported Successfully";
       },error=>{
@@ -113,15 +123,12 @@ export class ImportsComponent implements OnInit {
       .subscribe((res)=>{
         //let data = JSON.parse(res);
         let re=res as any
-        console.log(re);
-
         if(re.errors == 0 && re.total_success == 0 && re.success_percentage == "0%"){
           this.duplicateData = "Data in file already imported";
         }else{
+          this.verifySuccess = "Successful Verification. File ready for import.";
+          this.uploadDiv = false;
           this.errorDiv = true;
-          this.total_fails = re.total_fails;
-          this.total_success = re.total_success;
-          this.success_percentage =re.success_percentage;
 
           this.count = re.errors.length;
 

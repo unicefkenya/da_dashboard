@@ -50,7 +50,7 @@ sendImportStudentsData(data: any){
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                resolve(xhr.response);
+                resolve(JSON.parse(xhr.response) as any);
             } else {
                 reject(xhr.response)
             }
