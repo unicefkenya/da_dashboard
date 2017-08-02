@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectionStrategy,ChangeDetectorRef,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ImportsService} from './imports.service';
 import { FileUploader,FileSelectDirective, FileDropDirective, } from 'ng2-file-upload/ng2-file-upload';
@@ -15,7 +15,6 @@ import {BaseUrl} from '../baseurl';
   selector: 'app-imports',
   templateUrl: './imports.component.html',
   styleUrls: ['./imports.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ImportsService]
 
 })
@@ -48,19 +47,23 @@ export class ImportsComponent implements OnInit {
 
   private baseApiUrl = BaseUrl.base_api_url;
 
+  dt:any;
+  ds:any;
+  rows:any[];
+  total_success:any;
+  total_fails:any;
+  success_percentage:any;
+  errorDiv:boolean;
+  duplicateData: any;
   constructor(
     private _importService: ImportsService,private http:Http,
-    private fb: FormBuilder,private ref: ChangeDetectorRef)
+    private fb: FormBuilder)
     {
     this.form = this.fb.group({
       myfile: [null, Validators.compose([Validators.required,])],
     });
 
-      ref.detach();
-     setInterval(() => {
-       this.ref.detectChanges();
-     }, 5000);
-
+    this.errorDiv = false;
   }
 
   ngOnInit(): void {
@@ -98,12 +101,6 @@ export class ImportsComponent implements OnInit {
       })
     }
 
-    dt:any;
-    ds:any;
-    rows:any[];
-    total_success:any;
-    total_fails:any;
-    success_percentage:any;
 
     Verifyupload(event){
       let myfile = this.myfile.nativeElement.files[0];
@@ -118,31 +115,74 @@ export class ImportsComponent implements OnInit {
         let re=res as any
         console.log(re);
 
-        this.total_fails = re.total_fails;
-        this.total_success = re.total_success;
-        this.success_percentage =re.success_percentage;
+        if(re.errors == 0 && re.total_success == 0 && re.success_percentage == "0%"){
+          this.duplicateData = "Data in file already imported";
+        }else{
+          this.errorDiv = true;
+          this.total_fails = re.total_fails;
+          this.total_success = re.total_success;
+          this.success_percentage =re.success_percentage;
 
-        this.count = re.errors.length;
+          this.count = re.errors.length;
 
-        let items =[];
-        let rows = [];
-        for (let i = 0; i < re.errors.length; i++){
-          let errmessage = re.errors[i].error_message;
-          console.log(re.errors[i].error_message);
-          this.dt = {}
-          this.dt.rownumber = re.errors[i].row_number
-          this.dt.error=this.errorMessage(re.errors[i].error_message)
-          items.push(this.dt)
+          let items =[];
+          let rows = [];
+          for (let i = 0; i < re.errors.length; i++){
+            let errmessage = re.errors[i].error_message;
+            console.log(re.errors[i].error_message);
+            this.dt = {}
+            this.dt.rownumber = re.errors[i].row_number
+            this.dt.error=this.errorMessage(re.errors[i].error_message)
+            items.push(this.dt)
+          }
+          //initial data
+          this.errors=items;
         }
-        //initial data
-        this.errors=items;
-
       })
 
     }
 
   errorMessage(error_message){
-    if(error_message.fstname){
+    if(error_message.fstname && error_message.gender && error_message.clas && error_message.school ){
+      return "School emiscode, First Name, Gender & Class fields are blank";
+    }
+    else if(error_message.fstname && error_message.gender && error_message.clas){
+      return "First Name, Gender & Class fields are blank";
+    }
+    else if(error_message.fstname && error_message.gender && error_message.school ){
+      return "School emiscode, First Name & Gender fields are blank";
+    }
+    else if(error_message.gender && error_message.clas && error_message.school){
+      return "School emiscode, Gender & Class fields are blank";
+    }
+    else if(error_message.gender && error_message.clas && error_message.school){
+      return "School emiscode, Gender & Class fields are blank";
+    }
+    else if(error_message.fstname && error_message.clas && error_message.school){
+      return "School emiscode, First Name & Class fields are blank";
+    }
+    else if(error_message.school && error_message.gender ){
+      return "School emiscode & Gender fields are blank";
+    }
+    else if(error_message.school && error_message.fstname ){
+      return "School emiscode & First Name fields are blank";
+    }
+    else if(error_message.school && error_message.clas ){
+      return "School emiscode & Class fields are blank";
+    }
+    else if(error_message.fstname && error_message.gender ){
+      return "First Name & Gender fields are blank";
+    }
+    else if(error_message.gender && error_message.clas){
+      return "Gender & Class fields are blank";
+    }
+    else if(error_message.fstname && error_message.clas){
+      return "First Name & Class fields are blank";
+    }
+    else if(error_message.school){
+      return "The school emiscode is missing";
+    }
+    else if(error_message.fstname){
       return "First Name: "+error_message.fstname[0]
     }
     else if(error_message.gender){
@@ -151,7 +191,6 @@ export class ImportsComponent implements OnInit {
     else if(error_message.clas){
       return "Class: "+error_message.clas[0]
     }
-
 
   }
 
