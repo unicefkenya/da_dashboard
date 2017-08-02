@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectionStrategy,ViewChild } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy,ChangeDetectorRef,ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ImportsService} from './imports.service';
 import { FileUploader,FileSelectDirective, FileDropDirective, } from 'ng2-file-upload/ng2-file-upload';
@@ -34,17 +34,33 @@ export class ImportsComponent implements OnInit {
   public success;
   public importAbort;
   abort: any;
+  errors: any[];
+  count: number = 0;
+  offset: number = 0;
+  limit: number = 100;
 
   file:File;
+  columns = [
+    { name: 'Rownumber' },
+    { name: 'Error' }
+  ];
+
+
   private baseApiUrl = BaseUrl.base_api_url;
 
   constructor(
     private _importService: ImportsService,private http:Http,
-    private fb: FormBuilder)
+    private fb: FormBuilder,private ref: ChangeDetectorRef)
     {
     this.form = this.fb.group({
       myfile: [null, Validators.compose([Validators.required,])],
     });
+
+      ref.detach();
+     setInterval(() => {
+       this.ref.detectChanges();
+     }, 5000);
+
   }
 
   ngOnInit(): void {
@@ -82,6 +98,12 @@ export class ImportsComponent implements OnInit {
       })
     }
 
+    dt:any;
+    ds:any;
+    rows:any[];
+    total_success:any;
+    total_fails:any;
+    success_percentage:any;
 
     Verifyupload(event){
       let myfile = this.myfile.nativeElement.files[0];
@@ -90,25 +112,42 @@ export class ImportsComponent implements OnInit {
       let fd=new FormData();
       fd.append("file",myfile);
       console.log(fd);
-      this._importService.sendVerifyStudentsData(fd).toPromise()
-      .then((res)=>{
+      this._importService.sendVerifyStudentsData(fd)
+      .subscribe((res)=>{
         //let data = JSON.parse(res);
-        console.log(res);
-        //console.log(res."errors");
-        //return res =>res.json()
+        let re=res as any
+        console.log(re);
+
+        this.total_fails = re.total_fails;
+        this.total_success = re.total_success;
+        this.success_percentage =re.success_percentage;
+
+        this.count = re.errors.length;
+
+        let items =[];
+        let rows = [];
+        for (let i = 0; i < re.errors.length; i++){
+          let errmessage = re.errors[i].error_message.length;
+          console.log(re.errors[i].error_message);
+          this.dt = {}
+          this.dt.rownumber = re.errors[i].row_number
+            for(let j = 0; j< errmessage; j++){
+              this.ds = {}
+              this.ds.firstname = errmessage[j].fstname
+              this.ds.lastname = errmessage[j].lstname
+              this.ds.gender = errmessage[j].gender
+              this.ds.class = errmessage[j].class
+              rows.push(this.ds)
+            }
+          this.dt.errror = rows
+          items.push(this.dt)
+          console.log(this.dt.error);
+        }
+        //initial data
+        this.errors=items;
+
       })
-      /*this._importService.sendVerifyStudentsData(fd).subscribe(data=>
-      {
 
-
-        let message = self.data.errors;
-        console.log("fails", message);
-
-        //this.success = "Data Verified Successfully";
-      },error=>{
-        console.log(error)
-        //this.fail = "Data Contains Errors: "+error
-      })*/
     }
 
   Progressupload(event){

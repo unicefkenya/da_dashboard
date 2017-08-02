@@ -36,6 +36,7 @@ export class EnrollmentComponent implements OnInit {
     };
     males:any;
     females:any;
+    admin:any;
 
     partnerId:number;
 
@@ -179,10 +180,10 @@ export class EnrollmentComponent implements OnInit {
 
         //edit
       }else{
-
             console.log(this.partnerId);
             console.log(search.search,search.partner,search.gender);
           if(this.partnerId){
+            this.admin = localStorage.getItem('user-type');
             //search by name
             if(search.search){
             this.enrollmentService.searchPartnerData(this.partnerId, search.search)
