@@ -32,6 +32,7 @@ export class ImportsComponent implements OnInit {
   public importfile:any
   public success;
   public importAbort;
+  fileError:any;
   abort: any;
   errors: any[];
   count: number = 0;
@@ -125,8 +126,8 @@ export class ImportsComponent implements OnInit {
         let re=res as any
         if(re.errors == 0 && re.total_success == 0 && re.success_percentage == "0%"){
           this.duplicateData = "Data in file already imported";
-        }else{
-          this.verifySuccess = "Successful Verification. File ready for import.";
+        }else if(re.errors != 0){
+          this.fileError = "Kindly correct errors in file to be able to upload";
           this.uploadDiv = false;
           this.errorDiv = true;
 
@@ -144,6 +145,11 @@ export class ImportsComponent implements OnInit {
           }
           //initial data
           this.errors=items;
+
+        }
+        else{
+          this.uploadDiv = true;
+          this.verifySuccess = "Successful Verification. File ready for import.";
         }
       })
 

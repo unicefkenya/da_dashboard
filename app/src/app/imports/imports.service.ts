@@ -41,7 +41,7 @@ sendVerifyStudentsData(data: any){
 
 sendImportStudentsData(data: any){
   return Observable.fromPromise(new Promise((resolve, reject) => {
-    const studentsImport = this.baseApiUrl+'api/students/import';
+    const studentsImport = this.baseApiUrl+'api/students/import?verify=';
     let loadstart;
     let progress;
     let load;

@@ -18,9 +18,10 @@
           You need to <b>Verify</b> the data before importing.
           <button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="Verifyupload()">Verify</button>
           <span *ngIf="duplicateData &&!errorDiv"><h6 style="color: red;">{{duplicateData}}</h6></span>
-          <span *ngIf="verifySuccess && errorDiv"><h6 style="color: green;">{{verifySuccess}}</h6></span>
+          <span *ngIf="fileError && errorDiv"><h6 style="color: red;">{{fileError}}</h6></span>
+          <span *ngIf="verifySuccess && !errorDiv"><h6 style="color: green;">{{verifySuccess}}</h6></span>
           <br>
-          <div *ngIf="errorDiv" class="mb-1" style="margin-top: 10px;">
+          <div *ngIf="uploadDiv" class="mb-1" style="margin-top: 10px;">
             <button md-raised-button md-button-sm color="primary" (click)="Importupload()" type="button">Upload</button>
             <button md-raised-button md-button-sm color="warn" (click)="AbortImport()" type="button">Cancel</button>
             <button md-raised-button md-button-sm color="accent" type="button">Remove</button>
