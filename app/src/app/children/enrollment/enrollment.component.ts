@@ -64,7 +64,7 @@ export class EnrollmentComponent implements OnInit {
             this.allpartners.push(this.partner);
           }
         },
-      (err) => console.log(err)
+      //(err) => console.log(err)
     );
 
   }
@@ -160,6 +160,7 @@ export class EnrollmentComponent implements OnInit {
     fetchPartnerBoyChildTotal(id){
       this.enrollmentService.fetchPartnerBoyChildTotal(id).subscribe(data => {
         this.males = data.count;
+        return this.males;
       });
     }
 
@@ -172,6 +173,7 @@ export class EnrollmentComponent implements OnInit {
     fetchPartnerGirlChildTotal(id){
       this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
         this.females = data.count;
+        return this.females;
       });
     }
 
@@ -180,17 +182,16 @@ export class EnrollmentComponent implements OnInit {
 
         //edit
       }else{
-            console.log(this.partnerId);
-            console.log(search.search,search.partner,search.gender);
+        this.admin = localStorage.getItem('user-type');
           if(this.partnerId){
-            this.admin = localStorage.getItem('user-type');
             //search by name
             if(search.search){
-            this.enrollmentService.searchPartnerData(this.partnerId, search.search)
+              this.enrollmentService.searchPartnerData(this.partnerId, search.search)
                 .subscribe(
                   data => //console.log(data)
                   {
                     let res = data.results;
+                    this.count = data.count;
                     let childs =[];
                     let rows=[]
                     for (let i = 0; i < data.results.length; i++){
@@ -254,6 +255,7 @@ export class EnrollmentComponent implements OnInit {
                     .subscribe(
                       data => //console.log(data)
                       {
+                        this.count = data.count;
                         let res = data.results;
                         let childs =[];
                         let rows=[]
@@ -283,6 +285,7 @@ export class EnrollmentComponent implements OnInit {
               else{
                 this.empty = "Kindly select a filtering field";
               }
+              //admin
             }else{
               //search by name
               if(search.search){
@@ -318,11 +321,16 @@ export class EnrollmentComponent implements OnInit {
                 }
                 //search by partner
                 else if(search.partner){
+                  //showing total data of enrollment
+                  this.fetchPartnerGirlChildTotal(search.partner);
+                  this.fetchPartnerBoyChildTotal(search.partner);
+
                   this.enrollmentService.searchAPartnerData(search.partner)
                       .subscribe(
                         data => //console.log(data)
                         {
                           let res = data.results;
+                          this.count = data.count;
                           let childs =[];
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
@@ -414,11 +422,15 @@ export class EnrollmentComponent implements OnInit {
                 }
                 //search by name and partner
                 else if(search.search && search.partner){
+                  this.fetchPartnerGirlChildTotal(search.partner);
+                  this.fetchPartnerBoyChildTotal(search.partner);
+
                   this.enrollmentService.searchDataNamePartner(search.partner,search.search)
                       .subscribe(
                         data => //console.log(data)
                         {
                           let res = data.results;
+                          this.count = data.count;
                           let childs =[];
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
@@ -446,11 +458,15 @@ export class EnrollmentComponent implements OnInit {
                 }
                 //search by gender and partner
                 else if(search.gender && search.partner){
+                  this.fetchPartnerGirlChildTotal(search.partner);
+                  this.fetchPartnerBoyChildTotal(search.partner);
+
                   this.enrollmentService.searchDataGenderPartner(search.partner,search.gender)
                       .subscribe(
                         data => //console.log(data)
                         {
                           let res = data.results;
+                          this.count = data.count;
                           let childs =[];
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
