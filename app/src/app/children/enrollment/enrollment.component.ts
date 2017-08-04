@@ -182,8 +182,7 @@ export class EnrollmentComponent implements OnInit {
 
         //edit
       }else{
-        this.admin = localStorage.getItem('user-type');
-          if(this.partnerId){
+        if(this.partnerId){
             //search by name
             if(search.search){
               this.enrollmentService.searchPartnerData(this.partnerId, search.search)

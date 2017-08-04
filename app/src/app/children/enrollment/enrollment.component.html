@@ -20,7 +20,7 @@
               <md-option  value="F">Female</md-option>
             </md-select>
         </div>
-        <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+        <div *ngIf="!partnerId" fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
           Search by Partner
           <md-select  placeholder="Partner" [formControl]="form.controls['partner']" class="mb-2">
             <md-option *ngFor = "let name of allpartners" value="{{name.id}}">
