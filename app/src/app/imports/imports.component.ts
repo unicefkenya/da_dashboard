@@ -56,6 +56,7 @@ export class ImportsComponent implements OnInit {
   success_percentage:any;
   errorDiv:boolean;
   uploadDiv:boolean;
+  uploadButton:boolean;
   duplicateData: any;
   verifySuccess:any;
 
@@ -69,6 +70,7 @@ export class ImportsComponent implements OnInit {
 
     this.errorDiv = false;
     this.uploadDiv = false;
+    this.uploadButton = false;
   }
 
   ngOnInit(): void {
@@ -129,6 +131,7 @@ export class ImportsComponent implements OnInit {
         }else if(re.errors != 0){
           this.fileError = "Kindly correct errors in file to be able to upload";
           this.uploadDiv = false;
+          this.uploadButton = false;
           this.errorDiv = true;
 
           this.count = re.errors.length;
@@ -148,7 +151,7 @@ export class ImportsComponent implements OnInit {
 
         }
         else{
-          this.uploadDiv = true;
+          this.uploadButton = true;
           this.verifySuccess = "Successful Verification. File ready for import.";
         }
       })

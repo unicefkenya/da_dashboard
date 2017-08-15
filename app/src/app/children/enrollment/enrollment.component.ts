@@ -157,11 +157,11 @@ export class EnrollmentComponent implements OnInit {
       });
     }
 
-    fetchPartnerBoyChildTotal(id){
+    fetchPartnerBoyChildTotal(id):number{
       this.enrollmentService.fetchPartnerBoyChildTotal(id).subscribe(data => {
         this.males = data.count;
-        return this.males;
       });
+      return this.males;
     }
 
     fetchGirlChildTotal(){
@@ -170,11 +170,12 @@ export class EnrollmentComponent implements OnInit {
       });
     }
 
-    fetchPartnerGirlChildTotal(id){
+    fetchPartnerGirlChildTotal(id):number{
       this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
         this.females = data.count;
-        return this.females;
+
       });
+      return this.females;
     }
 
     searchChild(search: Search){
@@ -189,6 +190,7 @@ export class EnrollmentComponent implements OnInit {
                 .subscribe(
                   data => //console.log(data)
                   {
+
                     let res = data.results;
                     this.count = data.count;
                     let childs =[];
@@ -203,7 +205,6 @@ export class EnrollmentComponent implements OnInit {
                       this.dt.class=res[i].class_name
                       this.dt.id = res[i].id
                       childs.push(this.dt)
-
                     }
 
                     this.temp=[childs];
@@ -329,7 +330,8 @@ export class EnrollmentComponent implements OnInit {
                         data => //console.log(data)
                         {
                           let res = data.results;
-                          this.count = data.count;
+                          this.count = this.fetchPartnerBoyChildTotal(search.partner)+this.fetchPartnerGirlChildTotal(search.partner);
+                          console.log(data);
                           let childs =[];
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
@@ -588,6 +590,7 @@ export class EnrollmentComponent implements OnInit {
         this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
         this.fetchPartnerBoyChildTotal(this.partnerId);
         this.fetchPartnerGirlChildTotal(this.partnerId);
+        this.count = this.fetchPartnerBoyChildTotal(this.partnerId)+this.fetchPartnerGirlChildTotal(this.partnerId);
       }else{
         this.fetchChildren(this.offset, this.limit);
         this.fetchBoyChildTotal();

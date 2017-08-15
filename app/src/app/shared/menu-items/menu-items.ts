@@ -50,6 +50,7 @@ const MENUITEMS = [
     children: [
       {state: 'add-partner', name: 'Add Partners'},
       {state: 'view-partners', name: 'View Partners'},
+      {state: 'partner-enrollments', name: 'Partner Enrollments'},
     ]
   },
   /*{

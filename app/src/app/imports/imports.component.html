@@ -21,7 +21,7 @@
           <span *ngIf="fileError && errorDiv"><h6 style="color: red;">{{fileError}}</h6></span>
           <span *ngIf="verifySuccess && !errorDiv"><h6 style="color: green;">{{verifySuccess}}</h6></span>
           <br>
-          <div *ngIf="uploadDiv" class="mb-1" style="margin-top: 10px;">
+          <div *ngIf="uploadButton" class="mb-1" style="margin-top: 10px;">
             <button md-raised-button md-button-sm color="primary" (click)="Importupload()" type="button">Upload</button>
             <button md-raised-button md-button-sm color="warn" (click)="AbortImport()" type="button">Cancel</button>
             <button md-raised-button md-button-sm color="accent" type="button">Remove</button>

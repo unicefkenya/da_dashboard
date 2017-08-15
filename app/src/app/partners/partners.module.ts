@@ -12,11 +12,12 @@ import { PartnersRoutes } from './partners.routing';
 import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
 import { PartnersComponent } from './partners.component';
+import { PartnerenrollmentsComponent } from './enrollments/partnerenrollments.component';
 
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(PartnersRoutes), MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,ChartsModule,NgxDatatableModule],
-  declarations: [ AddPartnerComponent, ViewpartnersComponent, PartnersComponent]
+  declarations: [ AddPartnerComponent, ViewpartnersComponent, PartnersComponent, PartnerenrollmentsComponent]
 })
 
 export class PartnersModule {}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ViewpartnersService} from './viewpartners.service';
+import {EnrollmentService} from '../../children/enrollment/enrollment.service';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { Search } from '../../search';
@@ -11,7 +12,7 @@ import { Search } from '../../search';
   selector: 'app-partner',
   templateUrl: './viewpartners.component.html',
   styleUrls: ['./viewpartners.component.scss'],
-  providers: [ViewpartnersService]
+  providers: [ViewpartnersService,EnrollmentService]
 
 })
 export class ViewpartnersComponent implements OnInit {
@@ -35,17 +36,24 @@ export class ViewpartnersComponent implements OnInit {
     offset: 0
   };
   partnerId:number;
+  males:any;
+  females:any;
+
   columns = [
     { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Email' },
-    { name: 'Phonenumber' }
+    { name: 'Phonenumber' },
+    { name: 'Boys'},
+    { name: 'Girls'},
+    { name: 'Total'}
   ];
 
-  constructor( private partnersService: ViewpartnersService,private router: Router,private fb: FormBuilder) {
+  constructor( private partnersService: ViewpartnersService,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
   }
 
   //admin
   fetchpartners(offset,limit): void {
+
     this.partnersService.fetchPartners(this.page).subscribe(data => {
 
       //start and end for pagination
@@ -64,6 +72,9 @@ export class ViewpartnersComponent implements OnInit {
         this.dt.email=data[i].email
         this.dt.phone=data[i].phone
         this.dt.id = data[i].id
+        this.dt.boys = this.fetchPartnerBoyChildTotal(data[i].id);
+        this.dt.girls = this.fetchPartnerGirlChildTotal(data[i].id);
+        this.dt.total = this.dt.boys+this.dt.girls
         partner.push(this.dt)
       }
       //cache our data
@@ -85,7 +96,23 @@ export class ViewpartnersComponent implements OnInit {
     });
   }
 
+    //fetching number of boys per partner
+    fetchPartnerBoyChildTotal(id):number{
+      this.enrollmentService.fetchPartnerBoyChildTotal(id).subscribe(data => {
+        this.males = data.count;
+      });
+      return this.males;
+    }
+    //fetching number of girls per partner
+    fetchPartnerGirlChildTotal(id):number{
+      this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
+        this.females = data.count;
 
+      });
+      return this.females;
+    }
+
+    //search function
     searchSchool(search: Search){
       if(!this.submitted){
 
@@ -166,7 +193,6 @@ export class ViewpartnersComponent implements OnInit {
     });
 
     this.fetchpartners(this.offset, this.limit);
-
   }
 
 }
