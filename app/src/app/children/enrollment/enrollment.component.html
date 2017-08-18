@@ -35,20 +35,33 @@
     </md-card-content>
   </md-card>
   <div fxLayout="row"  fxLayoutWrap="wrap">
-    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <div fxFlex.gt-sm="25%" fxFlex.gt-xs="50" fxFlex="100">
       <md-card class="card-widget md-teal">
         <div md-card-widget>
           <div md-card-float-icon>
             <md-icon>local_offer</md-icon>
           </div>
           <div class="pl-0">
-            <h5 md-card-widget-title>{{ count }}</h5>
-            <p>Total Enrollments</p>
+            <h5 md-card-widget-title>{{ allChildren }}</h5>
+            <p>Total Children</p>
           </div>
         </div>
       </md-card>
     </div>
-    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <div fxFlex.gt-sm="25%" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-purple">
+        <div md-card-widget>
+          <div md-card-float-icon>
+            <md-icon>local_offer</md-icon>
+          </div>
+          <div class="pl-0">
+            <h5 md-card-widget-title>{{ count }}</h5>
+            <p>Total New Enrollments</p>
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <div fxFlex.gt-sm="25%" fxFlex.gt-xs="50" fxFlex="100">
       <md-card class="card-widget md-indigo">
         <div md-card-widget>
           <div md-card-float-icon>
@@ -61,7 +74,7 @@
         </div>
       </md-card>
     </div>
-    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <div fxFlex.gt-sm="25%" fxFlex.gt-xs="50" fxFlex="100">
       <md-card class="card-widget md-red">
         <div md-card-widget>
           <div md-card-float-icon>

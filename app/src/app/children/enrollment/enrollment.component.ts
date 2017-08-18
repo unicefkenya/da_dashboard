@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { EnrollmentService } from './enrollment.service';
 import {ViewpartnersService} from '../../partners/viewpartners/viewpartners.service'
@@ -15,6 +15,7 @@ import { Search } from '../../search';
 
 export class EnrollmentComponent implements OnInit {
 
+
     public form: FormGroup;
     public submitted: boolean =  true;
     public search: Search;
@@ -27,7 +28,7 @@ export class EnrollmentComponent implements OnInit {
     selected: any[];
     rows = [];
     temp = [];
-    count: number = 0;
+    //count: number = 0;
     offset: number = 0;
     limit: number = 100;
     page:number=1
@@ -37,7 +38,8 @@ export class EnrollmentComponent implements OnInit {
     males:any;
     females:any;
     admin:any;
-
+    allChildren:number;
+    count:number;
     partnerId:number;
 
     columns = [
@@ -69,6 +71,14 @@ export class EnrollmentComponent implements OnInit {
 
   }
   //admin
+  fetchAllChildren():void{
+    this.enrollmentService.fetchAllChildren().subscribe(data =>{
+      this.allChildren = data.count;
+      //console.log(data, "All children");
+    })
+  }
+
+
   fetchChildren(offset,limit): void {
     this.enrollmentService.fetchChildren(this.page).subscribe(data => {
       //start and end for pagination
@@ -111,6 +121,15 @@ export class EnrollmentComponent implements OnInit {
 
 
     //individual partners
+    fetchAllPartnerChildren(id):void{
+      this.enrollmentService.fetchAllPartnerChildren(id).subscribe(data =>{
+        this.allChildren = data.count;
+        //console.log(this.count);
+        //console.log(this.enrollmentPercentage);
+        //console.log(data, "All children");
+      })
+    }
+
     fetchPartnerChildren(id,offset,limit): void {
       this.enrollmentService.fetchPartnerChildren(id,this.page).subscribe(data => {
         //start and end for pagination
@@ -322,16 +341,15 @@ export class EnrollmentComponent implements OnInit {
                 //search by partner
                 else if(search.partner){
                   //showing total data of enrollment
-                  this.fetchPartnerGirlChildTotal(search.partner);
-                  this.fetchPartnerBoyChildTotal(search.partner);
-
+                  let g = this.fetchPartnerGirlChildTotal(search.partner);
+                  let b = this.fetchPartnerBoyChildTotal(search.partner);
                   this.enrollmentService.searchAPartnerData(search.partner)
                       .subscribe(
                         data => //console.log(data)
                         {
                           let res = data.results;
-                          this.count = this.fetchPartnerBoyChildTotal(search.partner)+this.fetchPartnerGirlChildTotal(search.partner);
-                          console.log(data);
+                         this.count = this.fetchPartnerGirlChildTotal(search.partner)+this.fetchPartnerBoyChildTotal(search.partner) ;
+                         //console.log(this.count, "jjjk");
                           let childs =[];
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
@@ -349,7 +367,7 @@ export class EnrollmentComponent implements OnInit {
 
                           this.temp=[childs];
                           this.children=childs;
-                          console.log(childs);
+                          //console.log(childs);
                         },
                         error =>{
                           this.empty = "This field is required";
@@ -591,10 +609,12 @@ export class EnrollmentComponent implements OnInit {
         this.fetchPartnerBoyChildTotal(this.partnerId);
         this.fetchPartnerGirlChildTotal(this.partnerId);
         this.count = this.fetchPartnerBoyChildTotal(this.partnerId)+this.fetchPartnerGirlChildTotal(this.partnerId);
+        this.fetchAllPartnerChildren(this.partnerId);
       }else{
         this.fetchChildren(this.offset, this.limit);
         this.fetchBoyChildTotal();
         this.fetchGirlChildTotal();
+        this.fetchAllChildren();
       }
 
     }

@@ -9,6 +9,18 @@ export class EnrollmentService {
   private baseApiUrl = BaseUrl.base_api_url;
   constructor( private http: Http){}
 
+//all
+  fetchAllChildren(){
+    return this.http.get(this.baseApiUrl+'api/students')
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  fetchAllPartnerChildren(id){
+    return this.http.get(this.baseApiUrl+'api/students?partner='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  //enrollments
   fetchChildren(page){
     return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&page='+page)
       .map((response: Response) => response.json())

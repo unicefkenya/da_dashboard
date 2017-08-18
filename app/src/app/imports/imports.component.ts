@@ -59,6 +59,7 @@ export class ImportsComponent implements OnInit {
   uploadButton:boolean;
   duplicateData: any;
   verifySuccess:any;
+  loading: boolean;
 
   constructor(
     private _importService: ImportsService,private http:Http,
@@ -74,7 +75,7 @@ export class ImportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loading = false;
   }
 
   AbortImport(){
@@ -89,46 +90,53 @@ export class ImportsComponent implements OnInit {
 
 
     Importupload(event){
+      this.loading = true;
       let myfile = this.myfile.nativeElement.files[0];
-      console.log(myfile);
+      //console.log(myfile);
 
       let fd=new FormData();
       fd.append("file",myfile);
-      console.log(fd);
+      //console.log(fd);
       this._importService.sendImportStudentsData(fd).subscribe(data=>
       {
         let res=data as any
         this.uploadDiv = true;
         this.errorDiv = false;
-        this.total_fails = res.total_fails;
-        this.total_success = res.total_success;
+        //interchanged the two
+        this.total_fails = res.total_success;
+        this.total_success = res.total_fails;
         this.success_percentage =res.success_percentage;
-        console.log(res);
+        this.verifySuccess = "File Successfully Imported";
+        this.loading = false;
+        //console.log(res);
         //let message = JSON.parse(data[0].total_fails);
         //console.log("fails", message);
 
         //this.success = "Data Imported Successfully";
       },error=>{
-        console.log(error)
+        //console.log(error)
         this.fail = "Data Not Imported: "+error
       })
     }
 
 
     Verifyupload(event){
+      this.loading = true;
       let myfile = this.myfile.nativeElement.files[0];
-      console.log(myfile);
+      //console.log(myfile);
 
       let fd=new FormData();
       fd.append("file",myfile);
-      console.log(fd);
+      //console.log(fd);
       this._importService.sendVerifyStudentsData(fd)
       .subscribe((res)=>{
         //let data = JSON.parse(res);
         let re=res as any
         if(re.errors == 0 && re.total_success == 0 && re.success_percentage == "0%"){
+          this.loading = false;
           this.duplicateData = "Data in file already imported";
         }else if(re.errors != 0){
+          this.loading = false;
           this.fileError = "Kindly correct errors in file to be able to upload";
           this.uploadDiv = false;
           this.uploadButton = false;
@@ -140,7 +148,7 @@ export class ImportsComponent implements OnInit {
           let rows = [];
           for (let i = 0; i < re.errors.length; i++){
             let errmessage = re.errors[i].error_message;
-            console.log(re.errors[i].error_message);
+            //console.log(re.errors[i].error_message);
             this.dt = {}
             this.dt.rownumber = re.errors[i].row_number
             this.dt.error=this.errorMessage(re.errors[i].error_message)
@@ -152,6 +160,7 @@ export class ImportsComponent implements OnInit {
         }
         else{
           this.uploadButton = true;
+          this.loading = false;
           this.verifySuccess = "Successful Verification. File ready for import.";
         }
       })

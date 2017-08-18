@@ -1,4 +1,12 @@
-<md-card>
+<div *ngIf="loading == true" style="margin: auto;width: 50%;padding: 170px;">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+  Loading. Please be patient.
+</div>
+<md-card *ngIf="loading == false">
   <md-card-title>Data File upload</md-card-title>
   <md-card-subtitle>Upload excel files in the correct format</md-card-subtitle>
 
@@ -17,8 +25,8 @@
           <br><br>
           You need to <b>Verify</b> the data before importing.
           <button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="Verifyupload()">Verify</button>
-          <span *ngIf="duplicateData &&!errorDiv"><h6 style="color: red;">{{duplicateData}}</h6></span>
-          <span *ngIf="fileError && errorDiv"><h6 style="color: red;">{{fileError}}</h6></span>
+          <span *ngIf="duplicateData &&!errorDiv && loading==false"><h6 style="color: red;">{{duplicateData}}</h6></span>
+          <span *ngIf="fileError && errorDiv && loading==false"><h6 style="color: red;">{{fileError}}</h6></span>
           <span *ngIf="verifySuccess && !errorDiv"><h6 style="color: green;">{{verifySuccess}}</h6></span>
           <br>
           <div *ngIf="uploadButton" class="mb-1" style="margin-top: 10px;">
