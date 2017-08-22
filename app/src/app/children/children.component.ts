@@ -39,6 +39,7 @@ export class ChildrenComponent implements OnInit {
   };
 
   partnerId:number;
+  schoolId:number;
 
   columns = [
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
@@ -54,6 +55,7 @@ export class ChildrenComponent implements OnInit {
   //admin
   fetchChildren(offset,limit): void {
     this.childrenService.fetchChildren(this.page).subscribe(data => {
+
       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
@@ -132,6 +134,49 @@ export class ChildrenComponent implements OnInit {
 
     });
   }
+
+  //school
+  fetchSchoolChildren(id,offset,limit): void {
+    this.childrenService.fetchSchoolChildren(id,this.page).subscribe(data => {
+      console.log(data);
+      //start and end for pagination
+      const start = offset * limit;
+      const end = start + limit;
+       this.count =data.count
+      data = data.results;
+      this.loading = false;
+
+      let childs =[]
+      let rows=[]
+      //  this.count = data.length;
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        this.dt.name=data[i].student_name
+        this.dt.gender=data[i].gender
+        this.dt.school = data[i].school_name
+        this.dt.class=data[i].class_name
+        this.dt.id = data[i].id
+        childs.push(this.dt)
+      }
+      //cache our data
+      //this.temp = childs;
+      let row=[...rows]
+      this.temp=[...childs];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = childs[j];
+        j++;
+      }
+      //this.temp=row
+      this.children=row;
+
+      this.selected = [];
+
+      //console.log('Page Results',this.children,this.count, start, end);
+
+    });
+  }
+
 
 
       searchSchool(search: Search){
@@ -255,10 +300,14 @@ export class ChildrenComponent implements OnInit {
     });
 
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     let partnerName = localStorage.getItem("welcomeName");
     if(this.partnerId && partnerName){
       this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
-    }else{
+    }else if(this.schoolId && partnerName){
+      this.fetchSchoolChildren(this.schoolId,this.offset, this.limit);
+    }
+    else{
       this.fetchChildren(this.offset, this.limit);
     }
 

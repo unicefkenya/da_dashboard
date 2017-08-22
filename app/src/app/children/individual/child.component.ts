@@ -120,6 +120,7 @@ export class ChildComponent implements OnInit{
     this.childService.fetchChild(id).subscribe(
       (data)  =>
       {
+        
         this.firstname = data.fstname;
         this.midname = data.midname;
         this.lastname = data.lstname;

@@ -28,6 +28,12 @@ export class ChildrenService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  fetchSchoolChildren(id,page){
+    return this.http.get(this.baseApiUrl+'api/students?page='+page+'&school='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   searchData(name){
     return this.http.get(this.baseApiUrl+'/api/students?name='+name)
     .map((response: Response) => response.json())

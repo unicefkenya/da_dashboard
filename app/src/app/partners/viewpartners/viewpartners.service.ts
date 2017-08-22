@@ -36,4 +36,16 @@ export class ViewpartnersService {
   }
 
 
+  fetchPartnerBoyChildTotal(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&gender=M&partner='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  fetchPartnerGirlChildTotal(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&gender=F&partner='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 }

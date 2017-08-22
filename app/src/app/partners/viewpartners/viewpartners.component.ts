@@ -38,6 +38,7 @@ export class ViewpartnersComponent implements OnInit {
   partnerId:number;
   males:any;
   females:any;
+  id:number;
 
   columns = [
     { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
@@ -50,7 +51,25 @@ export class ViewpartnersComponent implements OnInit {
 
   constructor( private partnersService: ViewpartnersService,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
   }
+dx:any;
+  //fetching number of boys per partner
+  fetchPartnerBoyChildTotal(id){
+    let array = []
+    this.partnersService.fetchPartnerBoyChildTotal(id).subscribe(data => {
+      //this.males = data.count;
+      this.dx = data.count
+      array.push(this.dx)
+    });
+    return array
+  }
 
+  //fetching number of girls per partner
+  fetchPartnerGirlChildTotal(id):any{
+    this.partnersService.fetchPartnerGirlChildTotal(id).subscribe(data => {
+      return data.count;
+    });
+  }
+a:any;
   //admin
   fetchpartners(offset,limit): void {
 
@@ -67,13 +86,17 @@ export class ViewpartnersComponent implements OnInit {
       let rows=[]
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
+        this.id = data[i].id
+      this.a = this.fetchPartnerBoyChildTotal(this.id);
+        let b = this.fetchPartnerGirlChildTotal(this.id);
+        console.log(this.a[0])
         this.dt = {}
         this.dt.organization=data[i].name
         this.dt.email=data[i].email
         this.dt.phone=data[i].phone
         this.dt.id = data[i].id
-        this.dt.boys = this.fetchPartnerBoyChildTotal(data[i].id);
-        this.dt.girls = this.fetchPartnerGirlChildTotal(data[i].id);
+        this.dt.boys = 1
+        this.dt.girls = b
         this.dt.total = this.dt.boys+this.dt.girls
         partner.push(this.dt)
       }
@@ -96,21 +119,7 @@ export class ViewpartnersComponent implements OnInit {
     });
   }
 
-    //fetching number of boys per partner
-    fetchPartnerBoyChildTotal(id):number{
-      this.enrollmentService.fetchPartnerBoyChildTotal(id).subscribe(data => {
-        this.males = data.count;
-      });
-      return this.males;
-    }
-    //fetching number of girls per partner
-    fetchPartnerGirlChildTotal(id):number{
-      this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
-        this.females = data.count;
 
-      });
-      return this.females;
-    }
 
     //search function
     searchSchool(search: Search){
@@ -127,11 +136,14 @@ export class ViewpartnersComponent implements OnInit {
                 let rows=[]
                 //  this.count = data.length;
                 for (let i = 0;i < data.length;i++){
+                  this.id = data[i].id
+
                   this.dt = {}
                   this.dt.organization=data[i].name
                   this.dt.email=data[i].email
                   this.dt.phone=data[i].phone
                   this.dt.id = data[i].id
+                  this.dt.total = this.dt.boys+this.dt.girls
                   partner.push(this.dt)
                 }
 
