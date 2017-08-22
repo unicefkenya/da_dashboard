@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { AuthGuard } from '../authguard/auth.guard';
 
 import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
@@ -16,7 +17,8 @@ export const PartnersRoutes: Routes = [
       component: AddPartnerComponent
     }, {
       path: 'partner/:id',
-      component: PartnersComponent
+      component: PartnersComponent,
+      canActivate: [AuthGuard]
     }
   ],
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { ViewTeachersService } from './viewteachers.service';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
@@ -13,7 +13,7 @@ import { Search } from '../../search';
 })
 export class ViewTeachersComponent implements OnInit {
 
-  constructor(private teachersService: ViewTeachersService,private router: Router,private fb: FormBuilder) {  }
+  constructor(private teachersService: ViewTeachersService,private router: Router,private activateRoute:ActivatedRoute,private fb: FormBuilder) {  }
 
   public form: FormGroup;
   public submitted: boolean =  true;
@@ -143,9 +143,20 @@ export class ViewTeachersComponent implements OnInit {
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('teacherId', this.selected[0].id);
-   console.log(this.selected[0].id);
+   //console.log(this.selected[0].id);
+   
    this.getTeacherId(this.selected[0].id);
    //this.router.navigate(['/teacher', this.selected[0].id]);
+   }
+private sub:any;
+routeId:number;
+   private id(){
+     this.sub = this.activateRoute.params.subscribe(params => {
+
+       this.routeId = +params[this.selected[0].id]; // (+) converts string 'id' to a number
+
+       // In a real app: dispatch action to load the details here.
+    });
    }
 
    private getTeacherId(id){
