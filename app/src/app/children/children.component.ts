@@ -215,7 +215,39 @@ export class ChildrenComponent implements OnInit {
                       this.fail = "Failed to save data";
                     }
                   );
-              }else{
+              }
+              else if(this.schoolId){
+                this.childrenService.searchSchoolData(this.schoolId, search.search)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        let res = data.results;
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.temp=[childs];
+                        this.children=childs;
+                        console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+                }
+              else{
                 this.childrenService.searchData(search.search)
                     .subscribe(
                       data => //console.log(data)

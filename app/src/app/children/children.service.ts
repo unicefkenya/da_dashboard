@@ -45,4 +45,9 @@ export class ChildrenService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+  searchSchoolData(id,name){
+    return this.http.get(this.baseApiUrl+'/api/students?name='+name+'&school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }
