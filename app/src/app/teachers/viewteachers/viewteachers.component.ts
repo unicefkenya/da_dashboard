@@ -58,12 +58,14 @@ export class ViewTeachersComponent implements OnInit {
       let items = [];
       let rows=[];
       for (let i = 0; i < data.length; i++){
+
         this.tmp = {}
         this.tmp.name = data[i].name
         this.tmp.phone_no = data[i].phone_no
         this.tmp.gender = data[i].gender
         this.tmp.qualifications = data[i].qualifications
         this.tmp.teachertype = data[i].teacher_type
+        this.tmp.id = data[i].id
         items.push(this.tmp);
       }
 
@@ -103,6 +105,7 @@ export class ViewTeachersComponent implements OnInit {
                         this.tmp.gender = data[i].gender
                         this.tmp.qualifications = data[i].qualifications
                         this.tmp.teachertype = data[i].teacher_type
+                        this.tmp.id = data[i].id
                         items.push(this.tmp);
                       }
 
@@ -140,6 +143,7 @@ export class ViewTeachersComponent implements OnInit {
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('teacherId', this.selected[0].id);
+   console.log(this.selected[0].id);
    this.getTeacherId(this.selected[0].id);
    //this.router.navigate(['/teacher', this.selected[0].id]);
    }
