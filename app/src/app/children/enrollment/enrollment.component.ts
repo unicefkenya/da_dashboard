@@ -203,17 +203,9 @@ export class EnrollmentComponent implements OnInit {
         }
         //cache our data
         //this.temp = childs;
-        let row=[...rows]
-        this.temp=[...childs];
-        let j=0
-        for (let i = start; i < end; i++) {
-          row[i] = childs[j];
-          j++;
-        }
-        //this.temp=row
-        this.children=row;
 
-        this.selected = [];
+        //this.temp=row
+        this.children=childs;
 
         //console.log('Page Results',this.children,this.count, start, end);
 
@@ -273,7 +265,7 @@ export class EnrollmentComponent implements OnInit {
               .subscribe(
                 data => //console.log(data)
                 {
-
+                  //console.log(data);
                   let res = data.results;
                   this.count = data.count;
                   let childs =[];
@@ -290,9 +282,9 @@ export class EnrollmentComponent implements OnInit {
                     childs.push(this.dt)
                   }
 
-                  this.temp=[childs];
+                  //this.temp=[childs];
                   this.children=childs;
-                  console.log(childs);
+                  //console.log(childs);
                 },
                 error =>{
                   this.empty = "This field is required";
@@ -324,7 +316,7 @@ export class EnrollmentComponent implements OnInit {
 
                       this.temp=[childs];
                       this.children=childs;
-                      console.log(childs);
+                    //  console.log(childs);
                     },
                     error =>{
                       this.empty = "This field is required";
@@ -357,7 +349,7 @@ export class EnrollmentComponent implements OnInit {
 
                       this.temp=[childs];
                       this.children=childs;
-                      console.log(childs);
+                    //  console.log(childs);
                     },
                     error =>{
                       this.empty = "This field is required";
@@ -369,7 +361,7 @@ export class EnrollmentComponent implements OnInit {
               this.empty = "Kindly select a filtering field";
             }
         }
-        if(this.partnerId){
+        else if(this.partnerId){
             //search by name
             if(search.search){
               this.enrollmentService.searchPartnerData(this.partnerId, search.search)
@@ -395,7 +387,7 @@ export class EnrollmentComponent implements OnInit {
 
                     this.temp=[childs];
                     this.children=childs;
-                    console.log(childs);
+                    ///console.log(childs);
                   },
                   error =>{
                     this.empty = "This field is required";
@@ -427,7 +419,7 @@ export class EnrollmentComponent implements OnInit {
 
                         this.temp=[childs];
                         this.children=childs;
-                        console.log(childs);
+                        //console.log(childs);
                       },
                       error =>{
                         this.empty = "This field is required";
@@ -460,7 +452,7 @@ export class EnrollmentComponent implements OnInit {
 
                         this.temp=[childs];
                         this.children=childs;
-                        console.log(childs);
+                        //console.log(childs);
                       },
                       error =>{
                         this.empty = "This field is required";
@@ -497,7 +489,7 @@ export class EnrollmentComponent implements OnInit {
 
                       this.temp=[childs];
                       this.children=childs;
-                      console.log(childs);
+                      //console.log(childs);
                     },
                     error =>{
                       this.empty = "This field is required";
@@ -566,7 +558,7 @@ export class EnrollmentComponent implements OnInit {
 
                           this.temp=[childs];
                           this.children=childs;
-                          console.log(childs);
+                        //  console.log(childs);
                         },
                         error =>{
                           this.empty = "This field is required";
@@ -598,7 +590,7 @@ export class EnrollmentComponent implements OnInit {
 
                           this.temp=[childs];
                           this.children=childs;
-                          console.log(childs);
+                        //  console.log(childs);
                         },
                         error =>{
                           this.empty = "This field is required";
@@ -634,7 +626,7 @@ export class EnrollmentComponent implements OnInit {
 
                           this.temp=[childs];
                           this.children=childs;
-                          console.log(childs);
+                          //console.log(childs);
                         },
                         error =>{
                           this.empty = "This field is required";
@@ -670,7 +662,7 @@ export class EnrollmentComponent implements OnInit {
 
                           this.temp=[childs];
                           this.children=childs;
-                          console.log(childs);
+                          //console.log(childs);
                         },
                         error =>{
                           this.empty = "This field is required";
@@ -702,7 +694,7 @@ export class EnrollmentComponent implements OnInit {
 
                           this.temp=[childs];
                           this.children=childs;
-                          console.log(childs);
+                        //  console.log(childs);
                         },
                         error =>{
                           this.empty = "This field is required";
@@ -746,7 +738,7 @@ export class EnrollmentComponent implements OnInit {
         // Whenever the filter changes, always go back to the first page
         this.table.offset = this.page;
 
-      console.log('Filter event', event);
+      //console.log('Filter event', event);
     }
 
 
@@ -780,6 +772,7 @@ export class EnrollmentComponent implements OnInit {
         this.fetchAllPartnerChildren(this.partnerId);
       }
       else if(this.schoolId && partnerName){
+        console.log('school yaah')
         this.fetchSchoolChildren(this.schoolId,this.offset, this.limit);
         this.fetchSchoolBoyChildTotal(this.schoolId);
         this.fetchSchoolGirlChildTotal(this.schoolId);

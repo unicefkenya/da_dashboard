@@ -85,12 +85,12 @@ export class EnrollmentService {
   }
 
   searchPartnerData(id,name){
-    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name+'&partner='+id)
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?name='+name+'&partner='+id+'&is_oosc=true')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   searchSchoolData(id,name){
-    return this.http.get(this.baseApiUrl+'/api/students?enrolls?is_oosc=true&name='+name+'&school='+id)
+    return this.http.get(this.baseApiUrl+'/api/students?enrolls?name='+name+'&school='+id+'&is_oosc=true')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

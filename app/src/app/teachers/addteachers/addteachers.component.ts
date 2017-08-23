@@ -4,18 +4,18 @@ import { Router } from '@angular/router';
 
 import { TeachersRoutes } from './../teachers.routing';
 import {AppModule} from '../../app.module';
-import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormArray, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
 import { TeacherRegistration } from './teacher';
 import { Response } from '@angular/http';
 import {AddTeacherService} from './addteacher.service';
 
-/*
-@Directive({
-  selector: '[focus]'
-})*/
-
+export interface Subjects {
+  name: string;
+  teaching: boolean;
+  subjects?: Subjects[];
+}
 
 @Component({
   selector: 'add-school',
@@ -28,6 +28,31 @@ import {AddTeacherService} from './addteacher.service';
 
 
 export class AddTeachersComponent implements OnInit {
+  subjects: Subjects[] = [{
+    name: 'Subjects',
+    teaching: false,
+    subjects: [{
+      name: 'Mathematics',
+      teaching: false
+    }, {
+      name: 'English',
+      teaching: false
+    }, {
+      name: 'Kiswahili',
+      teaching: false
+    },{
+      name: 'Science',
+      teaching: false
+    },{
+      name: 'Social Studies',
+      teaching: false
+    },{
+      name: 'C.R.E',
+      teaching: false
+    }]
+
+  }];
+
   editing = {};
   rows = [];
   tr:any;
@@ -44,15 +69,9 @@ export class AddTeachersComponent implements OnInit {
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
   public form: FormGroup ;
-  public subjects = [
-    {subject:'Mathematics', value:'1'},
-    {subject:'English', value:'2'},
-    {subject:'Kiswahili', value:'3'},
-    {subject:'Science', value:'4'},
-    {subject:'Social Studies', value:'5'},
-    {subject:'C.R.E', value:'6'}
-  ]
 
+
+  isChecked: boolean = false;
 
   constructor(
     private _teacherRegistrationService: AddTeacherService,
@@ -98,7 +117,7 @@ export class AddTeachersComponent implements OnInit {
       bom_no: [null],
       dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
-
+      subject:this.fb.array([])
     });
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
@@ -109,18 +128,7 @@ export class AddTeachersComponent implements OnInit {
     }
 
   }
-customForm:any;
-  onCheckboxChange(event) {
-    //We want to get back what the name of the checkbox represents, so I'm intercepting the event and
-    //manually changing the value from true to the name of what is being checked.
 
-    //check if the value is true first, if it is then change it to the name of the value
-    //this way when it's set to false it will skip over this and make it false, thus unchecking
-    //the box
-    if(this.customForm.get(event.target.id).value) {
-        this.customForm.patchValue({[event.target.id] : event.target.id}); //make sure to have the square brackets
-    }
-}
 
   onSubmit(registerTeacher: TeacherRegistration, form){
     var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
@@ -216,4 +224,29 @@ customForm:any;
     })
   }
 
+
+    allComplete(subjects: Subjects): boolean {
+      let subtasks = subjects.subjects;
+      return subtasks.every(t => t.teaching) ? true : subtasks.every(t => !t.teaching) ? false : subjects.teaching;
+    }
+
+    someComplete(subjects: Subjects[]): boolean {
+      const numComplete = subjects.filter(t => t.teaching).length;
+      return numComplete > 0 && numComplete < subjects.length;
+    }
+
+    setAllCompleted(subjects: Subjects[], teaching: boolean) {
+      subjects.forEach(t => t.teaching = teaching);
+    }
+/*
+    onChange(){
+      const subjectFormArray = <FormArray>this.form.controls.subject;
+      /if(isChecked){
+        subjectFormArray.push(new FormControl(thissubject));
+      }else{
+        let index = subjectFormArray.controls.findIndex(x => x.value ==thissubject)
+        subjectFormArray.removeAt(index);
+      }
+    }
+    */
 }

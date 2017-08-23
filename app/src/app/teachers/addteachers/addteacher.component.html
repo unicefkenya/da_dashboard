@@ -109,17 +109,21 @@
               </div>
               <div fxLayout = "row">
                 <div fxLayout="common" class="mb-1 ml-xs mr-xs" style="width:100%">
-                  <div class="form-group" *ngFor="let subject of subjects"> <!--I iterate here to list all my checkboxes -->
-                    <label class="control-label" for="{{sibject.subject}}"> {{subject.subject}} </label>
-                        <div class="checkbox">
-                          <input
-                              type="checkbox"
-                              id="{{subject.value}}"
-                              formControlName="{{parameter.Title}}"
-                              (change)="onCheckboxChange($event)"
-                              > <!-- ^^THIS^^ is the important part -->
-                         </div>
-                  </div>
+                  <li *ngFor="let subject of subjects">
+                    <md-checkbox [FormControl]="form.controls['subject']"
+                                 [checked]="allComplete(subjects)"
+                                 [indeterminate]="someComplete(subjects.subjects)"
+                                 (change)="setAllCompleted(subjects.subhects, $event.checked)">
+                      <h6 class="ma-0">{{subjects.name}}</h6>
+                    </md-checkbox>
+                    <ul class="ml-3">
+                      <li *ngFor="let subjects of subjects.subjects">
+                        <md-checkbox [(ngModel)]="subjects.teaching">
+                          {{subjects.name}}
+                        </md-checkbox>
+                      </li>
+                    </ul>
+                  </li>
                 </div>
               </div>
               <hr>
