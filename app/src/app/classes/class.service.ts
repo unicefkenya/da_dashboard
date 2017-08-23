@@ -27,14 +27,14 @@ export class ClassService {
   }
 
 
-  getClassses(){
+  getClassses(id){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.baseApiUrl+'api/streams',options)
+    return this.http.get(this.baseApiUrl+'api/streams?school='+id,options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

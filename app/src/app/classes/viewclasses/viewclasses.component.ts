@@ -14,6 +14,7 @@ export class ViewClassesComponent implements OnInit{
 
   loading:boolean;
   dt:any;
+  schoolId:number;
   classes: any[] = this.rows;
   selected: any[];
   rows = [];
@@ -32,8 +33,8 @@ export class ViewClassesComponent implements OnInit{
   constructor( private classService: ClassService,private router: Router) {
   }
 
-  getClassses(offset,limit): void {
-    this.classService.getClassses().subscribe(data => {
+  getClassses(id,offset,limit): void {
+    this.classService.getClassses(id).subscribe(data => {
 
       data = data.results;
       this.loading = false;
@@ -104,7 +105,8 @@ export class ViewClassesComponent implements OnInit{
 */
   ngOnInit(): void {
     this.loading = true;
-    this.getClassses(this.offset, this.limit);
+    this.schoolId = JSON.parse(localStorage.getItem('schoolId'));
+    this.getClassses(this.schoolId,this.offset, this.limit);
   }
 
 }

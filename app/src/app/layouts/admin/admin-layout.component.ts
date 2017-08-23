@@ -57,13 +57,21 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       //console.log(data.info.profile.school);
       localStorage.setItem("user-type", data.type);
       //localStorage.setItem("school", data.info.profile.school);
+      console.log(data.type,'sdsd');
       this.userType =  data.type;
 
     });
     this.welcomeName = localStorage.getItem("welcomeName");
+
   }
 
-
+  schoolProfile(){
+    console.log('onyesha bana');
+    if(this.userType == 'teacher'){
+      let schoolId = localStorage.getItem("schoolId");
+      this.router.navigate(['/school', schoolId]);
+    }
+  }
   ngOnDestroy() {
     this._router.unsubscribe();
     this.logout();
