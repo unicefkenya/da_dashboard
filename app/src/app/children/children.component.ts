@@ -177,8 +177,6 @@ export class ChildrenComponent implements OnInit {
     });
   }
 
-
-
       searchSchool(search: Search){
         if(!this.submitted){
 
@@ -312,7 +310,6 @@ export class ChildrenComponent implements OnInit {
 
     console.log('Filter event', event);
   }
-
 
 
   onPage(event) {
