@@ -43,20 +43,20 @@
       <md-nav-list class="navigation accordion">
         <md-list-item class="accordion-link" *ngFor="let menuitem of menuItems.getadmin()" group="{{menuitem.state}}">
           <!--Link-->
-          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.type === 'link' && menuitem.usertype === userType" [routerLink]="['/', menuitem.state]">
+          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.type === 'link' && userDashboard==='partner'" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
-          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.access === 'all' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
+          <a class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='admin' && menuitem.access === 'all' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
 
-          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType && menuitem.access != 'all' && menuitem.type === 'link'" [routerLink]="['/school', menuitem.id]">
+          <a  class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilitylink === userDashboard && menuitem.usertype != userDashboard && menuitem.type === 'link'" [routerLink]="['/school', menuitem.id]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>

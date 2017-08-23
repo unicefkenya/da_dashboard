@@ -46,7 +46,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     //gets the cuurrently saved user
     this.currentUser = JSON.parse(localStorage.getItem('user'));
   }
-
+userDashboard:any;
   ngOnInit(): void {
     this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
       this.url = event.url;
@@ -57,20 +57,19 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       //console.log(data.info.profile.school);
       localStorage.setItem("user-type", data.type);
       //localStorage.setItem("school", data.info.profile.school);
-      console.log(data.type,'sdsd');
       this.userType =  data.type;
 
     });
     this.welcomeName = localStorage.getItem("welcomeName");
+    this.userDashboard = localStorage.getItem("user-type");
 
   }
 
   schoolProfile(){
     console.log('onyesha bana');
-    if(this.userType == 'teacher'){
       let schoolId = localStorage.getItem("schoolId");
       this.router.navigate(['/school', schoolId]);
-    }
+
   }
   ngOnDestroy() {
     this._router.unsubscribe();
@@ -85,6 +84,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+openMe(){
+  console.log('clicked');
+}
 
   logout(){
     localStorage.clear();
