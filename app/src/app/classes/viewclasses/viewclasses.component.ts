@@ -41,7 +41,7 @@ export class ViewClassesComponent implements OnInit{
       let allClasses =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.name=data[i].class_name
+        this.dt.name="Class "+data[i].class_name
         this.dt.id = data[i].id
         allClasses.push(this.dt)
       }

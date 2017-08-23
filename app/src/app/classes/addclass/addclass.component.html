@@ -10,8 +10,8 @@
         <md-tab>
           <template md-tab-label>ADD CLASS</template>
           <md-card-content>
-            <small style="color: green;">{{success}}</small>
-            <small style="color: red;">{{fail}}</small>
+            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
@@ -25,9 +25,9 @@
               </div>
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Enter Stream name (required)" [formControl]="form.controls['class_name']"  type="text"></md-input>
+                  <md-input  placeholder="Enter Stream name (optional)" placeholder="Example: Input 1 East but if no stream input the number only i.e 1 (required) " [formControl]="form.controls['class_name']"  type="text"></md-input>
 
-                  <small *ngIf="form.controls['class_name'].hasError('required') && form.controls['class_name'].touched" class="md-text-warn">Enter Class name (e.g. 7R)</small>
+                  <small *ngIf="form.controls['class_name'].hasError('required') && form.controls['class_name'].touched" class="md-text-warn">Enter Class name (e.g. 1 East or just 1)</small>
                 </div>
               </div>
               <!-- <hr> -->

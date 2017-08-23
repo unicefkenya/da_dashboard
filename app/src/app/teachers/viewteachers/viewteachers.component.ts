@@ -144,7 +144,7 @@ export class ViewTeachersComponent implements OnInit {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('teacherId', this.selected[0].id);
    //console.log(this.selected[0].id);
-   
+
    this.getTeacherId(this.selected[0].id);
    //this.router.navigate(['/teacher', this.selected[0].id]);
    }

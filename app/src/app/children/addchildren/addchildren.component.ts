@@ -18,7 +18,7 @@ import {AddChildrenService} from './addchildren.service';
 export class AddChildrenComponent implements OnInit {
   editing = {};
   rows = [];
-
+  cl:any;
   public currentDate = new Date();
 
   constructor(
@@ -70,10 +70,11 @@ export class AddChildrenComponent implements OnInit {
   public submitted: boolean =  true;
   public school: ChildRegistration;
   public form: FormGroup;
-
+  schoolId:number;
   ngOnInit(){
     //this.onSubmit;
-    this.getSchoolClasses();
+    this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
+    this.getSchoolClasses(this.schoolId);
   }
 
   onSubmit(registerChild: ChildRegistration){
@@ -119,7 +120,7 @@ export class AddChildrenComponent implements OnInit {
           .subscribe(
             data => //console.log(data)
             {
-              console.log("Added Child Successfully"),
+              //console.log("Added Child Successfully"),
               this.success = "Added Child Successfully";
               this.form.reset();
             },
@@ -128,7 +129,7 @@ export class AddChildrenComponent implements OnInit {
               this.fail = "Failed to save data";
             }
           );
-          console.log("Added Child Successfully");
+          //console.log("Added Child Successfully");
           this.success = "Added Child Successfully";
 
         }
@@ -138,20 +139,22 @@ export class AddChildrenComponent implements OnInit {
     this.form.reset();
   }
 
-  getSchoolClasses(){
+  getSchoolClasses(id){
 
-    this._childRegistrationService.getClass()
+    this._childRegistrationService.getClass(id)
       .subscribe(
         (res)=>{
+          res = res.results
           const className = [];
-          for (let class_name in res){
-            className.push(res[class_name]);
+          for (let i = 0;i < res.length;i++){
+            this.cl = {}
+            this.cl.class_name=res[i].class_name
+            this.cl.id=res[i].id
+            className.push(this.cl)
           }
           this.schoolClasses = className;
-          console.log(className);
         },
       (err) => console.log(err),
-      ()=>console.log("Done")
     );
   }
 }

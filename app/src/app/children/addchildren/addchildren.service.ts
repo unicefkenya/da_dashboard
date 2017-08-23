@@ -65,14 +65,14 @@ export class AddChildrenService {
   }
 
 
-  getClass(){
+  getClass(id){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.baseApiUrl+'api/classes',options)
+    return this.http.get(this.baseApiUrl+'api/streams?school='+id,options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

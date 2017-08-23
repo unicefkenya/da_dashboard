@@ -48,18 +48,23 @@ export class AddTeacherService {
     return body.data || { };
   }
 
-  getSchools(){
+  getSchools(id){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.baseApiUrl+'api/schools',options)
+    return this.http.get(this.baseApiUrl+'api/schools?partner='+id,options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getSchoolName(id){
+    return this.http.get(this.baseApiUrl+'api/schools?id='+id)
+    .map((response:Response) => response.json())
+    .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   private handleError(error: Response | any){
     let errMsg: string;

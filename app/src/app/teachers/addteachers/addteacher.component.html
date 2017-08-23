@@ -10,12 +10,17 @@
         <md-tab>
           <template md-tab-label>Teachers Registration</template>
           <md-card-content>
-            <small style="color: green;">{{success}}</small>
-            <small style="color: red;">{{fail}}</small>
+            <small *ngIf="success" style="color: green;">{{success}}</small>
+            <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <div  fxLayout="row">
-                <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
-                  <md-select [formControl]="form.controls['schoolName']" placeholder="School Name (required)">
+                <div  fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
+                  <md-select *ngIf="schoolId" [formControl]="form.controls['schoolName']" placeholder="School Name (required)">
+                    <md-option value="{{schoolId}}">
+                      {{schoolName}}
+                    </md-option>
+                  </md-select>
+                  <md-select *ngIf="!schoolId" [formControl]="form.controls['schoolName']" placeholder="School Name (required)">
                     <md-option *ngFor = "let name of schoolName" value="{{name.id}}">
                       {{name.school_name}}
                     </md-option>
@@ -60,13 +65,14 @@
               </div>
 
               <div  fxLayout="row">
-                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
                   <md-select  [formControl]="form.controls['teacher_type']" placeholder="Teacher Type (required)">
                     <md-option  value="TSC">T.S.C</md-option>
                     <md-option   value="BRD">Board</md-option>
                   </md-select>
                   <small *ngIf="form.controls['teacher_type'].hasError('required') && form.controls['teacher_type'].touched" class="md-text-warn">Kindly input the teacher type.</small>
                 </div>
+                <!--
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-select [formControl]="form.controls['qualifications']"  placeholder="Qualifications (required)">
                     <md-option  value="UNI">University</md-option>
@@ -76,6 +82,7 @@
                   </md-select>
                   <small *ngIf="form.controls['qualifications'].hasError('required') && form.controls['qualifications'].touched" class="md-text-warn">Kindly input the teacher's qualifications.</small>
                 </div>
+              -->
               </div>
 
               <div  fxLayout="row">
@@ -98,6 +105,21 @@
                   <small *ngIf="form.controls['joinedCurrent'].hasError('required') && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a date.</small>
                   <small *ngIf="form.controls['joinedCurrent'].errors?.date && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a valid date.</small>
                   <small *ngIf="form.controls['joinedCurrent'].errors?.maxDate && form.controls['joinedCurrent'].touched" class="md-text-warn">Kindly input a valid date.</small>
+                </div>
+              </div>
+              <div fxLayout = "row">
+                <div fxLayout="common" class="mb-1 ml-xs mr-xs" style="width:100%">
+                  <div class="form-group" *ngFor="let subject of subjects"> <!--I iterate here to list all my checkboxes -->
+                    <label class="control-label" for="{{sibject.subject}}"> {{subject.subject}} </label>
+                        <div class="checkbox">
+                          <input
+                              type="checkbox"
+                              id="{{subject.value}}"
+                              formControlName="{{parameter.Title}}"
+                              (change)="onCheckboxChange($event)"
+                              > <!-- ^^THIS^^ is the important part -->
+                         </div>
+                  </div>
                 </div>
               </div>
               <hr>

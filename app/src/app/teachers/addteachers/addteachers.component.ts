@@ -30,6 +30,29 @@ import {AddTeacherService} from './addteacher.service';
 export class AddTeachersComponent implements OnInit {
   editing = {};
   rows = [];
+  tr:any;
+  schoolId:number;
+  partnerId:number;
+  public success;
+  public fail;
+  public empty;
+  public date;
+  public isVisible;
+  public schoolName;
+  public t_type;
+  public currentDate = new Date();
+  public submitted: boolean =  true;
+  public teacher: TeacherRegistration;
+  public form: FormGroup ;
+  public subjects = [
+    {subject:'Mathematics', value:'1'},
+    {subject:'English', value:'2'},
+    {subject:'Kiswahili', value:'3'},
+    {subject:'Science', value:'4'},
+    {subject:'Social Studies', value:'5'},
+    {subject:'C.R.E', value:'6'}
+  ]
+
 
   constructor(
     private _teacherRegistrationService: AddTeacherService,
@@ -58,32 +81,7 @@ export class AddTeachersComponent implements OnInit {
     this.rows[row.$$index][cell] = event.target.value;
   }
 
-/*
-  visible: boolean = true;
-  @Output() open: EventEmitter<any> = new EventEmitter();
-  @Output() close: EventEmitter<any> = new EventEmitter();
 
-  toggle(){
-    this.visible = !this.visible;
-    if(this.visible) {
-      this.open.emit(null);
-    }else{
-      this.close.emit(null);
-    }
-  }
-*/
-
-  public success;
-  public fail;
-  public empty;
-  public date;
-  public isVisible;
-  public schoolName;
-  public t_type;
-  public currentDate = new Date();
-  public submitted: boolean =  true;
-  public teacher: TeacherRegistration;
-  public form: FormGroup ;
 
   ngOnInit(){
     //this.onSubmit;
@@ -95,17 +93,34 @@ export class AddTeachersComponent implements OnInit {
       phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.number])],
       birthday: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       teacher_type: [null, Validators.compose([Validators.required])],
-      qualifications: [null, Validators.compose([Validators.required])],
+      qualifications: [null],
       tsc_no: [null],
       bom_no: [null],
       dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
 
     });
-    this.getSchoolNames();
+    this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
+    this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    if(this.partnerId){
+      this.getSchoolNames(this.partnerId);
+    }else if(this.schoolId){
+      this.getSchoolName(this.schoolId);
+    }
 
   }
+customForm:any;
+  onCheckboxChange(event) {
+    //We want to get back what the name of the checkbox represents, so I'm intercepting the event and
+    //manually changing the value from true to the name of what is being checked.
 
+    //check if the value is true first, if it is then change it to the name of the value
+    //this way when it's set to false it will skip over this and make it false, thus unchecking
+    //the box
+    if(this.customForm.get(event.target.id).value) {
+        this.customForm.patchValue({[event.target.id] : event.target.id}); //make sure to have the square brackets
+    }
+}
 
   onSubmit(registerTeacher: TeacherRegistration, form){
     var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
@@ -152,6 +167,7 @@ export class AddTeachersComponent implements OnInit {
               this.form.reset();
             },
             error =>{
+              console.log(error)
               this.empty = "This field is required";
               this.fail = "Failed to save data";
             }
@@ -171,24 +187,33 @@ export class AddTeachersComponent implements OnInit {
     var tsc = "TSC";
     var bom = "BOM";
     const teacherType = [tsc,bom];
-    console.log(teacherType);
+    //console.log(teacherType);
   }
 
-  getSchoolNames(){
+  getSchoolNames(id){
 
-    this._teacherRegistrationService.getSchools()
+    this._teacherRegistrationService.getSchools(id)
       .subscribe(
         (res)=>{
+          res = res.results
           const schoolName = [];
-          for (let schoolname in res){
-            schoolName.push(res[schoolname]);
+          for (let i = 0;i < res.length;i++){
+            this.tr = {}
+            this.tr.school_name=res[i].school_name
+            this.tr.id=res[i].id
+            schoolName.push(this.tr)
           }
           this.schoolName = schoolName;
-          console.log(schoolName);
+          //console.log(schoolName);
         },
-      (err) => console.log(err),
-      ()=>console.log("Done")
+      (err) => console.log(err)
     );
+  }
+
+  getSchoolName(id){
+    this._teacherRegistrationService.getSchoolName(id).subscribe((data)=>{
+      this.schoolName = data.results[0].school_name
+    })
   }
 
 }

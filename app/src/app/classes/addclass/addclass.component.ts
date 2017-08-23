@@ -65,7 +65,7 @@ export class AddClassComponent implements OnInit {
   }
 
   onSubmit(registerClass: ClassRegistration, form){
-    
+
     if(!this.submitted){
 
     }else{
