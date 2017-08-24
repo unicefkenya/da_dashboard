@@ -226,11 +226,11 @@ public fetchSchool(id){
     //getting annual attendance based on gender
     public getAnnualAttendanceGender(id){
         this._searchService.getAnnualAttendanceGender(id).subscribe( data => {
-
+          console.log(data)
         let children = [];
 
-        children.push(data.results[0].present_males);
         children.push(data.results[0].present_females);
+        children.push(data.results[0].present_males);
         this.pieChartData = children;
 
       });

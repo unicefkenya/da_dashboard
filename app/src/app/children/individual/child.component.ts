@@ -169,7 +169,11 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
         this.firstname = data.fstname;
         this.midname = data.midname;
         this.lastname = data.lstname;
-        this.childname = data.midname+" "+data.lstname;
+        if(data.midname == null){
+          this.childname = data.lstname;
+        }else{
+          this.childname = data.midname+" "+data.lstname;
+        }
         this.emiscode = data.emis_code;
         this.mode_of_transport = data.mode_of_transport;
         this.previousClass = data.previous_class;
