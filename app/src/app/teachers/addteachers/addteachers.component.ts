@@ -117,7 +117,7 @@ export class AddTeachersComponent implements OnInit {
       bom_no: [null],
       dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
-      subject:this.fb.array([])
+      //subject:this.fb.array([])
     });
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
@@ -162,7 +162,7 @@ export class AddTeachersComponent implements OnInit {
                   qualifications: registerTeacher.qualifications,
                   tsc_no: registerTeacher.tsc_no,
                   bom_no: registerTeacher.bom_no,
-                  subjects: [1],
+                  subjects: [],
                   date_started_teaching: registerTeacher.dateStarted,
                   joined_current_school:  registerTeacher.joinedCurrent,
                   gender: registerTeacher.gender

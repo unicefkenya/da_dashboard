@@ -10,7 +10,34 @@ import { TeachersService} from './teachers.service';
   providers: [TeachersService]
 })
 export class TeachersComponent implements OnInit{
-  //constructor(private teachersService: TeachersService,private router: Router) {  }
+  teacher:number;
+  firstname:any;
+  lastname:any;
+  phone:any;
+  dateJoined:any;
+  gender:any;
 
-  ngOnInit(){}
+  constructor(private teachersService: TeachersService,private router: Router) {  }
+
+  ngOnInit(){
+    this.teacher = JSON.parse(localStorage.getItem('teacherId'));
+    this.getTeacher(this.teacher);
+  }
+
+  getTeacher(id){
+    this.teachersService.getTeacherId(id).subscribe(data=>{
+      //console.log(data);
+      this.firstname = data.fstname
+      this.lastname = data.lstname
+      this.phone = data.phone_no
+      this.dateJoined = data.joined_current_school
+       if(data.gender == 'M'){
+         this.gender ='Male';
+       }
+       else if(data.gender == 'F'){
+         this.gender = 'Female';
+       }
+
+    })
+  }
 }

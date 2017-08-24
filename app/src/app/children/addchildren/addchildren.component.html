@@ -31,7 +31,7 @@
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Admission Number (required)" [formControl]="form.controls['admNo']"  type="text"></md-input>
-                  <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['admNo'].touched" class="md-text-warn">Kindly include student's admission no.</small>
+                  <small *ngIf="form.controls['admNo'].hasError('required') && form.controls['admNo'].touched" class="md-text-warn">Kindly include student's admission no.</small>
                 </div>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">

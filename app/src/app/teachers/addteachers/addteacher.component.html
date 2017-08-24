@@ -107,6 +107,7 @@
                   <small *ngIf="form.controls['joinedCurrent'].errors?.maxDate && form.controls['joinedCurrent'].touched" class="md-text-warn">Kindly input a valid date.</small>
                 </div>
               </div>
+              <!--
               <div fxLayout = "row">
                 <div fxLayout="common" class="mb-1 ml-xs mr-xs" style="width:100%">
                   <li *ngFor="let subject of subjects">
@@ -125,7 +126,7 @@
                     </ul>
                   </li>
                 </div>
-              </div>
+              </div>-->
               <hr>
               <md-card-actions>
                 <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>

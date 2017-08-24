@@ -39,10 +39,10 @@ export class ViewTeachersComponent implements OnInit {
 
   columns = [
     { name: 'Name' },
-    { name: 'Phone Number' },
+    { name: 'Phonenumber' },
     { name: 'Gender' },
-    { name: 'Qualifications' },
-    { name: 'Teacher Type' }
+    //{ name: 'Qualifications' },
+    { name: 'Type' }
 
   ];
 
@@ -58,13 +58,13 @@ export class ViewTeachersComponent implements OnInit {
       let items = [];
       let rows=[];
       for (let i = 0; i < data.length; i++){
-
+        console.log(data[i].phone_no)
         this.tmp = {}
         this.tmp.name = data[i].name
-        this.tmp.phone_no = data[i].phone_no
+        this.tmp.phonenumber = data[i].phone_no
         this.tmp.gender = data[i].gender
-        this.tmp.qualifications = data[i].qualifications
-        this.tmp.teachertype = data[i].teacher_type
+      //  this.tmp.qualifications = data[i].qualifications
+        this.tmp.type = data[i].teacher_type
         this.tmp.id = data[i].id
         items.push(this.tmp);
       }
@@ -101,10 +101,10 @@ export class ViewTeachersComponent implements OnInit {
                       for (let i = 0; i < data.length; i++){
                         this.tmp = {}
                         this.tmp.name = data[i].name
-                        this.tmp.phone_no = data[i].phone_no
+                        this.tmp.phonenumber = data[i].phone_no
                         this.tmp.gender = data[i].gender
-                        this.tmp.qualifications = data[i].qualifications
-                        this.tmp.teachertype = data[i].teacher_type
+                      //  this.tmp.qualifications = data[i].qualifications
+                        this.tmp.type = data[i].teacher_type
                         this.tmp.id = data[i].id
                         items.push(this.tmp);
                       }

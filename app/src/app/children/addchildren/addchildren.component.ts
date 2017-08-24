@@ -20,6 +20,14 @@ export class AddChildrenComponent implements OnInit {
   rows = [];
   cl:any;
   public currentDate = new Date();
+  public success;
+  public fail;
+  public empty;
+  public schoolClasses;
+  public submitted: boolean =  true;
+  public school: ChildRegistration;
+  public form: FormGroup;
+  schoolId:number;
 
   constructor(
     private _childRegistrationService: AddChildrenService,
@@ -63,14 +71,7 @@ export class AddChildrenComponent implements OnInit {
     this.rows[row.$$index][cell] = event.target.value;
   }
 
-  public success;
-  public fail;
-  public empty;
-  public schoolClasses;
-  public submitted: boolean =  true;
-  public school: ChildRegistration;
-  public form: FormGroup;
-  schoolId:number;
+
   ngOnInit(){
     //this.onSubmit;
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));

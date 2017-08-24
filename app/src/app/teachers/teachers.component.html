@@ -5,21 +5,24 @@
         <md-card-content>
           <div  fxLayout="row">
             <div fxFlex="50">
-            <h4 class="ma-0">Shimanyi&nbsp;<b>Valentino</b></h4>
-              <p><small>Phone number: </small><br>4567890</p>
-                  
-              <p><small>Enrolled in Current School on:</small><br>20-2-2012</p>
-            
-              <p><small>Gender:</small><br>Male</p>
+            <h4 class="ma-0">{{firstname}}&nbsp;<b>{{lastname}}</b></h4>
+              <p><small>Phone number: </small><br>{{phone}}</p>
+
+              <p><small>Enrolled in Current School on:</small><br>{{dateJoined}}</p>
+
+              <p><small>Gender:</small><br>{{gender}}</p>
               <!--<button md-raised-button color="primary" (click)="editProfile = true">Edit Profile</button>-->
-              <button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Teacher</button>
+              <!--<button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Teacher</button>
+              -->
             </div>
+            <!--
             <div fxFlex="50">
               <h4 class="ma-0">&nbsp;</h4>
               <p><small>Teaching Subjects: </small></p>
               <p>Mathematics, English, Science, etc.</p>
               <p><small>Qualifications: </small><br>College</p>
             </div>
+          -->
           </div>
         </md-card-content>
         <hr>

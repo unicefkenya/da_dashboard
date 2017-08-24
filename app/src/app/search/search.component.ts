@@ -51,7 +51,7 @@ export class SearchComponent {
     this._searchService.getSchoolStats(id).subscribe(
       (data)  =>
       {
-        console.log(data.results[0]);
+        //console.log(data.results[0]);
         this.males = (data.results[0].enrolled_males+data.results[0].old_males);
         this.females = (data.results[0].enrolled_females+data.results[0].old_females);
         this.totalStudents = data.results[0].total;
@@ -66,7 +66,7 @@ export class SearchComponent {
     }}).subscribe(
       (data)  =>
       {
-        console.log(data)
+        //console.log(data)
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;
@@ -85,7 +85,7 @@ public fetchSchool(id){
   this._searchService.getSchoolData(id).subscribe(
     (data)  =>
     {
-      console.log(data);
+      //console.log(data);
       let res = data.results;
       this.schoolname=res[0].school_name;
       this.schoolEmisCode = res[0].emis_code;
