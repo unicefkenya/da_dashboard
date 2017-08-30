@@ -100,5 +100,9 @@ export class SigninComponent implements OnInit {
     //console.log("Login Successfully");
 
   }
+  forgotPsd:any;
+  showMessage(){
+    this.forgotPsd = "Kindly contact your partner to reset password"
+  }
 
   }

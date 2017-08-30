@@ -73,8 +73,8 @@ export class AddClassComponent implements OnInit {
                         registerClass.class_id,
                         registerClass.class_name
                       );
-                      console.log(registerClass.class_name, 'sdsd');
-        if(registerClass.class_name == ''){
+                      
+        if(registerClass.class_name == null){
           this.classService.sendData({
 
                   	class_name: registerClass.class_id,

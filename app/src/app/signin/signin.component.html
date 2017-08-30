@@ -32,7 +32,7 @@
               <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
             </div>
             <div class="pt-1 pb-1 text-xs-center">
-              <a href="#">Forgot password?</a>
+              <a (click)="showMessage()" href="#">Forgot password?</a>
             </div>
           </form>
         </md-card-content>
