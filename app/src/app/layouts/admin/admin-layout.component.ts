@@ -47,6 +47,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     this.currentUser = JSON.parse(localStorage.getItem('user'));
   }
 userDashboard:any;
+schoolId:any;
   ngOnInit(): void {
     this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
       this.url = event.url;
@@ -62,6 +63,7 @@ userDashboard:any;
     });
     this.welcomeName = localStorage.getItem("welcomeName");
     this.userDashboard = localStorage.getItem("user-type");
+    this.schoolId = localStorage.getItem("schoolId");
 
   }
 
@@ -83,9 +85,11 @@ userDashboard:any;
       return window.matchMedia(`(max-width: 960px)`).matches;
     }
   }
-
-openMe(){
-  console.log('clicked');
+message:string;
+messageChange(){
+  this.message = localStorage.getItem("welcomeName");
+  console.log(this.message, 'sdsdsd');
+  //console.log('clicked');
 }
 
   logout(){

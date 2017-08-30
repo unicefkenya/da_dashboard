@@ -22,6 +22,8 @@ export class SigninService {
 
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("schoolId");
+    localStorage.clear();
     this._router.navigate(['signin']);
   }
 

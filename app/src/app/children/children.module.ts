@@ -13,10 +13,13 @@ import { ChildrenComponent } from './children.component';
 import { EnrollmentComponent } from './enrollment/enrollment.component';
 import { ChildComponent } from './individual/child.component';
 import { AddChildrenComponent } from './addchildren/addchildren.component';
+import { SchoolchildrenComponent } from './Schoolchildren/schoolchildren.component';
+import { SchoolenrollmentComponent } from './Schoolenrollment/schoolenrollment.component';
+
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ChildrenRoutes),ChartsModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ChildrenComponent, AddChildrenComponent, EnrollmentComponent, ChildComponent]
+  declarations: [ChildrenComponent, AddChildrenComponent, SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent]
 })
 
 export class ChildrenModule {}

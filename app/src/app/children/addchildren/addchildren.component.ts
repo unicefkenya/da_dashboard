@@ -130,8 +130,6 @@ export class AddChildrenComponent implements OnInit {
               this.fail = "Failed to save data";
             }
           );
-          //console.log("Added Child Successfully");
-          this.success = "Added Child Successfully";
 
         }
   }

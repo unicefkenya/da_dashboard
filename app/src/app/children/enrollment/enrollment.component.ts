@@ -254,10 +254,12 @@ export class EnrollmentComponent implements OnInit {
     }
 
     searchChild(search: Search){
+
       if(!this.submitted){
 
         //edit
       }else{
+
         if(this.schoolId){
           //search by name
           if(search.search){
@@ -465,6 +467,7 @@ export class EnrollmentComponent implements OnInit {
               }
               //admin
             }else{
+              console.log(search.search, search.gender, search.partner, 'dsdsds')
               //search by name
               if(search.search){
               this.enrollmentService.searchData(search.search)
@@ -780,6 +783,7 @@ export class EnrollmentComponent implements OnInit {
         this.fetchAllSchoolChildren(this.schoolId);
       }
       else{
+        this.admin = localStorage.getItem("user-type");
         this.fetchChildren(this.offset, this.limit);
         this.fetchBoyChildTotal();
         this.fetchGirlChildTotal();

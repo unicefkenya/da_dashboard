@@ -103,8 +103,8 @@ export class ImportsComponent implements OnInit {
         this.uploadDiv = true;
         this.errorDiv = false;
         //interchanged the two
-        this.total_fails = res.total_success;
-        this.total_success = res.total_fails;
+        this.total_fails = res.total_fails;
+        this.total_success = res.total_success;
         this.success_percentage =res.success_percentage;
         this.verifySuccess = "File Successfully Imported";
         this.loading = false;

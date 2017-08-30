@@ -18,7 +18,7 @@ private baseApiUrl = BaseUrl.base_api_url;
 sendVerifyStudentsData(data: any){
 
   return Observable.fromPromise(new Promise((resolve, reject) => {
-    const studentsImport = this.baseApiUrl+'api/students/import?verfiy=wait';
+    const studentsImport = this.baseApiUrl+'api/students/import?verify=wait';
     let loadstart;
     let progress;
     let load;

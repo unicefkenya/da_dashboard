@@ -80,10 +80,12 @@ export class SigninComponent implements OnInit {
               }else if(this.nav == "partner"){
                 let partnerId = data.info.id;
                 let partnerName = data.info.name;
+                //console.log(partnerId);
                 localStorage.setItem("partnerId", partnerId);
                 localStorage.setItem("welcomeName", partnerName);
                 this.router.navigate([this.returnUrl]);
               }else{
+                //console.log('admin');
                 this.router.navigate([this.returnUrl]);
               }
           });

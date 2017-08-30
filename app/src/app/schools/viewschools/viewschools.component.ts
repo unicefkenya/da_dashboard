@@ -40,7 +40,6 @@ export class ViewSchoolsComponent implements OnInit {
   partnerId: number;
 
   columns = [
-    { name: 'Schoolcode' },
     { name: 'Name' },
     { name: 'Emiscode' },
     { name: 'Level' },
@@ -57,7 +56,6 @@ export class ViewSchoolsComponent implements OnInit {
       let rowss = [];
       for (let i = 0; i < data.results.length; i++){
         this.dt = {}
-        this.dt.schoolcode = data.results[i].school_code
         this.dt.name = data.results[i].school_name
         this.dt.emiscode = data.results[i].emis_code
         this.dt.level = data.results[i].level
@@ -97,7 +95,6 @@ export class ViewSchoolsComponent implements OnInit {
         let rowss = [];
         for (let i = 0; i < data.results.length; i++){
           this.dt = {}
-          this.dt.schoolcode = data.results[i].school_code
           this.dt.name = data.results[i].school_name
           this.dt.emiscode = data.results[i].emis_code
           this.dt.level = data.results[i].level
@@ -124,7 +121,6 @@ export class ViewSchoolsComponent implements OnInit {
       });
     }
 
-
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
    localStorage.setItem('schoolId', this.selected[0].id);
@@ -149,13 +145,13 @@ export class ViewSchoolsComponent implements OnInit {
 
      //edit
    }else{
-       console.log(this.partnerId);
+       //console.log(this.partnerId);
        if(this.partnerId){
          this.schoolService.searchPartnerData(this.partnerId, search.search)
              .subscribe(
                data => //console.log(data)
                {
-                 console.log(data);
+                 //console.log(data);
                  let res =data.results;
                  this.schools = res;
                },
@@ -169,7 +165,7 @@ export class ViewSchoolsComponent implements OnInit {
                .subscribe(
                  data => //console.log(data)
                  {
-                   console.log(data);
+                   //console.log(data);
                    let items =[];
                    for (let i = 0; i < data.results.length; i++){
                      this.dt = {}
@@ -184,7 +180,7 @@ export class ViewSchoolsComponent implements OnInit {
 
                    this.temp=[items];
                    this.schools=items;
-                   console.log(items);
+                   //console.log(items);
                  },
                  error =>{
                    this.empty = "This field is required";

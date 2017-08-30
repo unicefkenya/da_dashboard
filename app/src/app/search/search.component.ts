@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import {AdminLayoutService} from '../layouts/admin/adminlayout.service';
-import {ActivatedRoute} from '@angular/router';
+import {Router,ActivatedRoute} from '@angular/router';
 import { SearchService} from '../search/search.service';
 
 @Component({
@@ -12,27 +12,28 @@ import { SearchService} from '../search/search.service';
 export class SearchComponent {
   constructor(private _adminLayoutService: AdminLayoutService,
               private _searchService: SearchService,
-              private route:ActivatedRoute) {
+              private route:ActivatedRoute,
+              private router: Router) {
   }
 
 
   public sub;
-
+  id:any;
   ngOnInit():void{
     //checks if the id param navigations have changed
 
     this.sub = this.route.params.subscribe(params => {
-     let id = +params['id'];
+     this.id = +params['id'];
      //sconsole.log(id);
      //console.log(schoolId);
-     this.getSchoolData(id);
-     this.fetchSchool(id);
-     this.getStats(id);
-     this.getSevenDaysAttendance(id);
-     this.getEnrollmentGraph(id);
-     this.getAnnualEnrollmentGender(id);
-     this.getAnnualAttendanceGender(id);
-     this.getMonthlyAttendance(id);
+     this.getSchoolData(this.id);
+     this.fetchSchool(this.id);
+     this.getStats(this.id);
+     this.getSevenDaysAttendance(this.id);
+     this.getEnrollmentGraph(this.id);
+     this.getAnnualEnrollmentGender(this.id);
+     this.getAnnualAttendanceGender(this.id);
+     this.getMonthlyAttendance(this.id);
    });
 
   }
@@ -45,6 +46,15 @@ export class SearchComponent {
   public county;
   public zone;
   public errorSearch;
+
+
+    getRegisteredChildren(){
+      this.router.navigate(['/children/view-children', this.id]);
+    }
+
+    getEnrolledChildren(){
+      this.router.navigate(['/children/enrollments', this.id]);
+    }
 
   public getStats(id):void {
     this.errorSearch = '';

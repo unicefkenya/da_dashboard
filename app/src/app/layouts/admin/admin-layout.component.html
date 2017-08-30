@@ -7,8 +7,11 @@
       <div class="logo"></div>
     </div>
     <div fxFlex *ngIf="userType == 'admin'">Welcome Unicef</div>
+    <div fxFlex *ngIf="userType == 'admin' && message">Unicef</div>
     <div fxFlex *ngIf="userType == 'partner'">Welcome {{welcomeName}}</div>
+    <div fxFlex *ngIf="userType == 'partner' && message">{{welcomeName}}</div>
     <div fxFlex *ngIf="userType == 'teacher'">Welcome {{welcomeName}}</div>
+    <div fxFlex *ngIf="userType == 'teacher' && message">{{welcomeName}}</div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
     </button>
@@ -43,20 +46,20 @@
       <md-nav-list class="navigation accordion">
         <md-list-item class="accordion-link" *ngFor="let menuitem of menuItems.getadmin()" group="{{menuitem.state}}">
           <!--Link-->
-          <a class="accordion-toggle relative" md-ripple *ngIf="menuitem.type === 'link' && userDashboard==='partner'" [routerLink]="['/', menuitem.state]">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="menuitem.type === 'link' && userDashboard==='partner'" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
-          <a class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='admin' && menuitem.access === 'all' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='admin' && menuitem.access === 'all' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
 
-          <a  class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilitylink === userDashboard && menuitem.usertype != userDashboard && menuitem.type === 'link'" [routerLink]="['/school', menuitem.id]">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilitylink === userDashboard  && menuitem.type === 'link'" [routerLink]="['/school', schoolId]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -64,7 +67,7 @@
           </a>
           <!--End-->
           <!--Ext Link Start-->
-          <a class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" *ngIf="menuitem.type === 'extLink'">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" *ngIf="menuitem.type === 'extLink'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -72,7 +75,7 @@
           </a>
           <!--End-->
           <!--Ext Tab Link-->
-          <a class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -80,14 +83,14 @@
           </a>
           <!--End-->
           <!--Sub Start-->
-          <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
-          <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.access === 'all'">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.access === 'all'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -95,7 +98,7 @@
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
 
-          <a class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType && menuitem.access != 'all'">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType && menuitem.access != 'all'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
