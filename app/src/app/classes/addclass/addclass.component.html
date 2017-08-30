@@ -25,9 +25,7 @@
               </div>
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Enter Stream name (optional)" placeholder="Example: Input 1 East but if no stream input the number only i.e 1 (required) " [formControl]="form.controls['class_name']"  type="text"></md-input>
-
-                  <small *ngIf="form.controls['class_name'].hasError('required') && form.controls['class_name'].touched" class="md-text-warn">Enter Class name (e.g. 1 East or just 1)</small>
+                  <md-input  placeholder="Enter Stream name (optional)"  [formControl]="form.controls['class_name']"  type="text"></md-input>
                 </div>
               </div>
               <!-- <hr> -->

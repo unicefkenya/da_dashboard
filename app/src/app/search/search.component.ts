@@ -236,7 +236,7 @@ public fetchSchool(id){
     //getting annual attendance based on gender
     public getAnnualAttendanceGender(id){
         this._searchService.getAnnualAttendanceGender(id).subscribe( data => {
-          console.log(data)
+          //console.log(data)
         let children = [];
 
         children.push(data.results[0].present_females);

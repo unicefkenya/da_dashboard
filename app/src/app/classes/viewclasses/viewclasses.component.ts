@@ -41,8 +41,12 @@ export class ViewClassesComponent implements OnInit{
       let allClasses =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.name="Class "+data[i].class_name
-        this.dt.id = data[i].id
+        console.log(data[i].class_name);
+        if(data[i].class_name == null){
+          this.dt.name = "Class "+data[i].id
+        }else{
+          this.dt.name="Class "+data[i].class_name
+        }this.dt.id = data[i].id
         allClasses.push(this.dt)
       }
       //cache our data

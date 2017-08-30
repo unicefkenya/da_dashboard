@@ -57,7 +57,7 @@ export class AddClassComponent implements OnInit {
     //this.onSubmit;
     this.form = this.fb.group({
       class_id: [null, Validators.compose([Validators.required])],
-      class_name: [null, Validators.compose([Validators.required])]
+      class_name: [null]
 
     });
     this.getClasses();
@@ -73,25 +73,45 @@ export class AddClassComponent implements OnInit {
                         registerClass.class_id,
                         registerClass.class_name
                       );
+                      console.log(registerClass.class_name, 'sdsd');
+        if(registerClass.class_name == ''){
+          this.classService.sendData({
 
-      this.classService.sendData({
+                  	class_name: registerClass.class_id,
+                  	_class: registerClass.class_id,
+                  	school:  this.school
 
-              	class_name: registerClass.class_name,
-              	_class: registerClass.class_id,
-              	school:  this.school
+              }).subscribe(
+                data => //console.log(data)
+                {
+                  console.log("Added Classes Successfully"),
+                  this.success = "Added Classes Successfully";
+                  this.resetButton();
+                },
+                error => {
+                  this.empty = "This field is required";
+                  this.fail = "Failed to save data";
+                }
+              );
+        }else{
+        this.classService.sendData({
+                	class_name: registerClass.class_id+' '+registerClass.class_name,
+                	_class: registerClass.class_id,
+                	school:  this.school
 
-          }).subscribe(
-            data => //console.log(data)
-            {
-              console.log("Added Classes Successfully"),
-              this.success = "Added Classes Successfully";
-              this.resetButton();
-            },
-            error => {
-              this.empty = "This field is required";
-              this.fail = "Failed to save data";
-            }
-          );
+            }).subscribe(
+              data => //console.log(data)
+              {
+                console.log("Added Classes Successfully"),
+                this.success = "Added Classes Successfully";
+                this.resetButton();
+              },
+              error => {
+                this.empty = "This field is required";
+                this.fail = "Failed to save data";
+              }
+            );
+          }
         }
   }
 

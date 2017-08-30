@@ -26,7 +26,7 @@ const MENUITEMS = [
     usertype: 'all',
     access: 'all',
     accessibilitylink: 'teacher',
-    id: JSON.parse(localStorage.getItem('schoolId')),
+    //id: JSON.parse(localStorage.getItem('schoolId')),
     state: 'home',
     name: 'Home',
     type: 'link',
