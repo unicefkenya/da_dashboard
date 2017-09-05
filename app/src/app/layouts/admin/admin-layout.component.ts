@@ -70,7 +70,7 @@ schoolId:any;
   schoolProfile(){
     console.log('onyesha bana');
       let schoolId = localStorage.getItem("schoolId");
-      this.router.navigate(['/school', schoolId]);
+      this.router.navigate(['/school', schoolId],{skipLocationChange: true});
 
   }
   ngOnDestroy() {

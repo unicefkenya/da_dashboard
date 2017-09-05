@@ -167,7 +167,7 @@ export class ViewpartnersComponent implements OnInit {
 
    private navigatePartner(id){
      //console.log('show partner')
-     this.router.navigate(['partners/partner/', id]);
+     this.router.navigate(['partners/partner/', id],{skipLocationChange: true});
    }
 
    onActivate(event) {

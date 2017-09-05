@@ -76,7 +76,7 @@ export class SigninComponent implements OnInit {
                 //console.log(schoolId);
                 localStorage.setItem("welcomeName", data.info.profile.name);
                 this.schoolId = localStorage.getItem("schoolId");
-                this.router.navigate(['/school', schoolId]);
+                this.router.navigate(['/school', schoolId],{skipLocationChange: true});
               }else if(this.nav == "partner"){
                 let partnerId = data.info.id;
                 let partnerName = data.info.name;

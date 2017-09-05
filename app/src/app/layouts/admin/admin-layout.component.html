@@ -59,7 +59,7 @@
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
 
-          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilitylink === userDashboard  && menuitem.type === 'link'" [routerLink]="['/school', schoolId]">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilitylink === userDashboard  && menuitem.type === 'link'" [routerLink]="['/school', schoolId]" skipLocationChange>
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>

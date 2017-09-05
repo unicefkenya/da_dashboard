@@ -79,7 +79,7 @@ export class ViewClassesComponent implements OnInit{
 
    private getClassId(id){
      console.log('yes');
-     this.router.navigate(['/classes/class', id]);
+     this.router.navigate(['/classes/class', id],{skipLocationChange: true});
 
    }
 

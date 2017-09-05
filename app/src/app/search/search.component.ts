@@ -49,11 +49,11 @@ export class SearchComponent {
 
 
     getRegisteredChildren(){
-      this.router.navigate(['/children/view-children', this.id]);
+      this.router.navigate(['/children/view-children', this.id],{skipLocationChange: true});
     }
 
     getEnrolledChildren(){
-      this.router.navigate(['/children/enrollments', this.id]);
+      this.router.navigate(['/children/enrollments', this.id],{skipLocationChange: true});
     }
 
   public getStats(id):void {

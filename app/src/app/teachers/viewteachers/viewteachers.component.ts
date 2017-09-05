@@ -161,7 +161,7 @@ routeId:number;
 
    private getTeacherId(id){
 
-     this.router.navigate(['/teachers/teacher', id]);
+     this.router.navigate(['/teachers/teacher', id],{skipLocationChange: true});
 
    }
 
