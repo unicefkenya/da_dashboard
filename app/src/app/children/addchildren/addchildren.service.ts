@@ -59,10 +59,18 @@ export class AddChildrenService {
 
   }
 
+  fetchPartnerSchools(id){
+    return this.http.get(this.baseApiUrl+'/api/school?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };
   }
+
+
 
 
   getClass(id){

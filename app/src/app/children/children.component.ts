@@ -288,7 +288,7 @@ export class ChildrenComponent implements OnInit {
 
    private getChildId(id){
 
-     this.router.navigate(['/children/child', id]);
+     this.router.navigate(['/children/child', id],{skipLocationChange: true});
 
    }
 

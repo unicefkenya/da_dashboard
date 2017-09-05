@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@an
 import { CustomValidators } from 'ng2-validation';
 import { ChildRegistration } from './children';
 import { Response } from '@angular/http';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {AddChildrenService} from './addchildren.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class AddChildrenComponent implements OnInit {
   editing = {};
   rows = [];
   cl:any;
+  sch:any;
   public currentDate = new Date();
   public success;
   public fail;
@@ -28,12 +30,14 @@ export class AddChildrenComponent implements OnInit {
   public school: ChildRegistration;
   public form: FormGroup;
   schoolId:number;
+  partnerId:number;
 
   constructor(
     private _childRegistrationService: AddChildrenService,
     private fb: FormBuilder
   ){
     this.form = this.fb.group({
+      schoolName: [null],
       firstName: [null, Validators.compose([Validators.required,])],
       maidenName: [null],
       lastName: [null, Validators.compose([Validators.required,])],
@@ -75,7 +79,14 @@ export class AddChildrenComponent implements OnInit {
   ngOnInit(){
     //this.onSubmit;
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
-    this.getSchoolClasses(this.schoolId);
+    this.partnerId = JSON.parse(localStorage.getItem('partnerId'));
+
+    if(this.schoolId){
+      this.getSchoolClasses(this.schoolId);
+    }else if(this.partnerId){
+      this.getSchools(this.partnerId);
+    }
+
   }
 
   onSubmit(registerChild: ChildRegistration){
@@ -84,6 +95,7 @@ export class AddChildrenComponent implements OnInit {
       //edit
     }else{
       this.school = new ChildRegistration(
+                            registerChild.schoolName,
                             registerChild.firstName,
                             registerChild.maidenName,
                             registerChild.lastName,
@@ -102,6 +114,7 @@ export class AddChildrenComponent implements OnInit {
                           );
 
       this._childRegistrationService.sendData({
+
                   fstname: registerChild.firstName,
                   midname: registerChild.maidenName,
                   lstname: registerChild.lastName,
@@ -137,12 +150,27 @@ export class AddChildrenComponent implements OnInit {
   resetButton(){
     this.form.reset();
   }
+schools:any;
+  getSchools(id){
+      this._childRegistrationService.fetchPartnerSchools(id).subscribe(res =>{
 
+        res = res.results;
+        this.schools = [];
+        for(let i =0; i<res.length;i++){
+          this.sch = {};
+          this.sch.school_name = res[i].school_name;
+          this.sch.id = res[i].id;
+          this.schools.push(this.sch);
+        }
+        // console.log(this.schools);
+      });
+  }
   getSchoolClasses(id){
 
     this._childRegistrationService.getClass(id)
       .subscribe(
         (res)=>{
+          console.log(res);
           res = res.results
           const className = [];
           for (let i = 0;i < res.length;i++){

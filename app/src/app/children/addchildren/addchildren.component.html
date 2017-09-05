@@ -13,6 +13,16 @@
             <small *ngIf="success" style="color: green;">{{success}}</small>
             <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
+              <div  fxLayout="row" >
+                <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
+                  <md-select required [formControl]="form.controls['schoolName']"  placeholder="School (required)">
+                    <md-option *ngFor = "let name of schools" value="{{name.id}}">
+                      {{name.school_name}}
+                    </md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
+                </div>
+              </div>
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input dividerColor="primary" placeholder="First Name (required)" [formControl]="form.controls['firstName']"  type="text"></md-input>

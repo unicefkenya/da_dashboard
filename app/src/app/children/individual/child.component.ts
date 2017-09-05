@@ -358,6 +358,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
           //edit
         }else{
           this.school = new ChildRegistration(
+                                registerChild.schoolName,
                                 registerChild.firstName,
                                 registerChild.maidenName,
                                 registerChild.lastName,

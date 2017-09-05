@@ -51,16 +51,14 @@ export class ViewpartnersComponent implements OnInit {
 
   constructor( private partnersService: ViewpartnersService,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
   }
-dx:any;
+  dx:any;
   //fetching number of boys per partner
   fetchPartnerBoyChildTotal(id){
-    let array = []
     this.partnersService.fetchPartnerBoyChildTotal(id).subscribe(data => {
-      //this.males = data.count;
-      this.dx = data.count
-      array.push(this.dx)
+      this.dx = data.count;
+
     });
-    return array
+    return this.dx;
   }
 
   //fetching number of girls per partner
@@ -69,7 +67,7 @@ dx:any;
       return data.count;
     });
   }
-a:any;
+
   //admin
   fetchpartners(offset,limit): void {
 
@@ -87,17 +85,18 @@ a:any;
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.id = data[i].id
-      this.a = this.fetchPartnerBoyChildTotal(this.id);
+        let a:any;
+        a = this.fetchPartnerBoyChildTotal(this.id);
         let b = this.fetchPartnerGirlChildTotal(this.id);
-        console.log(this.a[0])
+        console.log(a, b,this.id, 'jfhgfdfgh')
         this.dt = {}
         this.dt.organization=data[i].name
         this.dt.email=data[i].email
         this.dt.phone=data[i].phone
         this.dt.id = data[i].id
-        this.dt.boys = 1
+        this.dt.boys = this.dx
         this.dt.girls = b
-        this.dt.total = this.dt.boys+this.dt.girls
+        this.dt.total = 0
         partner.push(this.dt)
       }
       //cache our data

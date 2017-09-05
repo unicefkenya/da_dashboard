@@ -88,5 +88,5 @@ export const AppRoutes: Routes = [{
   }]
 }, {
   path: '**',
-  redirectTo: 'session/404'
+  redirectTo: '404'
 }];
