@@ -25,9 +25,9 @@ export class SchoolchildrenComponent implements OnInit {
   fail: string;
   loading:boolean;
   dt:any;
+  rows = [];
   children: any[] = this.rows;
   selected: any[];
-  rows = [];
   temp = [];
   count: number = 0;
   offset: number = 0;
@@ -56,7 +56,7 @@ export class SchoolchildrenComponent implements OnInit {
   //school
   fetchSchoolChildren(id,offset,limit): void {
     this.childrenService.fetchSchoolChildren(id,this.page).subscribe(data => {
-      console.log(data);
+      //console.log(data);
       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
@@ -124,7 +124,7 @@ export class SchoolchildrenComponent implements OnInit {
 
                       this.temp=[childs];
                       this.children=childs;
-                      console.log(childs);
+                    //  console.log(childs);
                     },
                     error =>{
                       this.empty = "This field is required";
@@ -155,7 +155,7 @@ export class SchoolchildrenComponent implements OnInit {
 
                         this.temp=[childs];
                         this.children=childs;
-                        console.log(childs);
+                        //console.log(childs);
                       },
                       error =>{
                         this.empty = "This field is required";
@@ -206,7 +206,7 @@ export class SchoolchildrenComponent implements OnInit {
 
    private getChildId(id){
 
-     this.router.navigate(['/children/child', id]);
+     this.router.navigate(['/children/child', id],{skipLocationChange:true});
 
    }
 
@@ -226,12 +226,12 @@ export class SchoolchildrenComponent implements OnInit {
       // Whenever the filter changes, always go back to the first page
       this.table.offset = this.page;
 
-    console.log('Filter event', event);
+    //console.log('Filter event', event);
   }
 
 
   onPage(event) {
-    console.log(event.offset);
+    //console.log(event.offset);
     this.page=event.offset+1
       this.fetchSchoolChildren(this.schoolId,event.offset, event.limit);
   }
@@ -241,7 +241,7 @@ export class SchoolchildrenComponent implements OnInit {
     this.form = this.fb.group({
       search: [null, Validators.compose([Validators.required,])],
     });
-    
+
     this.sub = this.route.params.subscribe(params => {
      this.schoolId = +params['id'];
 

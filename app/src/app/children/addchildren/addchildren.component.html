@@ -14,7 +14,7 @@
             <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
               <div  fxLayout="row" >
-                <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
+                <div *ngIf="!schoolId" fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
                   <md-select required [formControl]="form.controls['schoolName']"  placeholder="School (required)">
                     <md-option *ngFor = "let name of schools" value="{{name.id}}">
                       {{name.school_name}}

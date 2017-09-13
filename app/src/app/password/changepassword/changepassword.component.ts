@@ -36,7 +36,7 @@ export class ChangepasswordComponent implements OnInit {
         newPassword: [null, Validators.compose([Validators.required])],
         confirmPassword: [null, Validators.compose([Validators.required])],
       }, {
-      validator: this.MatchPassword // your validation method
+      validator: this.MatchPassword // confirm password validation method
     });
     }
 

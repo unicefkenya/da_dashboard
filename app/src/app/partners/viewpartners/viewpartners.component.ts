@@ -24,9 +24,9 @@ export class ViewpartnersComponent implements OnInit {
   fail: string;
   loading:boolean;
   dt:any;
+  rows = [];
   partners: any[] = this.rows;
   selected: any[];
-  rows = [];
   temp = [];
   count: number = 0;
   offset: number = 0;

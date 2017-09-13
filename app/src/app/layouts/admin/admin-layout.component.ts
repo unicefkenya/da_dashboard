@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, Event, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { MenuItems } from '../../shared/menu-items/menu-items';
@@ -29,7 +29,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   welcomeName: string;
 
   today: number = Date.now();
-  url: string;
+  url: any;
   showSettings:boolean = false;
 
   @ViewChild('sidemenu') sidemenu;
@@ -49,8 +49,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 userDashboard:any;
 schoolId:any;
   ngOnInit(): void {
-    this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
-      this.url = event.url;
+    this._router = this.router.events.filter(
+      (event:Event) => event instanceof NavigationEnd).subscribe(url => {
+      this.url = url;
       if (this.isOver()) this.sidemenu.close();
     });
 

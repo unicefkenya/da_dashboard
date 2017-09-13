@@ -22,10 +22,10 @@ export class ViewTeachersComponent implements OnInit {
   empty: string;
   fail: string;
   loading:boolean;
+  rows = [];
   teachers : any[] = this.rows;
   selected: any[];
   tmp :any;
-  rows = [];
   temp = [];
   count: number = 0;
   offset: number = 0;
@@ -58,7 +58,7 @@ export class ViewTeachersComponent implements OnInit {
       let items = [];
       let rows=[];
       for (let i = 0; i < data.length; i++){
-        console.log(data[i].phone_no)
+        //console.log(data[i].phone_no)
         this.tmp = {}
         this.tmp.name = data[i].name
         this.tmp.phonenumber = data[i].phone_no
@@ -123,7 +123,7 @@ export class ViewTeachersComponent implements OnInit {
 
 
   onPage(event) {
-    console.log(event.offset);
+    //console.log(event.offset);
     this.page=event.offset+1
 
     this.fetchTeachers(this.schoolId,event.offset, event.limit);

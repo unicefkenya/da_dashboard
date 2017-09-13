@@ -1,13 +1,13 @@
 <div class="wrapper">
   <div  fxLayout="row"  fxLayoutWrap="wrap" fxLayoutAlign="center start">
-    <div fxFlex.gt-sm="90" fxFlex="100">
+    <div fxFlex.gt-sm="100" fxFlex="100">
       <md-card>
         <md-card-content>
           <div  fxLayout="row">
             <div fxFlex="50">
-            <h4 class="ma-0">Class&nbsp;<b>1 East</b></h4>
+            <h4 class="ma-0">Class&nbsp;<b>{{className}}</b></h4>
             <br>
-              <p><small>Number of students: </small><br>50</p>
+              <p><small>Number of students: </small><br><b>{{students}}</b></p>
 
               <!--<button md-raised-button color="primary" (click)="editProfile = true">Edit Profile</button>-->
             <!--  <button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Class</button>
@@ -16,7 +16,7 @@
             <div fxFlex="50">
               <h4 class="ma-0">&nbsp;</h4>
               <br>
-              <p><small>Boys:</small>20 <br><small>Girls:</small>30</p>
+              <p><small>Boys:&nbsp;</small><b>{{maleNumber}}</b><br><small>Girls:&nbsp;</small><b>{{femaleNumber}}</b></p>
 
               <!--
               <button md-raised-button color="warn" (click)="open()" [disabled]="dialogRef">Delete Class</button>
@@ -31,4 +31,22 @@
       </md-card>
     </div>
   </div>
+  <ngx-datatable
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="children"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (page)='onPage($event)'
+    (select)='onSelect($event)'>
+  </ngx-datatable>
 </div>

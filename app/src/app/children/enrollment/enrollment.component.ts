@@ -24,9 +24,9 @@ export class EnrollmentComponent implements OnInit {
     fail: string;
     loading:boolean;
     dt:any;
+    rows = [];
     children: any[] = this.rows;
     selected: any[];
-    rows = [];
     temp = [];
     //count: number = 0;
     offset: number = 0;

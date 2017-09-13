@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@an
 import { CustomValidators } from 'ng2-validation';
 import { ChildRegistration } from './children';
 import { Response } from '@angular/http';
-import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {AddChildrenService} from './addchildren.service';
 
 @Component({

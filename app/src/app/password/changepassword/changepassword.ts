@@ -1,7 +1,7 @@
 export class ChangePassword {
   constructor(
-    public oldPassword: string,
-    public newPassword: string,
-    public confirmPassword: string,
+    public oldPassword: any,
+    public newPassword: any,
+    public confirmPassword: any,
   ){}
 }

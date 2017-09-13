@@ -25,9 +25,9 @@ export class SchoolenrollmentComponent implements OnInit {
   fail: string;
   loading:boolean;
   dt:any;
+  rows = [];
   children: any[] = this.rows;
   selected: any[];
-  rows = [];
   temp = [];
   //count: number = 0;
   offset: number = 0;
@@ -127,7 +127,7 @@ export class SchoolenrollmentComponent implements OnInit {
             .subscribe(
               data => //console.log(data)
               {
-                console.log(data);
+                //console.log(data);
                 let res = data.results;
                 this.count = data.count;
                 let childs =[];
@@ -235,7 +235,7 @@ export class SchoolenrollmentComponent implements OnInit {
 
    private getChildId(id){
 
-     this.router.navigate(['/children/child', id]);
+     this.router.navigate(['/children/child', id],{skipLocationChange:true});
 
    }
 

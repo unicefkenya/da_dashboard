@@ -15,9 +15,9 @@ export class ViewClassesComponent implements OnInit{
   loading:boolean;
   dt:any;
   schoolId:number;
+  rows = [];
   classes: any[] = this.rows;
   selected: any[];
-  rows = [];
   temp = [];
   count: number = 0;
   offset: number = 0;
@@ -41,7 +41,7 @@ export class ViewClassesComponent implements OnInit{
       let allClasses =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
-        console.log(data[i].class_name);
+        //console.log(data[i].class_name);
         if(data[i].class_name == null){
           this.dt.name = "Class "+data[i].id
         }else{
@@ -78,7 +78,7 @@ export class ViewClassesComponent implements OnInit{
    }
 
    private getClassId(id){
-     console.log('yes');
+     //console.log('yes');
      this.router.navigate(['/classes/class', id],{skipLocationChange: true});
 
    }
