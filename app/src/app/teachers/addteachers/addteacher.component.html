@@ -13,7 +13,7 @@
             <small *ngIf="success" style="color: green;">{{success}}</small>
             <small *ngIf="fail" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
-              <div  fxLayout="row">
+              <!--<div  fxLayout="row">
                 <div  fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
                   <md-select *ngIf="schoolId" [formControl]="form.controls['schoolName']" placeholder="School Name (required)">
                     <md-option value="{{schoolId}}">
@@ -27,7 +27,7 @@
                   </md-select>
                   <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input the school's name.</small>
                 </div>
-              </div>
+              </div>-->
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="First Name (required)"  [formControl]="form.controls['firstName']" type="text"></md-input>
@@ -40,13 +40,12 @@
                 </div>
                 <span style="margin-right:10px;"></span>
 
-                <label>Gender</label>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 77%;">
-                  <md-radio-group [formControl]="form.controls['gender']">
-                    <md-radio-button value="M">Male</md-radio-button>
-                    <md-radio-button value="F">Female</md-radio-button>
-                  </md-radio-group>
-                  <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the student's gender.</small>
+                  <md-select  style="margin-top:10px;" [formControl]="form.controls['gender']" placeholder="Gender (required)">
+                    <md-option  value="M">Male</md-option>
+                    <md-option   value="F">Female</md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the teacher's gender.</small>
                 </div>
               </div>
 
@@ -61,6 +60,7 @@
                   <md-input placeholder="Birthday (required)" [formControl]="form.controls['birthday']" type="date"></md-input>
                   <small *ngIf="form.controls['birthday'].hasError('required') && form.controls['birthday'].touched" class="md-text-warn">Kindly include a date.</small>
                   <small *ngIf="form.controls['birthday'].errors?.date && form.controls['birthday'].errors?.maxDate && form.controls['birthday'].touched" class="md-text-warn">Kindly include a valid date.</small>
+                  <small *ngIf="form.controls['birthday'].errors?.maxDate && form.controls['birthday'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
                 </div>
               </div>
 
@@ -70,7 +70,7 @@
                     <md-option  value="TSC">T.S.C</md-option>
                     <md-option   value="BRD">Board</md-option>
                   </md-select>
-                  <small *ngIf="form.controls['teacher_type'].hasError('required') && form.controls['teacher_type'].touched" class="md-text-warn">Kindly input the teacher type.</small>
+                  <small *ngIf="form.controls['teacher_type'].hasError('required') && form.controls['teacher_type'].touched" class="md-text-warn">Kindly input the type of teacher they are.</small>
                 </div>
                 <!--
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
@@ -97,14 +97,15 @@
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Date Started Teaching (required)" [formControl]="form.controls['dateStarted']" type="date"></md-input>
-                  <small *ngIf="form.controls['dateStarted'].hasError('required') && form.controls['dateStarted'].touched" class="md-text-warn">You must include a date.</small>
-                  <small *ngIf="form.controls['dateStarted'].errors?.date && form.controls['dateStarted'].errors?.maxDate && form.controls['dateStarted'].touched" class="md-text-warn">You must include a valid date.</small>
+                  <small *ngIf="form.controls['dateStarted'].hasError('required') && form.controls['dateStarted'].touched" class="md-text-warn">Kindly include a date.</small>
+                  <small *ngIf="form.controls['dateStarted'].errors?.date && form.controls['dateStarted'].errors?.maxDate && form.controls['dateStarted'].touched" class="md-text-warn">Kindly input a valid date.</small>
+                  <small *ngIf="form.controls['dateStarted'].errors?.maxDate && form.controls['dateStarted'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
                 </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input  placeholder="Joined Current School (required)" [formControl]="form.controls['joinedCurrent']"  type="date">{{joined_school | date:"yyyy-mm-dd"}}</md-input>
                   <small *ngIf="form.controls['joinedCurrent'].hasError('required') && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a date.</small>
                   <small *ngIf="form.controls['joinedCurrent'].errors?.date && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a valid date.</small>
-                  <small *ngIf="form.controls['joinedCurrent'].errors?.maxDate && form.controls['joinedCurrent'].touched" class="md-text-warn">Kindly input a valid date.</small>
+                  <small *ngIf="form.controls['joinedCurrent'].errors?.maxDate && form.controls['joinedCurrent'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
                 </div>
               </div>
               <!--
@@ -127,7 +128,17 @@
                   </li>
                 </div>
               </div>-->
+              <label><b>Subject Teaching</b></label>
               <hr>
+              <br>
+              <div  fxLayout="row">
+                <div *ngFor="let sub of subjects; let i=index;" fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 17%;">
+                <!--<input type="checkbox" value="{{sub}}" (click)="onChange(sub, $event)" >{{sub}}-->
+                <md-checkbox [checked]="exists(i)" (click)="toggle(i,sub)">{{sub}}</md-checkbox>
+                </div>
+                <!--<small *ngIf="form.controls['choosensubjects'].hasError('required') && form.controls['choosensubjects'].touched" class="md-text-warn">Kindly select subjects the teacher teaches</small>
+                -->
+              </div>
               <md-card-actions>
                 <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
                 <!--<button md-raised-button class="warn">Delete</button>-->

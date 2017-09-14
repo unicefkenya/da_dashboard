@@ -13,9 +13,10 @@ import {AddTeacherService} from './addteacher.service';
 
 export interface Subjects {
   name: string;
+  value: string;
   teaching: boolean;
-  subjects?: Subjects[];
 }
+
 
 @Component({
   selector: 'add-school',
@@ -28,30 +29,11 @@ export interface Subjects {
 
 
 export class AddTeachersComponent implements OnInit {
-  subjects: Subjects[] = [{
-    name: 'Subjects',
-    teaching: false,
-    subjects: [{
-      name: 'Mathematics',
-      teaching: false
-    }, {
-      name: 'English',
-      teaching: false
-    }, {
-      name: 'Kiswahili',
-      teaching: false
-    },{
-      name: 'Science',
-      teaching: false
-    },{
-      name: 'Social Studies',
-      teaching: false
-    },{
-      name: 'C.R.E',
-      teaching: false
-    }]
 
-  }];
+  @Output() selectedChange:EventEmitter<any> = new EventEmitter();
+
+  subjects= ['Mathematics','English','Kiswahili','Science','Social Studies','C.R.E'];
+  selected=[];
 
   editing = {};
   rows = [];
@@ -71,41 +53,18 @@ export class AddTeachersComponent implements OnInit {
   public form: FormGroup ;
 
 
-  isChecked: boolean = false;
-
   constructor(
     private _teacherRegistrationService: AddTeacherService,
     public datepipe:DatePipe,
     public _router: Router,
     private fb: FormBuilder
-  ){
-    this.fetch((data) => {
-      this.rows = data;
-    });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
-  }
-
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
-  }
+  ){}
 
 
 
   ngOnInit(){
     //this.onSubmit;
     this.form = this.fb.group({
-      schoolName: [null, Validators.compose([Validators.required,])],
       gender: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
@@ -117,8 +76,8 @@ export class AddTeachersComponent implements OnInit {
       bom_no: [null],
       dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
-      //subject:this.fb.array([])
     });
+
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     if(this.partnerId){
@@ -130,6 +89,7 @@ export class AddTeachersComponent implements OnInit {
   }
 
 
+
   onSubmit(registerTeacher: TeacherRegistration, form){
     var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
 
@@ -138,7 +98,6 @@ export class AddTeachersComponent implements OnInit {
       //edit
     }else{
       this.teacher = new TeacherRegistration(
-                        registerTeacher.schoolName,
                         registerTeacher.firstName,
                         registerTeacher.lastName,
                         registerTeacher.phoneNumber,
@@ -149,11 +108,12 @@ export class AddTeachersComponent implements OnInit {
                         registerTeacher.qualifications,
                         registerTeacher.dateStarted,
                         registerTeacher.joinedCurrent,
-                        registerTeacher.gender
+                        registerTeacher.gender,
+                        registerTeacher.subjects
                       );
       this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
 
-                  school: registerTeacher.schoolName,
+                  school: this.schoolId,
                   phone_no: registerTeacher.phoneNumber,
                   fstname:   registerTeacher.firstName,
                   lstname:   registerTeacher.lastName,
@@ -162,7 +122,7 @@ export class AddTeachersComponent implements OnInit {
                   qualifications: registerTeacher.qualifications,
                   tsc_no: registerTeacher.tsc_no,
                   bom_no: registerTeacher.bom_no,
-                  subjects: [],
+                  subjects: this.selected,
                   date_started_teaching: registerTeacher.dateStarted,
                   joined_current_school:  registerTeacher.joinedCurrent,
                   gender: registerTeacher.gender
@@ -181,6 +141,7 @@ export class AddTeachersComponent implements OnInit {
             }
           );
         }
+        //end
   }
 
   resetButton(){
@@ -224,29 +185,18 @@ export class AddTeachersComponent implements OnInit {
     })
   }
 
+  toggle(i, data){
+    var index = this.selected.indexOf(data);
+    if(index === -1){
+      this.selected.push(data);
+    }else{
+      this.selected.splice(index, 1);
+    }
+    this.selectedChange.emit(this.selected);
+  }
 
-    allComplete(subjects: Subjects): boolean {
-      let subtasks = subjects.subjects;
-      return subtasks.every(t => t.teaching) ? true : subtasks.every(t => !t.teaching) ? false : subjects.teaching;
-    }
+  exists(id){
+    return this.selected.indexOf(id) > -1;
+  }
 
-    someComplete(subjects: Subjects[]): boolean {
-      const numComplete = subjects.filter(t => t.teaching).length;
-      return numComplete > 0 && numComplete < subjects.length;
-    }
-
-    setAllCompleted(subjects: Subjects[], teaching: boolean) {
-      subjects.forEach(t => t.teaching = teaching);
-    }
-/*
-    onChange(){
-      const subjectFormArray = <FormArray>this.form.controls.subject;
-      /if(isChecked){
-        subjectFormArray.push(new FormControl(thissubject));
-      }else{
-        let index = subjectFormArray.controls.findIndex(x => x.value ==thissubject)
-        subjectFormArray.removeAt(index);
-      }
-    }
-    */
 }
