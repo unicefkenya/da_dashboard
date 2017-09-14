@@ -7,6 +7,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 import { ChildrenRoutes } from './children.routing';
 import { ChildrenComponent } from './children.component';
@@ -18,7 +19,7 @@ import { SchoolenrollmentComponent } from './Schoolenrollment/schoolenrollment.c
 
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ChildrenRoutes),ChartsModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
+  imports: [CommonModule, RouterModule.forChild(ChildrenRoutes),Ng2AutoCompleteModule,ChartsModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
   declarations: [ChildrenComponent, AddChildrenComponent, SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent]
 })
 

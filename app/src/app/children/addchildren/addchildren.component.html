@@ -15,12 +15,14 @@
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
               <div  fxLayout="row" >
                 <div *ngIf="!schoolId" fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
+                  <md-input style="width: 100%;" (keyup)="doCheck($event.target.value)" (input)="doCheck($event.target.value)" ng2-auto-complete [source]="schoolNames" [list-formatter]="autocompleListFormatter" dividerColor="primary" placeholder="School Name (required)" [formControl]="form.controls['schoolName']"  type="text"></md-input>
+                  <!--
                   <md-select required [formControl]="form.controls['schoolName']"  placeholder="School (required)">
                     <md-option *ngFor = "let name of schools" value="{{name.id}}">
                       {{name.school_name}}
                     </md-option>
-                  </md-select>
-                  <small *ngIf="form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
+                  </md-select>-->
+                  <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input the class.</small>
                 </div>
               </div>
               <div  fxLayout="row">
@@ -48,17 +50,16 @@
                   <md-input placeholder="Date Enrolled (required)" [formControl]="form.controls['enrolDate']" type="date"></md-input>
                   <small *ngIf="form.controls['enrolDate'].hasError('required') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a date.</small>
                   <small *ngIf="form.controls['enrolDate'].errors?.date && form.controls['enrolDate'].errors?.maxDate && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a valid date.</small>
+                  <small *ngIf="form.controls['enrolDate'].errors?.maxDate && form.controls['enrolDate'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
                 </div>
               </div>
 
               <div  fxLayout="row">
-                <span style="margin-right:90px;"></span>
-                <label>Gender</label>
-                  <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 70%;">
-                    <md-radio-group [formControl]="form.controls['gender']">
-                      <md-radio-button value="M">Male</md-radio-button>
-                      <md-radio-button value="F">Female</md-radio-button>
-                    </md-radio-group>
+                  <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                    <md-select  style="margin-top:10px;" [formControl]="form.controls['gender']" placeholder="Gender (required)">
+                      <md-option  value="M">Male</md-option>
+                      <md-option   value="F">Female</md-option>
+                    </md-select>
                     <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the student's gender.</small>
                   </div>
 
@@ -66,11 +67,12 @@
                     <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" type="date"></md-input>
                     <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
                     <small *ngIf="form.controls['dateOfBirth'].errors?.date && form.controls['dateOfBirth'].errors?.maxDate && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
+                    <small *ngIf="form.controls['dateOfBirth'].errors?.maxDate && form.controls['dateOfBirth'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
                   </div>
               </div>
 
               <div  fxLayout="row" >
-                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
                   <md-select required [formControl]="form.controls['className']"  placeholder="Class (required)">
                     <md-option *ngFor = "let name of schoolClasses" value="{{name.id}}">
                       {{name.class_name}}
@@ -85,7 +87,7 @@
                   <small *ngIf="form.controls['previousClass'].errors?.number && form.controls['previousClass'].touched" class="md-text-warn">Kindly input a valid digit.</small>
                 </div>
 
-                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
                   <md-select ngModel [formControl]="form.controls['notInSchool']" placeholder="Been in school before?">
                     <md-option value="True">Yes</md-option>
                     <md-option value="False">No</md-option>
@@ -116,7 +118,7 @@
 
               <h6>Household Details</h6>
               <div  fxLayout="row">
-                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
                   <md-select [formControl]="form.controls['stayWith']"   placeholder="Whom do you stay with?">
                     <md-option value="Parents">Parents</md-option>
                     <md-option value="Guardians">Guardians</md-option>
@@ -133,7 +135,7 @@
                   <small *ngIf="form.controls['mealsInDay'].errors?.number && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a digit.</small>
                 </div>
               </div>
-              <hr>
+
               <md-card-actions>
                 <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
                 <!--<button md-raised-button class="warn">Delete</button>-->

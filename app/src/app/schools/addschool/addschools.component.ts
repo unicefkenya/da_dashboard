@@ -22,27 +22,8 @@ export class AddSchoolsComponent implements OnInit {
   constructor(
     private _schoolRegistrationService: AddSchoolService,
     private fb: FormBuilder
-  ){
-    this.fetch((data) => {
-      this.rows = data;
-    });
-  }
+  ){}
 
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
-  }
-
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
-  }
 
   public success;
   public fail;
@@ -66,10 +47,15 @@ export class AddSchoolsComponent implements OnInit {
       lat_geo_cordinates: [null]
     });
     this.getSchoolCounties();
-    this.getSchoolConstituencies();
+    //this.getSchoolConstituencies();
 
   }
-
+subcountyForm:boolean = false;
+  onSelect(event, data){
+    console.log(event,data, 'wewe');
+    this.subcountyForm = true;
+    this.getSchoolConstituencies(data);
+  }
 
   onSubmit(registerSchool: SchoolRegistration){
     if(!this.submitted){
@@ -106,38 +92,38 @@ export class AddSchoolsComponent implements OnInit {
   resetButton(){
     this.form.reset();
   }
-
+countyName:any;
+county:any;
   getSchoolCounties(){
 
     this._schoolRegistrationService.getCounties()
-      .subscribe(
-        (res)=>{
-          const countyName = [];
-          for (let county_name in res){
-            countyName.push(res[county_name]);
+      .subscribe(res=>{
+
+          res = res.results;
+          this.countyName = [];
+          for(let i =0; i<res.length;i++){
+            this.county = {};
+            this.county.county_name = res[i].county_name;
+            this.county.id = res[i].id;
+            this.county.sub_counties = res[i].subcounties;
+            this.countyName.push(this.county);
           }
-          this.schoolCounty = countyName;
-          console.log(countyName);
-        },
-      (err) => console.log(err),
-      ()=>console.log("Done")
-    );
+           console.log(this.countyName);
+        });
+
+
   }
+subcounties:any;
+zones:any;
+  getSchoolConstituencies(data){
 
-  getSchoolConstituencies(){
+    if(data == 1){
+      this.subcounties = this.countyName[data-1].sub_counties;
+    }{
+      this.subcounties = this.countyName[data].sub_counties;
+    }
 
-    this._schoolRegistrationService.getConstituencies()
-      .subscribe(
-        (res)=>{
-          const constituencyName = [];
-          for (let constituency in res){
-            constituencyName.push(res[constituency]);
-          }
-          this.schoolConstituency = constituencyName;
-          console.log(constituencyName);
-        },
-      (err) => console.log(err),
-      ()=>console.log("Done")
-    );
+
+    console.log(data,this.subcounties, 'yeah');
   }
 }

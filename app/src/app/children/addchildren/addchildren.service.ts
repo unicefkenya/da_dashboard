@@ -65,6 +65,12 @@ export class AddChildrenService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  fetchSchoolName(id){
+    return this.http.get(this.baseApiUrl+'api/school?id='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };

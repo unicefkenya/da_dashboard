@@ -30,6 +30,10 @@ export class AddChildrenComponent implements OnInit {
   public form: FormGroup;
   schoolId:number;
   partnerId:number;
+  schools:any;
+  schoolName:any;
+  schoolPartnerId:any;
+  schoolNames = [];
 
   constructor(
     private _childRegistrationService: AddChildrenService,
@@ -53,26 +57,8 @@ export class AddChildrenComponent implements OnInit {
       householdNumber: [null],
       mealsInDay: [null, Validators.compose([Validators.required, CustomValidators.number])]
     });
-    this.fetch((data) => {
-      this.rows = data;
-    });
   }
 
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
-  }
-
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
-  }
 
 
   ngOnInit(){
@@ -82,17 +68,73 @@ export class AddChildrenComponent implements OnInit {
 
     if(this.schoolId){
       this.getSchoolClasses(this.schoolId);
+      this.getSchoolName(this.schoolId);
     }else if(this.partnerId){
-      this.getSchools(this.partnerId);
+      this.getPartnerSchools(this.partnerId);
+      //this.getSchoolClasses(this.schools.id);
     }
 
   }
-
+  doCheck(event){
+    console.log(event);
+  }
   onSubmit(registerChild: ChildRegistration){
     if(!this.submitted){
 
       //edit
     }else{
+      if(this.schoolId){
+
+          this.school = new ChildRegistration(
+                                registerChild.schoolName,
+                                registerChild.firstName,
+                                registerChild.maidenName,
+                                registerChild.lastName,
+                                registerChild.admNo,
+                                registerChild.enrolDate,
+                                registerChild.gender,
+                                registerChild.dateOfBirth,
+                                registerChild.className,
+                                registerChild.previousClass,
+                                registerChild.notInSchool,
+                                registerChild.modeOfTransport,
+                                registerChild.timeToSchool,
+                                registerChild.stayWith,
+                                registerChild.householdNumber,
+                                registerChild.mealsInDay
+                              );
+
+          this._childRegistrationService.sendData({
+                      school_name:this.schoolName,
+                      fstname: registerChild.firstName,
+                      midname: registerChild.maidenName,
+                      lstname: registerChild.lastName,
+                      admission_no: registerChild.admNo,
+                      date_enrolled: registerChild.enrolDate,
+                      gender: registerChild.gender,
+                      date_of_birth: registerChild.dateOfBirth,
+                      class_id: registerChild.className,
+                      previous_class: registerChild.previousClass,
+                      not_in_school_before: registerChild.notInSchool,
+                      mode_of_transport: registerChild.modeOfTransport,
+                      time_to_school: registerChild.timeToSchool,
+                      stay_with: registerChild.stayWith,
+                      household: registerChild.householdNumber,
+                      meals_per_day: registerChild.mealsInDay
+              })
+              .subscribe(
+                data => //console.log(data)
+                {
+                  //console.log("Added Child Successfully"),
+                  this.success = "Added Child Successfully";
+                  this.form.reset();
+                },
+                error =>{
+                  this.empty = "This field is required";
+                  this.fail = "Failed to save data";
+                }
+              );
+      }else{
       this.school = new ChildRegistration(
                             registerChild.schoolName,
                             registerChild.firstName,
@@ -113,7 +155,7 @@ export class AddChildrenComponent implements OnInit {
                           );
 
       this._childRegistrationService.sendData({
-
+                  school_name: registerChild.schoolName,
                   fstname: registerChild.firstName,
                   midname: registerChild.maidenName,
                   lstname: registerChild.lastName,
@@ -142,15 +184,15 @@ export class AddChildrenComponent implements OnInit {
               this.fail = "Failed to save data";
             }
           );
-
         }
+      }
   }
 
   resetButton(){
     this.form.reset();
   }
-schools:any;
-  getSchools(id){
+
+  getPartnerSchools(id){
       this._childRegistrationService.fetchPartnerSchools(id).subscribe(res =>{
 
         res = res.results;
@@ -159,10 +201,18 @@ schools:any;
           this.sch = {};
           this.sch.school_name = res[i].school_name;
           this.sch.id = res[i].id;
+          this.schoolNames.push(this.sch.school_name);
           this.schools.push(this.sch);
         }
         // console.log(this.schools);
       });
+  }
+  getSchoolName(id){
+    this._childRegistrationService.fetchSchoolName(id).subscribe(res =>{
+
+      res = res.results;
+      this.schoolName = res.school_name;
+    });
   }
   getSchoolClasses(id){
 

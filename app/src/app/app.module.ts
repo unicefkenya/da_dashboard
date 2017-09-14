@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
-
 import { AuthGuard } from './authguard/auth.guard';
 import { Adminaccess } from './authguard/adminaccess';
 import { Schoolaccess } from './authguard/schoolaccess';

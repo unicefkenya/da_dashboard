@@ -20,14 +20,14 @@
               <md-input placeholder="Emis Code (optional)" [formControl]="form.controls['emisCode']"   class="mb-1"></md-input>
 
               <md-select  placeholder="County (required)" [formControl]="form.controls['county']" class="mb-2">
-                <md-option *ngFor = "let name of schoolCounty" value="{{name.county_name}}">
+                <md-option *ngFor = "let name of countyName" value="{{name.county_name}}" (click)="onSelect($event.target.value, name.id)" (keyup)="onSelect($event.target.value)" >
                   {{name.county_name | capitalize}}
                 </md-option>
               </md-select>
               <small *ngIf="form.controls['county'].hasError('required') && form.controls['county'].touched" class="md-text-warn">Kindly input the school's county.</small>
 
-              <md-select  placeholder="Sub-County (required)" [formControl]="form.controls['zone']" class="mb-2">
-                <md-option *ngFor = "let name of schoolConstituency" value="{{name.id}}">{{name.name | capitalize}}</md-option>
+              <md-select *ngIf="subcountyForm" placeholder="Sub-County (required)" [formControl]="form.controls['zone']" class="mb-2">
+                <md-option *ngFor = "let name of subcounties" value="{{name.id}}">{{name.name | capitalize}}</md-option>
               </md-select>
               <small *ngIf="form.controls['zone'].hasError('required') && form.controls['zone'].touched" class="md-text-warn">Kindly input the school's sub county.</small>
 
