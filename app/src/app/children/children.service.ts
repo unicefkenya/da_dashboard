@@ -35,18 +35,18 @@ export class ChildrenService {
   }
 
   searchData(name){
-    return this.http.get(this.baseApiUrl+'/api/students?name='+name)
+    return this.http.get(this.baseApiUrl+'api/students?name='+name)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   searchPartnerData(id,name){
-    return this.http.get(this.baseApiUrl+'/api/students?name='+name+'&partner='+id)
+    return this.http.get(this.baseApiUrl+'api/students?name='+name+'&partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   searchSchoolData(id,name){
-    return this.http.get(this.baseApiUrl+'/api/students?name='+name+'&school='+id)
+    return this.http.get(this.baseApiUrl+'api/students?name='+name+'&school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

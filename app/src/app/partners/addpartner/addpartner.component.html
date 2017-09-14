@@ -23,6 +23,7 @@
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Email Address (required)"  [formControl]="form.controls['email']" type="text"></md-input>
                   <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">Include partner email address</small>
+                  <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="md-text-warn">You must include a valid email address.</small>
                 </div>
               </div>
               <div  fxLayout="row">

@@ -41,25 +41,25 @@ export class ClassService {
 
 
     getClassId(id){
-      return this.http.get(this.baseApiUrl+'/api/streams/'+id)
+      return this.http.get(this.baseApiUrl+'api/streams/'+id)
         .map((response: Response) => response.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getClassStudents(schoolId, streamId){
-      return this.http.get(this.baseApiUrl+'/api/students?school='+schoolId+'&Class='+streamId)
+      return this.http.get(this.baseApiUrl+'api/students?school='+schoolId+'&Class='+streamId)
         .map((response: Response) => response.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getClassMaleStudents(schoolId, streamId){
-      return this.http.get(this.baseApiUrl+'/api/students?gender=M&school='+schoolId+'&Class='+streamId)
+      return this.http.get(this.baseApiUrl+'api/students?gender=M&school='+schoolId+'&Class='+streamId)
         .map((response: Response) => response.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getClassFemaleStudents(schoolId, streamId){
-      return this.http.get(this.baseApiUrl+'/api/students?gender=F&school='+schoolId+'&Class='+streamId)
+      return this.http.get(this.baseApiUrl+'api/students?gender=F&school='+schoolId+'&Class='+streamId)
         .map((response: Response) => response.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

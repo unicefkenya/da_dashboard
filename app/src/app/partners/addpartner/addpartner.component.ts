@@ -54,7 +54,7 @@ export class AddPartnerComponent implements OnInit {
     this.form = this.fb.group({
       partner_name: [null, Validators.compose([Validators.required])],
       phone: [null, Validators.compose([Validators.required])],
-      email: [null, Validators.compose([Validators.required])],
+      email: [null, Validators.compose([Validators.required,CustomValidators.email])],
 
     });
   }

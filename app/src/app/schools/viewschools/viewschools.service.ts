@@ -11,26 +11,26 @@ export class ViewSchoolsService {
     private baseApiUrl = BaseUrl.base_api_url;
 
   fetchSchools(page){
-      return this.http.get(this.baseApiUrl+'/api/school?page='+page)
+      return this.http.get(this.baseApiUrl+'api/school?page='+page)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   fetchPartnerSchools(id,page){
-    return this.http.get(this.baseApiUrl+'/api/school?page='+page+'&partner='+id)
+    return this.http.get(this.baseApiUrl+'api/school?page='+page+'&partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   searchData(school){
 
-    return this.http.get(this.baseApiUrl+'/api/school?school_name='+school)
+    return this.http.get(this.baseApiUrl+'api/school?school_name='+school)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   searchPartnerData(id,school){
 
-    return this.http.get(this.baseApiUrl+'/api/school?school_name='+school+'&partner='+id)
+    return this.http.get(this.baseApiUrl+'api/school?school_name='+school+'&partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

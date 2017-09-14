@@ -13,10 +13,10 @@ export class TeachersService {
 private baseApiUrl = BaseUrl.base_api_url;
 
   getTeacherId(id){
-    return this.http.get(this.baseApiUrl+'/api/teachers/'+id)
+    return this.http.get(this.baseApiUrl+'api/teachers/'+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  
+
 }

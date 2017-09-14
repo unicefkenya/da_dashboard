@@ -60,19 +60,23 @@ export class ViewpartnersComponent implements OnInit {
     });
     return this.dx;
   }
-
-  //fetching number of girls per partner
+  girl = []
   fetchPartnerGirlChildTotal(id):any{
-    this.partnersService.fetchPartnerGirlChildTotal(id).subscribe(data => {
-      return data.count;
-    });
-  }
 
+
+  }
+girlNumber:any;
+girlsArray = [];
+  //fetching number of girls per partner
+
+partner = [];
+b:any;
+z:any;
   //admin
   fetchpartners(offset,limit): void {
 
     this.partnersService.fetchPartners(this.page).subscribe(data => {
-
+      console.log(data);
       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
@@ -80,32 +84,50 @@ export class ViewpartnersComponent implements OnInit {
       data = data.results;
       this.loading = false;
 
-      let partner =[]
+      //let partner =[]
       let rows=[]
+      let girlsarray = []
+
+        for(let k =0; k<data.length; k++){
+
+          this.id = data[k].id
+          this.partnersService.fetchPartnerGirlChildTotal(this.id).subscribe(data => {
+            //console.log(data);
+              this.b = {}
+              this.b.girls = data.count;
+              //console.log(data.count);
+              this.girlsArray.push(this.b);
+          });
+
+          this.girlsArray = girlsarray
+
+
+        }
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.id = data[i].id
         let a:any;
         a = this.fetchPartnerBoyChildTotal(this.id);
-        let b = this.fetchPartnerGirlChildTotal(this.id);
-        console.log(a, b,this.id, 'jfhgfdfgh')
+
         this.dt = {}
         this.dt.organization=data[i].name
         this.dt.email=data[i].email
         this.dt.phone=data[i].phone
         this.dt.id = data[i].id
         this.dt.boys = this.dx
-        this.dt.girls = b
+
+        this.dt.girls = girlsarray
         this.dt.total = 0
-        partner.push(this.dt)
+        this.partner.push(this.dt)
       }
+      console.log(this.partner);
       //cache our data
       //this.temp = childs;
       let row=[...rows]
-      this.temp=[...partner];
+      this.temp=[...this.partner];
       let j=0
       for (let i = start; i < end; i++) {
-        row[i] = partner[j];
+        row[i] = this.partner[j];
         j++;
       }
       //this.temp=row
