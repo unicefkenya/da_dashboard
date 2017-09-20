@@ -11,6 +11,8 @@ export class TeacherRegistration {
     public dateStarted: string,
     public joinedCurrent: string,
     public gender: string,
-    public subjects: any
+    public classAssigned: string,
+    public headteacher: string
+  //  public subjects: any
   ){}
 }

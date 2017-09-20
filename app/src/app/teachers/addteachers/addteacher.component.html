@@ -10,8 +10,8 @@
         <md-tab>
           <template md-tab-label>Teachers Registration</template>
           <md-card-content>
-            <small *ngIf="success" style="color: green;">{{success}}</small>
-            <small *ngIf="fail" style="color: red;">{{fail}}</small>
+            <small *ngIf="success && !fail" style="color: green;">{{success}}</small>
+            <small *ngIf="fail && !success" style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <!--<div  fxLayout="row">
                 <div  fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
@@ -65,13 +65,31 @@
               </div>
 
               <div  fxLayout="row">
-                <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
-                  <md-select  [formControl]="form.controls['teacher_type']" placeholder="Teacher Type (required)">
-                    <md-option  value="TSC">T.S.C</md-option>
-                    <md-option   value="BRD">Board</md-option>
+                <!--<div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-select  [formControl]="form.controls['class']" placeholder="Assign Class (required)">
+                    <md-option *ngFor="let cl of classes" let i=index; value="{{cl.id}}">
+                      <md-checkbox (click)="cbClick(i, $event)"></md-checkbox>
+                      {{cl.name}}
+                    </md-option>
                   </md-select>
-                  <small *ngIf="form.controls['teacher_type'].hasError('required') && form.controls['teacher_type'].touched" class="md-text-warn">Kindly input the type of teacher they are.</small>
+                  <small *ngIf="form.controls['class'].hasError('required') && form.controls['class'].touched" class="md-text-warn">Kindly input the class assigned.</small>
                 </div>
+              -->
+              <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                <md-select  [formControl]="form.controls['teacher_type']" placeholder="Teacher Type (required)">
+                  <md-option  value="TSC">T.S.C</md-option>
+                  <md-option   value="BRD">Board</md-option>
+                </md-select>
+                <small *ngIf="form.controls['teacher_type'].hasError('required') && form.controls['teacher_type'].touched" class="md-text-warn">Kindly input the type of teacher they are.</small>
+              </div>
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-select  [formControl]="form.controls['headteacher']" placeholder="Are they the headteacher (required)">
+                    <md-option  value="True">Yes</md-option>
+                    <md-option   value="False">No</md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['headteacher'].hasError('required') && form.controls['headteacher'].touched" class="md-text-warn">Kindly state if they are the headteacher or not.</small>
+                </div>
+
                 <!--
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-select [formControl]="form.controls['qualifications']"  placeholder="Qualifications (required)">
@@ -128,16 +146,26 @@
                   </li>
                 </div>
               </div>-->
+              <!--
               <label><b>Subject Teaching</b></label>
               <hr>
               <br>
               <div  fxLayout="row">
                 <div *ngFor="let sub of subjects; let i=index;" fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 17%;">
                 <!--<input type="checkbox" value="{{sub}}" (click)="onChange(sub, $event)" >{{sub}}-->
-                <md-checkbox [checked]="exists(i)" (click)="toggle(i,sub)">{{sub}}</md-checkbox>
+                <!--<md-checkbox [checked]="exists(i)" (click)="toggle(i,sub)">{{sub}}</md-checkbox>
                 </div>
                 <!--<small *ngIf="form.controls['choosensubjects'].hasError('required') && form.controls['choosensubjects'].touched" class="md-text-warn">Kindly select subjects the teacher teaches</small>
-                -->
+
+              </div>-->
+              <label><b>Assign Classes (Required)</b></label>
+              <hr>
+              <br>
+              <div  fxLayout="row">
+                <div *ngFor="let cl of classes; let i=index;" fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 17%;">
+                <!--<input type="checkbox" value="{{sub}}" (click)="onChange(sub, $event)" >{{sub}}-->
+                <md-checkbox name="classAssigned" [checked]="exists(i)" (click)="toggle(i,cl.id)">{{cl.name}}</md-checkbox>
+                </div>
               </div>
               <md-card-actions>
                 <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>

@@ -52,6 +52,7 @@ export class ViewTeachersComponent implements OnInit {
       const start = offset * limit;
       const end = start + limit;
        this.count =data.count
+       console.log(data)
       data = data.results;
       this.loading = false;
 

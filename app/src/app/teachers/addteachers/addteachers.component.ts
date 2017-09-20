@@ -1,4 +1,4 @@
-import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef} from '@angular/core';
+import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef,ViewChildren} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,8 @@ import { CustomValidators } from 'ng2-validation';
 import { TeacherRegistration } from './teacher';
 import { Response } from '@angular/http';
 import {AddTeacherService} from './addteacher.service';
+import {ClassService} from '../../classes/class.service';
+import {MdCheckbox} from '@angular/material';
 
 export interface Subjects {
   name: string;
@@ -22,14 +24,14 @@ export interface Subjects {
   selector: 'add-school',
   templateUrl: './addteacher.component.html',
   styleUrls: ['./addteacher.component.scss'],
-  providers: [AddTeacherService, DatePipe],
+  providers: [AddTeacherService, DatePipe, ClassService],
   //directives: [FocusDirective]
 
 })
 
 
 export class AddTeachersComponent implements OnInit {
-
+  @ViewChildren(MdCheckbox) checkboxes;
   @Output() selectedChange:EventEmitter<any> = new EventEmitter();
 
   subjects= ['Mathematics','English','Kiswahili','Science','Social Studies','C.R.E'];
@@ -51,10 +53,12 @@ export class AddTeachersComponent implements OnInit {
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
   public form: FormGroup ;
-
+  dt:any;
+  classes:any;
 
   constructor(
     private _teacherRegistrationService: AddTeacherService,
+    private classService:ClassService,
     public datepipe:DatePipe,
     public _router: Router,
     private fb: FormBuilder
@@ -71,6 +75,7 @@ export class AddTeachersComponent implements OnInit {
       phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.number])],
       birthday: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       teacher_type: [null, Validators.compose([Validators.required])],
+      headteacher: [null, Validators.compose([Validators.required])],
       qualifications: [null],
       tsc_no: [null],
       bom_no: [null],
@@ -83,6 +88,7 @@ export class AddTeachersComponent implements OnInit {
     if(this.partnerId){
       this.getSchoolNames(this.partnerId);
     }else if(this.schoolId){
+      this.getClassses(this.schoolId);
       this.getSchoolName(this.schoolId);
     }
 
@@ -97,7 +103,7 @@ export class AddTeachersComponent implements OnInit {
 
       //edit
     }else{
-      this.teacher = new TeacherRegistration(
+        this.teacher = new TeacherRegistration(
                         registerTeacher.firstName,
                         registerTeacher.lastName,
                         registerTeacher.phoneNumber,
@@ -109,9 +115,10 @@ export class AddTeachersComponent implements OnInit {
                         registerTeacher.dateStarted,
                         registerTeacher.joinedCurrent,
                         registerTeacher.gender,
-                        registerTeacher.subjects
+                        registerTeacher.classAssigned,
+                        registerTeacher.headteacher,
                       );
-      this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
+        this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
 
                   school: this.schoolId,
                   phone_no: registerTeacher.phoneNumber,
@@ -122,7 +129,8 @@ export class AddTeachersComponent implements OnInit {
                   qualifications: registerTeacher.qualifications,
                   tsc_no: registerTeacher.tsc_no,
                   bom_no: registerTeacher.bom_no,
-                  subjects: this.selected,
+                  classes: this.selected,
+                  headteacher: registerTeacher.headteacher,
                   date_started_teaching: registerTeacher.dateStarted,
                   joined_current_school:  registerTeacher.joinedCurrent,
                   gender: registerTeacher.gender
@@ -136,11 +144,11 @@ export class AddTeachersComponent implements OnInit {
             },
             error =>{
               console.log(error)
-              this.empty = "This field is required";
-              this.fail = "Failed to save data";
+
+              this.fail = "Failed to save data. Make sure all required data is filled "+error;
             }
           );
-        }
+      }
         //end
   }
 
@@ -157,6 +165,27 @@ export class AddTeachersComponent implements OnInit {
     var bom = "BOM";
     const teacherType = [tsc,bom];
     //console.log(teacherType);
+  }
+
+  getClassses(id): void {
+    this.classService.getClassses(id).subscribe(data => {
+      console.log(data, 'classes');
+      data = data.results;
+      let allClasses =[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        //console.log(data[i].class_name);
+
+        if(data[i].class_name == null){
+          this.dt.name = "Class "+data[i].id
+        }else{
+          this.dt.name="Class "+data[i].class_name
+        }
+        this.dt.id = data[i].id
+        allClasses.push(this.dt)
+      }
+      this.classes = allClasses;
+    });
   }
 
   getSchoolNames(id){
@@ -184,7 +213,7 @@ export class AddTeachersComponent implements OnInit {
       this.schoolName = data.results[0].school_name
     })
   }
-
+notSelected:any;
   toggle(i, data){
     var index = this.selected.indexOf(data);
     if(index === -1){
@@ -193,7 +222,10 @@ export class AddTeachersComponent implements OnInit {
       this.selected.splice(index, 1);
     }
     this.selectedChange.emit(this.selected);
+    //console.log(this.selected.length)
   }
+
+
 
   exists(id){
     return this.selected.indexOf(id) > -1;
