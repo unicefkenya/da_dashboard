@@ -39,6 +39,7 @@ export class ViewpartnersComponent implements OnInit {
   males:any;
   females:any;
   id:number;
+  partner=[];
 
   columns = [
     { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
@@ -51,32 +52,12 @@ export class ViewpartnersComponent implements OnInit {
 
   constructor( private partnersService: ViewpartnersService,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
   }
-  dx:any;
-  //fetching number of boys per partner
-  fetchPartnerBoyChildTotal(id){
-    this.partnersService.fetchPartnerBoyChildTotal(id).subscribe(data => {
-      this.dx = data.count;
 
-    });
-    return this.dx;
-  }
-  girl = []
-  fetchPartnerGirlChildTotal(id):any{
-
-
-  }
-girlNumber:any;
-girlsArray = [];
-  //fetching number of girls per partner
-
-partner = [];
-b:any;
-z:any;
   //admin
   fetchpartners(offset,limit): void {
 
     this.partnersService.fetchPartners(this.page).subscribe(data => {
-      console.log(data);
+    //  console.log(data);
       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
@@ -86,41 +67,22 @@ z:any;
 
       //let partner =[]
       let rows=[]
-      let girlsarray = []
-
-        for(let k =0; k<data.length; k++){
-
-          this.id = data[k].id
-          this.partnersService.fetchPartnerGirlChildTotal(this.id).subscribe(data => {
-            //console.log(data);
-              this.b = {}
-              this.b.girls = data.count;
-              //console.log(data.count);
-              this.girlsArray.push(this.b);
-          });
-
-          this.girlsArray = girlsarray
-
-
-        }
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.id = data[i].id
         let a:any;
-        a = this.fetchPartnerBoyChildTotal(this.id);
 
         this.dt = {}
         this.dt.organization=data[i].name
         this.dt.email=data[i].email
         this.dt.phone=data[i].phone
         this.dt.id = data[i].id
-        this.dt.boys = this.dx
-
-        this.dt.girls = girlsarray
-        this.dt.total = 0
+        this.dt.boys = data[i].students.males
+        this.dt.girls = data[i].students.females
+        this.dt.total = data[i].students.total
         this.partner.push(this.dt)
       }
-      console.log(this.partner);
+      //console.log(this.partner);
       //cache our data
       //this.temp = childs;
       let row=[...rows]
@@ -208,13 +170,13 @@ z:any;
       // Whenever the filter changes, always go back to the first page
       this.table.offset = this.page;
 
-    console.log('Filter event', event);
+  //  console.log('Filter event', event);
   }
 
 
 
   onPage(event) {
-    console.log(event.offset);
+    //console.log(event.offset);
     this.page=event.offset+1
     this.fetchpartners(event.offset, event.limit);
   }
