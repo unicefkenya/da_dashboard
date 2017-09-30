@@ -1,0 +1,16 @@
+
+<sebm-google-map
+     [latitude]="lat"
+     [longitude]="lng"
+     [zoom]="zoom">
+  <sebm-google-map-marker
+    *ngFor="let m of markers; let i"
+     [latitude]="m.lat"
+     [longitude]="m.lng"
+     [markerDraggable]="draggable"
+     (markerClick)="clickedMarker('l')">
+   </sebm-google-map-marker>
+   <sebm-google-map-info-window>
+     <p>More info!</p>
+  </sebm-google-map-info-window>
+</sebm-google-map>
