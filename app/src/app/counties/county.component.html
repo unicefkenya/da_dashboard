@@ -1,5 +1,5 @@
 
-<sebm-google-map
+<!--<sebm-google-map
      [latitude]="lat"
      [longitude]="lng"
      [zoom]="zoom">
@@ -13,4 +13,11 @@
    <sebm-google-map-info-window>
      <p>More info!</p>
   </sebm-google-map-info-window>
-</sebm-google-map>
+</sebm-google-map>-->
+
+<!-- this creates a google map on the page with the given lat/lng from -->
+<!-- the component as the initial center of the map: -->
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+     <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc" >
+     </agm-data-layer>
+</agm-map>
