@@ -1,11 +1,17 @@
 import { Routes } from "@angular/router";
-
 import { CountyComponent } from './county.component';
-import { AuthGuard } from '../authguard/auth.guard';
 
 
-export const CountyRoutes: Routes = [{
-  path: '',
-  component: CountyComponent,
-  canActivate: [AuthGuard]
-}];
+export const CountyRoutes: Routes = [
+  {
+    path: '',
+    children: [{
+      path: 'county-new-enrollments',
+      component: CountyComponent
+    },{
+      path: 'county-dropouts',
+      component: CountyComponent
+    }
+  ],
+  }
+]

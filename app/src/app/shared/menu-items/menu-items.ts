@@ -52,13 +52,17 @@ const MENUITEMS = [
       {state: 'view-partners', name: 'View Partners'}
     ]
   },
-  /*{
+  {
     usertype: 'admin',
     state: 'counties',
     name: 'Counties',
-    type: 'link',
-    icon: 'my_location'
-  },*/
+    type: 'sub',
+    icon: 'my_location',
+    children: [
+      {state: 'county-new-enrollments', name: 'New Enrollments'},
+      {state: 'county-dropouts', name: 'Dropouts'}
+    ]
+  },
   {
     usertype: 'partner',
     state: 'schools',
