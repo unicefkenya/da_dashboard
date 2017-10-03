@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CountyService} from './county.service';
 declare var google;
@@ -18,7 +18,7 @@ export class Marker {
   providers: [CountyService]
 
 })
-export class CountyComponent implements OnInit {
+export class CountyComponent implements OnInit, AfterViewInit {
 
 lat: number = 0.1768696;
 lng: number = 37.9083264;
@@ -36,16 +36,54 @@ markers: Marker[]=[{
 }
 ];
 
-geoJsonObject: Object;
+counties = [
+  {name: 'nairobi',lat:1.2921,lng:36.8219,},
+  {name: 'kisumu',lat:0.0917,lng:34.7680,}
+]
+
+geoJsonObject: Object = [
+  {lat:1.2921,lng:36.8219,},
+  {lat:0.0917,lng:34.7680,}
+];
   //http://technobytz.com/mapping-angular-google-maps-api-geojson.html
 
   constructor(private countyService: CountyService){}
 
   ngOnInit(){
-    this.getGeoJSON();
+    this.getCountiesData();
   }
+  private map:any;
+
+  ngAfterViewInit(){
+
+      function initMap() {
+        this.map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center:{lat: 0.176869, lng: 37.9083264},
+          //center: {lat: -28, lng: 137}
+        });
+
+        this.map.data.loadGeoJson('assets/data/kenyancounties.json');
+        this.map.data.setStyle({
+          //icon: '//example.com/path/to/image.png',
+          fillColor: '#521DB7',
+          strokeColor: '#521DB7',
+          strokeWeight: 2
+        });
+        this.map.data.addListener('mouseover', function(event) {
+        this.map.data.revertStyle();
+        this.map.data.overrideStyle(event.feature, {strokeWeight: 8});
+        });
+
+        this.map.data.addListener('mouseout', function(event) {
+        this.map.data.revertStyle();
+        });
+      }
+      google.maps.event.addDomListener(window, "load", initMap);
+  }
+
 ct:any;
-  getGeoJSON():void{
+  getCountiesData(){
     this.countyService.getCountiesData().subscribe(data=>{
       data = data.results;
       let counties = []
