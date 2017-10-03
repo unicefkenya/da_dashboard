@@ -4,5 +4,24 @@
      </agm-data-layer>
 </agm-map>
 -->
-
+<!--
 <div id="map"></div>
+-->
+
+<div id="controls" class="nicebox">
+  <div>
+      <select id="county-variable">
+        <option *ngFor="let a of selections; let index" (click)="loadCensusData(a.select)" value="{{a.select}}">{{a.select}}</option>
+      </select>
+  </div>
+  <div id="legend">
+      <div id="county-min">min</div>
+      <div class="color-key"><span id="data-caret">&#x25c6;</span></div>
+      <div id="county-max">max</div>
+  </div>
+  </div>
+  <div id="data-box" class="nicebox">
+      <label id="data-label" for="data-value"></label>
+      <span id="data-value"></span>
+  </div>
+  <div id="map"></div>
