@@ -38,10 +38,29 @@ markers: Marker[]=[{
 
 geoJsonObject: Object;
   //http://technobytz.com/mapping-angular-google-maps-api-geojson.html
-  ngOnInit(){}
 
+  constructor(private countyService: CountyService){}
+
+  ngOnInit(){
+    this.getGeoJSON();
+  }
+ct:any;
   getGeoJSON():void{
+    this.countyService.getCountiesData().subscribe(data=>{
+      data = data.results;
+      let counties = []
+      for(let a=0; a<data.length; a++){
+        this.ct = {}
+        this.ct.name = data[a].value;
+        this.ct.enrolled = data[a].enrolled_females + data[a].enrolled_males;
+        this.ct.total = data[a].old_females + data[a].old_males;
+        this.ct.dropouts = data[a].dropout_total;
+        counties.push(this.ct);
+      }console.log(counties, 'hizi county');
 
+    }),error =>{
+      console.log(error, 'aiyyayay');
+    }
   }
 
   styleFunc(feature){

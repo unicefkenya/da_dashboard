@@ -11,14 +11,14 @@ export class CountyService {
 
   private baseApiUrl = BaseUrl.base_api_url;
 
-  getSchools(){
+  getCountiesData(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.baseApiUrl+'api/counties',options)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/county',options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
