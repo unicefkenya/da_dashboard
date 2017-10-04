@@ -59,17 +59,92 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
         }
       });
 
-      var censusMin = Number.MAX_VALUE, censusMax = -Number.MAX_VALUE;
+      var mapStyle = [{
+        'stylers': [{'visibility': 'off'}]
+      }, {
+        'featureType': 'landscape',
+        'elementType': 'geometry',
+        'stylers': [{'visibility': 'on'}, {'color': '#fcfcfc'}]
+      }, {
+        'featureType': 'water',
+        'elementType': 'geometry',
+        'stylers': [{'visibility': 'on'}, {'color': '#bfd4ff'}]
+      }];
+
+      var countyMin = Number.MAX_VALUE, countyMax = -Number.MAX_VALUE;
 
 
       function initMap() {
 
         this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 6,
-          center:{lat: 0.176869, lng: 37.9083264},
+          center:{lat: 0.176869, lng: 37.9083264}
           //center: {lat: -28, lng: 137}
         });
 
+        this.map.data.setStyle({
+          //icon: '//example.com/path/to/image.png',
+          fillColor: '#521DB7',
+          strokeColor: '#521DB7',
+          strokeWeight: 2
+        });
+
+
+          this.map.data.setStyle(function(feature) {
+           var color = '#521DB7';
+
+           return  ({
+              fillColor: color,
+              strokeColor: color,
+              strokeWeight: 2
+            });
+         });
+
+          this.map.data.addListener('mouseover', function(event) {
+            console.log(event.feature.f);
+            console.log(JSON.parse(localStorage.getItem('countyDataAPi')), 'PLEASE WORK!!!')
+            var kaunty = JSON.parse(localStorage.getItem('countyDataAPi'));
+
+            for(var i = 0; i< kaunty.length;i++){
+              var countyName = kaunty[i].name;
+              var enrolled = kaunty[i].enrolled;
+              var total = kaunty[i].total;
+              var dropouts = kaunty[i].dropouts;
+
+              if(countyName = event.feature.f.COUNTY){
+                console.log(countyName, 'woooiii');
+              }
+
+            }
+          this.map.data.revertStyle();
+          this.map.data.overrideStyle(event.feature, {strokeWeight: 8});
+          });
+
+          this.map.data.addListener('mouseout', function(event) {
+          this.map.data.revertStyle();
+          });
+
+
+        this.map.data.loadGeoJson('assets/data/kenyancounties.json');
+        /*
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://api.attendance.co.ke/api/students/enrolls/county.json');
+        xhr.onload = function(){
+          var countyData = JSON.parse(xhr.responseText);
+          console.log(countyData, countyData.results, 'showing data');
+          for (var i=0; i< countyData.results.length; i++){
+            var totalChildren = countyData.results[i].total;
+            var newlyEnrolled = countyData.results[i].enrolled_males+countyData.results[i].enrolled_females;
+            var dropouts = countyData.results[i].dropout_total;
+            var name = countyData.results[i].value
+          }
+        };
+        xhr.send();
+        */
+      }
+
+
+      /*
         this.map.data.loadGeoJson('assets/data/kenyancounties.json');
         this.map.data.setStyle({
           //icon: '//example.com/path/to/image.png',
@@ -97,26 +172,10 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
         this.map.data.revertStyle();
         });
 
-        var selectBox = document.getElementById('census-variable');
-        google.maps.event.addDomListener(selectBox, 'change', function() {
-          clearCensusData();
-        //  loadCensusData(selectBox.options[selectBox.selectedIndex].value);
-        });
+        */
 
-      }
+
       google.maps.event.addDomListener(window, "load", initMap);
-
-      /** Removes census data from each shape on the map and resets the UI. */
-      function clearCensusData() {
-        censusMin = Number.MAX_VALUE;
-        censusMax = -Number.MAX_VALUE;
-        this.map.data.forEach(function(row) {
-          row.setProperty('census_variable', undefined);
-        });
-        document.getElementById('data-box').style.display = 'none';
-        document.getElementById('data-caret').style.display = 'none';
-      }
-
 
   }
 
@@ -134,6 +193,7 @@ count =[];
         this.ct.dropouts = data[a].dropout_total;
         this.count.push(this.ct);
       }
+      localStorage.setItem('countyDataAPi', JSON.stringify(this.count));
     }),error =>{
       console.log(error, 'aiyyayay');
     }
