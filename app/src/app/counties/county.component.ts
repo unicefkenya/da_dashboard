@@ -58,6 +58,7 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
           kaunt.push(this.kaunti);
         }
       });
+      var activeInfoWindow;
 
       var mapStyle = [{
         'stylers': [{'visibility': 'off'}]
@@ -106,22 +107,33 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
             var kaunty = JSON.parse(localStorage.getItem('countyDataAPi'));
 
             for(var i = 0; i< kaunty.length;i++){
+              var id = kaunty.index;
               var countyName = kaunty[i].name;
               var enrolled = kaunty[i].enrolled;
               var total = kaunty[i].total;
               var dropouts = kaunty[i].dropouts;
 
+                }
+
               if(countyName = event.feature.f.COUNTY){
-                console.log(countyName, 'woooiii');
+                console.log(countyName,enrolled, total, dropouts, 'woooiii');
+                var myCenter = new google.maps.LatLng(0.176869,37.9083264);
+                var marker = new google.maps.Marker({position:myCenter});
+                marker.setMap(this.map);
+                var infoWindow = new google.maps.InfoWindow({
+                  content: countyName+'<p><small>Total Registered Children: '+total+'</small></p><p><small>Total Newly Enrolled Children: '+enrolled+'</small></p><p><small>Dropouts: '+dropouts+'</small></p>'
+                });
+                infoWindow.open(this.map, marker);
               }
 
-            }
-          this.map.data.revertStyle();
-          this.map.data.overrideStyle(event.feature, {strokeWeight: 8});
-          });
 
-          this.map.data.addListener('mouseout', function(event) {
+            this.map.data.revertStyle();
+            this.map.data.overrideStyle(event.feature, {strokeWeight: 8, fillColor: 'red'});
+            });
+
+          this.map.data.addListener(this.marker,'mouseout', function(event) {
           this.map.data.revertStyle();
+          this.infoWindow.close();
           });
 
 
