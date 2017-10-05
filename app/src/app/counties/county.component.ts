@@ -24,7 +24,7 @@ lat: number = 0.1768696;
 lng: number = 37.9083264;
 zoom: number = 6;
 draggable: boolean = true;
-
+kaunt = [];
 markers: Marker[]=[{
   lat: -32.9477132,
   lng: -60.630465800000025,
@@ -133,13 +133,15 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
                 //console.log(cts.findIndex(countyName), countyName,enrolled, total, dropouts, 'woooiii');
                 if(county_name == event.feature.f.COUNTY){
-                  var myCenter = new google.maps.LatLng(0.176869,37.9083264);
+                  var myCenter = new google.maps.LatLng(event.feature.f.Lat,event.feature.f.Lng);
                   var marker = new google.maps.Marker({position:myCenter});
                   marker.setMap(this.map);
                   var infoWindow = new google.maps.InfoWindow({
                     content: county_name+'<p><small>Total Registered Children: '+county_total+'</small></p><p><small>Total Newly Enrolled Children: '+county_enrolls+'</small></p><p><small>Dropouts: '+county_dropouts+'</small></p>'
                   });
                   infoWindow.open(this.map, marker);
+                }else{
+
                 }
 
 
@@ -156,54 +158,8 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
 
         this.map.data.loadGeoJson('assets/data/kenyancounties.json');
-        /*
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://api.attendance.co.ke/api/students/enrolls/county.json');
-        xhr.onload = function(){
-          var countyData = JSON.parse(xhr.responseText);
-          console.log(countyData, countyData.results, 'showing data');
-          for (var i=0; i< countyData.results.length; i++){
-            var totalChildren = countyData.results[i].total;
-            var newlyEnrolled = countyData.results[i].enrolled_males+countyData.results[i].enrolled_females;
-            var dropouts = countyData.results[i].dropout_total;
-            var name = countyData.results[i].value
-          }
-        };
-        xhr.send();
-        */
+
       }
-
-
-      /*
-        this.map.data.loadGeoJson('assets/data/kenyancounties.json');
-        this.map.data.setStyle({
-          //icon: '//example.com/path/to/image.png',
-          fillColor: '#521DB7',
-          strokeColor: '#521DB7',
-          strokeWeight: 2
-        });
-
-        this.map.data.setStyle(function(feature) {
-         var color = '#521DB7';
-
-         return  ({
-            fillColor: color,
-            strokeColor: color,
-            strokeWeight: 2
-          });
-       });
-
-        this.map.data.addListener('mouseover', function(event) {
-        this.map.data.revertStyle();
-        this.map.data.overrideStyle(event.feature, {strokeWeight: 8});
-        });
-
-        this.map.data.addListener('mouseout', function(event) {
-        this.map.data.revertStyle();
-        });
-
-        */
-
 
       google.maps.event.addDomListener(window, "load", initMap);
 
@@ -228,7 +184,7 @@ count =[];
       console.log(error, 'aiyyayay');
     }
   }
-kaunt = []
+
   getData(){
     this.getMapData((data) => {
       console.log(data, 'kenyancountiesjson')
@@ -242,6 +198,7 @@ kaunt = []
       return this.kaunt;
     });
   }
+
   getMapData(data){
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/kenyancounties.json`);
@@ -251,20 +208,5 @@ kaunt = []
     req.send();
   }
 
-  styleFunc(feature){
-    var level =  feature.getProperty('level');
-    var color = 'green';
-    //only show level one features
-    var visibility =level==1?true:false;
-    return{
-      //set fill color for polygon features
-      fillColor:color,
-      //stroke color for polygons
-      strokeColor:color,
-      strokeWeight:1,
-      //make layer 1 features visible
-      visible: visibility
-    };
-  }
 
 }
