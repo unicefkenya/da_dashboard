@@ -64,6 +64,7 @@ schoolId:any;
     });
     this.welcomeName = localStorage.getItem("welcomeName");
     this.userDashboard = localStorage.getItem("user-type");
+    console.log(this.userDashboard, this.welcomeName, 'usertypes');
     this.schoolId = localStorage.getItem("schoolId");
 
   }

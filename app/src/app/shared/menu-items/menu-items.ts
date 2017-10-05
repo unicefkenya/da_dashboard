@@ -56,12 +56,8 @@ const MENUITEMS = [
     usertype: 'admin',
     state: 'counties',
     name: 'Counties',
-    type: 'sub',
-    icon: 'my_location',
-    children: [
-      {state: 'county-new-enrollments', name: 'New Enrollments'},
-      {state: 'county-dropouts', name: 'Dropouts'}
-    ]
+    type: 'linkb',
+    icon: 'map',
   },
   {
     usertype: 'partner',
@@ -97,6 +93,14 @@ const MENUITEMS = [
       {state: 'add-teachers', name: 'Add Teachers'},
       {state: 'view-teachers', name: 'View Teachers'},
     ]
+  },
+  {
+    usertype: 'teacher',
+    state: 'promotions',
+    paccess: 'teacher',
+    name: 'Promote Students',
+    type: 'linka',
+    icon: 'group_add'
   },
   {
     usertype: 'partner',
