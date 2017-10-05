@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ClassService} from './class.service';
+import { PromotionsService} from '../promotions/promotions.service';
 
 
 @Component({
   selector: 'app-classes',
   templateUrl: './class.component.html',
   styleUrls: ['./class.component.scss'],
-  providers: [ClassService]
+  providers: [ClassService, PromotionsService]
 })
 export class ClassComponent implements OnInit, OnDestroy{
   classId: any;
@@ -35,7 +36,7 @@ export class ClassComponent implements OnInit, OnDestroy{
 
   ];
 
-  constructor(private classService: ClassService,private router: Router){}
+  constructor(private classService: ClassService,private promotionService: PromotionsService, private router: Router){}
 
   ngOnInit(){
     this.classId = localStorage.getItem("classId");
@@ -127,4 +128,23 @@ export class ClassComponent implements OnInit, OnDestroy{
      this.router.navigate(['/children/child', id],{skipLocationChange: true});
 
    }
+pm:any;
+   promoteAllStudents(){
+     let studentIDs = [];
+     for(let i=0; i<this.children.length; i++){
+       this.pm = {}
+       this.pm = this.children[i].id;
+       studentIDs.push(this.pm);
+     }
+
+     console.log(JSON.stringify(studentIDs));
+     this.promotionService.promoteStudents({
+       class_id: this.classId,
+       students: studentIDs
+     }).subscribe(data=>{
+       console.log(data, 'Promoted yeaay');
+     },error=>{
+       console.log(error, 'whats the error');
+     }
+   )}
 }

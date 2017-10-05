@@ -68,21 +68,6 @@ export class PromotionsComponent implements OnInit {
         //our initial data
         this.classes = allClasses;
         this.selected = [];
-
-        /*
-        //pagination
-        this.count = data.length;
-
-        const start = offset * limit;
-        const end = start + limit;
-        console.log("Sadas",this.children);
-        for (let i = start; i < end; i++) {
-          this.children[i] = data[i];
-        }
-
-
-        console.log('Page Results', start, end);
-        */
       });
     }
 

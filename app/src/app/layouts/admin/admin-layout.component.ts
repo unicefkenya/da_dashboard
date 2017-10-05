@@ -64,13 +64,13 @@ schoolId:any;
     });
     this.welcomeName = localStorage.getItem("welcomeName");
     this.userDashboard = localStorage.getItem("user-type");
-    console.log(this.userDashboard, this.welcomeName, 'usertypes');
+    //console.log(this.userDashboard, this.welcomeName, 'usertypes');
     this.schoolId = localStorage.getItem("schoolId");
 
   }
 
   schoolProfile(){
-    console.log('onyesha bana');
+    //console.log('onyesha bana');
       let schoolId = localStorage.getItem("schoolId");
       this.router.navigate(['/school', schoolId],{skipLocationChange: true});
 
@@ -90,7 +90,7 @@ schoolId:any;
 message:string;
 messageChange(){
   this.message = localStorage.getItem("welcomeName");
-  console.log(this.message, 'sdsdsd');
+  //console.log(this.message, 'sdsdsd');
   //console.log('clicked');
 }
 
