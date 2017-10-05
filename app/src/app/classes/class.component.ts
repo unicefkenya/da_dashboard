@@ -24,6 +24,8 @@ export class ClassComponent implements OnInit, OnDestroy{
   limit: number = 100;
   maleNumber:any;
   femaleNumber:any;
+  pm:any;
+  promoteError:any;
   table = {
     offset: 0
   };
@@ -128,7 +130,7 @@ export class ClassComponent implements OnInit, OnDestroy{
      this.router.navigate(['/children/child', id],{skipLocationChange: true});
 
    }
-pm:any;
+
    promoteAllStudents(){
      let studentIDs = [];
      for(let i=0; i<this.children.length; i++){
@@ -137,14 +139,13 @@ pm:any;
        studentIDs.push(this.pm);
      }
 
-     console.log(JSON.stringify(studentIDs));
      this.promotionService.promoteStudents({
        class_id: this.classId,
        students: studentIDs
      }).subscribe(data=>{
-       console.log(data, 'Promoted yeaay');
+       this.router.navigate(['promoted']);
      },error=>{
-       console.log(error, 'whats the error');
+       this.promoteError = "Failed to promote. Try again later";
      }
    )}
 }

@@ -37,6 +37,11 @@ export const AppRoutes: Routes = [{
     canActivate: [AuthGuard]
   },
   {
+    path: 'promoted',
+    loadChildren: './promotions/promoted/promoted.module#PromotedModule',
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'children',
     loadChildren: './children/children.module#ChildrenModule',
     canActivate: [AuthGuard]

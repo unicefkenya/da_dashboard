@@ -28,6 +28,10 @@
             <md-card-actions _ngcontent-c26="" class="mat-card-actions">
               <button md-raised-button color="primary" (click)="promoteAllStudents()">Promote All</button>
             </md-card-actions>
+            <div *ngIf="promoteError">
+              <hr _ngcontent-c26="">
+              <b style="color:red;">{{promoteError}}</b>
+            </div>
           </div>
         </md-card-content>
         <hr>
