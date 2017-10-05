@@ -105,27 +105,45 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
             console.log(event.feature.f);
             console.log(JSON.parse(localStorage.getItem('countyDataAPi')), 'PLEASE WORK!!!')
             var kaunty = JSON.parse(localStorage.getItem('countyDataAPi'));
+            var countyName;
+            var enrolled;
+            var total;
+            var dropouts;
+            if(event.feature.f.COUNTY){
+              for(var i = 0; i< kaunty.length;i++){
 
-            for(var i = 0; i< kaunty.length;i++){
-              var id = kaunty.index;
-              var countyName = kaunty[i].name;
-              var enrolled = kaunty[i].enrolled;
-              var total = kaunty[i].total;
-              var dropouts = kaunty[i].dropouts;
+                var id = kaunty.indexOf(kaunty[i].name);
+                var countyName = kaunty[i].name;
+                var enrolled = kaunty[i].enrolled;
+                var total = kaunty[i].total;
+                var dropouts = kaunty[i].dropouts;
 
+                if(countyName == event.feature.f.COUNTY){
+                  localStorage.setItem('county_name', countyName);
+                  localStorage.setItem('county_enrolls', enrolled);
+                  localStorage.setItem('county_total', total);
+                  localStorage.setItem('county_dropouts', dropouts);
                 }
-
-              if(countyName = event.feature.f.COUNTY){
-                console.log(countyName,enrolled, total, dropouts, 'woooiii');
-                var myCenter = new google.maps.LatLng(0.176869,37.9083264);
-                var marker = new google.maps.Marker({position:myCenter});
-                marker.setMap(this.map);
-                var infoWindow = new google.maps.InfoWindow({
-                  content: countyName+'<p><small>Total Registered Children: '+total+'</small></p><p><small>Total Newly Enrolled Children: '+enrolled+'</small></p><p><small>Dropouts: '+dropouts+'</small></p>'
-                });
-                infoWindow.open(this.map, marker);
               }
 
+                var county_name = localStorage.getItem('county_name');
+                var county_enrolls = localStorage.getItem('county_enrolls');
+                var county_total = localStorage.getItem('county_total');
+                var county_dropouts  = localStorage.getItem('county_dropouts');
+
+                //console.log(cts.findIndex(countyName), countyName,enrolled, total, dropouts, 'woooiii');
+                if(county_name == event.feature.f.COUNTY){
+                  var myCenter = new google.maps.LatLng(0.176869,37.9083264);
+                  var marker = new google.maps.Marker({position:myCenter});
+                  marker.setMap(this.map);
+                  var infoWindow = new google.maps.InfoWindow({
+                    content: county_name+'<p><small>Total Registered Children: '+county_total+'</small></p><p><small>Total Newly Enrolled Children: '+county_enrolls+'</small></p><p><small>Dropouts: '+county_dropouts+'</small></p>'
+                  });
+                  infoWindow.open(this.map, marker);
+                }
+
+
+            }
 
             this.map.data.revertStyle();
             this.map.data.overrideStyle(event.feature, {strokeWeight: 8, fillColor: 'red'});
