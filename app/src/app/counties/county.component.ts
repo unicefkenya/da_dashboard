@@ -25,16 +25,8 @@ lng: number = 37.9083264;
 zoom: number = 6;
 draggable: boolean = true;
 kaunt = [];
-markers: Marker[]=[{
-  lat: -32.9477132,
-  lng: -60.630465800000025,
-  draggable: false
-},{
-  lat: -32.9477132,
-  lng: -60.630465800000025,
-  draggable: false
-}
-];
+ct:any;
+count =[];
 
 selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Dropouts'}];
   //http://technobytz.com/mapping-angular-google-maps-api-geojson.html
@@ -49,7 +41,6 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
       this.getCountiesData();
 
       this.getMapData((data) => {
-        console.log(data, 'kenyancountiesjson')
         let properties = data.features
         let kaunt = []
         for (let i=0;i<properties.length; i++){
@@ -101,9 +92,10 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
             });
          });
 
+         var infoWindow = new google.maps.InfoWindow();
+         var marker = new google.maps.Marker();
+
           this.map.data.addListener('mouseover', function(event) {
-            console.log(event.feature.f);
-            console.log(JSON.parse(localStorage.getItem('countyDataAPi')), 'PLEASE WORK!!!')
             var kaunty = JSON.parse(localStorage.getItem('countyDataAPi'));
             var countyName;
             var enrolled;
@@ -131,17 +123,20 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
                 var county_total = localStorage.getItem('county_total');
                 var county_dropouts  = localStorage.getItem('county_dropouts');
 
-                //console.log(cts.findIndex(countyName), countyName,enrolled, total, dropouts, 'woooiii');
+                var myCenter = new google.maps.LatLng(event.feature.f.Lat,event.feature.f.Lng);
+                marker.setPosition(myCenter);
+                marker.setMap(this.map);
+
                 if(county_name == event.feature.f.COUNTY){
-                  var myCenter = new google.maps.LatLng(event.feature.f.Lat,event.feature.f.Lng);
-                  var marker = new google.maps.Marker({position:myCenter});
-                  marker.setMap(this.map);
-                  var infoWindow = new google.maps.InfoWindow({
-                    content: county_name+'<p><small>Total Registered Children: '+county_total+'</small></p><p><small>Total Newly Enrolled Children: '+county_enrolls+'</small></p><p><small>Dropouts: '+county_dropouts+'</small></p>'
-                  });
+                  infoWindow.setContent(
+                    county_name+'<p><small>Total Registered Children: '+county_total+'</small></p><p><small>Total Newly Enrolled Children: '+county_enrolls+'</small></p><p><small>Dropouts: '+county_dropouts+'</small></p>'
+                  );
                   infoWindow.open(this.map, marker);
                 }else{
-
+                  infoWindow.setContent(
+                    '<p><small>No data available for '+event.feature.f.COUNTY+' County</small></p>'
+                  );
+                  infoWindow.open(this.map, marker);
                 }
 
 
@@ -151,9 +146,9 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
             this.map.data.overrideStyle(event.feature, {strokeWeight: 8, fillColor: 'red'});
             });
 
-          this.map.data.addListener(this.marker,'mouseout', function(event) {
-          this.map.data.revertStyle();
-          this.infoWindow.close();
+          this.map.data.addListener(marker,'mouseout', function(event) {
+            this.map.data.revertStyle();
+            infoWindow.close(this.map,marker);
           });
 
 
@@ -165,11 +160,8 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
   }
 
-ct:any;
-count =[];
   getCountiesData(){
     this.countyService.getCountiesData().subscribe(data=>{
-      console.log(data, 'ooscapi');
       data = data.results;
       for(let a=0; a<data.length; a++){
         this.ct = {}
@@ -181,13 +173,12 @@ count =[];
       }
       localStorage.setItem('countyDataAPi', JSON.stringify(this.count));
     }),error =>{
-      console.log(error, 'aiyyayay');
+
     }
   }
 
   getData(){
     this.getMapData((data) => {
-      console.log(data, 'kenyancountiesjson')
       let properties = data.features
 
       for (let i=0;i<properties.length; i++){
