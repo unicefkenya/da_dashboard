@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ClassService} from './class.service';
 
@@ -9,11 +9,12 @@ import { ClassService} from './class.service';
   styleUrls: ['./class.component.scss'],
   providers: [ClassService]
 })
-export class ClassComponent implements OnInit{
+export class ClassComponent implements OnInit, OnDestroy{
   classId: any;
   className: any;
   students: any;
   dt:any;
+  promoteStudents:any;
   rows = [];
   children: any[] = this.rows;
   selected: any[];
@@ -38,9 +39,14 @@ export class ClassComponent implements OnInit{
 
   ngOnInit(){
     this.classId = localStorage.getItem("classId");
+    this.promoteStudents = localStorage.getItem("promoteStudents");
     this.getClassData(this.classId);
   }
 
+  ngOnDestroy(){
+    localStorage.removeItem('promoteStudents');
+    localStorage.removeItem('classId');
+  }
   getClassData(id){
     this.classService.getClassId(id).subscribe(data =>{
         console.log(data);
@@ -92,7 +98,7 @@ export class ClassComponent implements OnInit{
 
   getNumberOfMales(schoolId, streamId){
     this.classService.getClassMaleStudents(schoolId, streamId).subscribe(data => {
-      
+
       this.maleNumber = data.count;
     }),
     error =>{
