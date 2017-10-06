@@ -23,20 +23,34 @@
             -->
             </div>
           </div>
-          <div *ngIf="promoteStudents" fxLayout ="row">
-            <hr _ngcontent-c26="">
-            <md-card-actions _ngcontent-c26="" class="mat-card-actions">
-              <button md-raised-button color="primary" (click)="promoteAllStudents()">Promote All</button>
-            </md-card-actions>
-            <div *ngIf="promoteError">
-              <hr _ngcontent-c26="">
-              <b style="color:red;">{{promoteError}}</b>
-            </div>
-          </div>
         </md-card-content>
         <hr>
         <md-card-content>
           <p class="text-xs-center">Please use the provided information for official use only.</p>
+        </md-card-content>
+        <hr>
+        <md-card-content>
+          <div *ngIf="promoteStudents">
+            <md-card-actions  class="mat-card-actions">
+              <form [formGroup]="form" (ngSubmit)="promoteAllStudents(form.value);">
+                <div  fxLayout ="row">
+                  <div fxLayout="column" class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                    <md-select required [formControl]="form.controls['className']"  placeholder="Select Class to Promote (required)">
+                      <md-option *ngFor = "let name of classes" value="{{name.id}}">
+                        {{name.class_name}}
+                      </md-option>
+                    </md-select>
+                  </div>
+                  <div fxLayout="column"class="mb-1 ml-xs mr-xs" style="width: 20%;" >
+                    <button  type="submit" [disabled]="!form.valid" md-raised-button color="primary">Promote All</button>
+                  </div>
+                </div>
+              </form>
+            </md-card-actions>
+            <div *ngIf="promoteError">
+              <b style="color:red;">{{promoteError}}</b>
+            </div>
+          </div>
         </md-card-content>
       </md-card>
     </div>

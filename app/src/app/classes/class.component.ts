@@ -1,8 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 import { ClassService} from './class.service';
 import { PromotionsService} from '../promotions/promotions.service';
 
+
+export class promoteClass {
+  constructor(public className: string, public classId: any){}
+}
 
 @Component({
   selector: 'app-classes',
@@ -25,7 +31,12 @@ export class ClassComponent implements OnInit, OnDestroy{
   maleNumber:any;
   femaleNumber:any;
   pm:any;
+  schoolId: number;
+  temp:any;
+  classes:any;
   promoteError:any;
+  promoteClass: promoteClass;
+  public form: FormGroup;
   table = {
     offset: 0
   };
@@ -38,11 +49,17 @@ export class ClassComponent implements OnInit, OnDestroy{
 
   ];
 
-  constructor(private classService: ClassService,private promotionService: PromotionsService, private router: Router){}
+  constructor(private classService: ClassService,private promotionService: PromotionsService,private fb:FormBuilder, private router: Router){
+    this.form = this.fb.group({
+      className: [null, Validators.compose([Validators.required,])],
+    });
+  }
 
   ngOnInit(){
+    this.schoolId = JSON.parse(localStorage.getItem('schoolId'));
     this.classId = localStorage.getItem("classId");
     this.promoteStudents = localStorage.getItem("promoteStudents");
+    this.getClassses(this.schoolId);
     this.getClassData(this.classId);
   }
 
@@ -50,9 +67,35 @@ export class ClassComponent implements OnInit, OnDestroy{
     localStorage.removeItem('promoteStudents');
     localStorage.removeItem('classId');
   }
+
+  //getting all classes
+  getClassses(id): void {
+    this.classService.getClassses(id).subscribe(data => {
+
+      data = data.results;
+      //console.log(data);
+      let allClasses =[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        //console.log(data[i].class_name, ':the classes', data[i].id, ':their ids');
+        if(data[i].class_name == null){
+          this.dt.class_name = "Class "+data[i].id
+        }else{
+          this.dt.class_name="Class "+data[i].class_name
+        }
+        this.dt.id = data[i].id
+        allClasses.push(this.dt)
+      }
+      //cache our data
+      this.temp = [...allClasses];
+      //our initial data
+      this.classes = allClasses;
+    });
+  }
+
   getClassData(id){
     this.classService.getClassId(id).subscribe(data =>{
-        console.log(data);
+      //  console.log(data);
         this.className = data.class_name;
 
         let streamId = data.id;
@@ -62,12 +105,13 @@ export class ClassComponent implements OnInit, OnDestroy{
         this.getNumberOfFemales(schoolId, streamId);
 
         this.classService.getClassStudents(schoolId,streamId).subscribe(data => {
-          console.log(data);
+          //console.log(data);
 
            this.count =data.count
           this.students = data.count;
           data = data.results;
 
+          //console.log(data);
           let childs =[]
           let rows=[]
           //  this.count = data.length;
@@ -87,7 +131,6 @@ export class ClassComponent implements OnInit, OnDestroy{
           }
           this.children = childs;
           this.selected = [];
-
         }),
         error => {
           //console.log(error);
@@ -131,7 +174,12 @@ export class ClassComponent implements OnInit, OnDestroy{
 
    }
 
-   promoteAllStudents(){
+   promoteAllStudents(promote: promoteClass){
+     if(this.schoolId){
+         this.promoteClass = new promoteClass(
+                               promote.className,
+                               promote.classId
+                             );
      let studentIDs = [];
      for(let i=0; i<this.children.length; i++){
        this.pm = {}
@@ -139,13 +187,30 @@ export class ClassComponent implements OnInit, OnDestroy{
        studentIDs.push(this.pm);
      }
 
-     this.promotionService.promoteStudents({
-       class_id: this.classId,
-       students: studentIDs
-     }).subscribe(data=>{
-       this.router.navigate(['promoted']);
-     },error=>{
-       this.promoteError = "Failed to promote. Try again later";
+     //console.log(promote.className,promote.classId, 'the class selected');
+     if(promote.className !="null"){
+         this.promotionService.promoteStudents({
+
+           class_id: promote.className,
+           students: studentIDs
+         }).subscribe(data=>{
+           this.router.navigate(['promoted']);
+         },error=>{
+           this.promoteError = "Failed to promote. Try again later";
+         }
+       )
+     }else{
+         this.promotionService.promoteStudents({
+
+           class_id: promote.classId,
+           students: studentIDs
+         }).subscribe(data=>{
+           this.router.navigate(['promoted']);
+         },error=>{
+           this.promoteError = "Failed to promote. Try again later";
+         }
+       )}
      }
-   )}
+
+  }
 }

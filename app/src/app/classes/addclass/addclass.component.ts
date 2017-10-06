@@ -73,7 +73,7 @@ export class AddClassComponent implements OnInit {
                         registerClass.class_id,
                         registerClass.class_name
                       );
-                      
+
         if(registerClass.class_name == null){
           this.classService.sendData({
 
@@ -84,7 +84,7 @@ export class AddClassComponent implements OnInit {
               }).subscribe(
                 data => //console.log(data)
                 {
-                  console.log("Added Classes Successfully"),
+                  //console.log("Added Classes Successfully"),
                   this.success = "Added Classes Successfully";
                   this.resetButton();
                 },
@@ -102,7 +102,7 @@ export class AddClassComponent implements OnInit {
             }).subscribe(
               data => //console.log(data)
               {
-                console.log("Added Classes Successfully"),
+                //console.log("Added Classes Successfully"),
                 this.success = "Added Classes Successfully";
                 this.resetButton();
               },
