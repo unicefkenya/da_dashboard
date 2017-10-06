@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,Output,EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
@@ -17,6 +17,7 @@ export class promoteClass {
   providers: [ClassService, PromotionsService]
 })
 export class ClassComponent implements OnInit, OnDestroy{
+  @Output() selectedChange:EventEmitter<any> = new EventEmitter();
   classId: any;
   className: any;
   students: any;
@@ -54,11 +55,17 @@ export class ClassComponent implements OnInit, OnDestroy{
       className: [null, Validators.compose([Validators.required,])],
     });
   }
-
+selectionType:any;
   ngOnInit(){
+
     this.schoolId = JSON.parse(localStorage.getItem('schoolId'));
     this.classId = localStorage.getItem("classId");
     this.promoteStudents = localStorage.getItem("promoteStudents");
+    if(this.promoteStudents){
+      this.selectionType = 'checkbox';
+    }else{
+      this.selectionType = 'single';
+    }
     this.getClassses(this.schoolId);
     this.getClassData(this.classId);
   }
@@ -161,10 +168,24 @@ export class ClassComponent implements OnInit, OnDestroy{
 
     }
   }
+   selectedArray = [];
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('childId', this.selected[0].id);
-   this.getChildId(this.selected[0].id);
+   if(!this.promoteStudents){
+     this.getChildId(this.selected[0].id);
+   }else{
+
+     let index = this.selectedArray.indexOf(this.selected[0].id);
+     if(index === -1){
+       this.selectedArray.push(this.selected[0].id);
+     }else{
+       this.selectedArray.splice(index, 1);
+     }
+     this.selectedChange.emit(this.selected);
+     console.log(this.selectedArray);
+   }
+
    //this.router.navigate(['/children/child', this.selected[0].id]);
    }
 
