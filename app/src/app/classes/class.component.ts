@@ -170,20 +170,29 @@ selectionType:any;
   }
    selectedArray = [];
   onSelect({ selected }) {
+
+  
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
    localStorage.setItem('childId', this.selected[0].id);
    if(!this.promoteStudents){
      this.getChildId(this.selected[0].id);
    }else{
 
-     let index = this.selectedArray.indexOf(this.selected[0].id);
-     if(index === -1){
-       this.selectedArray.push(this.selected[0].id);
-     }else{
-       this.selectedArray.splice(index, 1);
-     }
-     this.selectedChange.emit(this.selected);
-     console.log(this.selectedArray);
+       console.log( this.selected);
+       let index = this.selectedArray.indexOf(this.selected[0].id);
+
+       if(index === -1){
+         this.selectedArray.push(this.selected[0].id);
+         console.log(this.selectedArray.length);
+       }else{
+         this.selectedArray.splice(index, 1);
+         console.log(this.selectedArray.length);
+       }
+       this.selectedChange.emit(this.selectedArray);
+       //this.selectedArray = this.selected;
+
+
+
    }
 
    //this.router.navigate(['/children/child', this.selected[0].id]);
@@ -201,12 +210,21 @@ selectionType:any;
                                promote.className,
                                promote.classId
                              );
-     let studentIDs = [];
-     for(let i=0; i<this.children.length; i++){
-       this.pm = {}
-       this.pm = this.children[i].id;
-       studentIDs.push(this.pm);
-     }
+   let studentIDs = [];
+   console.log(this.selectedChange, 'selected')
+    if(typeof this.selectedArray  && this.selectedArray.length > 0){
+      for(let i=0; i<this.selectedArray.length; i++){
+        this.pm = {}
+        this.pm = this.selectedArray[i].id;
+        studentIDs.push(this.pm);
+      }
+    }else{
+      for(let i=0; i<this.children.length; i++){
+        this.pm = {}
+        this.pm = this.children[i].id;
+        studentIDs.push(this.pm);
+      }
+    }
 
      //console.log(promote.className,promote.classId, 'the class selected');
      if(promote.className !="null"){
