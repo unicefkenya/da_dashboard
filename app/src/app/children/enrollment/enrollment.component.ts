@@ -266,6 +266,7 @@ export class EnrollmentComponent implements OnInit {
         if(this.schoolId){
           //search by name
           if(search.search){
+
             this.enrollmentService.searchSchoolData(this.schoolId, search.search)
               .subscribe(
                 data => //console.log(data)
@@ -368,7 +369,17 @@ export class EnrollmentComponent implements OnInit {
         }
         else if(this.partnerId){
             //search by name
+
             if(search.search){
+              this.enrollmentService.fetchPartnerSearchNameBoyChildTotal(search.search,this.partnerId).subscribe(data => {
+                this.males = data.count;
+              });
+
+
+              this.enrollmentService.fetchPartnerSearchNameGirlChildTotal(search.search,this.partnerId).subscribe(data => {
+                this.females = data.count;
+              });
+
               this.enrollmentService.searchPartnerData(this.partnerId, search.search)
                 .subscribe(
                   data => //console.log(data)
@@ -392,7 +403,7 @@ export class EnrollmentComponent implements OnInit {
 
                     this.temp=[childs];
                     this.children=childs;
-                    ///console.log(childs);
+                    //console.log(childs);
                   },
                   error =>{
                     this.empty = "This field is required";
@@ -401,6 +412,7 @@ export class EnrollmentComponent implements OnInit {
                 );
               }
               //search by gender
+
               else if(search.gender){
                 this.enrollmentService.searchPartnerDataGender(this.partnerId,search.gender)
                     .subscribe(
@@ -433,13 +445,16 @@ export class EnrollmentComponent implements OnInit {
                     );
               }
               //search by name and gender
-              else if(search.search && search.gender){
+
+              if(search.search && search.gender){
+
                 this.enrollmentService.searchPartnerDataGenderName(this.partnerId,search.gender,search.search)
                     .subscribe(
                       data => //console.log(data)
                       {
                         this.count = data.count;
                         let res = data.results;
+                        //console.log(res);
                         let childs =[];
                         let rows=[]
                         for (let i = 0; i < data.results.length; i++){
