@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ClassService} from '../class.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class ViewClassesComponent implements OnInit{
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} }
   ];
 
-  constructor( private classService: ClassService,private router: Router) {
+  constructor( private readonly location:Location, private classService: ClassService,private router: Router) {
   }
 
   getClassses(id,offset,limit): void {
@@ -64,7 +65,8 @@ export class ViewClassesComponent implements OnInit{
 
    private getClassId(id){
      //console.log('yes');
-     this.router.navigate(['/classes/class', id],{skipLocationChange: true});
+     //this.location.replaceState("/classes/class/"+id);
+   this.router.navigate(['/classes/class', id],{skipLocationChange: true});
 
    }
 

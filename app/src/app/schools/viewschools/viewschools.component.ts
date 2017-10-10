@@ -153,7 +153,20 @@ export class ViewSchoolsComponent implements OnInit {
                {
                  //console.log(data);
                  let res =data.results;
-                 this.schools = res;
+                 let items =[];
+                 for (let i = 0; i < res.length; i++){
+                   this.dt = {}
+                   this.dt.schoolcode = res[i].school_code
+                   this.dt.name = res[i].school_name
+                   this.dt.emiscode = res[i].emis_code
+                   this.dt.level = res[i].level
+                   this.dt.id = res[i].id
+                   items.push(this.dt)
+
+                 }
+
+                 this.temp=[items];
+                 this.schools=items;
                },
                error =>{
                  this.empty = "This field is required";
