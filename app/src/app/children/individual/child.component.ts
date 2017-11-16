@@ -43,6 +43,7 @@ export class ChildComponent implements OnInit{
   public household;
   public meals;
   public dob;
+  public admNo;
   public enrolled;
   public enrolDate;
   public childType;
@@ -157,8 +158,9 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     this.dialogRef.componentInstance.class_ = this.class_;
     this.dialogRef.componentInstance.enrolDate = this.enrolDate;
     this.dialogRef.componentInstance.inSchool = this.inSchool;
-    this.dialogRef.componentInstance.guardian = this.guardian;
-    this.dialogRef.componentInstance.phone = this.phone;
+    this.dialogRef.componentInstance.admNo = this.admNo;
+  //  this.dialogRef.componentInstance.guardian = this.guardian;
+    //this.dialogRef.componentInstance.phone = this.phone;
   }
 
   public getChildData(id){
@@ -205,6 +207,9 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
           this.guardian = "N/A";
         }
 
+        if(data.admNo = "null"){
+          this.admNo = "N/A";
+        }
 
         if(data.gender = "M"){
           this.gender = "Male";
@@ -328,6 +333,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     public inSchool;
     public nonattendant;
     public attendant;
+    public admNo;
     cl:any;
     schoolClasses:any;
 

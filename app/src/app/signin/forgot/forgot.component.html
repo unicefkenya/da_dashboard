@@ -12,7 +12,7 @@
               <div class="pb-1">
                 <md-input placeholder="Email address" type="email" [formControl]="form.controls['email']" style="width: 100%"></md-input>
                 <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">You must include an email address.</small>
-                <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="md-text-warn">You must include a valid email address.</small>
+                <small *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched" class="md-text-warn">You must include a valid email address.</small>
               </div>
               <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
             </div>

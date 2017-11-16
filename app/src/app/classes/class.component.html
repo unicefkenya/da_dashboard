@@ -70,7 +70,6 @@
     [count]="count"
     [offset]="offset"
     [limit]="limit"
-    (page)='onPage($event)'
     (select)='onSelect($event)'>
     <ngx-datatable-column *ngIf="promoteStudents" [checkboxable]="true" [sortable]="false"></ngx-datatable-column>
     <ngx-datatable-column name="name"></ngx-datatable-column>

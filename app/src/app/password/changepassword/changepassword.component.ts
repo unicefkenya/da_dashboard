@@ -78,6 +78,10 @@ export class ChangepasswordComponent implements OnInit {
     }
   }
 
+  resetButton(){
+    this.form.reset()
+  }
+
   //confirmPassword
   MatchPassword(AC: AbstractControl) {
     let oldPassword = AC.get('oldPassword').value; //value of the old password

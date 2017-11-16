@@ -49,8 +49,7 @@
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Date Enrolled (required)" [formControl]="form.controls['enrolDate']" type="date"></md-input>
                   <small *ngIf="form.controls['enrolDate'].hasError('required') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a date.</small>
-                  <small *ngIf="form.controls['enrolDate'].errors?.date && form.controls['enrolDate'].errors?.maxDate && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a valid date.</small>
-                  <small *ngIf="form.controls['enrolDate'].errors?.maxDate && form.controls['enrolDate'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
+                  <small *ngIf="form.controls['enrolDate'].hasError('date') || form.controls['enrolDate'].hasError('maxDate') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a valid date.</small>
                 </div>
               </div>
 
@@ -66,8 +65,7 @@
                   <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                     <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" type="date"></md-input>
                     <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
-                    <small *ngIf="form.controls['dateOfBirth'].errors?.date && form.controls['dateOfBirth'].errors?.maxDate && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
-                    <small *ngIf="form.controls['dateOfBirth'].errors?.maxDate && form.controls['dateOfBirth'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
+                    <small *ngIf="form.controls['dateOfBirth'].hasError('date') || form.controls['dateOfBirth'].hasError('maxDate') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
                   </div>
               </div>
 
@@ -84,7 +82,7 @@
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 40%;">
                   <md-input placeholder="Previous Class" [formControl]="form.controls['previousClass']"  type="text"></md-input>
                   <small *ngIf="form.controls['previousClass'].hasError('required') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input the previous class.</small>
-                  <small *ngIf="form.controls['previousClass'].errors?.number && form.controls['previousClass'].touched" class="md-text-warn">Kindly input a valid digit.</small>
+                  <small *ngIf="form.controls['previousClass'].hasError('number') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input a valid digit.</small>
                 </div>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
@@ -132,7 +130,7 @@
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 35%;">
                   <md-input  placeholder="Number of meals/day" [formControl]="form.controls['mealsInDay']" type="text"></md-input>
-                  <small *ngIf="form.controls['mealsInDay'].errors?.number && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a digit.</small>
+                  <small *ngIf="form.controls['mealsInDay'].hasError('number') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a digit.</small>
                 </div>
               </div>
 

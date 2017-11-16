@@ -96,7 +96,7 @@ export class AddTeachersComponent implements OnInit {
 
 
 
-  onSubmit(registerTeacher: TeacherRegistration, form){
+  onSubmit(registerTeacher: TeacherRegistration){
     var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
 
     if(!this.submitted){

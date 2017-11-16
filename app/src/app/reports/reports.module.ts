@@ -14,14 +14,14 @@ import { SchoolsReportsComponent } from './schools/schoolsreport.component';
 import { TeachersModule } from '../teachers/teachers.module';
 import { TeachersReportComponent } from './teachers/teachersreport.component';
 import { ChangepasswordComponent } from '../password/changepassword/changepassword.component';
-import { SocialComponent } from '../social/social.component';
+//import { SocialComponent } from '../social/social.component';
 
 
 
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ReportsRoutes), FormsModule, ReactiveFormsModule,MdInputModule,MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, NgxDatatableModule, TeachersModule],
-  declarations: [ SchoolsReportsComponent, ChangepasswordComponent,TeachersReportComponent, ReportsComponent, SocialComponent ],
+  declarations: [ SchoolsReportsComponent, ChangepasswordComponent,TeachersReportComponent, ReportsComponent ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 

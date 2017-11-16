@@ -53,14 +53,13 @@
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Phone Number (required)"  [formControl]="form.controls['phoneNumber']" type="text"></md-input>
                   <small *ngIf="form.controls['phoneNumber'].hasError('required') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly include phone number.</small>
-                  <small *ngIf="form.controls['phoneNumber'].errors?.number && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a valid phone number.</small>
+                  <small *ngIf="form.controls['phoneNumber'].hasError('number') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a valid phone number.</small>
                 </div>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Birthday (required)" [formControl]="form.controls['birthday']" type="date"></md-input>
                   <small *ngIf="form.controls['birthday'].hasError('required') && form.controls['birthday'].touched" class="md-text-warn">Kindly include a date.</small>
-                  <small *ngIf="form.controls['birthday'].errors?.date && form.controls['birthday'].errors?.maxDate && form.controls['birthday'].touched" class="md-text-warn">Kindly include a valid date.</small>
-                  <small *ngIf="form.controls['birthday'].errors?.maxDate && form.controls['birthday'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
+                  <small *ngIf="form.controls['birthday'].hasError('date') || form.controls['birthday'].hasError('maxDate') && form.controls['birthday'].touched" class="md-text-warn">Kindly include a valid date.</small>
                 </div>
               </div>
 
@@ -116,14 +115,12 @@
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Date Started Teaching (required)" [formControl]="form.controls['dateStarted']" type="date"></md-input>
                   <small *ngIf="form.controls['dateStarted'].hasError('required') && form.controls['dateStarted'].touched" class="md-text-warn">Kindly include a date.</small>
-                  <small *ngIf="form.controls['dateStarted'].errors?.date && form.controls['dateStarted'].errors?.maxDate && form.controls['dateStarted'].touched" class="md-text-warn">Kindly input a valid date.</small>
-                  <small *ngIf="form.controls['dateStarted'].errors?.maxDate && form.controls['dateStarted'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
+                  <small *ngIf="form.controls['dateStarted'].hasError('date') || form.controls['dateStarted'].hasError('maxDate') && form.controls['dateStarted'].touched" class="md-text-warn">Kindly input a valid date.</small>
                 </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Joined Current School (required)" [formControl]="form.controls['joinedCurrent']"  type="date">{{joined_school | date:"yyyy-mm-dd"}}</md-input>
+                  <md-input  placeholder="Joined Current School (required)" [formControl]="form.controls['joinedCurrent']"  type="date"></md-input>
                   <small *ngIf="form.controls['joinedCurrent'].hasError('required') && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a date.</small>
-                  <small *ngIf="form.controls['joinedCurrent'].errors?.date && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a valid date.</small>
-                  <small *ngIf="form.controls['joinedCurrent'].errors?.maxDate && form.controls['joinedCurrent'].touched" class="md-text-warn">Date can't be greater than the current date.</small>
+                  <small *ngIf="form.controls['joinedCurrent'].hasError('date') || form.controls['joinedCurrent'].hasError('maxDate') &&form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a valid date.</small>
                 </div>
               </div>
               <!--

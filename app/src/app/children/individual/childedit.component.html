@@ -29,13 +29,12 @@
       <div  fxLayout="row">
         <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
           <md-input placeholder="Admission Number (required)" value="{{admNo}}" name="admNo" FormControlName="admNo"   type="text"></md-input>
-          <small *ngIf="form.controls['admNo'].hasError('required') && form.controls['admNo'].touched" class="md-text-warn">Kindly include student's admission no.</small>
         </div>
 
         <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
           <md-input placeholder="Date Enrolled (required)" value="{{enrolDate}}" name="enrolDate" FormControlName="enrolDate" type="date"></md-input>
           <small *ngIf="form.controls['enrolDate'].hasError('required') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a date.</small>
-          <small *ngIf="form.controls['enrolDate'].errors?.date && form.controls['enrolDate'].errors?.maxDate && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a valid date.</small>
+          <small *ngIf="form.controls['enrolDate'].hasError('date') || form.controls['enrolDate'].hasError('maxDate') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a valid date.</small>
         </div>
       </div>
 
@@ -52,9 +51,9 @@
           </div>
 
           <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-            <md-input placeholder="Birthday (required)" value="{{dateOfBirth}}" name="dateOfBirth" FormControlName="dateOfBirth" type="date"></md-input>
+            <md-input placeholder="Birthday (required)" value="{{dob}}" name="dateOfBirth" FormControlName="dateOfBirth" type="date"></md-input>
             <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
-            <small *ngIf="form.controls['dateOfBirth'].errors?.date && form.controls['dateOfBirth'].errors?.maxDate && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
+            <small *ngIf="form.controls['dateOfBirth'].hasError('date') || form.controls['dateOfBirth'].hasError('maxDate') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
           </div>
       </div>
 
@@ -72,7 +71,7 @@
         <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 40%;">
           <md-input placeholder="Previous Class" value="{{previousClass}}" name="previousClass" FormControlName="previousClass" type="text"></md-input>
           <small *ngIf="form.controls['previousClass'].hasError('required') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input the previous class.</small>
-          <small *ngIf="form.controls['previousClass'].errors?.number && form.controls['previousClass'].touched" class="md-text-warn">Kindly input a valid digit.</small>
+          <small *ngIf="form.controls['previousClass'].hasError('number') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input a valid digit.</small>
         </div>
 
         <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;">
@@ -126,7 +125,7 @@
 
         <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 35%;">
           <md-input  placeholder="Number of meals/day" value="{{meals}}" name="mealsInDay" FormControlName="mealsInDay" type="text"></md-input>
-          <small *ngIf="form.controls['mealsInDay'].errors?.number && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a digit.</small>
+          <small *ngIf="form.controls['mealsInDay'].hasError('number') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a digit.</small>
 
         </div>
       </div>
@@ -134,7 +133,7 @@
       <md-card-actions>
         <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
         <button md-raised-button class="warn">Delete</button>
-        <button type="button" (click)="dialogRef.close(howMuch.value)" md-raised-button color="primary">Cancel</button>
+        <button type="button" (click)="dialogRef.close()" md-raised-button color="primary">Cancel</button>
       </md-card-actions>
     </form>
   </md-card-content>

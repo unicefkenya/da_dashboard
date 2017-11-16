@@ -59,7 +59,7 @@ export class AddPartnerComponent implements OnInit {
     });
   }
 
-  onSubmit(registerPartner: PartnerRegistration, form){
+  onSubmit(registerPartner: PartnerRegistration){
 
     if(!this.submitted){
 
