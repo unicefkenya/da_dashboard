@@ -43,11 +43,13 @@ export class ViewpartnersComponent implements OnInit {
 
   columns = [
     { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
-    { name: 'Email' },
-    { name: 'Phonenumber' },
-    { name: 'Boys'},
-    { name: 'Girls'},
-    { name: 'Total'}
+    { name: 'Girlsenrolled'},
+    { name: 'Boysenrolled'},
+    { name: 'Totalenrolled'},
+    { name: 'Totalgirls'},
+    { name: 'Totalboys'},
+    { name: 'Totalchildren'},
+    {name: 'Lastuploaded'}
   ];
 
   constructor( private partnersService: ViewpartnersService,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
@@ -57,29 +59,39 @@ export class ViewpartnersComponent implements OnInit {
   fetchpartners(offset,limit): void {
 
     this.partnersService.fetchPartners(this.page).subscribe(data => {
-    //  console.log(data);
-      //start and end for pagination
+       //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
        this.count =data.count
       data = data.results;
       this.loading = false;
-
+      //console.log(data);
       //let partner =[]
       let rows=[]
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
+        console.log(data);
         this.id = data[i].id
         let a:any;
 
         this.dt = {}
         this.dt.organization=data[i].name
-        this.dt.email=data[i].email
-        this.dt.phone=data[i].phone
+        //this.dt.email=data[i].email
+        //this.dt.phonenumber=data[i].phone
+        let dateUpload = data[i].last_data_upload;
+        if(data[i].last_data_upload != null){
+          this.dt.lastuploaded = dateUpload;
+        }else{
+          this.dt.lastuploaded = 'N/A'
+        }
+
         this.dt.id = data[i].id
-        this.dt.boys = data[i].students.males
-        this.dt.girls = data[i].students.females
-        this.dt.total = data[i].students.total
+        this.dt.boysenrolled = data[i].students.enrolled_males
+        this.dt.girlsenrolled = data[i].students.enrolled_females
+        this.dt.totalenrolled = data[i].students.total_enrolled
+        this.dt.totalboys = data[i].students.old_males + data[i].students.enrolled_males
+        this.dt.totalgirls = data[i].students.old_females + data[i].students.enrolled_females
+        this.dt.totalchildren = data[i].students.total
         this.partner.push(this.dt)
       }
       //console.log(this.partner);
@@ -123,10 +135,21 @@ export class ViewpartnersComponent implements OnInit {
 
                   this.dt = {}
                   this.dt.organization=data[i].name
-                  this.dt.email=data[i].email
-                  this.dt.phone=data[i].phone
+                  //this.dt.email=data[i].email
+                  //this.dt.phonenumber=data[i].phone
+                  let dateUpload = data[i].last_data_upload
+                  if(data[i].last_data_upload != null){
+                    this.dt.lastuploaded = dateUpload;
+                  }else{
+                    this.dt.lastuploaded = 'N/A'
+                  }
                   this.dt.id = data[i].id
-                  this.dt.total = this.dt.boys+this.dt.girls
+                  this.dt.boysenrolled = data[i].students.enrolled_males
+                  this.dt.girlsenrolled = data[i].students.enrolled_females
+                  this.dt.totalenrolled = data[i].students.total_enrolled
+                  this.dt.totalboys = data[i].students.old_males + data[i].students.enrolled_males
+                  this.dt.totalgirls = data[i].students.old_females + data[i].students.enrolled_females
+                  this.dt.totalchildren = data[i].students.total
                   partner.push(this.dt)
                 }
 
