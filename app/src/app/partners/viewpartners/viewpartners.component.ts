@@ -5,6 +5,7 @@ import {EnrollmentService} from '../../children/enrollment/enrollment.service';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { Search } from '../../search';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -70,7 +71,6 @@ export class ViewpartnersComponent implements OnInit {
       let rows=[]
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
-        console.log(data);
         this.id = data[i].id
         let a:any;
 
@@ -78,8 +78,8 @@ export class ViewpartnersComponent implements OnInit {
         this.dt.organization=data[i].name
         //this.dt.email=data[i].email
         //this.dt.phonenumber=data[i].phone
-        let dateUpload = data[i].last_data_upload;
         if(data[i].last_data_upload != null){
+          let dateUpload = data[i].last_data_upload.match(/.{1,10}/)
           this.dt.lastuploaded = dateUpload;
         }else{
           this.dt.lastuploaded = 'N/A'
@@ -137,8 +137,8 @@ export class ViewpartnersComponent implements OnInit {
                   this.dt.organization=data[i].name
                   //this.dt.email=data[i].email
                   //this.dt.phonenumber=data[i].phone
-                  let dateUpload = data[i].last_data_upload
                   if(data[i].last_data_upload != null){
+                    let dateUpload = data[i].last_data_upload.match(/.{1,10}/)
                     this.dt.lastuploaded = dateUpload;
                   }else{
                     this.dt.lastuploaded = 'N/A'
