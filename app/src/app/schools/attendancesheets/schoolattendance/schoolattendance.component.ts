@@ -1,32 +1,35 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { ImportsService} from './imports.service';
+import { Router,ActivatedRoute, NavigationEnd } from '@angular/router';
+import { SchoolattendanceService} from './schoolattendance.service';
 import { FileUploader,FileSelectDirective, FileDropDirective, } from 'ng2-file-upload/ng2-file-upload';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { CustomValidators } from 'ng2-validation';
-import {importStudent} from './importStudent';
 
-import {BaseUrl} from '../baseurl';
+import {schoolAttendance} from './schoolattendance';
+import {BaseUrl} from '../../../baseurl';
 
 
 
 @Component({
-  selector: 'app-imports',
-  templateUrl: './imports.component.html',
-  styleUrls: ['./imports.component.scss'],
-  providers: [ImportsService]
+  selector: 'app-schoolattendance',
+  templateUrl: './schoolattendance.component.html',
+  styleUrls: ['./schoolattendance.component.scss'],
+  providers: [SchoolattendanceService]
 
 })
 
 
 
-export class ImportsComponent implements OnInit {
+export class SchoolattendanceComponent implements OnInit {
+
+
 
   @ViewChild('myfile') myfile;
+  public schoolName;
   public form: FormGroup;
   public submitted;
-  public studentDataType : importStudent;
+  public studentDataType : schoolAttendance;
   public empty;
   public fail;
   public importfile:any
@@ -60,10 +63,14 @@ export class ImportsComponent implements OnInit {
   duplicateData: any;
   verifySuccess:any;
   loading: boolean;
+  public sub;
+  public link;
+  id:any;
 
   constructor(
-    private _importService: ImportsService,private http:Http,
-    private fb: FormBuilder)
+    private _schoolattendanceService: SchoolattendanceService,private http:Http,
+    private fb: FormBuilder,
+    private route:ActivatedRoute,private router: Router)
     {
     this.form = this.fb.group({
       myfile: [null, Validators.compose([Validators.required,])],
@@ -76,18 +83,25 @@ export class ImportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = false;
+    this.schoolName = localStorage.getItem('attendanceschoolName');
+    this.sub = this.route.params.subscribe(params => {
+     this.id = +params['id'];
+     this.fileDownload(this.id);
+   });
   }
 
-  AbortImport(){
-    this.abort = this._importService.abortImport();
-    //console.log(this.abort);
-    if(this.abort){
-      //console.log('Aborted');
-    }else{
-      //console.log('Inatudanganya');
+
+    fileDownload(id){
+
+      this._schoolattendanceService.getExportFile(id).subscribe(
+        (data)  =>
+        {
+          //console.log(data.results[0]);
+          console.log(data);
+          this.link = data.link;
+        }
+      );
     }
-  }
-
 
     Importupload(event){
       this.loading = true;
@@ -97,7 +111,7 @@ export class ImportsComponent implements OnInit {
       let fd=new FormData();
       fd.append("file",myfile);
       //console.log(fd);
-      this._importService.sendImportStudentsData(fd).subscribe(data=>
+      this._schoolattendanceService.sendattendanceSheetsData(fd).subscribe(data=>
       {
         let res=data as any
         this.uploadDiv = true;
@@ -128,7 +142,7 @@ export class ImportsComponent implements OnInit {
       let fd=new FormData();
       fd.append("file",myfile);
       //console.log(fd);
-      this._importService.sendVerifyStudentsData(fd)
+      this._schoolattendanceService.sendVerifyAttendanceSheetsData(fd)
       .subscribe((res)=>{
         //let data = JSON.parse(res);
         let re=res as any

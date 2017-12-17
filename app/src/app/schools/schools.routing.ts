@@ -2,6 +2,8 @@ import { Routes } from "@angular/router";
 
 import { ViewSchoolsComponent } from './viewschools/viewschools.component';
 import { AddSchoolsComponent } from './addschool/addschools.component';
+import { AttendancesheetsComponent } from './attendancesheets/attendancesheets.component';
+import { SchoolattendanceComponent } from './attendancesheets/schoolattendance/schoolattendance.component';
 
 
 export const SchoolsRoutes: Routes = [
@@ -13,6 +15,12 @@ export const SchoolsRoutes: Routes = [
     },{
       path: 'add-schools',
       component: AddSchoolsComponent
+    },{
+      path: 'attendance-sheets',
+      component: AttendancesheetsComponent
+    }, {
+      path: 'attendance-sheets/:id',
+      component: SchoolattendanceComponent
     }
   ],
   }

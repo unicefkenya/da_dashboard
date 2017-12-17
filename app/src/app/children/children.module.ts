@@ -17,7 +17,6 @@ import { AddChildrenComponent } from './addchildren/addchildren.component';
 import { SchoolchildrenComponent } from './Schoolchildren/schoolchildren.component';
 import { SchoolenrollmentComponent } from './Schoolenrollment/schoolenrollment.component';
 
-
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ChildrenRoutes),Ng2AutoCompleteModule,ChartsModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
   declarations: [ChildrenComponent, AddChildrenComponent, SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent]
