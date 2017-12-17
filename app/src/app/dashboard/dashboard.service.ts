@@ -22,9 +22,15 @@ export class DashboardService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-  
+
   getPartnerStats(id){
     return this.http.get(this.baseApiUrl+'api/statistics?partner='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getPartnerAdminStats(id){
+    return this.http.get(this.baseApiUrl+'api/statistics?partner_admin='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -41,6 +47,12 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getPartnerAdminWeeklySummary(id){
+    return this.http.get(this.baseApiUrl+'api/attendance/weekly?partner_admin='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAnnualAttendanceGender(){
     return this.http.get(this.baseApiUrl+'api/attendances/yearly')
     .map((response: Response) => response.json())
@@ -53,6 +65,12 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getPartnerAdminAnnualAttendanceGender(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly?partner_admin='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAnnualEnrollmentGender(){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/gender')
     .map((response: Response) => response.json())
@@ -60,7 +78,12 @@ export class DashboardService {
   }
 
   getPartnerAnnualEnrollmentGender(id){
-    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender?partner='+id)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender?partner_admin='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  getPartnerAdminAnnualEnrollmentGender(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender?partner_admin='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -77,6 +100,11 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getPartnerAdminMonthlyAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner_admin='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   //Shimanyi - getSevenDaysAttendance
   getSevenDaysAttendance(){
@@ -89,6 +117,11 @@ export class DashboardService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+  getPartnerAdminSevenDaysAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner_admin='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   getEnrollmentGraph(){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/class')
@@ -98,6 +131,12 @@ export class DashboardService {
 
   getPartnerEnrollmentGraph(id){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/class?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getPartnerAdminEnrollmentGraph(id){
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/class?partner_admin='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

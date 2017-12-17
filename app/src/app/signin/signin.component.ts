@@ -84,6 +84,14 @@ export class SigninComponent implements OnInit {
                 localStorage.setItem("partnerId", partnerId);
                 localStorage.setItem("welcomeName", partnerName);
                 this.router.navigate([this.returnUrl]);
+              }else if(this.nav == "partner_admin"){
+                //an admin controlling a specific region
+                let partneradminId = data.info.id;
+                let partnerName = data.info.name;
+                //console.log(partnerId);
+                localStorage.setItem("partneradminId", partneradminId);
+                localStorage.setItem("welcomeName", partnerName);
+                this.router.navigate([this.returnUrl]);
               }else{
                 //console.log('admin');
                 this.router.navigate([this.returnUrl]);

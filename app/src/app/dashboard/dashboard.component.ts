@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit{
   public boys: any;
   public girls: any;
   partnerId:number;
+  partneradminId:number;
   partnerName: string;
 
   constructor(private dashboardServices: DashboardService) {
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
     this.partnerName = localStorage.getItem("welcomeName");
     if(this.partnerId && this.partnerName){
       this.getPartnerStats(this.partnerId);
@@ -48,6 +50,13 @@ export class DashboardComponent implements OnInit{
       this.getPartnerSevenDaysAttendance(this.partnerId);
       this.getPartnerEnrollmentGraph(this.partnerId);
 
+    }else if(this.partneradminId){
+      this.getPartnerAdminStats(this.partneradminId);
+      this.getPartnerAdminAnnualAttendanceGender(this.partneradminId);
+      this.getPartnerAdminAnnualEnrollmentGender(this.partneradminId);
+      this.getPartnerAdminMonthlyAttendance(this.partneradminId);
+      this.getPartnerAdminSevenDaysAttendance(this.partneradminId);
+      this.getPartnerAdminEnrollmentGraph(this.partneradminId);
     }else{
       this.getStats();
       //this.getWeeklySummary(); commented till the api is fixed
@@ -76,6 +85,20 @@ export class DashboardComponent implements OnInit{
   public getPartnerStats(id):void {
 
     this.dashboardServices.getPartnerStats(id).subscribe(data => {
+
+       this.schools = data.active_schools;
+       this.males = data.students.males;
+       this.females = data.students.females;
+       this.students = +(this.males+this.females);
+       this.teachers = data.teachers;
+
+
+    });
+  }
+  //partner admin
+  public getPartnerAdminStats(id):void {
+
+    this.dashboardServices.getPartnerAdminStats(id).subscribe(data => {
 
        this.schools = data.active_schools;
        this.males = data.students.males;
@@ -178,6 +201,51 @@ export class DashboardComponent implements OnInit{
     });
   }
 
+  //partner admin weekly status
+  public getPartnerAdminWeeklySummary(id){
+    this.dashboardServices.getPartnerAdminWeeklySummary(id).subscribe( data => {
+      this.malesPresent   = data.present.males;
+      this.malesAbscent   = data.absent.males;
+      this.femalesPresent = data.present.females;
+      this.femalesAbscent = data.absent.females;
+      this.childrenPresent = data.present.total + "%";
+      this.childrenAbscent = data.absent.total;
+
+      this.attendanceSnapshot = [
+        {
+          "title": "Girls Present",
+          "duration":"1 week",
+          "progress": this.femalesPresent,
+          "color":"primary"
+        }, {
+          "title": "Boys Present ",
+          "duration":"1 week",
+          "progress": this.malesPresent,
+          "color":"primary"
+        }, {
+          "title": "Children Present",
+          "duration":"1 week",
+          "progress": this.childrenPresent,
+          "color":"primary"
+        },{
+          "title": "Girls Absent",
+          "duration":"1 week",
+          "progress": this.femalesAbscent,
+          "color":"accent"
+        }, {
+          "title": "Males Abscent",
+          "duration":"1 week",
+          "progress": this.childrenAbscent,
+          "color":"accent"
+        },  {
+          "title": "Children Abscent",
+          "duration":"1 week",
+          "progress": this.malesAbscent,
+          "color":"warn"
+        }
+      ]
+    });
+  }
   // Shared chart options
   public globalChartOptions: any = {
       responsive: true,
@@ -294,7 +362,17 @@ export class DashboardComponent implements OnInit{
       this.pieChartData = children;
     });
   }
+  public getPartnerAdminAnnualAttendanceGender(id){
+      this.dashboardServices.getPartnerAdminAnnualAttendanceGender(id).subscribe( data => {
 
+      data = data.results;
+      let children = [];
+
+      children.push(data[0].present_females);
+      children.push(data[0].present_males);
+      this.pieChartData = children;
+    });
+  }
 //Norman - pie chart data for enrollment based on gender
   public getAnnualEnrollmentGender(){
 
@@ -312,6 +390,22 @@ export class DashboardComponent implements OnInit{
   public getPartnerAnnualEnrollmentGender(id){
 
       this.dashboardServices.getPartnerAnnualEnrollmentGender(id).subscribe( data => {
+
+        data = data.results;
+        let enrolled = [];
+        enrolled.push(data[0].enrolled_females);
+        enrolled.push(data[0].enrolled_males);
+
+        this.pieChartEnrollmentData = enrolled;
+        if(this.pieChartEnrollmentData == [0,0]){
+          this.noNewlyEnrolled = 'No newly enrolled student';
+        }
+    });
+  }
+
+  public getPartnerAdminAnnualEnrollmentGender(id){
+
+      this.dashboardServices.getPartnerAdminAnnualEnrollmentGender(id).subscribe( data => {
 
         data = data.results;
         let enrolled = [];
@@ -395,7 +489,49 @@ export class DashboardComponent implements OnInit{
 
       for(let i = 0; i < subset.length; i++){
 
-        let splitted = subset[i].value.split("/");
+        let splitted = subset[i].value.split("-");
+        let month = splitted[1] - 1;
+        columns.push(months[month]);
+
+        totalAbsent.push(subset[i].absent );
+        totalPresent.push(subset[i].present);
+      }
+
+      this.comboChartLabels = columns;
+      this.comboChartData  = [{
+        data: totalAbsent,
+        label: 'Absents',
+        borderWidth: 1,
+        type: 'line',
+        fill: false
+      },{
+        data: totalPresent,
+        label: 'Presents',
+        borderWidth: 1,
+        type: 'bar',
+      }];
+    });
+  }
+
+  public getPartnerAdminMonthlyAttendance(id){
+
+    this.dashboardServices.getPartnerAdminMonthlyAttendance(id).subscribe( data => {
+      data = data.results;
+      let subset = data.slice(Math.max(data.length - 6, 0));
+
+      let columns:String [] = [];
+      let totalAbsent: number [] = [];
+      let totalPresent: number [] = [];
+      let refine: any;
+
+      let months: string [] =
+      ["Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+      "Oct", "Nov", "Dec", ];
+
+      for(let i = 0; i < subset.length; i++){
+
+        let splitted = subset[i].value.split("-");
         let month = splitted[1] - 1;
         columns.push(months[month]);
 
@@ -468,6 +604,29 @@ export class DashboardComponent implements OnInit{
   });
   }
 
+  public getPartnerAdminEnrollmentGraph(id){
+
+    this.dashboardServices.getPartnerAdminEnrollmentGraph(id).subscribe( data => {
+      data = data.results;
+      let subset = data.slice(Math.max(data.length - 8, 0));
+
+      let columns:string[] = [];
+      let enrollments: number [] = [];
+
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].value);
+        enrollments.push(subset[i].total);
+      }
+
+      this.EnrolledComboChartLabels = columns;
+      this.EnrolledComboChartData  = [{
+        data: enrollments,
+        label: 'Students',
+        borderWidth: 1,
+        type: 'bar',
+      }];
+  });
+  }
   //Shimanyi - get Attendance for the last 7 days
 
   // Bar
@@ -574,4 +733,37 @@ export class DashboardComponent implements OnInit{
     });
   }
 
+  public getPartnerAdminSevenDaysAttendance(id){
+
+    this.dashboardServices.getPartnerAdminSevenDaysAttendance(id).subscribe( data => {
+      data = data.results;
+      let subset = data.slice(Math.max(data.length - 7, 0));
+
+      let columns: string[] = [];
+      let absents: number[] = [];
+      let presents: number[] = [];
+
+      let columnNames: string = '';
+      for(let i = 0; i < subset.length; i++){
+        columns.push(subset[i].value);
+        absents.push((subset[i].absent_males + subset[i].absent_females));
+        presents.push((subset[i].present_females + subset[i].present_males));
+      }
+
+      this.barChartLabels = columns;
+      this.barChartData = [{
+        //display data for boys ranging from class 1 to 7
+        //presents
+        data: presents,
+        label: 'Present Students',
+        borderWidth: 0
+      }, {
+        //absents
+        data: absents,
+        label: 'Absent Students',
+        borderWidth: 0
+      }];
+
+    });
+  }
 }
