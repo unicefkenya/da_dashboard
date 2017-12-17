@@ -49,7 +49,7 @@ const MENUITEMS = [
     icon: 'extension',
     children: [
       {state: 'add-partner', name: 'Add Partners'},
-      {state: 'view-partners', name: 'View Partners'}
+      {state: 'view-partners', name: 'View Partners', access:'partner-admin'}
     ]
   },
   {
@@ -69,7 +69,7 @@ const MENUITEMS = [
     icon: 'home',
     children: [
       {state: 'add-schools', name: 'Add Schools'},
-      {state: 'view-schools', name: 'View Schools'},
+      {state: 'view-schools', name: 'View Schools', access:'partner-admin'},
       {state: 'attendance-sheets', name: 'Attendance Sheets'}
     ]
   },
@@ -112,8 +112,8 @@ const MENUITEMS = [
     icon: 'face',
     children: [
       {state: 'add-children', name: 'Add Children'},
-      {state: 'enrollments', name: 'New Enrollments'},
-      {state: 'view-children', name: 'View Children'},
+      {state: 'enrollments', name: 'New Enrollments', access:'partner-admin'},
+      {state: 'view-children', name: 'View Children', access:'partner-admin'},
     ]
   },
   /*{

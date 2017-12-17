@@ -351,7 +351,7 @@ export class DashboardComponent implements OnInit{
 
       for(let i = 0; i < subset.length; i++){
 
-        let splitted = subset[i].value.split("/");
+        let splitted = subset[i].value.split("-");
         let month = splitted[1] - 1;
         columns.push(months[month]);
 

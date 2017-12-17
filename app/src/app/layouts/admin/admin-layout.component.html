@@ -12,6 +12,7 @@
     <div fxFlex *ngIf="userType == 'partner' && message">{{welcomeName}}</div>
     <div fxFlex *ngIf="userType == 'teacher'">Welcome {{welcomeName}}</div>
     <div fxFlex *ngIf="userType == 'teacher' && message">{{welcomeName}}</div>
+    <div fxFlex *ngIf="userType == 'partner_admin'">Welcome {{welcomeName}}</div>
     <button appToggleFullscreen md-icon-button>
       <md-icon>fullscreen</md-icon>
     </button>
@@ -47,6 +48,12 @@
         <md-list-item class="accordion-link" *ngFor="let menuitem of menuItems.getadmin()" group="{{menuitem.state}}">
           <!--Link-->
           <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='partner' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
+            <md-icon>{{ menuitem.icon }}</md-icon>
+            <span>{{ menuitem.name | translate }}</span>
+            <span fxFlex></span>
+            <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+          </a>
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='partner_admin' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
