@@ -52,7 +52,7 @@ export class AddSchoolsComponent implements OnInit {
   }
 subcountyForm:boolean = false;
   onSelect(event, data){
-    console.log(event,data, 'wewe');
+    //console.log(event,data, 'wewe');
     this.subcountyForm = true;
     this.getSchoolConstituencies(data);
   }
@@ -76,7 +76,7 @@ subcountyForm:boolean = false;
           .subscribe(
             data => //console.log(data)
             {
-              console.log("Added School Successfully"),
+              //console.log("Added School Successfully"),
               this.success = "Added School Successfully";
               this.form.reset();
             },
@@ -108,7 +108,7 @@ county:any;
             this.county.sub_counties = res[i].subcounties;
             this.countyName.push(this.county);
           }
-           console.log(this.countyName);
+           //console.log(this.countyName);
         });
 
 
@@ -124,6 +124,6 @@ zones:any;
     }
 
 
-    console.log(data,this.subcounties, 'yeah');
+    //console.log(data,this.subcounties, 'yeah');
   }
 }

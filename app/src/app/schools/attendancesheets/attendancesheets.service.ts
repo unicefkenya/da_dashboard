@@ -50,7 +50,7 @@ export class AttendancesheetsService {
     }else{
       errMsg = error.message ? error.message: error.toString();
     }
-    console.log(errMsg);
+    //console.log(errMsg);
     return Observable.throw(errMsg);
   }
 

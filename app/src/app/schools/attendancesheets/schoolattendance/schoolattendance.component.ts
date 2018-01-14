@@ -97,7 +97,7 @@ export class SchoolattendanceComponent implements OnInit {
         (data)  =>
         {
           //console.log(data.results[0]);
-          console.log(data);
+          //console.log(data);
           this.link = data.link;
         }
       );

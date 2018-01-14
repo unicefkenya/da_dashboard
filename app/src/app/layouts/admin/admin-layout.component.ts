@@ -46,6 +46,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     //gets the cuurrently saved user
     this.currentUser = JSON.parse(localStorage.getItem('user'));
   }
+
+
 userDashboard:any;
 schoolId:any;
   ngOnInit(): void {
@@ -69,6 +71,15 @@ schoolId:any;
 
   }
 
+  hideSchools(childitem){
+     let hiddenSchools = ['Add Schools','Attendance Sheets','Add Children', 'Add Partners']
+     let index=hiddenSchools.indexOf(childitem.name)
+     let res=index==-1?true:false
+     //console.log("Hide item ",index,res)
+     return res
+
+}
+
   schoolProfile(){
     //console.log('onyesha bana');
       let schoolId = localStorage.getItem("schoolId");
@@ -87,12 +98,12 @@ schoolId:any;
       return window.matchMedia(`(max-width: 960px)`).matches;
     }
   }
-message:string;
-messageChange(){
-  this.message = localStorage.getItem("welcomeName");
-  //console.log(this.message, 'sdsdsd');
-  //console.log('clicked');
-}
+  message:string;
+  messageChange(){
+    this.message = localStorage.getItem("welcomeName");
+    //console.log(this.message, 'sdsdsd');
+    //console.log('clicked');
+  }
 
   logout(){
     localStorage.clear();

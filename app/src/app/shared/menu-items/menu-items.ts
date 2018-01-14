@@ -26,7 +26,7 @@ const MENUITEMS = [
     usertype: 'all',
     access: 'all',
     accessibilitylink: 'teacher',
-    //id: JSON.parse(localStorage.getItem('schoolId')),
+    accessibilitypadmin: 'partner-admin',
     state: 'home',
     name: 'Home',
     type: 'link',
@@ -42,11 +42,13 @@ const MENUITEMS = [
     */
   },
   {
-    usertype: 'admin',
+    usertype: 'partner',
     state: 'partners',
     name: 'Partners',
     type: 'sub',
     icon: 'extension',
+    accessibilitypadmin: 'partner-admin',
+    access: 'admin',
     children: [
       {state: 'add-partner', name: 'Add Partners'},
       {state: 'view-partners', name: 'View Partners', access:'partner-admin'}
@@ -63,6 +65,7 @@ const MENUITEMS = [
     usertype: 'partner',
     state: 'schools',
     accessibility: 'teacher',
+    accessibilitypadmin: 'partner-admin',
     access: 'admin',
     name: 'Schools',
     type: 'sub',
@@ -108,6 +111,7 @@ const MENUITEMS = [
     state: 'children',
     name: 'Children',
     access: 'admin',
+    accessibilitypadmin:'partner-admin',
     type: 'sub',
     icon: 'face',
     children: [
@@ -136,6 +140,7 @@ const MENUITEMS = [
   },*/
   {
     usertype: 'partner',
+    accessibility: 'partner',
     state: 'imports',
     name: 'Import',
     type: 'link',
