@@ -25,33 +25,26 @@ const MENUITEMS = [
   {
     usertype: 'all',
     access: 'all',
-    accessibilitylink: 'teacher',
-    accessibilitypadmin: 'partner-admin',
+    accessibilityteacher: 'teacher',
+    accessibilitypadmin: 'partner_admin',
     state: 'home',
     name: 'Home',
     type: 'link',
     icon: 'dashboard'
-    /*
-    access: 'admin',
-    accessibility: 'teacher',
-    id: localStorage.getItem('schoolId'),
-    state: 'home',
-    name: 'Home',
-    type: 'link',
-    icon: 'dashboard'
-    */
   },
   {
-    usertype: 'partner',
+    usertype: 'none',
     state: 'partners',
+    accessibility: 'teacher',
+    accessibilityteacher: 'none',
+    accessibilitypadmin: 'partner_admin',
+    access: 'admin',
     name: 'Partners',
     type: 'sub',
     icon: 'extension',
-    accessibilitypadmin: 'partner-admin',
-    access: 'admin',
     children: [
       {state: 'add-partner', name: 'Add Partners'},
-      {state: 'view-partners', name: 'View Partners', access:'partner-admin'}
+      {state: 'view-partners', name: 'View Partners', access:'partner_admin'}
     ]
   },
   {
@@ -65,14 +58,14 @@ const MENUITEMS = [
     usertype: 'partner',
     state: 'schools',
     accessibility: 'teacher',
-    accessibilitypadmin: 'partner-admin',
+    accessibilitypadmin: 'partner_admin',
     access: 'admin',
     name: 'Schools',
     type: 'sub',
     icon: 'home',
     children: [
       {state: 'add-schools', name: 'Add Schools'},
-      {state: 'view-schools', name: 'View Schools', access:'partner-admin'},
+      {state: 'view-schools', name: 'View Schools', access:'partner_admin'},
       {state: 'attendance-sheets', name: 'Attendance Sheets'}
     ]
   },
@@ -82,6 +75,9 @@ const MENUITEMS = [
     name: 'Classes',
     type: 'sub',
     icon: 'store',
+    access: 'adminteacher',
+    accessibilityteacher: 'teacher',
+    //accessibilitypadmin:'partner_admin',
     children: [
       {state: 'add-class', name: 'Add Class'},
       {state: 'view-classes', name: 'View Classes'},
@@ -93,6 +89,9 @@ const MENUITEMS = [
     name: 'Teachers',
     type: 'sub',
     icon: 'people',
+    access: 'adminteacher',
+    accessibilityteacher: 'teacher',
+    //accessibilitypadmin:'partner_admin',
     children: [
       {state: 'add-teachers', name: 'Add Teachers'},
       {state: 'view-teachers', name: 'View Teachers'},
@@ -107,37 +106,20 @@ const MENUITEMS = [
     icon: 'group_add'
   },
   {
-    usertype: 'partner',
+   usertype: 'partner',
     state: 'children',
     name: 'Children',
     access: 'admin',
-    accessibilitypadmin:'partner-admin',
+    accessibilityteacher: 'teacher',
+    accessibilitypadmin:'partner_admin',
     type: 'sub',
     icon: 'face',
     children: [
       {state: 'add-children', name: 'Add Children'},
-      {state: 'enrollments', name: 'New Enrollments', access:'partner-admin'},
-      {state: 'view-children', name: 'View Children', access:'partner-admin'},
+      {state: 'enrollments', name: 'New Enrollments', access:'partner_admin'},
+      {state: 'view-children', name: 'View Children', access:'partner_admin'},
     ]
   },
-  /*{
-    usertype: 'partner',
-    state: 'reports',
-    name: 'Reports',
-    access: 'admin',
-    type: 'sub',
-    icon: 'format_line_spacing',
-    badge: [
-      {type: 'purple', value: '5'}
-    ],
-    children: [
-      {state: 'attendance', name: 'Overall Attendance'},
-      {state: 'enrollments', name: 'New Enrollments'},
-      {state: 'boys', name: 'Boys Attendance'},
-      {state: 'girls', name: 'Girls Attendance'},
-      {state: 'dropouts', name: 'Children Dropouts'},
-    ]
-  },*/
   {
     usertype: 'partner',
     accessibility: 'partner',

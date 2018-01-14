@@ -53,7 +53,7 @@
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
-          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userType==='partner_admin' && menuitem.accessibilitypadmin ==='partner-admin' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userType==='partner_admin' && menuitem.accessibilitypadmin ==='partner_admin' && menuitem.type === 'link'" [routerLink]="['/', menuitem.state]">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -66,7 +66,7 @@
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
 
-          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilitylink === userDashboard  && menuitem.type === 'link'" [routerLink]="['/school', schoolId]" skipLocationChange>
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple *ngIf="userDashboard==='teacher' && menuitem.accessibilityteacher === userDashboard  && menuitem.type === 'link'" [routerLink]="['/school', schoolId]" skipLocationChange>
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -104,13 +104,15 @@
           </a>
           <!--End-->
           <!--Sub Start-->
-          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibility != userType">
+
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.access === userType && menuitem.accessibilitypadmin != userType && menuitem.usertype != userType && menuitem.accessibility != userType && menuitem.accessibilityteacher != userType">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
+
           <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.access === 'all'">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
@@ -118,7 +120,19 @@
             <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
-          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType && menuitem.access != 'all'">
+
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.accessibilityteacher === userType || menuitem.usertype === userType && menuitem.access != 'all' && menuitem.access != userType && menuitem.accessibility != userType && menuitem.accessibilitypadmin != userType">
+            <md-icon>{{ menuitem.icon }}</md-icon>
+            <span>{{ menuitem.name | translate }}</span>
+            <span fxFlex></span>
+            <span class="menu-badge md-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+            <md-icon class="menu-caret">arrow_drop_down</md-icon>
+          </a>
+
+
+          
+
+          <a click="messageChange()" class="accordion-toggle relative" md-ripple href="javascript:;" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitypadmin === userType && menuitem.usertype != userType  && menuitem.access != 'all' && menuitem.access != userType &&  menuitem.accessibilityteacher != userType">
             <md-icon>{{ menuitem.icon }}</md-icon>
             <span>{{ menuitem.name | translate }}</span>
             <span fxFlex></span>
@@ -126,29 +140,43 @@
             <md-icon class="menu-caret">arrow_drop_down</md-icon>
           </a>
           <!--End-->
+
           <!--Sub Child Start-->
-          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType || menuitem.access === 'admin' && menuitem.accessibilitypadmin != 'partner-admin' && menuitem.accessibility != userType">
+          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.access === userType && menuitem.accessibilitypadmin != userType && menuitem.usertype != userType && menuitem.accessibility != userType && menuitem.accessibilityteacher != userType">
             <md-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>AD {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
+
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.access === 'all'">
             <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>ALL {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
 
-          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitylink === 'teacher' && menuitem.usertype != userType  && menuitem.access != 'all'">
+          <!--partner-->
+          <!--<md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.usertype === userType  && menuitem.access != 'all' && menuitem.access != userType && menuitem.accessibility != userType && menuitem.accessibilitypadmin != userType && menuitem.accessibilityteacher != userType">
             <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple> TH {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple> P {{ childitem.name | translate }}</a>
             </md-list-item>
-          </md-nav-list>
+          </md-nav-list>-->
+          <!--end-->
 
-          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitypadmin === 'partner-admin' && menuitem.usertype != userType  && menuitem.access != 'all' && menuitem.access != 'partner-admin' && menuitem.accessibility != 'partner-admin'">
+          <!--teacher-->
+          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilityteacher === userType || menuitem.usertype === userType && menuitem.access != 'all' && menuitem.access != userType && menuitem.accessibility != userType && menuitem.accessibilitypadmin != userType">
             <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
-              <a *ngIf="hideSchools(childitem)" [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple> PA {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
+          <!--end-->
+
+          <!--partner admin -->
+          <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitypadmin === userType && menuitem.usertype != userType  && menuitem.access != 'all' && menuitem.access != userType &&  menuitem.accessibilityteacher != userType">
+            <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
+              <a *ngIf="hideSchools(childitem)" [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
+            </md-list-item>
+          </md-nav-list>
+          <!--end-->
           <!--End-->
         </md-list-item>
       </md-nav-list>

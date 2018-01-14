@@ -72,7 +72,7 @@ schoolId:any;
   }
 
   hideSchools(childitem){
-     let hiddenSchools = ['Add Schools','Attendance Sheets','Add Children', 'Add Partners']
+     let hiddenSchools = ['Add Schools','Attendance Sheets','Add Children', 'Add Partners','Add Class', 'Add Teachers', 'View Classes','View Teachers']
      let index=hiddenSchools.indexOf(childitem.name)
      let res=index==-1?true:false
      //console.log("Hide item ",index,res)
