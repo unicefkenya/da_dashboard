@@ -308,9 +308,8 @@ export class EnrollmentComponent implements OnInit {
     }
 
     fetchPartnerAdminGirlChildTotal(id):number{
-      this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
+      this.enrollmentService.fetchPartnerAdminGirlChildTotal(id).subscribe(data => {
         this.females = data.count;
-
       });
       return this.females;
     }
@@ -468,7 +467,6 @@ export class EnrollmentComponent implements OnInit {
                       childs.push(this.dt)
                     }
 
-                    this.temp=[childs];
                     this.children=childs;
                     //console.log(childs);
                   },
@@ -501,7 +499,6 @@ export class EnrollmentComponent implements OnInit {
 
                         }
 
-                        this.temp=[childs];
                         this.children=childs;
                         //console.log(childs);
                       },
@@ -537,7 +534,6 @@ export class EnrollmentComponent implements OnInit {
 
                         }
 
-                        this.temp=[childs];
                         this.children=childs;
                         //console.log(childs);
                       },
@@ -583,7 +579,6 @@ export class EnrollmentComponent implements OnInit {
                         childs.push(this.dt)
                       }
 
-                      this.temp=[childs];
                       this.children=childs;
                       //console.log(childs);
                     },
@@ -616,7 +611,6 @@ export class EnrollmentComponent implements OnInit {
 
                         }
 
-                        this.temp=[childs];
                         this.children=childs;
                         //console.log(childs);
                       },
@@ -652,7 +646,6 @@ export class EnrollmentComponent implements OnInit {
 
                         }
 
-                        this.temp=[childs];
                         this.children=childs;
                         //console.log(childs);
                       },
@@ -692,7 +685,6 @@ export class EnrollmentComponent implements OnInit {
 
                       }
 
-                      this.temp=[childs];
                       this.children=childs;
                       //console.log(childs);
                     },
@@ -729,7 +721,6 @@ export class EnrollmentComponent implements OnInit {
 
                           }
 
-                          this.temp=[childs];
                           this.children=childs;
                           //console.log(childs);
                         },
@@ -761,7 +752,6 @@ export class EnrollmentComponent implements OnInit {
 
                           }
 
-                          this.temp=[childs];
                           this.children=childs;
                         //  console.log(childs);
                         },
@@ -793,7 +783,6 @@ export class EnrollmentComponent implements OnInit {
 
                           }
 
-                          this.temp=[childs];
                           this.children=childs;
                         //  console.log(childs);
                         },
@@ -829,7 +818,6 @@ export class EnrollmentComponent implements OnInit {
 
                           }
 
-                          this.temp=[childs];
                           this.children=childs;
                           //console.log(childs);
                         },
@@ -865,7 +853,6 @@ export class EnrollmentComponent implements OnInit {
 
                           }
 
-                          this.temp=[childs];
                           this.children=childs;
                           //console.log(childs);
                         },
@@ -897,7 +884,6 @@ export class EnrollmentComponent implements OnInit {
 
                           }
 
-                          this.temp=[childs];
                           this.children=childs;
                         //  console.log(childs);
                         },
@@ -970,12 +956,21 @@ export class EnrollmentComponent implements OnInit {
       this.partneradminid = JSON.parse(localStorage.getItem("partneradminId"));
       this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
       let partnerName = localStorage.getItem("welcomeName");
+
       if(this.partnerId && partnerName){
         this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
         this.fetchPartnerBoyChildTotal(this.partnerId);
         this.fetchPartnerGirlChildTotal(this.partnerId);
         this.count = this.fetchPartnerBoyChildTotal(this.partnerId)+this.fetchPartnerGirlChildTotal(this.partnerId);
         this.fetchAllPartnerChildren(this.partnerId);
+      }
+      else if(this.partneradminid && partnerName){
+        this.fetchPartnerAdminChildren(this.partneradminid,this.offset, this.limit);
+        this.fetchPartnerAdminBoyChildTotal(this.partneradminid);
+        this.fetchPartnerAdminGirlChildTotal(this.partneradminid);
+
+        this.count = this.fetchPartnerBoyChildTotal(this.partneradminid)+this.fetchPartnerAdminGirlChildTotal(this.partneradminid);
+        this.fetchAllPartnerAdminChildren(this.partneradminid);
       }
       else if(this.schoolId && partnerName){
         //console.log('school yaah')
