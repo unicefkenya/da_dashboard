@@ -76,7 +76,7 @@ export class AddChildrenComponent implements OnInit {
 
   }
   doCheck(event){
-    console.log(event);
+    //console.log(event);
   }
   onSubmit(registerChild: ChildRegistration){
     if(!this.submitted){
@@ -219,7 +219,7 @@ export class AddChildrenComponent implements OnInit {
     this._childRegistrationService.getClass(id)
       .subscribe(
         (res)=>{
-          console.log(res);
+          //console.log(res);
           res = res.results
           const className = [];
           for (let i = 0;i < res.length;i++){
@@ -230,7 +230,8 @@ export class AddChildrenComponent implements OnInit {
           }
           this.schoolClasses = className;
         },
-      (err) => console.log(err),
+      (err) => {//console.log(err)
+      }
     );
   }
 }

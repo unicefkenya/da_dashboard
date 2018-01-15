@@ -22,7 +22,6 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 
 import { SharedModule }       from './shared/shared.module';
-//import { SocialComponent } from './social/social.component';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -33,7 +32,6 @@ export function createTranslateLoader(http: Http) {
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    //SocialComponent,
     EditProfileDialog
   ],
   imports: [

@@ -29,7 +29,7 @@ export class TeachersComponent implements OnInit{
 
   getTeacher(id){
     this.teachersService.getTeacherId(id).subscribe(data=>{
-      console.log(data);
+      //console.log(data);
       this.firstname = data.fstname
       this.lastname = data.lstname
       this.phone = data.phone_no
@@ -45,7 +45,7 @@ export class TeachersComponent implements OnInit{
           this.className = []
           //console.log(data.classes)
           this.teachersService.getClassName(data.classes[i]).subscribe(data=>{
-            console.log(data);
+            //console.log(data);
             this.cl = {}
             this.cl.name = data.class_name
             this.className.push(this.cl);

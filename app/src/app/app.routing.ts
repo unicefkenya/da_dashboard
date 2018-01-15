@@ -77,10 +77,6 @@ export const AppRoutes: Routes = [{
     path: 'school/:id',
     loadChildren: './search/search.module#SearchModule',
     canActivate: [AuthGuard]
-  }, {
-    path: 'profile',
-    loadChildren: './social/social.module#SocialModule',
-    canActivate: [AuthGuard]
   },{
     path: '404',
     loadChildren: './not-found/not-found.module#NotFoundModule',

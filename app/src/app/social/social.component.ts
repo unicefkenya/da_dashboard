@@ -56,10 +56,10 @@ export class SocialComponent implements OnInit {
       this.name = 'Unicef';
     }
     else{
-      console.log(this.usertype);
+      //console.log(this.usertype);
       this.id = JSON.parse(localStorage.getItem("schoolId"));
       this.fetchSchoolDetails(this.id);
-      console.log("Is a school");
+      //console.log("Is a school");
     }
   }
 
@@ -71,7 +71,7 @@ export class SocialComponent implements OnInit {
                   this.email = res.email;
                   this.name = res.name;
                   this.phone = res.phone;
-                  console.log(this.phone);
+                  //console.log(this.phone);
                 },
               (err) => {
                 this.error = err;
@@ -83,7 +83,7 @@ export class SocialComponent implements OnInit {
     this._socialService.fetchSchoolProfile(id)
            .subscribe(
                 (res)=>{
-                  console.log(res);
+                  //console.log(res);
                   let data = res.results;
                   this.email = data[0].email;
                   this.name = data[0].school_name;
@@ -116,7 +116,7 @@ export class SocialComponent implements OnInit {
   editAccount() {
 
     // Get the data from the service
-    console.log('here');
+    //console.log('here');
     this._socialService.fetchAdminDetails()
      .subscribe(
           (res)=>{
@@ -129,8 +129,8 @@ export class SocialComponent implements OnInit {
         },
       );
 
-     console.log(this.email);
-     console.log(this.phone);
+     //console.log(this.email);
+     //console.log(this.phone);
   }
 
 }

@@ -83,7 +83,7 @@ export class EnrollmentComponent implements OnInit {
   fetchChildren(offset,limit): void {
     this.enrollmentService.fetchChildren(this.page).subscribe(data => {
       //start and end for pagination
-      console.log(data);
+      //console.log(data);
       const start = offset * limit;
       const end = start + limit;
        this.count =data.count
@@ -793,7 +793,7 @@ export class EnrollmentComponent implements OnInit {
         this.fetchAllPartnerChildren(this.partnerId);
       }
       else if(this.schoolId && partnerName){
-        console.log('school yaah')
+        //console.log('school yaah')
         this.fetchSchoolChildren(this.schoolId,this.offset, this.limit);
         this.fetchSchoolBoyChildTotal(this.schoolId);
         this.fetchSchoolGirlChildTotal(this.schoolId);

@@ -109,6 +109,10 @@ schoolId:any;
     localStorage.clear();
     this._signin.logout();
   }
+
+  profile(){
+    this.router.navigate(['/reports/profile']);
+  }
 /*
   private getSchoolId(id){
 
