@@ -38,7 +38,7 @@ export class ViewSchoolsComponent implements OnInit {
     offset: 0
   };
   partnerId: number;
-
+  partneradminId: number;
   columns = [
     { name: 'Name' },
     { name: 'Emiscode' },
@@ -121,24 +121,63 @@ export class ViewSchoolsComponent implements OnInit {
       });
     }
 
-  onSelect({ selected }) {
-   //console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
-   localStorage.setItem('schoolId', this.selected[0].id);
-   this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
- }
+    //partner admin
+    fetchPartnerAdminSchools(id,offset,limit): void {
+      this.schoolService.fetchPartnerAdminSchools(id,this.page).subscribe(data => {
+        console.log(data)
+        //start and end for pagination
+        const start = offset * limit;
+        const end = start + limit;
+         this.count =data.count
+        this.loading = false;
+        let items =[];
+        let rowss = [];
+        for (let i = 0; i < data.results.length; i++){
+          this.dt = {}
+          this.dt.name = data.results[i].school_name
+          this.dt.emiscode = data.results[i].emis_code
+          this.dt.level = data.results[i].level
+          this.dt.id = data.results[i].id
+          items.push(this.dt)
 
- updateFilter(event) {
-   const val = event.target.value.toLowerCase();
+        }
 
-   // filter our data
-   const temp = this.temp.filter(function(d) {
-     return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-   });
-   // update the rows
-   this.schools = temp;
-   // Whenever the filter changes, always go back to the first page
-   this.table.offset = 0;
- }
+        //cached data
+        let rowSchool=[...rowss]
+        this.temp=[...items];
+        let j=0
+        for (let i = start; i < end; i++) {
+          rowSchool[i] = items[j];
+          j++;
+        }
+        //initial data
+        this.schools=rowSchool;
+
+        this.selected = [];
+
+        //console.log('Page Results',this.schools,this.count, start, end);
+
+      });
+    }
+
+    onSelect({ selected }) {
+     //console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
+     localStorage.setItem('schoolId', this.selected[0].id);
+     this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
+   }
+
+   updateFilter(event) {
+     const val = event.target.value.toLowerCase();
+
+     // filter our data
+     const temp = this.temp.filter(function(d) {
+       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+     });
+     // update the rows
+     this.schools = temp;
+     // Whenever the filter changes, always go back to the first page
+     this.table.offset = 0;
+   }
 
  searchSchool(search: Search){
    if(!this.submitted){
@@ -173,7 +212,36 @@ export class ViewSchoolsComponent implements OnInit {
                  this.fail = "Failed to save data";
                }
              );
-         }else{
+         }
+         else if(this.partneradminId){
+                    this.schoolService.searchPartnerAdminData(this.partneradminId, search.search)
+             .subscribe(
+               data => //console.log(data)
+               {
+                 //console.log(data);
+                 let res =data.results;
+                 let items =[];
+                 for (let i = 0; i < res.length; i++){
+                   this.dt = {}
+                   this.dt.schoolcode = res[i].school_code
+                   this.dt.name = res[i].school_name
+                   this.dt.emiscode = res[i].emis_code
+                   this.dt.level = res[i].level
+                   this.dt.id = res[i].id
+                   items.push(this.dt)
+
+                 }
+
+                 this.temp=[items];
+                 this.schools=items;
+               },
+               error =>{
+                 this.empty = "This field is required";
+                 this.fail = "Failed to save data";
+               }
+             );
+         }
+         else{
            this.schoolService.searchData(search.search)
                .subscribe(
                  data => //console.log(data)
@@ -225,10 +293,15 @@ export class ViewSchoolsComponent implements OnInit {
     });
 
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
     let partnerName = localStorage.getItem("welcomeName");
+
     if(this.partnerId && partnerName){
       this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);
-    }else{
+    }else if(this.partneradminId && partnerName){
+      this.fetchPartnerAdminSchools(this.partneradminId, this.offset,this.limit);
+    }
+    else{
       this.fetchSchools(this.offset,this.limit);
     }
 
