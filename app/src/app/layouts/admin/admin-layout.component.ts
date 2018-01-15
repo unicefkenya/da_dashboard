@@ -113,6 +113,7 @@ schoolId:any;
   profile(){
     this.router.navigate(['/reports/profile']);
   }
+
 /*
   private getSchoolId(id){
 
