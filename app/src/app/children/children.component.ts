@@ -39,6 +39,7 @@ export class ChildrenComponent implements OnInit {
   };
 
   partnerId:number;
+  partneradminId: number;
   schoolId:number;
 
   columns = [
@@ -135,6 +136,47 @@ export class ChildrenComponent implements OnInit {
     });
   }
 
+
+  fetchPartnerAdminChildren(id,offset,limit): void {
+    this.childrenService.fetchPartnerAdminChildren(id,this.page).subscribe(data => {
+      //start and end for pagination
+      const start = offset * limit;
+      const end = start + limit;
+       this.count =data.count
+      data = data.results;
+      this.loading = false;
+
+      let childs =[]
+      let rows=[]
+      //  this.count = data.length;
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        this.dt.name=data[i].student_name
+        this.dt.gender=data[i].gender
+        this.dt.school = data[i].school_name
+        this.dt.class=data[i].class_name
+        this.dt.id = data[i].id
+        childs.push(this.dt)
+      }
+      //cache our data
+      //this.temp = childs;
+      let row=[...rows]
+      this.temp=[...childs];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = childs[j];
+        j++;
+      //this.temp=row
+      this.children=row;
+    }
+
+
+    this.selected = [];
+      //console.log('Page Results',this.children,this.count, start, end);
+
+    });
+  }
+
   //school
   fetchSchoolChildren(id,offset,limit): void {
     this.childrenService.fetchSchoolChildren(id,this.page).subscribe(data => {
@@ -185,6 +227,37 @@ export class ChildrenComponent implements OnInit {
 
             if(this.partnerId){
               this.childrenService.searchPartnerData(this.partnerId, search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+                      let res = data.results;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+
+                      }
+
+                      this.temp=[childs];
+                      this.children=childs;
+                      //console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+              }
+              else if(this.partneradminId){
+              this.childrenService.searchPartnerAdminData(this.partneradminId, search.search)
                   .subscribe(
                     data => //console.log(data)
                     {
@@ -329,11 +402,17 @@ export class ChildrenComponent implements OnInit {
     });
 
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     let partnerName = localStorage.getItem("welcomeName");
+
     if(this.partnerId && partnerName){
       this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
-    }else if(this.schoolId && partnerName){
+    }
+    else if(this.partneradminId && partnerName){
+      this.fetchPartnerAdminChildren(this.partneradminId,this.offset, this.limit);
+    }
+    else if(this.schoolId && partnerName){
       this.fetchSchoolChildren(this.schoolId,this.offset, this.limit);
     }
     else{

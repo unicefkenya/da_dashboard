@@ -28,6 +28,12 @@ export class ChildrenService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  fetchPartnerAdminChildren(id,page){
+    return this.http.get(this.baseApiUrl+'api/students?page='+page+'&partner_admin='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   fetchSchoolChildren(id,page){
     return this.http.get(this.baseApiUrl+'api/students?page='+page+'&school='+id)
       .map((response: Response) => response.json())
@@ -45,6 +51,13 @@ export class ChildrenService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  searchPartnerAdminData(id,name){
+    return this.http.get(this.baseApiUrl+'api/students?name='+name+'&partner_admin='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   searchSchoolData(id,name){
     return this.http.get(this.baseApiUrl+'api/students?name='+name+'&school='+id)
     .map((response: Response) => response.json())

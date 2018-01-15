@@ -41,6 +41,7 @@ export class EnrollmentComponent implements OnInit {
     allChildren:number;
     count:number;
     partnerId:number;
+    partneradminid:number;
     schoolId:number;
 
     columns = [
@@ -132,6 +133,15 @@ export class EnrollmentComponent implements OnInit {
       })
     }
 
+    fetchAllPartnerAdminChildren(id):void{
+      this.enrollmentService.fetchAllPartnerAdminChildren(id).subscribe(data =>{
+        this.allChildren = data.count;
+        //console.log(this.count);
+        //console.log(this.enrollmentPercentage);
+        //console.log(data, "All children");
+      })
+    }
+
     fetchAllSchoolChildren(id):void{
       this.enrollmentService.fetchAllSchoolChildren(id).subscribe(data =>{
         this.allChildren = data.count;
@@ -143,6 +153,46 @@ export class EnrollmentComponent implements OnInit {
 
     fetchPartnerChildren(id,offset,limit): void {
       this.enrollmentService.fetchPartnerChildren(id,this.page).subscribe(data => {
+        //start and end for pagination
+        const start = offset * limit;
+        const end = start + limit;
+         this.count =data.count
+        data = data.results;
+        this.loading = false;
+
+        let childs =[]
+        let rows=[]
+        //  this.count = data.length;
+        for (let i = 0;i < data.length;i++){
+          this.dt = {}
+          this.dt.name=data[i].student_name
+          this.dt.gender=data[i].gender
+          this.dt.school = data[i].school_name
+          this.dt.class=data[i].class_name
+          this.dt.id = data[i].id
+          childs.push(this.dt)
+        }
+        //cache our data
+        //this.temp = childs;
+        let row=[...rows]
+        this.temp=[...childs];
+        let j=0
+        for (let i = start; i < end; i++) {
+          row[i] = childs[j];
+          j++;
+        }
+        //this.temp=row
+        this.children=row;
+
+        this.selected = [];
+
+        //console.log('Page Results',this.children,this.count, start, end);
+
+      });
+    }
+
+    fetchPartnerAdminChildren(id,offset,limit): void {
+      this.enrollmentService.fetchPartnerAdminChildren(id,this.page).subscribe(data => {
         //start and end for pagination
         const start = offset * limit;
         const end = start + limit;
@@ -226,6 +276,14 @@ export class EnrollmentComponent implements OnInit {
       });
       return this.males;
     }
+
+    fetchPartnerAdminBoyChildTotal(id):number{
+      this.enrollmentService.fetchPartnerAdminBoyChildTotal(id).subscribe(data => {
+        this.males = data.count;
+      });
+      return this.males;
+    }
+
     //school
     fetchSchoolBoyChildTotal(id):number{
       this.enrollmentService.fetchSchoolBoyChildTotal(id).subscribe(data => {
@@ -248,6 +306,15 @@ export class EnrollmentComponent implements OnInit {
       });
       return this.females;
     }
+
+    fetchPartnerAdminGirlChildTotal(id):number{
+      this.enrollmentService.fetchPartnerGirlChildTotal(id).subscribe(data => {
+        this.females = data.count;
+
+      });
+      return this.females;
+    }
+
     fetchSchoolGirlChildTotal(id):number{
       this.enrollmentService.fetchSchoolGirlChildTotal(id).subscribe(data => {
         this.females = data.count;
@@ -483,9 +550,126 @@ export class EnrollmentComponent implements OnInit {
               else{
                 this.empty = "Kindly select a filtering field";
               }
-              //admin
-            }else{
-              console.log(search.search, search.gender, search.partner, 'dsdsds')
+            }
+            else if(this.partneradminid){
+              if(search.search){
+                this.enrollmentService.fetchPartnerAdminSearchNameBoyChildTotal(search.search,this.partneradminid).subscribe(data => {
+                  this.males = data.count;
+                });
+
+
+                this.enrollmentService.fetchPartnerAdminSearchNameGirlChildTotal(search.search,this.partneradminid).subscribe(data => {
+                  this.females = data.count;
+                });
+
+                this.enrollmentService.searchPartnerAdminData(this.partneradminid, search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+
+                      let res = data.results;
+                      this.count = data.count;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+                      }
+
+                      this.temp=[childs];
+                      this.children=childs;
+                      //console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+                }
+              //search by gender
+
+              else if(search.gender){
+                this.enrollmentService.searchPartnerAdminDataGender(this.partneradminid,search.gender)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        let res = data.results;
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.temp=[childs];
+                        this.children=childs;
+                        //console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+              //search by name and gender
+
+              if(search.search && search.gender){
+
+                this.enrollmentService.searchPartnerAdminDataGenderName(this.partneradminid,search.gender,search.search)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        this.count = data.count;
+                        let res = data.results;
+                        //console.log(res);
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.temp=[childs];
+                        this.children=childs;
+                        //console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+              else{
+                this.empty = "Kindly select a filtering field";
+              }
+            }
+            
+
+            //admin
+            else{
               //search by name
               if(search.search){
               this.enrollmentService.searchData(search.search)
@@ -783,6 +967,7 @@ export class EnrollmentComponent implements OnInit {
 
       this.fetchPartners();
       this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+      this.partneradminid = JSON.parse(localStorage.getItem("partneradminId"));
       this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
       let partnerName = localStorage.getItem("welcomeName");
       if(this.partnerId && partnerName){
