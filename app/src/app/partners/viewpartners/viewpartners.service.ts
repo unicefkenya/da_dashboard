@@ -15,6 +15,14 @@ export class ViewpartnersService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  fetchPartnersAdmin(page,id){
+    return this.http.get(this.baseApiUrl+'api/partners?partner_admin='+id+'&page='+page)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
   //used in enrollment component
   fetchAllPartners(){
     return this.http.get(this.baseApiUrl+'api/partners')
@@ -28,9 +36,23 @@ export class ViewpartnersService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  fetchAPartnerAdmin(name,id){
+    return this.http.get(this.baseApiUrl+'api/students?partner_admin='+id+'&name='+name)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
   searchData(name){
 
     return this.http.get(this.baseApiUrl+'api/partners?name='+name)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+   searchDataPartnerAdmin(name,id){
+
+    return this.http.get(this.baseApiUrl+'api/partners?name='+name+'&partner_admin='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
