@@ -144,20 +144,20 @@
           <!--Sub Child Start-->
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.access === userType && menuitem.accessibilitypadmin != userType && menuitem.usertype != userType && menuitem.accessibility != userType && menuitem.accessibilityteacher != userType">
             <md-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>AD {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
 
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.access === 'all'">
             <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>ALL {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
 
           <!--teacher-->
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilityteacher === userType || menuitem.usertype === userType && menuitem.access != 'all' && menuitem.access != userType && menuitem.accessibility != userType && menuitem.accessibilitypadmin != userType">
             <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple> TH {{ childitem.name | translate }}</a>
+              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
           <!--end-->
@@ -165,7 +165,7 @@
           <!--partner admin -->
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.accessibilitypadmin === userType && menuitem.usertype != userType  && menuitem.access != 'all'  &&  menuitem.accessibilityteacher != userType">
             <md-list-item *ngFor="let childitem of menuitem.children"  routerLinkActive="open">
-              <a *ngIf="hideSchools(childitem)" [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>PA {{ childitem.name | translate }}</a>
+              <a *ngIf="hideSchools(childitem)" [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
           <!--end-->
