@@ -12,6 +12,7 @@ export class DashboardComponent implements OnInit{
   rows = [];
 
   public students: any;
+  public dropouts:any;
   public males: any;
   public females: any;
   public teachers: any;
@@ -73,12 +74,14 @@ export class DashboardComponent implements OnInit{
   public getStats():void {
 
     this.dashboardServices.getStats().subscribe(data => {
+      console.log(data);
 
        this.schools = data.active_schools;
        this.males = data.students.males;
        this.females = data.students.females;
-       this.students = +(this.males+this.females);
+       this.students = (this.males+this.females);
        this.teachers = data.teachers;
+       this.dropouts = data.students.dropout_females+data.students.dropout_males;
     });
   }
   // Partner > getStats()
@@ -91,7 +94,7 @@ export class DashboardComponent implements OnInit{
        this.females = data.students.females;
        this.students = +(this.males+this.females);
        this.teachers = data.teachers;
-
+       this.dropouts = data.students.dropout_females+data.students.dropout_males;
 
     });
   }
@@ -105,7 +108,7 @@ export class DashboardComponent implements OnInit{
        this.females = data.students.females;
        this.students = +(this.males+this.females);
        this.teachers = data.teachers;
-
+       this.dropouts = data.students.dropout_females+data.students.dropout_males;
 
     });
   }

@@ -52,7 +52,7 @@ export class AddSchoolsComponent implements OnInit {
   }
 subcountyForm:boolean = false;
   onSelect(event, data){
-    //console.log(event,data, 'wewe');
+    console.log(event,data, 'wewe');
     this.subcountyForm = true;
     this.getSchoolConstituencies(data);
   }
@@ -62,6 +62,7 @@ subcountyForm:boolean = false;
 
       //edit
     }else{
+      console.log(registerSchool.zone, 'This is the zone');
       this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.long_geo_cordinates,registerSchool.lat_geo_cordinates,registerSchool.waterSource, registerSchool.zone,registerSchool.county);
 
       this._schoolRegistrationService.sendData({
@@ -69,7 +70,7 @@ subcountyForm:boolean = false;
             school_code: registerSchool.schoolCode,
             geo_cordinates: (registerSchool.long_geo_cordinates)+","+(registerSchool.lat_geo_cordinates),
             emis_code: registerSchool.emisCode,
-            zone: registerSchool.zone,
+            zone_id: registerSchool.zone,
             county: registerSchool.county,
             source_of_water: registerSchool.waterSource
           })
@@ -81,6 +82,7 @@ subcountyForm:boolean = false;
               this.form.reset();
             },
             error =>{
+              console.log(error);
               this.empty = "This field is required";
               this.fail = "Failed to save data";
             }
@@ -116,7 +118,7 @@ county:any;
 subcounties:any;
 zones:any;
   getSchoolConstituencies(data){
-
+    console.log(this.countyName[data].sub_counties, 'Data again', this.countyName[data-1].sub_counties);
     if(data == 1){
       this.subcounties = this.countyName[data-1].sub_counties;
     }{

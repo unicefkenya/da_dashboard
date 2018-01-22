@@ -46,6 +46,7 @@ export class SearchComponent {
   public county;
   public zone;
   public errorSearch;
+  public dropouts;
 
 
     getRegisteredChildren(){
@@ -61,11 +62,11 @@ export class SearchComponent {
     this._searchService.getSchoolStats(id).subscribe(
       (data)  =>
       {
-        //console.log(data.results[0]);
         this.males = (data.results[0].enrolled_males+data.results[0].old_males);
         this.females = (data.results[0].enrolled_females+data.results[0].old_females);
         this.totalStudents = data.results[0].total;
         this.enrolledStudents = (data.results[0].enrolled_males+data.results[0].enrolled_females);
+        this.dropouts = data.results[0].dropout_total;
       }
     );
   }

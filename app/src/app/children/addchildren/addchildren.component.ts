@@ -130,6 +130,7 @@ export class AddChildrenComponent implements OnInit {
                   this.form.reset();
                 },
                 error =>{
+                  console.log(error);
                   this.empty = "This field is required";
                   this.fail = "Failed to save data";
                 }
