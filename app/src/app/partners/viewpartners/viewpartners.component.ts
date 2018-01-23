@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ViewpartnersService} from './viewpartners.service';
-import {EnrollmentService} from '../../children/enrollment/enrollment.service';
+import { EnrollmentService} from '../../children/enrollment/enrollment.service';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { Search } from '../../search';
 import { DatePipe } from '@angular/common';
-
-
 
 @Component({
   selector: 'app-partner',
@@ -44,14 +42,14 @@ export class ViewpartnersComponent implements OnInit {
   partneradminid:number;
 
   columns = [
-    { name: 'Organization', filtering:{filterString: '', placeholder: 'Filter by name'} },
-    { name: 'Girlsenrolled'},
-    { name: 'Boysenrolled'},
-    { name: 'Totalenrolled'},
-    { name: 'Totalgirls'},
-    { name: 'Totalboys'},
-    { name: 'Totalchildren'},
-    {name: 'Lastuploaded'}
+    { prop: 'organization', name: 'ORGANIZATION', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'girlsenrolled', name: 'GIRLS ENROLLED'},
+    { prop: 'boysenrolled', name: 'BOYS ENROLLED'},
+    { prop: 'totalenrolled', name: 'ENROLLMENTS'},
+    { prop: 'totalgirls', name: 'TOTAL GIRLS'},
+    { prop: 'totalboys', name: 'TOTAL BOYS'},
+    { prop: 'totalchildren', name: 'TOTAL CHILDREN'},
+    { prop: 'lastuploaded', name: 'LAST UPDATE'}
   ];
 
   constructor( private partnersService: ViewpartnersService,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
@@ -64,7 +62,7 @@ export class ViewpartnersComponent implements OnInit {
        //start and end for pagination
       const start = offset * limit;
       const end = start + limit;
-       this.count =data.count
+       this.count = data.count
       data = data.results;
       this.loading = false;
       //console.log(data);
@@ -273,7 +271,54 @@ export class ViewpartnersComponent implements OnInit {
       
     }
 
+  //search function
+  searchSchool(search: Search){
+    if(!this.submitted){
 
+      //edit
+    }else{
+      this.partnersService.searchData(search.search)
+          .subscribe(
+            data => //console.log(data)
+            {
+
+              let partner =[]
+              let rows=[]
+              //  this.count = data.length;
+              for (let i = 0;i < data.length;i++){
+                this.id = data[i].id
+
+                this.dt = {}
+                this.dt.organization=data[i].name
+                //this.dt.email=data[i].email
+                //this.dt.phonenumber=data[i].phone
+                if(data[i].last_data_upload != null){
+                  let dateUpload = data[i].last_data_upload.match(/.{1,10}/)
+                  this.dt.lastuploaded = dateUpload;
+                }else{
+                  this.dt.lastuploaded = 'N/A'
+                }
+                this.dt.id = data[i].id
+                this.dt.boysenrolled = data[i].students.enrolled_males
+                this.dt.girlsenrolled = data[i].students.enrolled_females
+                this.dt.totalenrolled = data[i].students.total_enrolled
+                this.dt.totalboys = data[i].students.old_males + data[i].students.enrolled_males
+                this.dt.totalgirls = data[i].students.old_females + data[i].students.enrolled_females
+                this.dt.totalchildren = data[i].students.total
+                partner.push(this.dt)
+              }
+
+              this.temp=[partner];
+              this.partners=partner;
+              console.log(partner);
+            },
+            error =>{
+              this.empty = "This field is required";
+              this.fail = "Failed to save data";
+            }
+          );
+    }
+  }
   onSelect({ selected }) {
    localStorage.setItem('partnerId', this.selected[0].id);
    this.navigatePartner(this.selected[0].id);
@@ -303,8 +348,6 @@ export class ViewpartnersComponent implements OnInit {
 
   //  console.log('Filter event', event);
   }
-
-
 
   onPage(event) {
     //console.log(event.offset);
