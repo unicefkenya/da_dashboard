@@ -900,12 +900,15 @@ export class EnrollmentComponent implements OnInit {
           }
     }
 
-    onSelect({ selected }) {
-     //console.log('Select Event', selected, this.selected,this.selected[0].id);
-     localStorage.setItem('childId', this.selected[0].id);
-     this.getChildId(this.selected[0].id);
-     //this.router.navigate(['/children/child', this.selected[0].id]);
-     }
+
+
+  onSelect() {
+    
+   //console.log('Select Event', selected, this.selected,this.selected[0].id);
+   localStorage.setItem('childId', this.selected[0].id);
+   this.getChildId(this.selected[0].id);
+   //this.router.navigate(['/children/child', this.selected[0].id]);
+   }
 
      private getChildId(id){
 
