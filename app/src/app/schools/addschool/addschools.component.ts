@@ -33,7 +33,11 @@ export class AddSchoolsComponent implements OnInit {
   public submitted: boolean =  true;
   public school: SchoolRegistration;
   public form: FormGroup;
-
+  countyName:any;
+  county:any;
+  subcounties:any;
+  zones:any;
+  partnerId:any=[];
   ngOnInit(){
     //this.onSubmit;
     this.form = this.fb.group({
@@ -48,11 +52,12 @@ export class AddSchoolsComponent implements OnInit {
     });
     this.getSchoolCounties();
     //this.getSchoolConstituencies();
+    this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
 
   }
 subcountyForm:boolean = false;
+
   onSelect(event, data){
-    console.log(event,data, 'wewe');
     this.subcountyForm = true;
     this.getSchoolConstituencies(data);
   }
@@ -62,16 +67,23 @@ subcountyForm:boolean = false;
 
       //edit
     }else{
-      console.log(registerSchool.zone, 'This is the zone');
-      this.school = new SchoolRegistration(registerSchool.schoolName, registerSchool.schoolCode, registerSchool.emisCode, registerSchool.long_geo_cordinates,registerSchool.lat_geo_cordinates,registerSchool.waterSource, registerSchool.zone,registerSchool.county);
+      this.school = new SchoolRegistration(registerSchool.schoolName, 
+                    registerSchool.schoolCode, 
+                    registerSchool.emisCode, 
+                    registerSchool.long_geo_cordinates,
+                    registerSchool.lat_geo_cordinates,
+                    registerSchool.waterSource, 
+                    registerSchool.zone,
+                    registerSchool.county);
 
       this._schoolRegistrationService.sendData({
+            partners: [this.partnerId],
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
             geo_cordinates: (registerSchool.long_geo_cordinates)+","+(registerSchool.lat_geo_cordinates),
             emis_code: registerSchool.emisCode,
-            zone_id: registerSchool.zone,
             county: registerSchool.county,
+            subcounty: registerSchool.zone,
             source_of_water: registerSchool.waterSource
           })
           .subscribe(
@@ -94,8 +106,7 @@ subcountyForm:boolean = false;
   resetButton(){
     this.form.reset();
   }
-countyName:any;
-county:any;
+
   getSchoolCounties(){
 
     this._schoolRegistrationService.getCounties()
@@ -110,22 +121,14 @@ county:any;
             this.county.sub_counties = res[i].subcounties;
             this.countyName.push(this.county);
           }
-           //console.log(this.countyName);
+          // console.log(this.county.sub_counties);
         });
-
-
   }
-subcounties:any;
-zones:any;
+
+
+
   getSchoolConstituencies(data){
-    console.log(this.countyName[data].sub_counties, 'Data again', this.countyName[data-1].sub_counties);
-    if(data == 1){
-      this.subcounties = this.countyName[data-1].sub_counties;
-    }{
-      this.subcounties = this.countyName[data].sub_counties;
-    }
-
-
+     this.subcounties = this.countyName.filter(ct=>ct.id==data)[0].sub_counties;
     //console.log(data,this.subcounties, 'yeah');
   }
 }
