@@ -167,6 +167,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     this.childService.fetchChild(id).subscribe(
       (data)  =>
       {
+        console.log(data);
 
         this.firstname = data.fstname;
         this.midname = data.midname;
@@ -191,9 +192,22 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
         data.guardian_name;
         this.phone = data.guardian_phone;
 
-        if(data.newly_enrolled = "true"){
-          this.enrolled = "New";
+        if(data.is_oosc = 'true'){
+          this.enrolled = "Enrolled Child";
+          this.childType = "OOSC";
+        }else{
+          this.enrolled = "No";
+          this.childType = "Old Student";
         }
+
+        if(data.stay_with = "null"){
+          this.staywith = "N/A";
+        }
+
+        if(data.mode_of_transport = "null"){
+          this.mode_of_transport = "N/A";
+        }
+
 
         if(data.not_in_school_before = "false"){
           this.childType = "OOSC";
@@ -205,6 +219,10 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
 
         if(data.guardian_name = "null"){
           this.guardian = "N/A";
+        }
+
+        if(data.guardian_phone = "null"){
+          this.phone = "N/A";
         }
 
         if(data.admNo = "null"){

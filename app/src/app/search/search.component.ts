@@ -72,12 +72,13 @@ export class SearchComponent {
   }
   //Shimanyi - Get top level School Data
   public getSchoolData(id){
+
     this._adminLayoutService.sendSearch({search:id,"details":{
       id:id
     }}).subscribe(
       (data)  =>
       {
-        //console.log(data)
+        console.log(data)
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;
