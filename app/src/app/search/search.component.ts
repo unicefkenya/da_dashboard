@@ -45,6 +45,7 @@ export class SearchComponent {
   public schoolEmisCode;
   public county;
   public zone;
+  public subcountyname;
   public errorSearch;
   public dropouts;
 
@@ -97,11 +98,20 @@ public fetchSchool(id){
   this._searchService.getSchoolData(id).subscribe(
     (data)  =>
     {
-      //console.log(data);
+      console.log(data);
       let res = data.results;
       this.schoolname=res[0].school_name;
       this.schoolEmisCode = res[0].emis_code;
-      this.county = res[0].county;
+      if(res[0].county_name = 'null'){
+        this.county = 'N/A';
+      }else{
+        this.county = res[0].county;
+      }
+      if(res[0].subcounty_name = 'null'){
+        this.subcountyname = 'N/A';
+      }else{
+        this.subcountyname = res[0].subcounty_name;
+      }
       this.zone = res[0].zone;
     }
   );
