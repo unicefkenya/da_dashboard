@@ -231,8 +231,8 @@ export class EnrollmentService {
 
   //getting Attendance Data
   //getting Export File
-  getExportFile(id){
-    return this.http.get(this.baseApiUrl+'api/students/exports?partner='+id)
+  getExportFile(id,month,year){
+    return this.http.get(this.baseApiUrl+'api/v2/attendances/export?partner='+id+'&month='+month+'&year='+year)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

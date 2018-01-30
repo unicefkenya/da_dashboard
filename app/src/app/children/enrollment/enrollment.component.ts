@@ -937,15 +937,9 @@ export class EnrollmentComponent implements OnInit {
     }
 
     exportAttendance(){
-
-      this.enrollmentService.getExportFile(this.partnerId).subscribe(
-        (data)  =>
-        {
-          //console.log(data.results[0]);
-          //console.log(data);
-          this.link = data.link;
-        }
-      );
+      console.log('clicked right now');
+      this.router.navigate(['/children/export-attendance', this.partnerId],{skipLocationChange: true});
+      
     }
 
     onPage(event) {

@@ -28,7 +28,7 @@
   [rowHeight]="auto"
   [rows]="schools"
   [selected]="selected"
-  [selectionType]="'single'"
+  [selectionType]="'cell'"
   [externalPaging]="true"
   [count]="count"
   [offset]="offset"
@@ -36,5 +36,32 @@
   (page)='onPage($event)'
   (activate)='onActivate($event)'
   (select)='onSelect($event)'>
+  <ngx-datatable-column 
+    *ngFor="let col of columns" 
+    [name]="col.name"
+    width="300"
+    >
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Options"> 
+    <template let-value="value" ngx-datatable-cell-template>
+      <button *ngIf="selected" type="button" (clicked)="onEditClicked($event)">
+        Edit
+      </button>
+    </template>
+  </ngx-datatable-column> 
 </ngx-datatable>
+<div class='selected-column' hidden>
+  <h4>Available Columns</h4>
+  <ul>
+    <li *ngFor='let col of allColumns'>
+      <input
+        type='checkbox'
+        [id]="col.name"
+        (click)='toggle(col)'
+        [checked]='isChecked(col)'
+      />
+      <label [attr.for]="col.name">{{col.name}}</label>
+    </li>
+  </ul>
+</div>
 </div>

@@ -16,6 +16,7 @@ export class ViewSchoolsComponent implements OnInit {
   constructor(private schoolService: ViewSchoolsService,private router: Router, private fb: FormBuilder ) {
 
   }
+
   public form: FormGroup;
   public submitted: boolean =  true;
   public search: Search;
@@ -42,8 +43,36 @@ export class ViewSchoolsComponent implements OnInit {
   columns = [
     { name: 'Name' },
     { name: 'Emiscode' },
-    { name: 'Level' },
+    { name: 'Level' }
   ];
+
+   allColumns = [
+    { name: 'Name' },
+    { name: 'Emiscode' },
+    { name: 'Level' }
+  ];
+
+  toggle(col) {
+    const isChecked = this.isChecked(col);
+
+    if(isChecked) {
+      this.columns = this.columns.filter(c => { 
+        return c.name !== col.name; 
+      });
+    } else {
+      this.columns = [...this.columns, col];
+    }
+  }
+
+  isChecked(col) {
+    return this.columns.find(c => {
+      return c.name === col.name;
+    });
+  }
+
+  onEditClicked(event){
+    console.log('Edit Clicked', event)
+  }
 
   fetchSchools(offset,limit): void {
     this.schoolService.fetchSchools(this.page).subscribe(data => {
@@ -161,9 +190,12 @@ export class ViewSchoolsComponent implements OnInit {
     }
 
     onSelect({ selected }) {
-     //console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
-     localStorage.setItem('schoolId', this.selected[0].id);
-     this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
+     console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
+       
+       //localStorage.setItem('schoolId', this.selected[0].id);
+       //this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
+     
+     
    }
 
    updateFilter(event) {

@@ -30,7 +30,7 @@
         </div>
         <md-card-actions>
           <button type="submit" md-raised-button class="shadow-none">Search</button>
-           <a *ngIf="partnerId" href="{{link}}"><button type="button" (click)="exportAttendance()" md-raised-button color="primary" style="margin-left: 70%;">Export Attendance</button></a>
+           <button *ngIf="partnerId" type="button" (click)="exportAttendance()" md-raised-button color="primary" style="margin-left: 60%;">Export Attendance</button>
 
         </md-card-actions>
       </form>
