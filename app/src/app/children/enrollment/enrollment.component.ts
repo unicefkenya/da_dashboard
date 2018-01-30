@@ -43,6 +43,7 @@ export class EnrollmentComponent implements OnInit {
     partnerId:number;
     partneradminid:number;
     schoolId:number;
+    link:any;
 
     columns = [
       { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
@@ -935,7 +936,17 @@ export class EnrollmentComponent implements OnInit {
       //console.log('Filter event', event);
     }
 
+    exportAttendance(){
 
+      this.enrollmentService.getExportFile(this.partnerId).subscribe(
+        (data)  =>
+        {
+          //console.log(data.results[0]);
+          //console.log(data);
+          this.link = data.link;
+        }
+      );
+    }
 
     onPage(event) {
       this.page=event.offset+1

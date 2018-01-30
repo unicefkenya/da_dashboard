@@ -228,4 +228,12 @@ export class EnrollmentService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  //getting Attendance Data
+  //getting Export File
+  getExportFile(id){
+    return this.http.get(this.baseApiUrl+'api/students/exports?partner='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }
