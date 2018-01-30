@@ -37,6 +37,12 @@ export class EditschoolService {
 
   }
 
+   getSchoolData(id){
+    return this.http.get(this.baseApiUrl+'api/schools?id='+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };

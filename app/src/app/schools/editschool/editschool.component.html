@@ -12,41 +12,46 @@
             <small style="color: green;">{{success}}</small>
             <small style="color: red;">{{fail}}</small>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);"  fxLayout="column">
-              <md-input placeholder="School Name (required)" [formControl]="form.controls['schoolName']" style="width: 100%"></md-input>
+              <md-input placeholder="School Name (required)" [formControl]="form.controls['schoolName']" style="width: 100%" value="{{schoolname}}">{{schoolname}}</md-input>
               <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input a school name.</small>
 
-              <md-input placeholder="School Code (optional)" [formControl]="form.controls['schoolCode']" style="width: 100%"></md-input>
+              <md-input placeholder="School Code (optional)" [formControl]="form.controls['schoolCode']" style="width: 100%" value="{{schoolcode}}">{{schoolcode}}</md-input>
 
-              <md-input placeholder="Emis Code (optional)" [formControl]="form.controls['emisCode']"   class="mb-1"></md-input>
+              <md-input placeholder="Emis Code (optional)" [formControl]="form.controls['emisCode']"   class="mb-1" value="{{schoolEmisCode}}">{{schoolEmisCode}}</md-input>
 
-              <md-select  placeholder="County (required)" [formControl]="form.controls['county']" class="mb-2">
-                <md-option *ngFor = "let name of countyName" value="{{name.county_name}}" (click)="onSelect($event.target.value, name.id)" (keyup)="onSelect($event.target.value)" >
+              <md-select  placeholder="{{countySchool}}" [formControl]="form.controls['county']" class="mb-2">
+                <md-option selected value="{{countySchool}}">{{countySchool}}</md-option>
+                <md-option  *ngFor = "let name of countyName" value="{{countySchool}}" (click)="onSelect($event.target.value, name.id)" (keyup)="onSelect($event.target.value)" >
                   {{name.county_name}}
                 </md-option>
               </md-select>
+
+
               <small *ngIf="form.controls['county'].hasError('required') && form.controls['county'].touched" class="md-text-warn">Kindly input the school's county.</small>
 
-              <md-select *ngIf="subcountyForm" placeholder="Sub-County (required)" [formControl]="form.controls['zone']" class="mb-2">
+              <md-select placeholder="{{subcountyname}}" [formControl]="form.controls['zone']" class="mb-2">
+                <md-option selected value="{{subcountyname}}">{{subcountyname}}</md-option>
                 <md-option *ngFor = "let name of subcounties" value="{{name.id}}">{{name.name}}</md-option>
               </md-select>
               <small *ngIf="form.controls['zone'].hasError('required') && form.controls['zone'].touched" class="md-text-warn">Kindly input the school's sub county.</small>
 
-              <md-select [formControl]="form.controls['waterSource']" placeholder="Water Source" class="mb-2">
+              <md-select [formControl]="form.controls['waterSource']" placeholder="{{watersource}}" class="mb-2">
+                <md-option selected="selected" value="{{watersource}}">{{watersource}}</md-option>
                 <md-option value="borehole">Borehole</md-option>
                 <md-option value="river">River</md-option>
               </md-select>
               <small *ngIf="form.controls['waterSource'].hasError('required') && form.controls['waterSource'].touched" class="md-text-warn">Kindly input the school's water source.</small>
 
               <h6>Geo Coordinates</h6>
-              <md-input placeholder="Longitude" [formControl]="form.controls['long_geo_cordinates']"   class="mb-1"></md-input>
+              <md-input placeholder="Longitude" [formControl]="form.controls['long_geo_cordinates']"   class="mb-1" value="{{longitude}}">{{longitude}}</md-input>
 
-              <md-input placeholder="Latitude" [formControl]="form.controls['lat_geo_cordinates']"   class="mb-1"></md-input>
+              <md-input placeholder="Latitude" [formControl]="form.controls['lat_geo_cordinates']"   class="mb-1" value="{{latitude}}">{{latitude}}</md-input>
 
               <hr>
               <md-card-actions>
-                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
+                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Edit</button>
                 <!--<button type="button" md-raised-button class="warn">Delete</button>-->
-                <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
+                <button type="button" (click)="navigateBack()" md-raised-button color="primary">Back</button>
               </md-card-actions>
             </form>
           </md-card-content>

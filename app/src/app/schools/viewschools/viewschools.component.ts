@@ -141,7 +141,6 @@ export class ViewSchoolsComponent implements OnInit {
         this.schools=rowSchool;
 
         this.selected = [];
-
         //console.log('Page Results',this.schools,this.count, start, end);
 
       });

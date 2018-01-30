@@ -1,4 +1,5 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
+import {NgModel} from '@angular/forms';
 import {AppModule} from '../../app.module';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
@@ -38,6 +39,9 @@ export class EditschoolComponent implements OnInit {
   subcounties:any;
   zones:any;
   partnerId:any=[];
+  subcountyForm:boolean = false;
+  schoolId:any;
+
   ngOnInit(){
     //this.onSubmit;
     this.form = this.fb.group({
@@ -53,9 +57,39 @@ export class EditschoolComponent implements OnInit {
     this.getSchoolCounties();
     //this.getSchoolConstituencies();
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    this.schoolId = localStorage.getItem("schoolId");
+
+    this.fetchSchool(this.schoolId);
 
   }
-subcountyForm:boolean = false;
+
+schoolname:any;
+schoolEmisCode:any;
+countySchool:any;
+subcountyname:any;
+longitude:any;
+latitude:any;
+watersource:any;
+schoolcode:any;
+
+  public fetchSchool(id){
+  this._schoolRegistrationService.getSchoolData(id).subscribe(
+    (data)  =>
+    {
+      console.log(data);
+      let res = data.results;
+      this.schoolname=res[0].school_name;
+      this.schoolEmisCode = res[0].emis_code;
+      this.countySchool = res[0].county_name;
+      this.subcountyname = res[0].subcounty_name;
+      this.watersource = res[0].source_of_water;
+      this.longitude = res[0].geo_coordinates.lng;
+      this.latitude = res[0].geo_coordinates.lat;
+      this.schoolcode = res[0].school_code;
+      
+    }
+  );
+}
 
   onSelect(event, data){
     this.subcountyForm = true;
@@ -103,8 +137,10 @@ subcountyForm:boolean = false;
   }
 
 
-  resetButton(){
-    this.form.reset();
+  navigateBack(){
+    console.log('navigateBack');
+    //this.router.navigate(['/schools/view-schools');
+    //this.form.reset();
   }
 
   getSchoolCounties(){
