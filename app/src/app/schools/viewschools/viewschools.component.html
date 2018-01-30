@@ -42,9 +42,9 @@
     width="300"
     >
   </ngx-datatable-column>
-  <ngx-datatable-column name="Options"> 
+  <ngx-datatable-column name="Edit" width="150"> 
     <template let-value="value" ngx-datatable-cell-template>
-      <button *ngIf="selected" type="button" (clicked)="onEditClicked($event)">
+      <button *ngIf="selected" type="button" class="btn-customized" color="primary">
         Edit
       </button>
     </template>

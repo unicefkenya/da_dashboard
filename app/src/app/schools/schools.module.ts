@@ -10,13 +10,14 @@ import {CapitalizePipe} from "../pipes/capitalize.pipe";
 
 import { SchoolsRoutes } from './schools.routing';
 import { AddSchoolsComponent } from './addschool/addschools.component';
+import { EditschoolComponent } from './editschool/editschool.component';
 import { ViewSchoolsComponent } from './viewschools/viewschools.component';
 import { SchoolattendanceComponent } from './attendancesheets/schoolattendance/schoolattendance.component';
 import { AttendancesheetsComponent } from './attendancesheets/attendancesheets.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, RouterModule.forChild(SchoolsRoutes), MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ AddSchoolsComponent, ViewSchoolsComponent,SchoolattendanceComponent,AttendancesheetsComponent,CapitalizePipe]
+  declarations: [ AddSchoolsComponent,EditschoolComponent, ViewSchoolsComponent,SchoolattendanceComponent,AttendancesheetsComponent,CapitalizePipe]
 })
 
 export class SchoolsModule {}

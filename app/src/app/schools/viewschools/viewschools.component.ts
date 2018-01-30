@@ -70,9 +70,6 @@ export class ViewSchoolsComponent implements OnInit {
     });
   }
 
-  onEditClicked(event){
-    console.log('Edit Clicked', event)
-  }
 
   fetchSchools(offset,limit): void {
     this.schoolService.fetchSchools(this.page).subscribe(data => {
@@ -190,13 +187,20 @@ export class ViewSchoolsComponent implements OnInit {
     }
 
     onSelect({ selected }) {
-     console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
-       
-       //localStorage.setItem('schoolId', this.selected[0].id);
-       //this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
+        localStorage.setItem('schoolId', this.selected[0].id);
+     //console.log(event,, 'Select Event', selected, this.selected,this.selected[0].emiscode);
+       if(event.srcElement.localName == 'button'){
+         
+        // console.log('Edit Clicked')
+         this.router.navigate(['/schools/edit-school/', this.selected[0].id],{skipLocationChange: true});
+       }else{
+        // console.log('Page Clicked')
+         this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
+       }
      
      
    }
+
 
    updateFilter(event) {
      const val = event.target.value.toLowerCase();
