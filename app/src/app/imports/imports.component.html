@@ -16,11 +16,20 @@
     <small *ngIf="importAbort" style="color: red;">{{importAbort}}</small>
     <div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="start">
       <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
-        <h6 class="mt-0">Select a file</h6>
-        <form [formGroup]="form"  method="post"  enctype="multipart/form-data">
+        
+        <form [formGroup]="form"  method="post" enctype="multipart/form-data">
 
           <!--original<input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" (change)="Importupload($event)"  name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
           -->
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+            <md-select [formControl]="form.controls['type_of_file']" (ngModelChange)="onChange($event)" name="typeoffile" placeholder="Type of data being imported">
+              <md-option value="true">Newly Enrolled</md-option>
+              <md-option value="false">Old Students</md-option>
+            </md-select>
+            <small *ngIf="form.controls['type_of_file'].hasError('required') && form.controls['type_of_file'].touched" class="md-text-warn">Kindly input whether the students' are old or newly enrolled.</small>
+          </div>
+          <br>
+          <h6 class="mt-0">Select a file</h6>
           <input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" #myfile name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
           <br><br>
           You need to <b>Verify</b> the data before importing.

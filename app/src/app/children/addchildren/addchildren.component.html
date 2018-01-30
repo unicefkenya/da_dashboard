@@ -15,7 +15,7 @@
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
               <div  fxLayout="row" >
                 <div *ngIf="!schoolId" fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
-                  <md-input style="width: 100%;" (keyup)="doCheck($event.target.value)" (input)="doCheck($event.target.value)" ng2-auto-complete [source]="schoolNames" [list-formatter]="autocompleListFormatter" dividerColor="primary" placeholder="School Name (required)" [formControl]="form.controls['schoolName']"  type="text"></md-input>
+                  <md-input style="width: 100%;" (click)="doCheck($event.target.value)" (keyup)="doCheck($event.target.value)" (input)="doCheck($event.target.value)" ng2-auto-complete [source]="schoolNames" [list-formatter]="autocompleListFormatter" dividerColor="primary" placeholder="School Name (required)" [formControl]="form.controls['schoolName']"  type="text"></md-input>
                   <!--
                   <md-select required [formControl]="form.controls['schoolName']"  placeholder="School (required)">
                     <md-option *ngFor = "let name of schools" value="{{name.id}}">
@@ -42,8 +42,7 @@
 
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input placeholder="Admission Number (required)" [formControl]="form.controls['admNo']"  type="text"></md-input>
-                  <small *ngIf="form.controls['admNo'].hasError('required') && form.controls['admNo'].touched" class="md-text-warn">Kindly include student's admission no.</small>
+                  <md-input placeholder="Admission Number" [formControl]="form.controls['admNo']"  type="text"></md-input>
                 </div>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
@@ -97,7 +96,7 @@
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
                   <md-select [formControl]="form.controls['modeOfTransport']"  placeholder="Mode of Transport">
-                    <md-option value="Personal Vehicle">Personal Vehicle</md-option>
+                    <md-option value="Family Vehicle">Family Vehicle</md-option>
                     <md-option value="School Bus">School Bus</md-option>
                     <md-option value="By Foot">By Foot</md-option>
                   </md-select>

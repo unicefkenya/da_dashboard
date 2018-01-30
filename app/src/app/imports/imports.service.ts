@@ -15,10 +15,10 @@ export class ImportsService {
 private baseApiUrl = BaseUrl.base_api_url;
 
 //data importing
-sendVerifyStudentsData(data: any){
+sendVerifyStudentsData(data: any, filetype){
 
   return Observable.fromPromise(new Promise((resolve, reject) => {
-    const studentsImport = this.baseApiUrl+'api/students/import?verify=wait';
+    const studentsImport = this.baseApiUrl+'api/students/import?is_oosc='+filetype+'&verify=wait';
     let loadstart;
     let progress;
     let load;
@@ -39,9 +39,9 @@ sendVerifyStudentsData(data: any){
     }))
 }
 
-sendImportStudentsData(data: any){
+sendImportStudentsData(data: any, filetype){
   return Observable.fromPromise(new Promise((resolve, reject) => {
-    const studentsImport = this.baseApiUrl+'api/students/import?verify=';
+    const studentsImport = this.baseApiUrl+'api/students/import?is_oosc='+filetype+'&verify=';
     let loadstart;
     let progress;
     let load;

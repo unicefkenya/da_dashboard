@@ -67,6 +67,7 @@ export class ImportsComponent implements OnInit {
     {
     this.form = this.fb.group({
       myfile: [null, Validators.compose([Validators.required,])],
+      type_of_file: [Validators.compose([Validators.required])]
     });
 
     this.errorDiv = false;
@@ -89,15 +90,21 @@ export class ImportsComponent implements OnInit {
   }
 
 
-    Importupload(event){
+    Importupload(){
+      
+
       this.loading = true;
+      //let studentDataTypes = new importStudent(imports.type_of_file);
+       
+
       let myfile = this.myfile.nativeElement.files[0];
       //console.log(myfile);
 
       let fd=new FormData();
       fd.append("file",myfile);
       //console.log(fd);
-      this._importService.sendImportStudentsData(fd).subscribe(data=>
+      
+      this._importService.sendImportStudentsData(fd, this.typeoffile).subscribe(data=>
       {
         let res=data as any
         this.uploadDiv = true;
@@ -120,51 +127,64 @@ export class ImportsComponent implements OnInit {
     }
 
 
-    Verifyupload(event){
+    Verifyupload(){
+
       this.loading = true;
+      //let studentDataType  = new importStudent(imports.type_of_file);
       let myfile = this.myfile.nativeElement.files[0];
-      //console.log(myfile);
+      
+      if(myfile && this.typeoffile){
+          let fd=new FormData();
+        fd.append("file",myfile);
+        //console.log(fd);
+        this._importService.sendVerifyStudentsData(fd, this.typeoffile)
+        .subscribe((res)=>{
+          //let data = JSON.parse(res);
+          let re=res as any
+          if(re.errors == 0 && re.total_success == 0 && re.success_percentage == "0%"){
+            this.loading = false;
+            this.duplicateData = "Data in file already imported";
+          }else if(re.errors != 0){
+            this.loading = false;
+            this.fileError = "Kindly correct errors in file to be able to upload";
+            this.uploadDiv = false;
+            this.uploadButton = false;
+            this.errorDiv = true;
 
-      let fd=new FormData();
-      fd.append("file",myfile);
-      //console.log(fd);
-      this._importService.sendVerifyStudentsData(fd)
-      .subscribe((res)=>{
-        //let data = JSON.parse(res);
-        let re=res as any
-        if(re.errors == 0 && re.total_success == 0 && re.success_percentage == "0%"){
-          this.loading = false;
-          this.duplicateData = "Data in file already imported";
-        }else if(re.errors != 0){
-          this.loading = false;
-          this.fileError = "Kindly correct errors in file to be able to upload";
-          this.uploadDiv = false;
-          this.uploadButton = false;
-          this.errorDiv = true;
+            this.count = re.errors.length;
 
-          this.count = re.errors.length;
+            let items =[];
+            let rows = [];
+            for (let i = 0; i < re.errors.length; i++){
+              let errmessage = re.errors[i].error_message;
+              console.log(re.errors[i].error_message);
+              this.dt = {}
+              this.dt.rownumber = re.errors[i].row_number
+              this.dt.error=this.errorMessage(re.errors[i].error_message)
+              items.push(this.dt)
+            }
+            //initial data
+            this.errors=items;
 
-          let items =[];
-          let rows = [];
-          for (let i = 0; i < re.errors.length; i++){
-            let errmessage = re.errors[i].error_message;
-            //console.log(re.errors[i].error_message);
-            this.dt = {}
-            this.dt.rownumber = re.errors[i].row_number
-            this.dt.error=this.errorMessage(re.errors[i].error_message)
-            items.push(this.dt)
           }
-          //initial data
-          this.errors=items;
+          else{
+            this.uploadButton = true;
+            this.loading = false;
+            this.verifySuccess = "Successful Verification. File ready for import.";
+          }
+        })
+      }
+      else{
+        this.loading = false;
+        this.duplicateData = "Kindly select a file for upload!";
+      }
+      
 
-        }
-        else{
-          this.uploadButton = true;
-          this.loading = false;
-          this.verifySuccess = "Successful Verification. File ready for import.";
-        }
-      })
+    }
 
+    typeoffile:any;
+    onChange(event){
+      this.typeoffile = event;
     }
 
   errorMessage(error_message){
@@ -215,6 +235,8 @@ export class ImportsComponent implements OnInit {
     }
     else if(error_message.clas){
       return "Class: "+error_message.clas[0]
+    }else if(error_message.date_enrolled){
+      return "Date enrolled field is required";
     }
 
   }

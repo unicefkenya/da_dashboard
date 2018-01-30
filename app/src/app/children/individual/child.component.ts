@@ -167,7 +167,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     this.childService.fetchChild(id).subscribe(
       (data)  =>
       {
-        console.log(data);
+        //console.log(data);
 
         this.firstname = data.fstname;
         this.midname = data.midname;

@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ElementRef, Output, EventEmitter} from '@angular/core';
 import {AppModule} from '../../app.module';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
@@ -45,7 +45,7 @@ export class AddChildrenComponent implements OnInit {
       maidenName: [null],
       lastName: [null, Validators.compose([Validators.required,])],
       gender: [null, Validators.compose([Validators.required])],
-      admNo: [null, Validators.compose([Validators.required])],
+      admNo: [null],
       enrolDate: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       dateOfBirth: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       className: [null, Validators.compose([Validators.required])],
@@ -67,17 +67,18 @@ export class AddChildrenComponent implements OnInit {
     this.partnerId = JSON.parse(localStorage.getItem('partnerId'));
 
     if(this.schoolId){
+      //console.log(this.schoolId);
       this.getSchoolClasses(this.schoolId);
       this.getSchoolName(this.schoolId);
     }else if(this.partnerId){
+
+      //this.getSchoolClasses(this.schools.id);
       this.getPartnerSchools(this.partnerId);
       //this.getSchoolClasses(this.schools.id);
     }
 
   }
-  doCheck(event){
-    //console.log(event);
-  }
+  
   onSubmit(registerChild: ChildRegistration){
     if(!this.submitted){
 
@@ -208,6 +209,19 @@ export class AddChildrenComponent implements OnInit {
         // console.log(this.schools);
       });
   }
+
+@Output() public selected = new EventEmitter();
+
+  doCheck(event){
+       let schoolSelectedId = this.schools.filter(ct=>ct.school_name==event);
+       let schoolid=schoolSelectedId.length >0?schoolSelectedId[0].id:null
+       if(schoolid){
+         this.getSchoolClasses(schoolSelectedId[0].id);
+       }
+       
+      
+  }
+
   getSchoolName(id){
     this._childRegistrationService.fetchSchoolName(id).subscribe(res =>{
 
@@ -216,11 +230,10 @@ export class AddChildrenComponent implements OnInit {
     });
   }
   getSchoolClasses(id){
-
     this._childRegistrationService.getClass(id)
       .subscribe(
         (res)=>{
-          //console.log(res);
+          console.log(res, 'dffdf');
           res = res.results
           const className = [];
           for (let i = 0;i < res.length;i++){
