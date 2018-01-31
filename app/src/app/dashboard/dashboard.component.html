@@ -105,9 +105,14 @@
 	</div>
   <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
-      <md-card-title>Attendance per Gender</md-card-title>
+      <md-card-title>Annual Attendance
+        <md-select style="margin-left: 20%; margin-top:-5%; font-weight: 5px; height: 3px;">
+          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getYearClicked(item)">{{item}}</md-option>
+        </md-select>
+      </md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Annual Attendance per Gender &nbsp; <span class="font-weight-bold md-text-warn"></span>
+        Aggregated Annual Attendance (%) &nbsp; <span class="font-weight-bold md-text-warn"></span>
+        
       </md-card-subtitle>
 			<md-card-content>
         <small *ngIf=noAttendanceGender>{{noAttendanceGender}}</small>

@@ -4,6 +4,7 @@ import {AppModule} from '../../app.module';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
+import { Router, NavigationEnd } from '@angular/router';
 import { SchoolRegistration } from './school';
 import { Response } from '@angular/http';
 import {EditschoolService} from './editschool.service';
@@ -22,7 +23,8 @@ export class EditschoolComponent implements OnInit {
 
   constructor(
     private _schoolRegistrationService: EditschoolService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ){}
 
 
@@ -101,6 +103,8 @@ schoolcode:any;
 
       //edit
     }else{
+      let e_code = localStorage.getItem('editEmisCode');
+      console.log(e_code);
       this.school = new SchoolRegistration(registerSchool.schoolName, 
                     registerSchool.schoolCode, 
                     registerSchool.emisCode, 
@@ -139,8 +143,9 @@ schoolcode:any;
 
 
   navigateBack(){
-    console.log('navigateBack');
-    //this.router.navigate(['/schools/view-schools');
+    //console.log('navigateBack');
+    localStorage.removeItem('editEmisCode');
+    this.router.navigate(['/schools/view-schools']);
     //this.form.reset();
   }
 

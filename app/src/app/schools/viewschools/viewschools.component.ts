@@ -189,7 +189,7 @@ export class ViewSchoolsComponent implements OnInit {
         localStorage.setItem('schoolId', this.selected[0].id);
      //console.log(event,, 'Select Event', selected, this.selected,this.selected[0].emiscode);
        if(event.srcElement.localName == 'button'){
-         
+         localStorage.setItem('editEmisCode', this.selected[0].emiscode);
         // console.log('Edit Clicked')
          this.router.navigate(['/schools/edit-school/', this.selected[0].id],{skipLocationChange: true});
        }else{

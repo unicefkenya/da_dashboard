@@ -34,19 +34,22 @@ export class DashboardComponent implements OnInit{
   partnerId:number;
   partneradminId:number;
   partnerName: string;
+  annualYear:any;
 
   constructor(private dashboardServices: DashboardService) {
-    this.fetch((data) => { this.rows = data; });
+    //this.fetch((data) => { this.rows = data; });
   }
 
   ngOnInit(): void {
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
     this.partnerName = localStorage.getItem("welcomeName");
+    let today = new Date();
+    let todayYear = today.getFullYear();
 
     if(this.partnerId && this.partnerName){
       this.getPartnerStats(this.partnerId);
-      this.getPartnerAnnualAttendanceGender(this.partnerId);
+      this.getPartnerAnnualAttendanceGender(this.partnerId, todayYear);
       this.getPartnerAnnualEnrollmentGender(this.partnerId);
       this.getPartnerMonthlyAttendance(this.partnerId);
       this.getPartnerSevenDaysAttendance(this.partnerId);
@@ -54,7 +57,7 @@ export class DashboardComponent implements OnInit{
 
     }else if(this.partneradminId){
       this.getPartnerAdminStats(this.partneradminId);
-      this.getPartnerAdminAnnualAttendanceGender(this.partneradminId);
+      this.getPartnerAdminAnnualAttendanceGender(this.partneradminId, todayYear);
       this.getPartnerAdminAnnualEnrollmentGender(this.partneradminId);
       this.getPartnerAdminMonthlyAttendance(this.partneradminId);
       this.getPartnerAdminSevenDaysAttendance(this.partneradminId);
@@ -62,7 +65,8 @@ export class DashboardComponent implements OnInit{
     }else{
       this.getStats();
       //this.getWeeklySummary(); commented till the api is fixed
-      this.getAnnualAttendanceGender();
+      
+      this.getAnnualAttendanceGender(todayYear);
       this.getAnnualEnrollmentGender();
       this.getMonthlyAttendance();
       this.getSevenDaysAttendance();
@@ -259,7 +263,7 @@ export class DashboardComponent implements OnInit{
     }
 
   // Pie
-  public pieChartLabels: string[] = ['Girls', 'Boys'];
+  public pieChartLabels: string[] = ['Boys Present', 'Girls Present','Girls Absent','Boys Absent'];
   public pieChartData: number[] = [];
   public pieChartEnrollmentData: number[] = [];
   public pieChartType: string = 'pie';
@@ -275,21 +279,21 @@ export class DashboardComponent implements OnInit{
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-  }, { // dark grey
+  }, { 
     backgroundColor: "#009D89",
     borderColor: "#e0e0e0",
     pointBackgroundColor: "#e0e0e0",
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(77,83,96,1)'
-  }, { // grey
+  }, { 
     backgroundColor: '#FF001C',
     borderColor: 'rgba(148,159,177,1)',
     pointBackgroundColor: 'rgba(148,159,177,1)',
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-  }, { // grey
+  }, { 
     backgroundColor: '#FFFF00',
     borderColor: 'rgba(148,159,177,1)',
     pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -325,20 +329,10 @@ export class DashboardComponent implements OnInit{
     }
   }, this.globalChartOptions);
 
- 
-  // project table
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/projects.json`);
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-    req.send();
-  }
 
   // Doughnut
   public doughnutChartColors: any[] = [{
-    backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
+    backgroundColor: ["#8072cc", "#009d89", "#FFFF00", "#ff001c"]
   }];
   public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
   public doughnutOptions: any = Object.assign({
@@ -349,39 +343,85 @@ export class DashboardComponent implements OnInit{
     }
   }, this.globalChartOptions);
 
-  //Shimanyi - get Attendance per Gender
-  public getAnnualAttendanceGender(){
+
+  public getYearClicked(event){
+    if(this.partnerId){
+      this.getPartnerAnnualAttendanceGender(this.partnerId, event);
+    }else if(this.partneradminId){
+      this.getPartnerAdminAnnualAttendanceGender(this.partneradminId, event);
+    }else{
+      this.getAnnualAttendanceGender(event);
+    }
+    
+  }
+  //Norman - get Attendance per Gender
+  public getAnnualAttendanceGender(yr){
       this.dashboardServices.getAnnualAttendanceGender().subscribe( data => {
 
       data = data.results;
+      //console.log(data)
       let children = [];
-
-      children.push(data[0].present_females);
-      children.push(data[0].present_males);
+      let annualYear = [];
+      for(let i =0; i < data.length; i++){
+          annualYear.push(data[i].value);
+          if(yr == data[i].value){
+            children.push(data[i].present_males);
+            children.push(data[i].present_females);
+            children.push(data[i].absent_females);
+            children.push(data[i].absent_males);
+          }
+          
+        
+      }
+      this.annualYear =annualYear.reverse();
       this.pieChartData = children;
 
     });
   }
-  public getPartnerAnnualAttendanceGender(id){
+
+
+  public getPartnerAnnualAttendanceGender(id, yr){
       this.dashboardServices.getPartnerAnnualAttendanceGender(id).subscribe( data => {
 
-      data = data.results;
+        data = data.results;
       let children = [];
-
-      children.push(data[0].present_females);
-      children.push(data[0].present_males);
+      let annualYear = [];
+      for(let i =0; i < data.length; i++){
+          annualYear.push(data[i].value);
+          if(yr == data[i].value){
+            children.push(data[i].present_males);
+            children.push(data[i].present_females);
+            children.push(data[i].absent_females);
+            children.push(data[i].absent_males);
+          }
+        
+      }
+      this.annualYear =annualYear.reverse();
       this.pieChartData = children;
-    });
+     }); 
+      
   }
-  public getPartnerAdminAnnualAttendanceGender(id){
-      this.dashboardServices.getPartnerAdminAnnualAttendanceGender(id).subscribe( data => {
 
+
+  public getPartnerAdminAnnualAttendanceGender(id, yr){
+
+      this.dashboardServices.getPartnerAdminAnnualAttendanceGender(id).subscribe( data => {
       data = data.results;
       let children = [];
-
-      children.push(data[0].present_females);
-      children.push(data[0].present_males);
+      let annualYear = [];
+      for(let i =0; i < data.length; i++){
+          annualYear.push(data[i].value);
+          if(yr == data[i].value){
+            children.push(data[i].present_males);
+            children.push(data[i].present_females);
+            children.push(data[i].absent_females);
+            children.push(data[i].absent_males);
+          }
+        
+      }
+      this.annualYear =annualYear.reverse();
       this.pieChartData = children;
+
     });
   }
 //Norman - pie chart data for enrollment based on gender

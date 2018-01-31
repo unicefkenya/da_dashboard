@@ -17,8 +17,9 @@ export class EditschoolService {
   sendData(user: any){
 
     //console.log(myApiRoutes=>apiRoutes);
-
-    const _schoolRegistrationUrl = this.baseApiUrl+'api/school';
+    console.log(user);
+    let e_code = localStorage.getItem('editEmisCode');
+    const _schoolRegistrationUrl = this.baseApiUrl+'api/school/'+e_code;
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these
