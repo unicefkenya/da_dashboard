@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit{
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
     this.partnerName = localStorage.getItem("welcomeName");
+
     if(this.partnerId && this.partnerName){
       this.getPartnerStats(this.partnerId);
       this.getPartnerAnnualAttendanceGender(this.partnerId);
@@ -630,6 +631,7 @@ export class DashboardComponent implements OnInit{
       }];
   });
   }
+
   //Shimanyi - get Attendance for the last 7 days
 
   // Bar
@@ -639,19 +641,19 @@ export class DashboardComponent implements OnInit{
   public barChartData: any[] = [{}];
   public barChartOptions: any = Object.assign({
     scaleShowVerticalLines: false,
-    tooltips: {
+    /*tooltips: {
       mode: 'index',
       intersect: false
-    },
+    },*/
     responsive: true,
     scales: {
       xAxes: [{
         gridLines: {
           color: 'rgba(0,0,0,0.02)',
-          defaultFontColor: 'rgba(0,0,0,0.02)',
+          //defaultFontColor: 'rgba(0,0,0,0.02)',
           zeroLineColor: 'rgba(0,0,0,0.02)'
         },
-        stacked: true,
+        //stacked: true,
         ticks: {
           beginAtZero: true
         }
@@ -659,15 +661,36 @@ export class DashboardComponent implements OnInit{
       yAxes: [{
         gridLines: {
           color: 'rgba(0,0,0,0.02)',
-           defaultFontColor: 'rgba(0,0,0,0.02)',
+           //defaultFontColor: 'rgba(0,0,0,0.02)',
           zeroLineColor: 'rgba(0,0,0,0.02)'
         },
-        stacked: true
+        //stacked: true,
+        position:'left',
+        ticks: {
+          beginAtZero: true,
+          //suggestedMax: 9
+        }
       }]
     }
   }, this.globalChartOptions);
 
+  public barchartColors: Array < any > = [{ // grey
+    backgroundColor: "#8072cc",
+    borderColor: "#3f51b5"
+  }, { // dark grey
+    backgroundColor: "#009D89",
+    borderColor: "#e0e0e0"
+  }, { // grey
+    backgroundColor: '#FF001C',
+    borderColor: 'rgba(148,159,177,1)'
+  },{ // grey
+    backgroundColor: '#FFFF00',
+    borderColor: 'rgba(148,159,177,1)'
+  }];
 
+  public weekday = [
+    'Sun','Mon','Tue', 'Wed','Thurs','Fri','Sat'
+  ]
 
   public getSevenDaysAttendance(){
 
@@ -676,27 +699,43 @@ export class DashboardComponent implements OnInit{
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
-      let absents: number[] = [];
-      let presents: number[] = [];
+      let absentMales: number[] = [];
+      let presentMales: number[] = [];
+      let absentFemales: number[] = [];
+      let presentFemales: number[] = [];
 
       let columnNames: string = '';
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].value);
-        absents.push((subset[i].absent_males + subset[i].absent_females));
-        presents.push((subset[i].present_females + subset[i].present_males));
+        let day = new Date(subset[i].value);
+        let n = this.weekday[day.getDay()]+' '+subset[i].value;  
+        columns.push(n);
+        absentMales.push((subset[i].absent_males));
+        absentFemales.push((subset[i].absent_females));
+        presentMales.push((subset[i].present_males));
+        presentFemales.push((subset[i].present_females));
       }
 
       this.barChartLabels = columns;
       this.barChartData = [{
         //display data for boys ranging from class 1 to 7
-        //presents
-        data: presents,
-        label: 'Present Students',
+        //presents Males
+        data: presentMales,
+        label: 'Present Male Students',
+        borderWidth: 0
+      },{
+        //present Females
+        data: presentFemales,
+        label: 'Present Female Students',
+        borderWidth: 0
+      },{
+        //absents Males
+        data: absentMales,
+        label: 'Absent Male Students',
         borderWidth: 0
       }, {
-        //absents
-        data: absents,
-        label: 'Absent Students',
+        //absent Females
+        data: absentFemales,
+        label: 'Absent Female Students',
         borderWidth: 0
       }];
 
@@ -709,27 +748,43 @@ export class DashboardComponent implements OnInit{
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
-      let absents: number[] = [];
-      let presents: number[] = [];
+      let absentMales: number[] = [];
+      let presentMales: number[] = [];
+      let absentFemales: number[] = [];
+      let presentFemales: number[] = [];
 
       let columnNames: string = '';
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].value);
-        absents.push((subset[i].absent_males + subset[i].absent_females));
-        presents.push((subset[i].present_females + subset[i].present_males));
+        let day = new Date(subset[i].value);
+        let n = this.weekday[day.getDay()]+' '+subset[i].value;  
+        columns.push(n);
+        absentMales.push((subset[i].absent_males));
+        absentFemales.push((subset[i].absent_females));
+        presentMales.push((subset[i].present_males));
+        presentFemales.push((subset[i].present_females));
       }
 
       this.barChartLabels = columns;
       this.barChartData = [{
         //display data for boys ranging from class 1 to 7
-        //presents
-        data: presents,
-        label: 'Present Students',
+        //presents Males
+        data: presentMales,
+        label: 'Present Male Students',
+        borderWidth: 0
+      },{
+        //present Females
+        data: presentFemales,
+        label: 'Present Female Students',
+        borderWidth: 0
+      },{
+        //absents Males
+        data: absentMales,
+        label: 'Absent Male Students',
         borderWidth: 0
       }, {
-        //absents
-        data: absents,
-        label: 'Absent Students',
+        //absent Females
+        data: absentFemales,
+        label: 'Absent Female Students',
         borderWidth: 0
       }];
 
@@ -743,27 +798,43 @@ export class DashboardComponent implements OnInit{
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
-      let absents: number[] = [];
-      let presents: number[] = [];
+      let absentMales: number[] = [];
+      let presentMales: number[] = [];
+      let absentFemales: number[] = [];
+      let presentFemales: number[] = [];
 
       let columnNames: string = '';
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].value);
-        absents.push((subset[i].absent_males + subset[i].absent_females));
-        presents.push((subset[i].present_females + subset[i].present_males));
+        let day = new Date(subset[i].value);
+        let n = this.weekday[day.getDay()]+' '+subset[i].value;  
+        columns.push(n);
+        absentMales.push((subset[i].absent_males));
+        absentFemales.push((subset[i].absent_females));
+        presentMales.push((subset[i].present_males));
+        presentFemales.push((subset[i].present_females));
       }
 
       this.barChartLabels = columns;
       this.barChartData = [{
         //display data for boys ranging from class 1 to 7
-        //presents
-        data: presents,
-        label: 'Present Students',
+        //presents Males
+        data: presentMales,
+        label: 'Present Male Students',
+        borderWidth: 0
+      },{
+        //present Females
+        data: presentFemales,
+        label: 'Present Female Students',
+        borderWidth: 0
+      },{
+        //absents Males
+        data: absentMales,
+        label: 'Absent Male Students',
         borderWidth: 0
       }, {
-        //absents
-        data: absents,
-        label: 'Absent Students',
+        //absent Females
+        data: absentFemales,
+        label: 'Absent Female Students',
         borderWidth: 0
       }];
 
