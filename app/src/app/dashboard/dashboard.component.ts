@@ -475,7 +475,7 @@ export class DashboardComponent implements OnInit{
   */
   public getEnrolledAnnualAttendanceGender(yr){
       this.dashboardServices.getEnrolledAnnualAttendanceGender().subscribe( data => {
-      console.log(data);
+      //console.log(data);
       data = data.results;
       //console.log(data)
       let children = [];
@@ -811,7 +811,6 @@ export class DashboardComponent implements OnInit{
   public getEnrolledMonthlyAttendance(){
 
     this.dashboardServices.getEnrolledMonthlyAttendance().subscribe( data => {
-      console.log(data, 'monthly newly enrolled');
       data = data.results;
       let subset = data.reverse().slice(Math.max(data.length - 6, 0));
      //let subset = data.reverse().slice(Math.max(data.length - 6, 0));
@@ -1315,7 +1314,7 @@ Weekly newly enrolled children attendance
   public getEnrolledSevenDaysAttendance(){
 
     this.dashboardServices.getEnrolledSevenDaysAttendance().subscribe( data => {
-      console.log(data);
+      //console.log(data);
       data = data.results;
       let subset = data.slice(Math.max(data.length - 7, 0));
 
