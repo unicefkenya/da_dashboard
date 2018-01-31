@@ -79,7 +79,7 @@ schoolcode:any;
   this._schoolRegistrationService.getSchoolData(id).subscribe(
     (data)  =>
     {
-      console.log(data);
+      //console.log(data);
       let res = data.results;
       this.schoolname=res[0].school_name;
       this.schoolEmisCode = res[0].emis_code;
@@ -106,7 +106,6 @@ schoolcode:any;
       //edit
     }else{
       let e_code = localStorage.getItem('editEmisCode');
-      console.log(e_code);
       this.school = new SchoolRegistration(registerSchool.schoolName, 
                     registerSchool.schoolCode, 
                     registerSchool.emisCode, 
@@ -120,7 +119,7 @@ schoolcode:any;
             partners: [this.partnerId],
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
-            geo_cordinates: (registerSchool.long_geo_cordinates)+","+(registerSchool.lat_geo_cordinates),
+            geo_cordinates: {lat:registerSchool.long_geo_cordinates,lng:registerSchool.lat_geo_cordinates},
             emis_code: registerSchool.emisCode,
             county: registerSchool.county,
             subcounty: registerSchool.zone,
@@ -129,13 +128,13 @@ schoolcode:any;
           .subscribe(
             data => //console.log(data)
             {
-              console.log(data);
+              //console.log(data);
               //console.log("Added School Successfully"),
               this.success = "Edited School Successfully";
               this.form.reset();
             },
             error =>{
-              console.log(error);
+              //console.log(error);
               this.empty = "This field is required";
               this.fail = "Failed to save data";
             }

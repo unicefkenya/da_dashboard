@@ -80,7 +80,7 @@ subcountyForm:boolean = false;
             partners: [this.partnerId],
             school_name: registerSchool.schoolName,
             school_code: registerSchool.schoolCode,
-            geo_cordinates: (registerSchool.long_geo_cordinates)+","+(registerSchool.lat_geo_cordinates),
+            geo_cordinates: {lat:registerSchool.long_geo_cordinates,lng:registerSchool.lat_geo_cordinates},
             emis_code: registerSchool.emisCode,
             county: registerSchool.county,
             subcounty: registerSchool.zone,
