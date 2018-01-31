@@ -53,6 +53,10 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+/*
+Annual all children attendance services
+--------
+*/
   getAnnualAttendanceGender(){
     return this.http.get(this.baseApiUrl+'api/attendances/yearly')
     .map((response: Response) => response.json())
@@ -71,6 +75,31 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+
+/*
+Annual newly Enrolled attendance services
+--------
+*/
+  getEnrolledAnnualAttendanceGender(){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getEnrolledPartnerAnnualAttendanceGender(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly?partner='+id+'&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getEnrolledPartnerAdminAnnualAttendanceGender(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly?partner_admin='+id+'&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
+
   getAnnualEnrollmentGender(){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/gender')
     .map((response: Response) => response.json())
@@ -88,6 +117,11 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+
+/*
+Monthly all children attendance
+-----------
+*/
   getMonthlyAttendance(){
     return this.http.get(this.baseApiUrl+'api/attendances/monthly')
     .map((response: Response) => response.json())
@@ -106,7 +140,34 @@ export class DashboardService {
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  //Shimanyi - getSevenDaysAttendance
+
+/*
+Monthly newly enrolled children attendance
+-----------
+*/
+  getEnrolledMonthlyAttendance(){
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getEnrolledPartnerMonthlyAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner='+id+'&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getEnrolledPartnerAdminMonthlyAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner_admin='+id+'&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
+ /*
+Weekly all children attendance
+-------------
+ */
   getSevenDaysAttendance(){
     return this.http.get(this.baseApiUrl+'api/attendances/daily')
     .map((response: Response) => response.json())
@@ -122,6 +183,28 @@ export class DashboardService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+
+ /*
+Weekly newly enrolled children attendance
+-------------
+ */
+  getEnrolledSevenDaysAttendance(){
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  getEnrolledPartnerSevenDaysAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id+'&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  getEnrolledPartnerAdminSevenDaysAttendance(id){
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner_admin='+id+'&is_oosc=true')
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 
   getEnrollmentGraph(){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/class')
