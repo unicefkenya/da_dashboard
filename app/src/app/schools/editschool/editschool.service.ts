@@ -31,7 +31,7 @@ export class EditschoolService {
 
     let options = new RequestOptions({headers: headers});
 
-    return this.http.put(_schoolRegistrationUrl, body, options)
+    return this.http.patch(_schoolRegistrationUrl, body, options)
       .map(this.extractData)
       .catch(this.handleError);
 

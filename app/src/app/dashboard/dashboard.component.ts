@@ -75,8 +75,7 @@ export class DashboardComponent implements OnInit{
   public getStats():void {
 
     this.dashboardServices.getStats().subscribe(data => {
-      console.log(data);
-
+      
        this.schools = data.active_schools;
        this.males = data.students.males;
        this.females = data.students.females;
@@ -270,21 +269,28 @@ export class DashboardComponent implements OnInit{
   public comboChartData: any[] = [{}];
   public comboChartLegend: boolean = true;
   public chartColors: Array < any > = [{ // grey
-    backgroundColor: "#7986cb",
+    backgroundColor: "#8072cc",
     borderColor: "#3f51b5",
     pointBackgroundColor: "#3f51b5",
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
   }, { // dark grey
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#009D89",
     borderColor: "#e0e0e0",
     pointBackgroundColor: "#e0e0e0",
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(77,83,96,1)'
   }, { // grey
-    backgroundColor: 'rgba(148,159,177,0.2)',
+    backgroundColor: '#FF001C',
+    borderColor: 'rgba(148,159,177,1)',
+    pointBackgroundColor: 'rgba(148,159,177,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }, { // grey
+    backgroundColor: '#FFFF00',
     borderColor: 'rgba(148,159,177,1)',
     pointBackgroundColor: 'rgba(148,159,177,1)',
     pointBorderColor: '#fff',
@@ -310,6 +316,7 @@ export class DashboardComponent implements OnInit{
           color: 'rgba(0,0,0,0.02)',
           zeroLineColor: 'rgba(0,0,0,0.02)'
         },
+        position:'left',
         ticks: {
           beginAtZero: true,
           suggestedMax: 9,
@@ -318,7 +325,7 @@ export class DashboardComponent implements OnInit{
     }
   }, this.globalChartOptions);
 
-
+ 
   // project table
   fetch(cb) {
     const req = new XMLHttpRequest();
@@ -433,42 +440,68 @@ export class DashboardComponent implements OnInit{
   public getMonthlyAttendance(){
 
     this.dashboardServices.getMonthlyAttendance().subscribe( data => {
+      //console.log(data);
       data = data.results;
-      let subset = data.slice(Math.max(data.length - data.length, 0));
+      let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //console.log(subset);
 
       let columns:String [] = [];
-      let totalAbsent: number [] = [];
-      let totalPresent: number [] = [];
+      let totalGirlsAbsent: number [] = [];
+      let totalGirlsPresent: number [] = [];
+      let totalBoysPresent: number [] = [];
+      let totalBoysAbsent: number [] = [];
       let refine: any;
 
       let months: string [] =
       ["Jan", "Feb", "Mar",
       "Apr", "May", "Jun", "Jul", "Aug", "Sep",
       "Oct", "Nov", "Dec", ];
-
-
+            
       for(let i = 0; i < subset.length; i++){
+  
+        //let sortedMonths = x.sort(sortByDateAsc);
 
-        let splitted = subset[i].value.split("-");
-        let month = splitted[1] - 1;
-        columns.push(months[month]);
+        let month =  new Date(subset[i].value);
+        let yr = month.getFullYear();
+        let today = new Date();
+        /*if(yr != 2014){
+          let m =  months[month.getMonth()]+' '+yr; 
+          columns.push(m);
+        }*/
+        let m =  months[month.getMonth()]+' '+yr; 
 
-        totalAbsent.push(subset[i].absent );
-        totalPresent.push(subset[i].present);
+        columns.push(m);
+        
+
+        totalGirlsAbsent.push(subset[i].absent_females );
+        totalGirlsPresent.push(subset[i].present_females);
+        totalBoysAbsent.push(subset[i].absent_males );
+        totalBoysPresent.push(subset[i].present_males);
       }
 
 
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalAbsent,
-        label: 'Absents',
+        data: totalBoysPresent,
+        label: 'Boys Present',
         borderWidth: 1,
-        type: 'line',
+        type: 'bar',
         fill: false
       },{
-        data: totalPresent,
-        label: 'Presents',
+        data: totalGirlsPresent,
+        label: 'Girls Present',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalBoysAbsent,
+        label: 'Boys Absent',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalGirlsAbsent,
+        label: 'Girls Absent',
         borderWidth: 1,
         type: 'bar',
       }];
@@ -479,38 +512,66 @@ export class DashboardComponent implements OnInit{
 
     this.dashboardServices.getPartnerMonthlyAttendance(id).subscribe( data => {
       data = data.results;
-      let subset = data.slice(Math.max(data.length - 6, 0));
+      let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //console.log(subset);
 
       let columns:String [] = [];
-      let totalAbsent: number [] = [];
-      let totalPresent: number [] = [];
+      let totalGirlsAbsent: number [] = [];
+      let totalGirlsPresent: number [] = [];
+      let totalBoysPresent: number [] = [];
+      let totalBoysAbsent: number [] = [];
       let refine: any;
 
       let months: string [] =
       ["Jan", "Feb", "Mar",
       "Apr", "May", "Jun", "Jul", "Aug", "Sep",
       "Oct", "Nov", "Dec", ];
-
+            
       for(let i = 0; i < subset.length; i++){
+  
+        //let sortedMonths = x.sort(sortByDateAsc);
 
-        let splitted = subset[i].value.split("-");
-        let month = splitted[1] - 1;
-        columns.push(months[month]);
+        let month =  new Date(subset[i].value);
+        let yr = month.getFullYear();
+        let today = new Date();
+        /*if(yr != 2014){
+          let m =  months[month.getMonth()]+' '+yr; 
+          columns.push(m);
+        }*/
+        let m =  months[month.getMonth()]+' '+yr; 
 
-        totalAbsent.push(subset[i].absent );
-        totalPresent.push(subset[i].present);
+        columns.push(m);
+        
+
+        totalGirlsAbsent.push(subset[i].absent_females );
+        totalGirlsPresent.push(subset[i].present_females);
+        totalBoysAbsent.push(subset[i].absent_males );
+        totalBoysPresent.push(subset[i].present_males);
       }
+
+
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalAbsent,
-        label: 'Absents',
+        data: totalBoysPresent,
+        label: 'Boys Present',
         borderWidth: 1,
-        type: 'line',
+        type: 'bar',
         fill: false
       },{
-        data: totalPresent,
-        label: 'Presents',
+        data: totalGirlsPresent,
+        label: 'Girls Present',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalBoysAbsent,
+        label: 'Boys Absent',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalGirlsAbsent,
+        label: 'Girls Absent',
         borderWidth: 1,
         type: 'bar',
       }];
@@ -521,38 +582,66 @@ export class DashboardComponent implements OnInit{
 
     this.dashboardServices.getPartnerAdminMonthlyAttendance(id).subscribe( data => {
       data = data.results;
-      let subset = data.slice(Math.max(data.length - 6, 0));
+      let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //console.log(subset);
 
       let columns:String [] = [];
-      let totalAbsent: number [] = [];
-      let totalPresent: number [] = [];
+      let totalGirlsAbsent: number [] = [];
+      let totalGirlsPresent: number [] = [];
+      let totalBoysPresent: number [] = [];
+      let totalBoysAbsent: number [] = [];
       let refine: any;
 
       let months: string [] =
       ["Jan", "Feb", "Mar",
       "Apr", "May", "Jun", "Jul", "Aug", "Sep",
       "Oct", "Nov", "Dec", ];
-
+            
       for(let i = 0; i < subset.length; i++){
+  
+        //let sortedMonths = x.sort(sortByDateAsc);
 
-        let splitted = subset[i].value.split("-");
-        let month = splitted[1] - 1;
-        columns.push(months[month]);
+        let month =  new Date(subset[i].value);
+        let yr = month.getFullYear();
+        let today = new Date();
+        /*if(yr != 2014){
+          let m =  months[month.getMonth()]+' '+yr; 
+          columns.push(m);
+        }*/
+        let m =  months[month.getMonth()]+' '+yr; 
 
-        totalAbsent.push(subset[i].absent );
-        totalPresent.push(subset[i].present);
+        columns.push(m);
+        
+
+        totalGirlsAbsent.push(subset[i].absent_females );
+        totalGirlsPresent.push(subset[i].present_females);
+        totalBoysAbsent.push(subset[i].absent_males );
+        totalBoysPresent.push(subset[i].present_males);
       }
+
+
 
       this.comboChartLabels = columns;
       this.comboChartData  = [{
-        data: totalAbsent,
-        label: 'Absents',
+        data: totalBoysPresent,
+        label: 'Boys Present',
         borderWidth: 1,
-        type: 'line',
+        type: 'bar',
         fill: false
       },{
-        data: totalPresent,
-        label: 'Presents',
+        data: totalGirlsPresent,
+        label: 'Girls Present',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalBoysAbsent,
+        label: 'Boys Absent',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalGirlsAbsent,
+        label: 'Girls Absent',
         borderWidth: 1,
         type: 'bar',
       }];
@@ -631,8 +720,6 @@ export class DashboardComponent implements OnInit{
       }];
   });
   }
-
-  //Shimanyi - get Attendance for the last 7 days
 
   // Bar
   public barChartLabels: string[] = [];
