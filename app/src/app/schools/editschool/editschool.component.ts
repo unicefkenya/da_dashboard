@@ -69,6 +69,7 @@ schoolname:any;
 schoolEmisCode:any;
 countySchool:any;
 subcountyname:any;
+subcountyid:any;
 longitude:any;
 latitude:any;
 watersource:any;
@@ -84,6 +85,7 @@ schoolcode:any;
       this.schoolEmisCode = res[0].emis_code;
       this.countySchool = res[0].county_name;
       this.subcountyname = res[0].subcounty_name;
+      this.subcountyid = res[0].subcounty;
       this.watersource = res[0].source_of_water;
       this.longitude = res[0].geo_coordinates.lng;
       this.latitude = res[0].geo_coordinates.lat;
@@ -129,7 +131,7 @@ schoolcode:any;
             {
               console.log(data);
               //console.log("Added School Successfully"),
-              this.success = "Added School Successfully";
+              this.success = "Edited School Successfully";
               this.form.reset();
             },
             error =>{

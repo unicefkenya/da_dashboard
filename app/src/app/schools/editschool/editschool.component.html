@@ -30,7 +30,7 @@
               <small *ngIf="form.controls['county'].hasError('required') && form.controls['county'].touched" class="md-text-warn">Kindly input the school's county.</small>
 
               <md-select placeholder="{{subcountyname}}" [formControl]="form.controls['zone']" class="mb-2">
-                <md-option selected value="{{subcountyname}}">{{subcountyname}}</md-option>
+                <md-option selected value="{{subcountyid}}">{{subcountyname}}</md-option>
                 <md-option *ngFor = "let name of subcounties" value="{{name.id}}">{{name.name}}</md-option>
               </md-select>
               <small *ngIf="form.controls['zone'].hasError('required') && form.controls['zone'].touched" class="md-text-warn">Kindly input the school's sub county.</small>
