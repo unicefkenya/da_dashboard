@@ -76,7 +76,7 @@ schoolcode:any;
   this._schoolRegistrationService.getSchoolData(id).subscribe(
     (data)  =>
     {
-      console.log(data);
+      //console.log(data);
       let res = data.results;
       this.schoolname=res[0].school_name;
       this.schoolEmisCode = res[0].emis_code;
@@ -123,6 +123,7 @@ schoolcode:any;
           .subscribe(
             data => //console.log(data)
             {
+              console.log(data);
               //console.log("Added School Successfully"),
               this.success = "Added School Successfully";
               this.form.reset();

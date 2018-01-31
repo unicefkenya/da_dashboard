@@ -144,7 +144,7 @@
           <!--Sub Child Start-->
           <md-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub' && menuitem.access === userType && menuitem.accessibilitypadmin != userType && menuitem.usertype != userType && menuitem.accessibility != userType && menuitem.accessibilityteacher != userType">
             <md-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
+              <a *ngIf="hideItemsAdmin(childitem)" [routerLink]="['/', menuitem.state, childitem.state ]" class="relative" md-ripple>{{ childitem.name | translate }}</a>
             </md-list-item>
           </md-nav-list>
 

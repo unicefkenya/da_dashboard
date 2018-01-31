@@ -77,8 +77,15 @@ schoolId:any;
      let res=index==-1?true:false
      //console.log("Hide item ",index,res)
      return res
+  }
 
-}
+  hideItemsAdmin(childitem){
+     let hiddenitemsAdmin = ['Add Schools','Attendance Sheets','Add Children','Add Class', 'Add Teachers', 'View Classes','View Teachers']
+     let index=hiddenitemsAdmin.indexOf(childitem.name)
+     let result=index==-1?true:false
+     //console.log("Hide item ",index,res)
+     return result
+  }
 
   schoolProfile(){
     //console.log('onyesha bana');
@@ -114,31 +121,4 @@ schoolId:any;
     this.router.navigate(['/reports/profile']);
   }
 
-/*
-  private getSchoolId(id){
-
-    this.router.navigate(['/search', id]);
-    this.form.reset();
-
-  }
-
-  public performSearch(search: Search, form){
-
-    this.search = new Search(search.searchText);
-    this.errorSearch = '';
-    this._adminLayoutService.sendSearch({search:search.searchText,"details":{
-      emis_code:search.searchText
-    }}).subscribe(
-      (data)  =>
-      {
-        localStorage.setItem('schoolId', data.id);
-        this.getSchoolId(data.emis_code);
-
-      },
-      error =>{
-        this.errorSearch = 'Emis Code not found';
-      }
-    );
-  }
-  */
 }
