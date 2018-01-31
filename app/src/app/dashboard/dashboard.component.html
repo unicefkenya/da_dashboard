@@ -135,7 +135,7 @@
 <div fxLayout="row"  fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="33.33%" fxFlex="100">
     <md-card>
-      <md-card-title>Out Of School Children</md-card-title>
+      <md-card-title>OOSC Daily Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
         Aggregated Daily Attendance <span class="font-weight-bold md-text-primary"></span>
       </md-card-subtitle>
@@ -153,7 +153,7 @@
   </div>
   <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
     <md-card>
-      <md-card-title>Monthly Attendance</md-card-title>
+      <md-card-title>OOSC Monthly Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
       Aggregated Monthly Attendance (%) <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
@@ -171,9 +171,9 @@
   </div>
   <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
     <md-card>
-      <md-card-title>Annual Attendance
-        <md-select style="margin-left: 20%; margin-top:-5%; font-weight: 5px; height: 3px;">
-          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getYearClicked(item)">{{item}}</md-option>
+      <md-card-title>OOSC Annual Attendance
+        <md-select style="margin-left: 5%; margin-top:-5%; font-weight: 5px; height: 3px;">
+          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getEnrolledYearClicked(item)">{{item}}</md-option>
         </md-select>
       </md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">

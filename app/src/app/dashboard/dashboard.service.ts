@@ -81,7 +81,7 @@ Annual newly Enrolled attendance services
 --------
 */
   getEnrolledAnnualAttendanceGender(){
-    return this.http.get(this.baseApiUrl+'api/attendances/yearly&is_oosc=true')
+    return this.http.get(this.baseApiUrl+'api/attendances/yearly?is_oosc=true')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -146,7 +146,7 @@ Monthly newly enrolled children attendance
 -----------
 */
   getEnrolledMonthlyAttendance(){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly&is_oosc=true')
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?is_oosc=true')
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
