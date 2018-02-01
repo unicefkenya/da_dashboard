@@ -9,8 +9,8 @@
         <md-tab>
           <template md-tab-label>Schools Registration</template>
           <md-card-content>
-            <small style="color: green;">{{success}}</small>
-            <small style="color: red;">{{fail}}</small>
+            <h6 *ngIf="success && !fail" style="color: green;">{{success}}</h6>
+            <h6 *ngIf="fail && !success" style="color: red;">{{fail}}</h6>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);"  fxLayout="column">
               <md-input placeholder="School Name (required)" [formControl]="form.controls['schoolName']" style="width: 100%" value="{{schoolname}}">{{schoolname}}</md-input>
               <small *ngIf="form.controls['schoolName'].hasError('required') && form.controls['schoolName'].touched" class="md-text-warn">Kindly input a school name.</small>

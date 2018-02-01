@@ -79,7 +79,7 @@ schoolcode:any;
   this._schoolRegistrationService.getSchoolData(id).subscribe(
     (data)  =>
     {
-      //console.log(data);
+      console.log(data);
       let res = data.results;
       this.schoolname=res[0].school_name;
       this.schoolEmisCode = res[0].emis_code;
@@ -134,9 +134,11 @@ schoolcode:any;
               this.form.reset();
             },
             error =>{
-              //console.log(error);
-              this.empty = "This field is required";
-              this.fail = "Failed to save data";
+              if(error.emis_code[0]){
+                this.fail = 'Emis code already exists!'
+              }else{
+                this.fail = "Failed to save data";
+              }
             }
           );
         }

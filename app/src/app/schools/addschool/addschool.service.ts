@@ -37,11 +37,7 @@ export class AddSchoolService {
 
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
-    return body.data || { };
-  }
-
+ 
   getConstituencies(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
@@ -65,6 +61,12 @@ export class AddSchoolService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+   private extractData(res: Response) {
+    let body = res.json();
+    return body.data || { };
+  }
+
 
   private handleError(error: Response | any){
     let errMsg: string;
