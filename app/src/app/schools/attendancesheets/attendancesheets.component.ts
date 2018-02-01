@@ -171,6 +171,7 @@ export class AttendancesheetsComponent implements OnInit {
                  this.schools=items;
                },
                error =>{
+                 //console.log(error)
                  this.empty = "This field is required";
                  this.fail = "Failed to save data";
                }
@@ -198,6 +199,7 @@ export class AttendancesheetsComponent implements OnInit {
                    //console.log(items);
                  },
                  error =>{
+                   //console.log(error)
                    this.empty = "This field is required";
                    this.fail = "Failed to save data";
                  }

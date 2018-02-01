@@ -10,8 +10,8 @@
         <md-tab>
           <template md-tab-label>Partner Registration</template>
           <md-card-content>
-            <small *ngIf="success" style="color: green;">{{success}}</small>
-            <small *ngIf="fail" style="color: red;">{{fail}}</small>
+            <h6 *ngIf="success && !fail" style="color: green;">{{success}}</h6>
+            <h6 *ngIf="fail && !success" style="color: red;">{{fail}}</h6>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <div  fxLayout="row">
                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
@@ -29,7 +29,8 @@
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input  placeholder="Phonenumber (required)"  [formControl]="form.controls['phone']" type="text"></md-input>
-                  <small *ngIf="form.controls['phone'].hasError('required') && form.controls['phone'].touched" class="md-text-warn">Include partner Phone number</small>
+                  <small *ngIf="form.controls['phone'].hasError('required') && form.controls['phone'].touched" class="md-text-warn">Include valid phone number</small>
+                  <small *ngIf="form.controls['phone'].hasError('number') && form.controls['phone'].touched" class="md-text-warn">Include valid phone number</small>
                 </div>
               </div>
 

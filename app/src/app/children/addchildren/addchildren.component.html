@@ -129,7 +129,7 @@
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 35%;">
                   <md-input  placeholder="Number of meals/day" [formControl]="form.controls['mealsInDay']" type="text"></md-input>
-                  <small *ngIf="form.controls['mealsInDay'].hasError('number') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a digit.</small>
+                  <small *ngIf="form.controls['mealsInDay'].hasError('number') && form.controls['mealsInDay'].touched" class="md-text-warn">Kindly input a digit.</small>
                 </div>
               </div>
 

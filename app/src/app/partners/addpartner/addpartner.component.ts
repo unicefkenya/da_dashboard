@@ -53,7 +53,7 @@ export class AddPartnerComponent implements OnInit {
     //this.onSubmit;
     this.form = this.fb.group({
       partner_name: [null, Validators.compose([Validators.required])],
-      phone: [null, Validators.compose([Validators.required])],
+      phone: [null, Validators.compose([Validators.required,CustomValidators.number])],
       email: [null, Validators.compose([Validators.required,CustomValidators.email])],
 
     });
@@ -79,13 +79,23 @@ export class AddPartnerComponent implements OnInit {
           }).subscribe(
             data => //console.log(data)
             {
-              console.log("Added Partner Successfully"),
+              //console.log("Added Partner Successfully"),
               this.success = "Added Partner Successfully";
               this.resetButton();
             },
             error => {
-              this.empty = "This field is required";
-              this.fail = error;
+              if(error.detail){
+                this.fail = 'User with email already exits'
+              }else{
+                this.fail = 'Failed to add partner. Try again later';
+              }
+
+
+              if(error.name[0]){
+                this.fail = error.name[0]
+              }else{
+                this.fail = 'Failed to add partner. Try again later';
+              }
             }
           );
         }
