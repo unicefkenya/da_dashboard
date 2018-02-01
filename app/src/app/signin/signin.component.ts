@@ -100,7 +100,12 @@ export class SigninComponent implements OnInit {
       },
       error => {
         this.load = false;
-        this.fail = "Wrong Username/ Password combination";
+        if(error.error_description == 'Invalid credentials given.'){
+          this.fail = "Wrong Username/ Password combination";
+        }else{
+          this.fail = "Wrong Username/ Password combination";
+        }
+        
         this.form.reset();
       }
 

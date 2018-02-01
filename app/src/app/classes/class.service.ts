@@ -88,13 +88,9 @@ export class ClassService {
     let errMsg: string;
 
     if(error instanceof Response){
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = error.statusText;
-    }else{
-      errMsg = error.message ? error.message: error.toString();
+      const body = error.json();
+      errMsg = body;
     }
-    console.log(errMsg);
     return Observable.throw(errMsg);
   }
 

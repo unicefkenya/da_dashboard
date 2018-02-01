@@ -73,17 +73,13 @@ private extractData(res: Response) {
   return body.data || { };
 }
 
-private handleError(error: Response | any){
-  let errMsg: string;
+  private handleError(error: Response | any){
+    let errMsg: string;
 
-  if(error instanceof Response){
-    const body = error.json() || '';
-    const err = body.error || JSON.stringify(body);
-    errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-  }else{
-    errMsg = error.message ? error.message: error.toString();
+    if(error instanceof Response){
+      const body = error.json();
+      errMsg = body;
+    }
+    return Observable.throw(errMsg);
   }
-  console.log(errMsg);
-  return Observable.throw(errMsg);
-}
 }

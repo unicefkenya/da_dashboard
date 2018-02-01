@@ -89,8 +89,7 @@ export class AddClassComponent implements OnInit {
                   this.resetButton();
                 },
                 error => {
-                  this.empty = "This field is required";
-                  this.fail = "Failed to save data";
+                  this.fail = "Failed to save data. Kindly try again later.";
                 }
               );
         }else{
@@ -107,8 +106,8 @@ export class AddClassComponent implements OnInit {
                 this.resetButton();
               },
               error => {
-                this.empty = "This field is required";
-                this.fail = "Failed to save data";
+                console.log(error);
+                this.fail = "Failed to save data. Kindly try again later.";
               }
             );
           }

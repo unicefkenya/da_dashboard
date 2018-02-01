@@ -5,7 +5,7 @@
         <md-card-content>
           <div  fxLayout="row">
             <div fxFlex="50">
-            <h4 class="ma-0">Class&nbsp;<b>{{className}}</b></h4>
+            <h4 class="ma-0"><b>{{className}}</b></h4>
             <br>
               <p><small>Number of students: </small><br><b>{{students}}</b></p>
 
@@ -40,6 +40,7 @@
                         {{name.class_name}}
                       </md-option>
                     </md-select>
+                    <small *ngIf="form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
                   </div>
                   <div fxLayout="column"class="mb-1 ml-xs mr-xs" style="width: 20%;" >
                     <button  type="submit" [disabled]="!form.valid" md-raised-button color="primary">Promote All</button>

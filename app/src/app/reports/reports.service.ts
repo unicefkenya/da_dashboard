@@ -12,4 +12,14 @@ export class ReportsService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+	private handleError(error: Response | any){
+    let errMsg: string;
+
+    if(error instanceof Response){
+      const body = error.json();
+      errMsg = body;
+    }
+    return Observable.throw(errMsg);
+  }
 }

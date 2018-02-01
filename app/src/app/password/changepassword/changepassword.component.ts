@@ -21,7 +21,7 @@ export class ChangepasswordComponent implements OnInit {
   public changePsd: ChangepasswordService;
   public form: FormGroup;
   public psd: ChangePassword;
-  public error: boolean;
+  public error: any;
   public success;
   public fail;
   public empty;
@@ -61,17 +61,15 @@ export class ChangepasswordComponent implements OnInit {
     .subscribe(
       data => //console.log(data)
       {
-        //console.log(data);
-        console.log("Changed Password Successfully"),
-        this.error = true;
-        //console.log(this.error);
         this.success = "Changed Password Successfully";
         this.form.reset();
       },
       error =>{
-        this.error = false;
-        //console.log(this.error);
-        this.fail = "Failed to change password. "+error;
+        if(error.old_password[0]){
+          this.fail = 'Kindly input the correct password';
+        }else{
+          this.fail = 'Failed to change password. Kindly try again later';
+        }
       }
     );
 

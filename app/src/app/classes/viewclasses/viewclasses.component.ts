@@ -44,9 +44,9 @@ export class ViewClassesComponent implements OnInit{
         this.dt = {}
         //console.log(data[i].class_name);
         if(data[i].class_name == null){
-          this.dt.name = "Class "+data[i].id
+          this.dt.name = data[i].id
         }else{
-          this.dt.name="Class "+data[i].class_name
+          this.dt.name= data[i].class_name
         }this.dt.id = data[i].id
         allClasses.push(this.dt)
       }
