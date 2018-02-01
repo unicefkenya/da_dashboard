@@ -52,7 +52,7 @@
     </md-card>
   </div>
   <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
-    <md-card class="card-widget md-purple">
+    <md-card class="card-widget" style="background-color: #CCCC00; color: #fff ">
       <div md-card-widget>
         <div md-card-float-icon>
           <!-- <md-icon>phone</md-icon> -->
@@ -199,14 +199,14 @@
 <div fxLayout="row"  fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <md-card>
-      <md-card-title>Enrollments</md-card-title>
-      <md-card-subtitle>Children enrolled per class in partner's schools</md-card-subtitle>
+      <md-card-title>Children</md-card-title>
+      <md-card-subtitle>Number of children per class in partner's schools</md-card-subtitle>
       <md-card-content>
         <canvas height="120" baseChart class="chart"
           [datasets]="EnrolledComboChartData"
           [labels]="EnrolledComboChartLabels"
           [options]="ComboChartOptions"
-          [colors]="chartColors"
+          [colors]="EnrolledchartColors"
           [legend]="comboChartLegend"
           [chartType]="barChartType">
         </canvas>
@@ -217,15 +217,15 @@
   <!-- pie -->
   <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
     <md-card>
-        <md-card-title>Enrollment per Gender</md-card-title>
-        <md-card-subtitle>Boys and Girls enrolled in the Past Year</md-card-subtitle>
+        <md-card-title>Old vs New Children</md-card-title>
+        <md-card-subtitle>Comparison based on gender</md-card-subtitle>
         <md-card-content>
           <small *ngIf=noNewlyEnrolled>{{noNewlyEnrolled}}</small>
           <canvas height="260" baseChart class="chart"
             [data]="pieChartEnrollmentData"
             [options]="doughnutOptions"
             [colors]="doughnutChartColors"
-            [labels]="pieChartLabels"
+            [labels]="studentsPieChartLabels"
             [chartType]="pieChartType">
           </canvas>
         </md-card-content>

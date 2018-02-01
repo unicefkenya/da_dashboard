@@ -281,6 +281,7 @@ export class DashboardComponent implements OnInit{
 
   // Pie
   public pieChartLabels: string[] = ['Boys Present', 'Girls Present','Girls Absent','Boys Absent'];
+  public studentsPieChartLabels: string[] = ['Total Old Boys', 'Total Old Girls','Total Enrolled Girls','Total Enrolled Boys'];
   public pieChartData: number[] = [];
   public pieChartDataEnrolled: number[] = [];
   public pieChartEnrollmentData: number[] = [];
@@ -316,6 +317,58 @@ export class DashboardComponent implements OnInit{
   }, { 
     backgroundColor: '#FFFF00',
     borderColor: 'rgba(148,159,177,1)',
+    pointBackgroundColor: 'rgba(148,159,177,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }];
+
+  public EnrolledchartColors: Array < any > = [{ 
+    backgroundColor: "#D3D3D3",
+    borderColor: "#FAFAFA",
+    pointBackgroundColor: "#3f51b5",
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }
+  ,{ 
+    backgroundColor: "#8072cc",
+    borderColor: "#3f51b5",
+    pointBackgroundColor: "#3f51b5",
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }, { 
+    backgroundColor: "#009D89",
+    borderColor: "#e0e0e0",
+    pointBackgroundColor: "#e0e0e0",
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(77,83,96,1)'
+  }, { 
+    backgroundColor: '#FF001C',
+    borderColor: 'rgba(148,159,177,1)',
+    pointBackgroundColor: 'rgba(148,159,177,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }, { 
+    backgroundColor: '#FFFF00',
+    borderColor: 'rgba(148,159,177,1)',
+    pointBackgroundColor: 'rgba(148,159,177,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }, { 
+    backgroundColor: '#8072cc',
+    borderColor: '#3f51b5',
+    pointBackgroundColor: 'rgba(148,159,177,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+  }, { 
+    backgroundColor: '#D3D3D3',
+    borderColor: '#FAFAFA',
     pointBackgroundColor: 'rgba(148,159,177,1)',
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
@@ -543,53 +596,61 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-//Norman - pie chart data for enrollment based on gender
+//Norman 
+/*
+Students based on gender
+----------------
+*/
   public getAnnualEnrollmentGender(){
 
-      this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
-
-        data = data.results;
-        let enrolled = [];
-        enrolled.push(data[0].enrolled_females);
-        enrolled.push(data[0].enrolled_males);
-        this.pieChartEnrollmentData = enrolled;
-
-
+    this.dashboardServices.getAnnualEnrollmentGender().subscribe( data => {
+        
+      data = data.results;
+      let enrolled = [];
+      enrolled.push(data[0].old_males);
+      enrolled.push(data[0].old_females);
+      enrolled.push(data[0].enrolled_females);
+      enrolled.push(data[0].enrolled_males);
+      this.pieChartEnrollmentData = enrolled;
+     
     });
   }
   public getPartnerAnnualEnrollmentGender(id){
 
-      this.dashboardServices.getPartnerAnnualEnrollmentGender(id).subscribe( data => {
+    this.dashboardServices.getPartnerAnnualEnrollmentGender(id).subscribe( data => {
 
-        data = data.results;
-        let enrolled = [];
-        enrolled.push(data[0].enrolled_females);
-        enrolled.push(data[0].enrolled_males);
-
-        this.pieChartEnrollmentData = enrolled;
-        if(this.pieChartEnrollmentData == [0,0]){
-          this.noNewlyEnrolled = 'No newly enrolled student';
-        }
+      data = data.results;
+      let enrolled = [];
+     
+      enrolled.push(data.old_males);
+      enrolled.push(data.old_females);
+      enrolled.push(data.enrolled_females);
+      enrolled.push(data.enrolled_males);
+      this.pieChartDataEnrolled = enrolled;
+     
     });
   }
 
   public getPartnerAdminAnnualEnrollmentGender(id){
 
-      this.dashboardServices.getPartnerAdminAnnualEnrollmentGender(id).subscribe( data => {
+    this.dashboardServices.getPartnerAdminAnnualEnrollmentGender(id).subscribe( data => {
 
-        data = data.results;
-        let enrolled = [];
-        enrolled.push(data[0].enrolled_females);
-        enrolled.push(data[0].enrolled_males);
-
-        this.pieChartEnrollmentData = enrolled;
-        if(this.pieChartEnrollmentData == [0,0]){
-          this.noNewlyEnrolled = 'No newly enrolled student';
-        }
+      data = data.results;
+      let enrolled = [];
+     
+      enrolled.push(data.old_males);
+      enrolled.push(data.old_females);
+      enrolled.push(data.enrolled_females);
+      enrolled.push(data.enrolled_males);
+      this.pieChartDataEnrolled = enrolled;
+     
     });
   }
 
-
+/*
+End Students Based on Gender
+----------------------------
+*/
 /* All Children Attendance Graphs
 ----------------
 */
@@ -1020,6 +1081,10 @@ export class DashboardComponent implements OnInit{
 
 
   //Norman - children enrollment in all the classes
+ /*
+ Students based on classes
+  ------------------------
+ */
   public getEnrollmentGraph(){
 
     this.dashboardServices.getEnrollmentGraph().subscribe( data => {
@@ -1027,21 +1092,67 @@ export class DashboardComponent implements OnInit{
       let subset = data.slice(Math.max(data.length - 8, 0));
 
       let columns:string[] = [];
-      let enrollments: number [] = [];
+      let dropoutMales: number[]=[];
+      let dropoutFemales: number []=[];
+      let enrolledMales: number[]=[];
+      let enrolledFemales: number[]=[];
+      let oldMales: number [] = [];
+      let oldFemales: number [] = [];
+      let total: number[]=[];
 
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].value);
-        enrollments.push(subset[i].total);
+        let cl = 'Class '
+        columns.push(cl+subset[i].value);
+        total.push(subset[i].total);
+        oldMales.push(subset[i].old_males)
+        enrolledMales.push(subset[i].enrolled_males);
+        oldFemales.push(subset[i].old_females)
+        enrolledFemales.push(subset[i].enrolled_females);
+        dropoutMales.push(subset[i].dropout_old_males +subset[i].dropout_enrolled_males);
+        dropoutFemales.push(subset[i].dropout_old_females+ subset[i].dropout_enrolled_females);
+        
       }
 
       this.EnrolledComboChartLabels = columns;
       this.EnrolledComboChartData  = [{
-        data: enrollments,
-        label: 'Students',
+        data: total,
+        label: 'Total Students',
+        borderWidth: 1,
+        type: 'bar',
+        fill: false
+      },{
+        data: oldMales,
+        label: 'Old Boys',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: enrolledMales,
+        label: 'Enrolled Boys',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: oldFemales,
+        label: 'Old Girls',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: enrolledFemales,
+        label: 'Enrolled Girls',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: dropoutMales,
+        label: 'Total Boys Dropped Out',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: dropoutFemales,
+        label: 'Total Girls Dropped Out',
         borderWidth: 1,
         type: 'bar',
       }];
   });
+
   }
 
   public getPartnerEnrollmentGraph(id){
@@ -1051,17 +1162,62 @@ export class DashboardComponent implements OnInit{
       let subset = data.slice(Math.max(data.length - 8, 0));
 
       let columns:string[] = [];
-      let enrollments: number [] = [];
+      let dropoutMales: number[]=[];
+      let dropoutFemales: number []=[];
+      let enrolledMales: number[]=[];
+      let enrolledFemales: number[]=[];
+      let oldMales: number [] = [];
+      let oldFemales: number [] = [];
+      let total: number[]=[];
 
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].value);
-        enrollments.push(subset[i].total);
+        let cl = 'Class '
+        columns.push(cl+subset[i].value);
+        total.push(subset[i].total);
+        oldMales.push(subset[i].old_males)
+        enrolledMales.push(subset[i].enrolled_males);
+        oldFemales.push(subset[i].old_females)
+        enrolledFemales.push(subset[i].enrolled_females);
+        dropoutMales.push(subset[i].dropout_old_males +subset[i].dropout_enrolled_males);
+        dropoutFemales.push(subset[i].dropout_old_females+ subset[i].dropout_enrolled_females);
+        
       }
 
       this.EnrolledComboChartLabels = columns;
       this.EnrolledComboChartData  = [{
-        data: enrollments,
-        label: 'Students',
+        data: total,
+        label: 'Total Students',
+        borderWidth: 1,
+        type: 'bar',
+        fill: false
+      },{
+        data: oldMales,
+        label: 'Old Boys',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: enrolledMales,
+        label: 'Enrolled Boys',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: oldFemales,
+        label: 'Old Girls',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: enrolledFemales,
+        label: 'Enrolled Girls',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: dropoutMales,
+        label: 'Total Boys Dropped Out',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: dropoutFemales,
+        label: 'Total Girls Dropped Out',
         borderWidth: 1,
         type: 'bar',
       }];
@@ -1075,23 +1231,72 @@ export class DashboardComponent implements OnInit{
       let subset = data.slice(Math.max(data.length - 8, 0));
 
       let columns:string[] = [];
-      let enrollments: number [] = [];
+      let dropoutMales: number[]=[];
+      let dropoutFemales: number []=[];
+      let enrolledMales: number[]=[];
+      let enrolledFemales: number[]=[];
+      let oldMales: number [] = [];
+      let oldFemales: number [] = [];
+      let total: number[]=[];
 
       for(let i = 0; i < subset.length; i++){
-        columns.push(subset[i].value);
-        enrollments.push(subset[i].total);
+        let cl = 'Class '
+        columns.push(cl+subset[i].value);
+        total.push(subset[i].total);
+        oldMales.push(subset[i].old_males)
+        enrolledMales.push(subset[i].enrolled_males);
+        oldFemales.push(subset[i].old_females)
+        enrolledFemales.push(subset[i].enrolled_females);
+        dropoutMales.push(subset[i].dropout_old_males +subset[i].dropout_enrolled_males);
+        dropoutFemales.push(subset[i].dropout_old_females+ subset[i].dropout_enrolled_females);
+        
       }
 
       this.EnrolledComboChartLabels = columns;
       this.EnrolledComboChartData  = [{
-        data: enrollments,
-        label: 'Students',
+        data: total,
+        label: 'Total Students',
+        borderWidth: 1,
+        type: 'bar',
+        fill: false
+      },{
+        data: oldMales,
+        label: 'Old Boys',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: enrolledMales,
+        label: 'Enrolled Boys',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: oldFemales,
+        label: 'Old Girls',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: enrolledFemales,
+        label: 'Enrolled Girls',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: dropoutMales,
+        label: 'Total Boys Dropped Out',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: dropoutFemales,
+        label: 'Total Girls Dropped Out',
         borderWidth: 1,
         type: 'bar',
       }];
   });
   }
 
+/*
+End Students Based on Class
+-----------------------
+*/
   // Bar
   public barChartLabels: string[] = [];
   public barChartLabelsEnrolled: string[] = [];
