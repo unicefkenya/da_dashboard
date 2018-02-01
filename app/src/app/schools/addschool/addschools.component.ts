@@ -94,9 +94,13 @@ subcountyForm:boolean = false;
               this.form.reset();
             },
             error =>{
-              console.log(error);
-              this.empty = "This field is required";
-              this.fail = "Failed to save data";
+              //console.log(error, error.emis_code[0]);
+              if(error.emis_code[0]){
+                this.fail = 'Emis Code already exists!'
+              }else{
+                this.fail = "Failed to save data";
+              }
+              
             }
           );
         }
