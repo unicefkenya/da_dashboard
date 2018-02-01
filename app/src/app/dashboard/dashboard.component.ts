@@ -618,15 +618,14 @@ Students based on gender
   public getPartnerAnnualEnrollmentGender(id){
 
     this.dashboardServices.getPartnerAnnualEnrollmentGender(id).subscribe( data => {
-
       data = data.results;
       let enrolled = [];
      
-      enrolled.push(data.old_males);
-      enrolled.push(data.old_females);
-      enrolled.push(data.enrolled_females);
-      enrolled.push(data.enrolled_males);
-      this.pieChartDataEnrolled = enrolled;
+      enrolled.push(data[0].old_males);
+      enrolled.push(data[0].old_females);
+      enrolled.push(data[0].enrolled_females);
+      enrolled.push(data[0].enrolled_males);
+      this.pieChartEnrollmentData = enrolled;
      
     });
   }
@@ -634,15 +633,14 @@ Students based on gender
   public getPartnerAdminAnnualEnrollmentGender(id){
 
     this.dashboardServices.getPartnerAdminAnnualEnrollmentGender(id).subscribe( data => {
-
       data = data.results;
       let enrolled = [];
      
-      enrolled.push(data.old_males);
-      enrolled.push(data.old_females);
-      enrolled.push(data.enrolled_females);
-      enrolled.push(data.enrolled_males);
-      this.pieChartDataEnrolled = enrolled;
+      enrolled.push(data[0].old_males);
+      enrolled.push(data[0].old_females);
+      enrolled.push(data[0].enrolled_females);
+      enrolled.push(data[0].enrolled_males);
+      this.pieChartEnrollmentData = enrolled;
      
     });
   }
