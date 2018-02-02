@@ -167,7 +167,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     this.childService.fetchChild(id).subscribe(
       (data)  =>
       {
-        //console.log(data);
+        console.log(data);
 
         this.firstname = data.fstname;
         this.midname = data.midname;
@@ -177,20 +177,9 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
         }else{
           this.childname = data.midname+" "+data.lstname;
         }
-        this.emiscode = data.emis_code;
-        this.mode_of_transport = data.mode_of_transport;
-        this.previousClass = data.previous_class;
-        this.time_to_school = data.time_to_school;
+
         this.schoolName = data.school_name;
-        this.staywith = data.stay_with;
-        this.household =data.household;
-        this.meals = data.meals_per_day;
-        this.dob = data.date_of_birth;
         this.class_ = data.class_name;
-        this.enrolDate = data.date_enrolled;
-        this.inSchool = data.not_in_school_before;
-        data.guardian_name;
-        this.phone = data.guardian_phone;
 
         if(data.is_oosc = 'true'){
           this.enrolled = "Enrolled Child";
@@ -200,36 +189,87 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
           this.childType = "Old Student";
         }
 
+        if(data.emiscode = "null"){
+          this.emiscode = "N/A";
+        }else{
+          this.emiscode = data.emis_code;
+        }
+
         if(data.stay_with = "null"){
           this.staywith = "N/A";
+        }else{
+          this.staywith = data.stay_with;
         }
 
-        if(data.mode_of_transport = "null"){
+        if(data.previous_class = 'null'){
+          this.previousClass = 'N/A';
+        }else{
+          this.previousClass = data.previous_class;
+        }
+
+        if(data.household = 'null'){
+          this.household = 'N/A';
+        }else{
+          this.household = data.household;
+        }
+
+        if(data.guardian_name = 'null'){
+          this.guardian = 'N/A';
+        }else{
+          this.guardian = data.guardian_name;
+        }
+
+        if(data.guardian_phone = 'null'){
+          this.phone = 'N/A';
+        }else{
+          this.phone = data.guardian_phone;
+        }
+
+        if(data.date_enrolled == 'null'){
+          this.enrolDate = 'N/A';
+        }else{
+          this.enrolDate = data.date_enrolled;
+        }
+
+
+
+        if(data.date_of_birth = 'null'){
+          this.dob = 'N/A';
+        }else{
+          this.dob = data.date_of_birth;
+        }
+
+        if(data.meals = 'null'){
+          this.meals = 'N/A';
+        }else{
+          this.household = data.meals_per_day;
+        }
+
+        if(data.mode_of_transport = "NS"){
           this.mode_of_transport = "N/A";
+        }else{
+          this.mode_of_transport = data.mode_of_transport;
         }
 
-
-        if(data.not_in_school_before = "false"){
-          this.childType = "OOSC";
+        if(data.time_to_school = "NS"){
+          this.time_to_school = "N/A";
+        }else{
+          this.time_to_school = data.time_to_school;
         }
 
-        if(data.date_of_birth = "null"){
-          this.dob = "N/A";
+        if(data.stay_with = "NS"){
+          this.staywith = "N/A";
+        }else{
+          this.staywith = data.stay_with;
         }
 
-        if(data.guardian_name = "null"){
-          this.guardian = "N/A";
-        }
-
-        if(data.guardian_phone = "null"){
-          this.phone = "N/A";
-        }
-
-        if(data.admNo = "null"){
+        if(data.admNo == "null"){
           this.admNo = "N/A";
+        }else{
+          this.admNo = data.admission_no
         }
 
-        if(data.gender = "M"){
+        if(data.gender == "M"){
           this.gender = "Male";
         }
         else if(data.gender = "F"){

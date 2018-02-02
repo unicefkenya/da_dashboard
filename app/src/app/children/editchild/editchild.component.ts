@@ -5,12 +5,14 @@ import { CustomValidators } from 'ng2-validation';
 import { ChildRegistration } from './child';
 import { Response } from '@angular/http';
 import {EditchildService} from './editchild.service';
+import {ChildService} from '../individual/child.service';
+import {Router,ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'edit-child',
   templateUrl: './editchild.component.html',
   styleUrls: ['./editchild.component.scss'],
-  providers: [EditchildService]
+  providers: [EditchildService, ChildService]
 
 })
 
@@ -35,12 +37,36 @@ export class EditchildComponent implements OnInit {
   schoolPartnerId:any;
   schoolNames = [];
 
+  firstname:any;
+  midname:any;
+  lastname:any;
+  emiscode:any;
+  mode_of_transport:any;
+  previousClass:any;
+  time_to_school:any;
+  staywith:any;
+  household:any;
+  meals:any;
+  dob:any;
+  enrolDate:any;
+  inSchool:any;
+  phone:any;
+  guardian:any;
+  admNo:any;
+  is_oosc:any;
+  class:any;
+  genderAcronym:any;
+  gender:any;
+  is_oosc_value:any;
+
   constructor(
     private _childRegistrationService: EditchildService,
-    private fb: FormBuilder
+    private childService: ChildService,
+    private fb: FormBuilder,
+    private router:Router,
+    private route:ActivatedRoute
   ){
     this.form = this.fb.group({
-      schoolName: [null],
       firstName: [null, Validators.compose([Validators.required,])],
       maidenName: [null],
       lastName: [null, Validators.compose([Validators.required,])],
@@ -51,20 +77,26 @@ export class EditchildComponent implements OnInit {
       className: [null, Validators.compose([Validators.required])],
       previousClass: [null, Validators.compose([Validators.required, CustomValidators.number])],
       notInSchool: [null, Validators.compose([Validators.required])],
-      modeOfTransport: [null, Validators.compose([Validators.required])],
-      timeToSchool: [null, Validators.compose([Validators.required])],
+      modeOfTransport: [null],
+      timeToSchool: [null],
       stayWith: [null],
       householdNumber: [null],
-      mealsInDay: [null, Validators.compose([Validators.required, CustomValidators.number])]
+      mealsInDay: [null]
     });
   }
 
-
+sub:any;
 
   ngOnInit(){
     //this.onSubmit;
     this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     this.partnerId = JSON.parse(localStorage.getItem('partnerId'));
+
+    this.sub = this.route.params.subscribe(params => {
+       let childId = +params['id'];
+       this.getChildData(childId);
+    });
+
 
     if(this.schoolId){
       //console.log(this.schoolId);
@@ -79,15 +111,78 @@ export class EditchildComponent implements OnInit {
 
   }
   
+  
+  public getChildData(id){
+    this.childService.fetchChild(id).subscribe(
+      (data)  =>
+      {
+        console.log(data);
+
+        this.firstname = data.fstname;
+        this.midname = data.midname;
+        this.lastname = data.lstname;
+        this.emiscode = data.emis_code;
+        this.schoolName = data.school_name;
+        this.meals = data.meals_per_day;
+        this.class = data.class_name;
+        this.is_oosc = data.is_oosc;
+        this.household = data.household;
+        this.enrolDate = data.date_enrolled;
+        this.previousClass = data.previous_class;
+        this.staywith = data.stay_with;
+        this.mode_of_transport = data.mode_of_transport;
+        this.time_to_school = data.time_to_school;
+        this.dob = data.date_of_birth;
+        this.admNo = data.admission_no
+
+        if(data.is_oosc = 'false'){
+          this.is_oosc_value = 'false'
+          this.is_oosc = 'No'
+        }else{
+          this.is_oosc_value = 'true'
+          this.is_oosc = 'Yes'
+        }
+        if(data.gender == 'M'){
+          this.genderAcronym = 'M'
+          this.gender = 'Male'
+        }else{
+          this.genderAcronym = 'F'
+          this.gender = 'Female'
+        }
+
+        if(data.mode_of_transport == "NS"){
+          this.mode_of_transport = "N/A";
+        }else{
+          this.mode_of_transport = data.mode_of_transport;
+        }
+
+        if(data.time_to_school == "NS"){
+          this.time_to_school = "N/A";
+        }else{
+          this.time_to_school = data.time_to_school;
+        }
+
+        if(data.stay_with == "NS"){
+          this.staywith = "N/A";
+        }else{
+          this.staywith = data.stay_with;
+        }
+
+      },
+      error =>{
+
+        let errorSearch = 'Id  not found';
+      }
+    );
+  }
+
+
   onSubmit(registerChild: ChildRegistration){
     if(!this.submitted){
 
       //edit
     }else{
-      if(this.schoolId){
-
-          this.school = new ChildRegistration(
-                                registerChild.schoolName,
+      this.school = new ChildRegistration(
                                 registerChild.firstName,
                                 registerChild.maidenName,
                                 registerChild.lastName,
@@ -106,7 +201,8 @@ export class EditchildComponent implements OnInit {
                               );
 
           this._childRegistrationService.sendData({
-                      school_name:this.schoolName,
+
+                      school_name: localStorage.getItem('schoolEdit'),
                       fstname: registerChild.firstName,
                       midname: registerChild.maidenName,
                       lstname: registerChild.lastName,
@@ -124,74 +220,28 @@ export class EditchildComponent implements OnInit {
                       meals_per_day: registerChild.mealsInDay
               })
               .subscribe(
-                data => //console.log(data)
+                data => 
                 {
-                  //console.log("Added Child Successfully"),
-                  this.success = "Added Child Successfully";
+                  this.success = "Edited Child Successfully";
                   this.form.reset();
                 },
                 error =>{
                   console.log(error);
-                  this.empty = "This field is required";
                   this.fail = "Failed to save data";
                 }
               );
-      }else{
-      this.school = new ChildRegistration(
-                            registerChild.schoolName,
-                            registerChild.firstName,
-                            registerChild.maidenName,
-                            registerChild.lastName,
-                            registerChild.admNo,
-                            registerChild.enrolDate,
-                            registerChild.gender,
-                            registerChild.dateOfBirth,
-                            registerChild.className,
-                            registerChild.previousClass,
-                            registerChild.notInSchool,
-                            registerChild.modeOfTransport,
-                            registerChild.timeToSchool,
-                            registerChild.stayWith,
-                            registerChild.householdNumber,
-                            registerChild.mealsInDay
-                          );
-
-      this._childRegistrationService.sendData({
-                  school_name: registerChild.schoolName,
-                  fstname: registerChild.firstName,
-                  midname: registerChild.maidenName,
-                  lstname: registerChild.lastName,
-                  admission_no: registerChild.admNo,
-                  date_enrolled: registerChild.enrolDate,
-                  gender: registerChild.gender,
-                  date_of_birth: registerChild.dateOfBirth,
-                  class_id: registerChild.className,
-                  previous_class: registerChild.previousClass,
-                  not_in_school_before: registerChild.notInSchool,
-                  mode_of_transport: registerChild.modeOfTransport,
-                  time_to_school: registerChild.timeToSchool,
-                  stay_with: registerChild.stayWith,
-                  household: registerChild.householdNumber,
-                  meals_per_day: registerChild.mealsInDay
-          })
-          .subscribe(
-            data => //console.log(data)
-            {
-              //console.log("Added Child Successfully"),
-              this.success = "Added Child Successfully";
-              this.form.reset();
-            },
-            error =>{
-              this.empty = "This field is required";
-              this.fail = "Failed to save data";
-            }
-          );
-        }
-      }
-  }
+          }
+}
 
   resetButton(){
     this.form.reset();
+  }
+
+  navigateBack(){
+    //console.log('navigateBack');
+    localStorage.removeItem('schoolEdit');
+    this.router.navigate(['/children/view-children']);
+    //this.form.reset();
   }
 
   getPartnerSchools(id){

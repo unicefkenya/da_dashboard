@@ -354,9 +354,10 @@ export class ChildrenComponent implements OnInit {
 
   onSelect({ selected }) {
    //console.log('Select Event', selected, this.selected,this.selected[0].id);
+   
    localStorage.setItem('childId', this.selected[0].id);
    if(event.srcElement.localName == 'button'){
-         //localStorage.setItem('editEmisCode', this.selected[0].emiscode);
+         localStorage.setItem('schoolEdit', this.selected[0].school);
         // console.log('Edit Clicked')
          this.router.navigate(['/children/edit-child/', this.selected[0].id],{skipLocationChange: true});
        }else{

@@ -31,7 +31,7 @@ export class EditchildService {
 
     let options = new RequestOptions({headers: headers});
 
-    return this.http.patch(_childRegistrationUrl, body, options)
+    return this.http.put(_childRegistrationUrl, body, options)
       .map(this.extractData)
       .catch(this.handleError);
 

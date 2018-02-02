@@ -114,7 +114,7 @@
     width="300"
     >
   </ngx-datatable-column>
-    <ngx-datatable-column *ngIf="partnerId || schoolId" name="Edit" width="150"> 
+    <ngx-datatable-column *ngIf=" partnerId || schoolId" name="Edit" width="150"> 
     <template let-value="value" ngx-datatable-cell-template>
       <button *ngIf="selected" type="button" class="btn-customized" color="primary">
         Edit

@@ -51,11 +51,11 @@ export class AddChildrenComponent implements OnInit {
       className: [null, Validators.compose([Validators.required])],
       previousClass: [null, Validators.compose([Validators.required, CustomValidators.number])],
       notInSchool: [null, Validators.compose([Validators.required])],
-      modeOfTransport: [null, Validators.compose([Validators.required])],
-      timeToSchool: [null, Validators.compose([Validators.required])],
+      modeOfTransport: [null],
+      timeToSchool: [null],
       stayWith: [null],
       householdNumber: [null],
-      mealsInDay: [null, Validators.compose([Validators.required, CustomValidators.number])]
+      mealsInDay: [null]
     });
   }
 

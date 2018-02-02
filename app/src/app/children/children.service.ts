@@ -27,7 +27,7 @@ export class ChildrenService {
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-
+  
   fetchPartnerAdminChildren(id,page){
     return this.http.get(this.baseApiUrl+'api/students?page='+page+'&partner_admin='+id)
       .map((response: Response) => response.json())
