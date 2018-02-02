@@ -5,6 +5,7 @@ import { SchoolchildrenComponent } from './Schoolchildren/schoolchildren.compone
 import { SchoolenrollmentComponent } from './Schoolenrollment/schoolenrollment.component';
 import { EnrollmentComponent } from './enrollment/enrollment.component';
 import { AddChildrenComponent } from './addchildren/addchildren.component';
+import { EditchildComponent } from './editchild/editchild.component';
 import { ChildComponent } from './individual/child.component';
 import {ExportattendanceComponent} from './exportattendance/exportattendance.component';
 
@@ -19,6 +20,9 @@ export const ChildrenRoutes: Routes = [{
   },{
     path: 'add-children',
     component: AddChildrenComponent
+  },{
+    path: 'edit-child/:id',
+    component: EditchildComponent
   },{
     path: 'enrollments',
     component: EnrollmentComponent
