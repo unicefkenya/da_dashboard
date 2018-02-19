@@ -123,19 +123,35 @@ Monthly all children attendance
 -----------
 */
   getMonthlyAttendance(){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly')
+    var date=new Date()
+    var start_date= this.get_formatted_date(new Date(this.get_start_date(190))) 
+    var end_date=this.get_formatted_date(new Date())
+
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?start_date='+start_date+'&end_date='+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getPartnerMonthlyAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner='+id)
+    var date=new Date()
+    var start_date= this.get_formatted_date(new Date(this.get_start_date(190))) 
+    var end_date=this.get_formatted_date(new Date())
+
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner='+id+'&start_date='+start_date+'&end_date='+end_date)
+    
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getPartnerAdminMonthlyAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner_admin='+id)
+
+   var date=new Date()
+    var start_date= this.get_formatted_date(new Date(this.get_start_date(190))) 
+    var end_date=this.get_formatted_date(new Date())
+
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner_admin='+id+'&start_date='+start_date+'&end_date='+end_date)
+    
+
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -146,19 +162,33 @@ Monthly newly enrolled children attendance
 -----------
 */
   getEnrolledMonthlyAttendance(){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly?is_oosc=true')
-    .map((response: Response) => response.json())
+    var date=new Date()
+    var start_date= this.get_formatted_date(new Date(this.get_start_date(190))) 
+    var end_date=this.get_formatted_date(new Date())
+
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?is_oosc=true&start_date='+start_date+'&end_date='+end_date)
+     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getEnrolledPartnerMonthlyAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner='+id+'&is_oosc=true')
+
+    var date=new Date()
+    var start_date= this.get_formatted_date(new Date(this.get_start_date(190))) 
+    var end_date=this.get_formatted_date(new Date())
+
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?is_oosc=true&partner='+id+'&start_date='+start_date+'&end_date='+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getEnrolledPartnerAdminMonthlyAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/monthly?partner_admin='+id+'&is_oosc=true')
+
+    var date=new Date()
+    var start_date= this.get_formatted_date(new Date(this.get_start_date(190))) 
+    var end_date=this.get_formatted_date(new Date())
+
+    return this.http.get(this.baseApiUrl+'api/attendances/monthly?is_oosc=true&partner_admin='+id+'&start_date='+start_date+'&end_date='+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -168,18 +198,37 @@ Monthly newly enrolled children attendance
 Weekly all children attendance
 -------------
  */
+ get_start_date(days){
+  var d=new Date()
+  return d.setDate(d.getDate() - days);
+ }
+ get_formatted_date(date){
+   return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+ }
   getSevenDaysAttendance(){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily')
+    var date=new Date(this.get_start_date(15))
+    var d=new Date()
+    var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    var end_date=this.get_formatted_date(d)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   getPartnerSevenDaysAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id)
+    var date=new Date(this.get_start_date(15))
+    var d=new Date()
+    var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    var end_date=this.get_formatted_date(d)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id+'&start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   getPartnerAdminSevenDaysAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner_admin='+id)
+    var date=new Date(this.get_start_date(15))
+    var d=new Date()
+    var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    var end_date=this.get_formatted_date(d)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner_admin='+id+'&start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -190,17 +239,33 @@ Weekly newly enrolled children attendance
 -------------
  */
   getEnrolledSevenDaysAttendance(){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily?is_oosc=true')
+   
+    var date=new Date(this.get_start_date(15))
+    var d=new Date()
+    var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    var end_date=this.get_formatted_date(d)
+    console.log("The start dat eis ",start_date)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?is_oosc=true&start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   getEnrolledPartnerSevenDaysAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id+'&is_oosc=true')
+    var date=new Date(this.get_start_date(15))
+    var d=new Date()
+    var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    var end_date=this.get_formatted_date(d)
+    console.log("The start dat eis ",start_date)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id+'&is_oosc=true&start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   getEnrolledPartnerAdminSevenDaysAttendance(id){
-    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner_admin='+id+'&is_oosc=true')
+    var date=new Date(this.get_start_date(15))
+    var d=new Date()
+    var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    var end_date=this.get_formatted_date(d)
+    console.log("The start dat eis ",start_date)
+    return this.http.get(this.baseApiUrl+'api/attendances/daily?partner_admin='+id+'&is_oosc=true&start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

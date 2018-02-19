@@ -1363,6 +1363,9 @@ Weekly all children attendance
   public getSevenDaysAttendance(){
 
     this.dashboardServices.getSevenDaysAttendance().subscribe( data => {
+      
+      console.log(data);
+
       data = data.results;
       let subset = data.slice(Math.max(data.length - 7, 0));
 
