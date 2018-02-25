@@ -266,7 +266,6 @@
         <md-card-title>Old vs New Children</md-card-title>
         <md-card-subtitle>Comparison based on gender</md-card-subtitle>
         <md-card-content>
-          <small *ngIf=noNewlyEnrolled>{{noNewlyEnrolled}}</small>
           <canvas height="260" baseChart class="chart"
             [data]="pieChartEnrollmentData"
             [options]="doughnutOptions"
