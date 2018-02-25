@@ -266,16 +266,16 @@ public fetchSchool(id){
 
     // Doughnut
     public doughnutChartColors: any[] = [{
-      backgroundColor: ["#f44336", "#3f51b5", "#ffeb3b", "#4caf50", "#2196f"]
-    }];
-    public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
-    public doughnutOptions: any = Object.assign({
-      elements: {
-        arc: {
-          borderWidth: 0
-        }
+    backgroundColor: ["#8072cc", "#009d89", "#FFFF00", "#ff001c"]
+  }];
+  public doughnutChartLabels: string[] = ['Boys enrolled', 'Girls enrolled'];
+  public doughnutOptions: any = Object.assign({
+    elements: {
+      arc: {
+        borderWidth: 0
       }
-    }, this.globalChartOptions);
+    }
+  }, this.globalChartOptions);
 
     // Bar
     public barChartLabels: string[] = [];
@@ -621,9 +621,7 @@ columnOOSCSevenData:any;
    public getEnrolledSevenDaysAttendance(id){
 
     this._searchService.getEnrolledSevenDaysAttendance(id).subscribe( data => {
-      
       data = data.results;
-
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];
@@ -633,7 +631,6 @@ columnOOSCSevenData:any;
       let presentFemales: number[] = [];
 
       let columnNames: string = '';
-      console.log(subset.length)
       for(let i = 0; i < subset.length; i++){
         let day = new Date(subset[i].value);
         let n = this.weekday[day.getDay()]+' '+subset[i].value;  
@@ -645,10 +642,8 @@ columnOOSCSevenData:any;
       }
 
       this.barChartLabelsEnrolled = columns;
-      this.columnOOSCSevenData = this.barChartLabelsEnrolled.length;
-      console.log(this.columnOOSCSevenData)
+      this.columnOOSCSevenData =  columns.length;
       this.barChartDataEnrolled = [{
-        //display data for boys ranging from class 1 to 7
         //presents Males
         data: presentMales,
         label: 'Present Male Students',
