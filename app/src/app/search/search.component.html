@@ -115,7 +115,7 @@
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
         Aggregated Daily Attendance <span class="font-weight-bold md-text-primary"></span>
       </md-card-subtitle>
-			<md-card-content>
+			<md-card-content *ngIf="columnData != 0">
         <canvas height="260" baseChart class="chart"
           [datasets]="barChartData"
           [labels]="barChartLabels"
@@ -125,13 +125,16 @@
           [chartType]="barChartType">
         </canvas>
       </md-card-content>
+      <md-card-content *ngIf="columnData == 0">
+        No data for this period
+      </md-card-content>
 		</md-card>
 	</div>
 	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
       <md-card-title>Monthly Attendance</md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-      Aggregated Monthly Attendance Summary &nbsp; <span class="font-weight-bold md-text-warn"></span>
+      Aggregated Monthly Attendance (%) <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
 			<md-card-content>
         <canvas height="260" baseChart class="chart"
@@ -147,11 +150,16 @@
 	</div>
   <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
 		<md-card>
-      <md-card-title>Attendance per Gender</md-card-title>
+      <md-card-title>Annual Attendance
+        <md-select style="margin-left: 20%; margin-top:-5%; font-weight: 5px; height: 3px;">
+          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getYearClicked(item)">{{item}}</md-option>
+        </md-select>
+      </md-card-title>
       <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
-        Annual Attendance per Gender &nbsp; <span class="font-weight-bold md-text-warn"></span>
+        Aggregated Annual Attendance (%) &nbsp; <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
 			<md-card-content>
+        <small *ngIf=noAttendanceGender>{{noAttendanceGender}}</small>
         <canvas height="260" baseChart class="chart"
           [data]="pieChartData"
           [options]="doughnutOptions"
@@ -164,19 +172,93 @@
 	</div>
 </div>
 
+
+<!--
+  Newly enrolled attendance
+-->
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="33.33%" fxFlex="100">
+    <md-card>
+      <md-card-title>OOSC Daily Attendance</md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+        Aggregated Daily Attendance <span class="font-weight-bold md-text-primary"></span>
+      </md-card-subtitle>
+      <md-card-content *ngIf="columnOOSCSevenData != 0">
+        <canvas height="260" baseChart class="chart"
+          [datasets]="barChartDataEnrolled"
+          [labels]="barChartLabelsEnrolled"
+          [options]="barChartOptions"
+          [colors]="barchartColors"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+      <md-card-content *ngIf="columnOOSCSevenData == 0">
+        No data for this period
+      </md-card-content>
+      
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card>
+      <md-card-title>OOSC Monthly Attendance</md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+      Aggregated Monthly Attendance (%) <span class="font-weight-bold md-text-warn"></span>
+      </md-card-subtitle>
+      <md-card-content *ngIf="columnEnrolledMonthData != 0 ">
+        <canvas height="260" baseChart class="chart"
+          [datasets]="comboChartDataEnrolled"
+          [labels]="comboChartLabelsEnrolled"
+          [options]="ComboChartOptions"
+          [colors]="chartColors"
+          [legend]="comboChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+      <md-card-content *ngIf="columnEnrolledMonthData == 0 ">No data for this period</md-card-content>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card>
+      <md-card-title>OOSC Annual Attendance
+        <md-select style="margin-left: 5%; margin-top:-5%; font-weight: 5px; height: 3px;">
+          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getEnrolledYearClicked(item)">{{item}}</md-option>
+        </md-select>
+      </md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+        Aggregated Annual Attendance (%) &nbsp; <span class="font-weight-bold md-text-warn"></span>
+        
+      </md-card-subtitle>
+      <md-card-content>
+        <small *ngIf=noAttendanceGender>{{noAttendanceGender}}</small>
+        <canvas height="260" baseChart class="chart"
+          [data]="pieChartDataEnrolled"
+          [options]="doughnutOptions"
+          [colors]="doughnutChartColors"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType">
+        </canvas>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+
+
+<!--other section-->
 <div fxLayout="row"  fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="66.66%" fxFlex="100">
     <md-card>
-      <md-card-title>Enrollments</md-card-title>
-      <md-card-subtitle>Children enrolled in classes</md-card-subtitle>
+      <md-card-title>Children</md-card-title>
+      <md-card-subtitle>Number of children per class</md-card-subtitle>
       <md-card-content>
         <canvas height="120" baseChart class="chart"
           [datasets]="EnrolledComboChartData"
           [labels]="EnrolledComboChartLabels"
           [options]="ComboChartOptions"
-          [colors]="chartColors"
+          [colors]="EnrolledchartColors"
           [legend]="comboChartLegend"
-          [chartType]="barChartType"></canvas>
+          [chartType]="barChartType">
+        </canvas>
       </md-card-content>
     </md-card>
   </div>
@@ -184,14 +266,15 @@
   <!-- pie -->
   <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
     <md-card>
-        <md-card-title>Enrollment per Gender</md-card-title>
-        <md-card-subtitle>Boys and Girls enrolled in the Past Year</md-card-subtitle>
+        <md-card-title>Old vs New Children</md-card-title>
+        <md-card-subtitle>Comparison based on gender</md-card-subtitle>
         <md-card-content>
+          <small *ngIf=noNewlyEnrolled>{{noNewlyEnrolled}}</small>
           <canvas height="260" baseChart class="chart"
             [data]="pieChartEnrollmentData"
             [options]="doughnutOptions"
             [colors]="doughnutChartColors"
-            [labels]="pieChartLabels"
+            [labels]="studentsPieChartLabels"
             [chartType]="pieChartType">
           </canvas>
         </md-card-content>

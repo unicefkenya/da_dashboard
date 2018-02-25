@@ -92,5 +92,5 @@ export class ChangepasswordComponent implements OnInit {
         //console.log('true');
         return null
     }
-}
+  }
 }

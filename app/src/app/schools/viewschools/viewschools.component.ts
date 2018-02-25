@@ -149,7 +149,7 @@ export class ViewSchoolsComponent implements OnInit {
     //partner admin
     fetchPartnerAdminSchools(id,offset,limit): void {
       this.schoolService.fetchPartnerAdminSchools(id,this.page).subscribe(data => {
-        console.log(data)
+        //console.log(data)
         //start and end for pagination
         const start = offset * limit;
         const end = start + limit;
