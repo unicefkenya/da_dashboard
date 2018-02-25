@@ -92,7 +92,7 @@ export class SearchComponent {
     }}).subscribe(
       (data)  =>
       {
-        console.log(data)
+        //console.log(data)
         this.schoolname=data.school_name;
         this.schoolEmisCode = data.emis_code;
         this.county = data.county;
@@ -111,7 +111,7 @@ public fetchSchool(id){
   this._searchService.getSchoolData(id).subscribe(
     (data)  =>
     {
-      console.log(data);
+      //console.log(data);
       let res = data.results;
       this.schoolname=res[0].school_name;
       this.schoolEmisCode = res[0].emis_code;
@@ -326,7 +326,7 @@ public fetchSchool(id){
 
     public getAnnualAttendanceGender(id, yr){
       this._searchService.getAnnualAttendanceGender(id).subscribe( data => {
-        console.log(yr, this.todayYear);
+        //console.log(yr, this.todayYear);
       data = data.results;
       if(yr != this.todayYear){
         
@@ -673,7 +673,7 @@ columnEnrolledMonthData:any;
   public getEnrolledMonthlyAttendance(id){
 
     this._searchService.getEnrolledMonthlyAttendance(id).subscribe( data => {
-      console.log(data);
+      //console.log(data);
       data = data.results;
       let subset = data.reverse().slice(Math.max(data.length - 6, 0));
      //let subset = data.reverse().slice(Math.max(data.length - 6, 0));

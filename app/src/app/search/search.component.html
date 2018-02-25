@@ -159,7 +159,6 @@
         Aggregated Annual Attendance (%) &nbsp; <span class="font-weight-bold md-text-warn"></span>
       </md-card-subtitle>
 			<md-card-content>
-        <small *ngIf=noAttendanceGender>{{noAttendanceGender}}</small>
         <canvas height="260" baseChart class="chart"
           [data]="pieChartData"
           [options]="doughnutOptions"
@@ -229,7 +228,6 @@
         
       </md-card-subtitle>
       <md-card-content>
-        <small *ngIf=noAttendanceGender>{{noAttendanceGender}}</small>
         <canvas height="260" baseChart class="chart"
           [data]="pieChartDataEnrolled"
           [options]="doughnutOptions"
