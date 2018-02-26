@@ -24,8 +24,6 @@ export class DashboardComponent implements OnInit{
   public femalesAbscent: any;
   public childrenPresent: any;
   public childrenAbscent: any;
-  noNewlyEnrolled: string;
-  noAttendanceGender: string;
   public attendanceSnapshot: any [];
 
   //Annual Attendance per Gender
@@ -280,7 +278,7 @@ export class DashboardComponent implements OnInit{
     }
 
   // Pie
-  public pieChartLabels: string[] = ['Boys Present', 'Girls Present','Girls Absent','Boys Absent'];
+  public pieChartLabels: string[] = ['Total Old  Boys Present', 'Total Old Girls Present','Total Enrolled Girls Absent','Total Enrolled Boys Absent'];
   public studentsPieChartLabels: string[] = ['Total Old Boys', 'Total Old Girls','Total Enrolled Girls','Total Enrolled Boys'];
   public pieChartData: number[] = [];
   public pieChartDataEnrolled: number[] = [];
