@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
+import {Router,ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,8 +40,8 @@ export class DashboardComponent implements OnInit{
   public month;
   public dateGiven;
 
-  constructor(private dashboardServices: DashboardService) {
-    //this.fetch((data) => { this.rows = data; });
+  constructor(private dashboardServices: DashboardService,private route:ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -89,6 +90,39 @@ export class DashboardComponent implements OnInit{
     }
 
   }
+
+  getRegisteredChildren(){
+      if(this.partnerId){
+        this.router.navigate(['/children/view-children', this.partnerId]);
+      }else if(this.partneradminId){
+        this.router.navigate(['/children/view-children', this.partneradminId]);
+      }else{
+        this.router.navigate(['/children/view-children']);
+      }
+    }
+
+    getSchools(){
+      if(this.partnerId){
+        this.router.navigate(['/schools/view-schools', this.partnerId]);
+      }else if(this.partneradminId){
+        this.router.navigate(['/schools/view-schools', this.partneradminId]);
+      }else{
+        this.router.navigate(['/schools/view-schools']);
+      }
+    }
+
+
+    getEnrolledChildren(){
+      if(this.partnerId){
+        this.router.navigate(['/children/enrollments', this.partnerId]);
+      }else if(this.partneradminId){
+        this.router.navigate(['/children/enrollments', this.partneradminId]);
+      }else{
+        this.router.navigate(['/children/enrollments']);
+      }
+    }
+
+
 
   // Shimanyi > getStats()
   public getStats():void {
