@@ -141,7 +141,7 @@ public fetchSchool(id){
       }
 
     // Pie
-    public pieChartLabels: string[] = ['Boys Present', 'Girls Present','Girls Absent','Boys Absent'];
+    public pieChartLabels: string[] = ['Total Old  Boys Present', 'Total Old Girls Present','Total Enrolled Girls Absent','Total Enrolled Boys Absent'];
     public studentsPieChartLabels: string[] = ['Total Old Boys', 'Total Old Girls','Total Enrolled Girls','Total Enrolled Boys'];
     public pieChartData: number[] = [];
     public pieChartDataEnrolled: number[] = [];
