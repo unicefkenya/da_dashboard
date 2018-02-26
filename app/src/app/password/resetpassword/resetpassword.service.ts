@@ -18,7 +18,7 @@ export class ResetpasswordService {
   sendData(user: any){
 
     //assign the url like below
-    const _changePasswordRegistrationUrl = this.baseApiUrl+'api/v2/admin/resetpassword';
+    const _changePasswordRegistrationUrl = this.baseApiUrl+'api/v2/admin/reset-password';
     const body = JSON.stringify(user);
 
      //this is optional - angular2 already sends these

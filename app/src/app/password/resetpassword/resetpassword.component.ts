@@ -56,19 +56,20 @@ export class ResetpasswordComponent implements OnInit {
 
       this._changePasswordService.sendData({
                   username: changePsd.username,
-                  new_password: changePsd.newPassword,
+                  password: changePsd.newPassword,
     })
     .subscribe(
       data => //console.log(data)
       {
-        this.success = "Changed Password Successfully";
+        this.success = "Password Reset Successfully";
         this.form.reset();
       },
       error =>{
-        if(error.old_password[0]){
-          this.fail = 'Kindly input the correct password';
+        console.log(error);
+        if(error.username){
+        	this.fail = error.username[0]
         }else{
-          this.fail = 'Failed to change password. Kindly try again later';
+        	this.fail = error.detail
         }
       }
     );
