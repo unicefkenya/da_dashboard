@@ -103,7 +103,7 @@ export class SearchService {
   }
 
   getAnnualEnrollmentGender(id){
-    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender&school='+id)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls/gender?school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

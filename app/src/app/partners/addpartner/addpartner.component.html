@@ -10,8 +10,10 @@
         <md-tab>
           <template md-tab-label>Partner Registration</template>
           <md-card-content>
-            <h6 *ngIf="success && !fail" style="color: green;">{{success}}</h6>
-            <h6 *ngIf="fail && !success" style="color: red;">{{fail}}</h6>
+            <button md-raised-button  style="background-color: #00DB65; color: #fff" *ngIf="success && !fail">{{success}}</button>
+            <button md-raised-button color="warn" *ngIf="fail && !success">{{fail}}</button>
+            <br>
+
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
               <div  fxLayout="row">
                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">

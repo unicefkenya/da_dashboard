@@ -373,7 +373,7 @@ public fetchSchool(id){
   public getAnnualEnrollmentGender(id){
 
     this._searchService.getAnnualEnrollmentGender(id).subscribe( data => {
-        console.log(data);
+       
       data = data.results;
       let enrolled = [];
       enrolled.push(data[0].old_males);
