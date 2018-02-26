@@ -373,7 +373,7 @@ public fetchSchool(id){
   public getAnnualEnrollmentGender(id){
 
     this._searchService.getAnnualEnrollmentGender(id).subscribe( data => {
-        
+        console.log(data);
       data = data.results;
       let enrolled = [];
       enrolled.push(data[0].old_males);
@@ -622,6 +622,7 @@ columnOOSCSevenData:any;
 
     this._searchService.getEnrolledSevenDaysAttendance(id).subscribe( data => {
       data = data.results;
+      //console.log(data, 'OOSC');
       let subset = data.slice(Math.max(data.length - 7, 0));
 
       let columns: string[] = [];

@@ -138,6 +138,7 @@ const MENUITEMS = [
 
     children: [
       {state: 'change-password', name: 'Change Password'},
+      {state: 'reset-password', name: 'Reset Password'},
       {state: 'profile', name: 'Profile'},
 
     ]

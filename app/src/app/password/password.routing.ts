@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
+
 export const PasswordRoutes: Routes = [
   {
     path: '',
