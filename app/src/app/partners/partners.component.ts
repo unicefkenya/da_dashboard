@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { DashboardService } from '../dashboard/dashboard.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute,Router} from '@angular/router';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
 @Component({
@@ -41,8 +41,10 @@ export class PartnersComponent implements OnInit{
     partnerId:number;
     public sub;
     pId;
+    dropouts:any;
 
-    constructor(private dashboardServices: DashboardService, private route:ActivatedRoute) {
+    constructor(private dashboardServices: DashboardService, private route:ActivatedRoute,
+              private router: Router) {
       
     }
 
@@ -70,6 +72,26 @@ export class PartnersComponent implements OnInit{
 
     }
 
+
+    getRegisteredChildren(){
+       this.router.navigate(['/children/view-children']);
+    }
+
+    getSchools(){
+        this.router.navigate(['/schools/view-schools']); 
+    }
+
+
+    getEnrolledChildren(){
+        this.router.navigate(['/children/enrollments']);
+    }
+
+
+    getDropouts(){
+        this.router.navigate(['/children/dropouts']);
+    }
+
+
     public getPartner(id):void{
       this.dashboardServices.getPartner(id).subscribe(data => {
         this.partnerName = data.name;
@@ -83,12 +105,12 @@ export class PartnersComponent implements OnInit{
 
       this.dashboardServices.getPartnerStats(id).subscribe(data => {
 
-         this.schools = data.active_schools;
+          this.schools = data.active_schools;
          this.males = data.students.males;
          this.females = data.students.females;
          this.students = +(this.males+this.females);
          this.teachers = data.teachers;
-
+         this.dropouts = data.students.dropout_females+data.students.dropout_males;
 
       });
     }
