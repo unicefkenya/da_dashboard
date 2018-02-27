@@ -92,45 +92,21 @@ export class DashboardComponent implements OnInit{
   }
 
   getRegisteredChildren(){
-      if(this.partnerId){
-        this.router.navigate(['/children/view-children', this.partnerId]);
-      }else if(this.partneradminId){
-        this.router.navigate(['/children/view-children', this.partneradminId]);
-      }else{
-        this.router.navigate(['/children/view-children']);
-      }
+       this.router.navigate(['/children/view-children', this.partnerId]);
     }
 
     getSchools(){
-      if(this.partnerId){
-        this.router.navigate(['/schools/view-schools', this.partnerId]);
-      }else if(this.partneradminId){
-        this.router.navigate(['/schools/view-schools', this.partneradminId]);
-      }else{
-        this.router.navigate(['/schools/view-schools']);
-      }
+        this.router.navigate(['/schools/view-schools']); 
     }
 
 
     getEnrolledChildren(){
-      if(this.partnerId){
-        this.router.navigate(['/children/enrollments', this.partnerId]);
-      }else if(this.partneradminId){
-        this.router.navigate(['/children/enrollments', this.partneradminId]);
-      }else{
         this.router.navigate(['/children/enrollments']);
-      }
     }
 
 
     getDropouts(){
-      if(this.partnerId){
-        this.router.navigate(['/children/dropouts', this.partnerId]);
-      }else if(this.partneradminId){
-        this.router.navigate(['/children/dropouts', this.partneradminId]);
-      }else{
         this.router.navigate(['/children/dropouts']);
-      }
     }
 
 
