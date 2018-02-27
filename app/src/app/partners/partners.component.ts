@@ -55,6 +55,7 @@ export class PartnersComponent implements OnInit{
     count: number = 0;
     offset: number = 0;
     limit: number = 100;
+    page:number=1
     table = {
       offset: 0
     };
@@ -130,7 +131,7 @@ export class PartnersComponent implements OnInit{
 
         
         this.takenAttendance = true
-       this.getClasssesAttendanceMonitor(this.pId,this.offset, this.limit, this.takenAttendance, this.start_date,this.end_date);
+       this.getClasssesAttendanceMonitor(this.page, this.pId,this.offset, this.limit, this.takenAttendance, this.start_date,this.end_date);
 
      });
 
@@ -148,21 +149,21 @@ export class PartnersComponent implements OnInit{
    
 
     getSchools(){ 
-        this.router.navigate(['/schools/view-schools', this.pId],{skipLocationChange: true});
+       // this.router.navigate(['/schools/view-schools', this.pId],{skipLocationChange: true});
     }
 
      getRegisteredChildren(){
-      this.router.navigate(['/children/view-children', this.pId],{skipLocationChange: true});
+      //this.router.navigate(['/children/view-children', this.pId],{skipLocationChange: true});
     }
 
     getEnrolledChildren(){
-      this.router.navigate(['/children/enrollments', this.pId],{skipLocationChange: true});
+     // this.router.navigate(['/children/enrollments', this.pId],{skipLocationChange: true});
     }
 
 
 
     getDropouts(){
-       this.router.navigate(['/children/dropouts', this.pId],{skipLocationChange: true});
+      // this.router.navigate(['/children/dropouts', this.pId],{skipLocationChange: true});
     }
 
     atTk: attendanceTake;
@@ -173,8 +174,10 @@ export class PartnersComponent implements OnInit{
     }else{
 
       this.atTk = new attendanceTake( attendance.takenAttendance,attendance.startDate,attendance.endDate);
-
-      this.getClasssesAttendanceMonitor(this.pId, this.offset,this.limit, attendance.takenAttendance,attendance.startDate,attendance.endDate );
+      this.takenAttendance = JSON.parse(attendance.takenAttendance);
+      this.start_date = attendance.startDate;
+      this.end_date = attendance.endDate;
+      this.getClasssesAttendanceMonitor(this.page, this.pId, this.offset,this.limit, attendance.takenAttendance,attendance.startDate,attendance.endDate );
     }
   }
 
@@ -184,22 +187,27 @@ export class PartnersComponent implements OnInit{
   }
 
   onPage(event){
-
+    this.page=event.offset+1
+    //if(this.pId){
+      this.getClasssesAttendanceMonitor(this.page,this.pId,event.offset, event.limit,this.takenAttendance, this.start_date, this.end_date);
+    //}
   }
 
   onActivate(event){
 
   }
 
-  getClasssesAttendanceMonitor(id,offset,limit,taken, start_date, end_date): void {
+  getClasssesAttendanceMonitor(page, id,offset,limit,taken, start_date, end_date): void {
 
-    this.viewpartnerService.getClasssesAttendancePartnerMonitor(id,taken, start_date, end_date).subscribe(data => {
-     console.log(data, start_date,end_date)
+    this.viewpartnerService.getClasssesAttendancePartnerMonitor(page,id,taken, start_date, end_date).subscribe(data => {
+     
        const start = offset * limit;
       const end = start + limit;
+      //console.log(data, start, end, start_date,end_date)
        this.count =data.count
       data = data.results;
       let allClasses =[]
+      let rows=[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
         this.dt.schoolname = data[i].school_name;
@@ -221,9 +229,18 @@ export class PartnersComponent implements OnInit{
       }
      //console.log(allClasses);
       //cache our data
-      this.temp = [...allClasses];
+      //this.temp = [...allClasses];
+       let row=[...rows]
+      this.temp=[...allClasses];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = allClasses[j];
+        j++;
+      }
+      //this.temp=row
+      this.classes=row;
       //our initial data
-      this.classes = allClasses;
+      //this.classes = allClasses;
       this.selected = [];
     });
   }
