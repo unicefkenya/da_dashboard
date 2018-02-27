@@ -116,7 +116,7 @@ export class SearchComponent {
       this.end_date=this.get_formatted_date(d)
 
       
-      this.takenAttendance = false
+      this.takenAttendance = true
      this.getClasssesAttendanceMonitor(this.id,this.offset, this.limit, this.takenAttendance, this.start_date,this.end_date);
 
    });
@@ -202,8 +202,8 @@ export class SearchComponent {
   }
 
   onSelect({ selected }) {
-   localStorage.setItem('classId', this.selected[0].id);
-   this.getClassId(this.selected[0].id);
+   //localStorage.setItem('classId', this.selected[0].id);
+   //this.getClassId(this.selected[0].id);
    }
 
    private getClassId(id){
