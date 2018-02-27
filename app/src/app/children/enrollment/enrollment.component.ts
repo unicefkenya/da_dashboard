@@ -962,6 +962,7 @@ export class EnrollmentComponent implements OnInit {
     ngOnInit(): void {
       this.loading = true;
       this.form = this.fb.group({
+        searchType: [null],
         search: [null],
         gender: [null],
         partner: [null]

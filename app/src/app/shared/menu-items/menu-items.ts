@@ -118,6 +118,7 @@ const MENUITEMS = [
       {state: 'add-children', name: 'Add Children'},
       {state: 'enrollments', name: 'New Enrollments', access:'partner_admin'},
       {state: 'view-children', name: 'View Children', access:'partner_admin'},
+      {state: 'dropouts', name: 'Dropouts', access:'partner_admin'},
     ]
   },
   {

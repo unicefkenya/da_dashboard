@@ -10,7 +10,16 @@
     <md-card-content>
       <small style="color:red">{{empty}}</small>
       <form [formGroup]="form" (ngSubmit)="searchChild(form.value);">
-        <md-input placeholder="Search by name"  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+        <!--<div *ngIf="admin || partnerId || partneradminid" fxLayout="row"  style="width: 100%;">
+          <md-select  placeholder="Search Name Type" [formControl]="form.controls['searchType']" class="mb-2" style="width: 20%">
+                <md-option  value="1">Child</md-option>
+                <md-option  value="2">School</md-option>
+          </md-select>
+          <md-input placeholder="Search by name"  [formControl]="form.controls['search']" style="width: 78%; margin-top: -10px;" class="mb-1 ml-1 mr-1"></md-input>
+        </div>-->
+        <div  fxLayout="row"  style="width: 100%;">
+          <md-input placeholder="Search by name"  [formControl]="form.controls['search']" style="width: 98%; margin-top: -10px;" class="mb-1 ml-1 mr-1"></md-input>
+        </div>
         <br>
         <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
             Search by Gender

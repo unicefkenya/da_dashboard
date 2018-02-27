@@ -8,6 +8,7 @@ import { AddChildrenComponent } from './addchildren/addchildren.component';
 import { EditchildComponent } from './editchild/editchild.component';
 import { ChildComponent } from './individual/child.component';
 import {ExportattendanceComponent} from './exportattendance/exportattendance.component';
+import { DropoutsComponent } from './dropouts/dropouts.component';
 
 export const ChildrenRoutes: Routes = [{
   path: '',
@@ -17,6 +18,9 @@ export const ChildrenRoutes: Routes = [{
   },{
     path: 'view-children/:id',
     component: SchoolchildrenComponent
+  },{
+    path: 'dropouts',
+    component: DropoutsComponent
   },{
     path: 'add-children',
     component: AddChildrenComponent

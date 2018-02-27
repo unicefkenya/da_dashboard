@@ -18,10 +18,11 @@ import { SchoolchildrenComponent } from './Schoolchildren/schoolchildren.compone
 import { SchoolenrollmentComponent } from './Schoolenrollment/schoolenrollment.component';
 import { ExportattendanceComponent } from './exportattendance/exportattendance.component';
 import { EditchildComponent } from './editchild/editchild.component';
+import { DropoutsComponent } from './dropouts/dropouts.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ChildrenRoutes),Ng2AutoCompleteModule,ChartsModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ChildrenComponent, AddChildrenComponent, EditchildComponent,SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent,ExportattendanceComponent]
+  declarations: [ChildrenComponent, AddChildrenComponent,DropoutsComponent, EditchildComponent,SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent,ExportattendanceComponent]
 })
 
 export class ChildrenModule {}
