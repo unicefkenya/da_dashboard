@@ -307,7 +307,7 @@
                 </div>
             </div>
             <md-card-actions>
-                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Save</button>
+                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Search</button>
                 <!--<button md-raised-button class="warn">Delete</button>-->
                 <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
               </md-card-actions>
@@ -331,8 +331,7 @@
       [limit]="limit"
       (page)='onPage($event)'
       (activate)='onActivate($event)'
-      (select)='onSelect($event)'>ent)"
-      (select)='onSelect($event)'>
+      (select)='onSelect($event)'s>
       </ngx-datatable>
   </div>
 

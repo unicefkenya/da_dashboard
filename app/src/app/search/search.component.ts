@@ -152,6 +152,19 @@ export class SearchComponent {
     }
   }
 
+
+  resetButton(){
+    this.form.reset();
+  }
+
+  onPage(event){
+
+  }
+
+  onActivate(event){
+
+  }
+
   getClasssesAttendanceMonitor(id,offset,limit,taken, start_date, end_date): void {
 
     this._searchService.getClasssesAttendanceMonitor(id,taken, start_date, end_date).subscribe(data => {
