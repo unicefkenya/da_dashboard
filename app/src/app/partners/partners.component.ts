@@ -40,7 +40,7 @@ export class PartnersComponent implements OnInit{
     public girls: any;
     partnerId:number;
     public sub;
-
+    pId;
 
     constructor(private dashboardServices: DashboardService, private route:ActivatedRoute) {
       
@@ -49,6 +49,7 @@ export class PartnersComponent implements OnInit{
     ngOnInit(): void {
       this.sub = this.route.params.subscribe(params => {
        let partnerId = +params['id'];
+       this.pId = +params['id'];
 
        let today = new Date();
       let todayYear = today.getFullYear();
@@ -331,6 +332,10 @@ export class PartnersComponent implements OnInit{
   }
 
 
+  public getYearClicked(event){
+      this.getPartnerAnnualAttendanceGender(this.pId , event);
+  }
+
   public getPartnerAnnualEnrollmentGender(id){
 
     this.dashboardServices.getPartnerAnnualEnrollmentGender(id).subscribe( data => {
@@ -357,42 +362,70 @@ export class PartnersComponent implements OnInit{
 
       this.dashboardServices.getPartnerMonthlyAttendance(id).subscribe( data => {
         data = data.results;
-        let subset = data.slice(Math.max(data.length - 6, 0));
+      let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //let subset = data.reverse().slice(Math.max(data.length - 6, 0));
+     //console.log(subset);
 
-        let columns:String [] = [];
-        let totalAbsent: number [] = [];
-        let totalPresent: number [] = [];
-        let refine: any;
+      let columns:String [] = [];
+      let totalGirlsAbsent: number [] = [];
+      let totalGirlsPresent: number [] = [];
+      let totalBoysPresent: number [] = [];
+      let totalBoysAbsent: number [] = [];
+      let refine: any;
 
-        let months: string [] =
-        ["Jan", "Feb", "Mar",
-        "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-        "Oct", "Nov", "Dec", ];
+      let months: string [] =
+      ["Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+      "Oct", "Nov", "Dec", ];
+            
+      for(let i = 0; i < subset.length; i++){
+  
+        //let sortedMonths = x.sort(sortByDateAsc);
 
-        for(let i = 0; i < subset.length; i++){
+        let month =  new Date(subset[i].value);
+        let yr = month.getFullYear();
+        let today = new Date();
+        /*if(yr != 2014){
+          let m =  months[month.getMonth()]+' '+yr; 
+          columns.push(m);
+        }*/
+        let m =  months[month.getMonth()]+' '+yr; 
 
-          let splitted = subset[i].value.split("/");
-          let month = splitted[1] - 1;
-          columns.push(months[month]);
+        columns.push(m);
+        
 
-          totalAbsent.push(subset[i].absent_males + subset[i].absent_females );
-          totalPresent.push(subset[i].present_males + subset[i].present_females);
-        }
+        totalGirlsAbsent.push(subset[i].absent_females );
+        totalGirlsPresent.push(subset[i].present_females);
+        totalBoysAbsent.push(subset[i].absent_males );
+        totalBoysPresent.push(subset[i].present_males);
+      }
 
-        this.comboChartLabels = columns;
-        this.comboChartData  = [{
-          data: totalAbsent,
-          label: 'Absents',
-          borderWidth: 1,
-          type: 'line',
-          fill: false
-        },{
-          data: totalPresent,
-          label: 'Presents',
-          borderWidth: 1,
-          type: 'bar',
-        }];
-      });
+
+
+      this.comboChartLabels = columns;
+      this.comboChartData  = [{
+        data: totalBoysPresent,
+        label: 'Boys Present',
+        borderWidth: 1,
+        type: 'bar',
+        fill: false
+      },{
+        data: totalGirlsPresent,
+        label: 'Girls Present',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalBoysAbsent,
+        label: 'Boys Absent',
+        borderWidth: 1,
+        type: 'bar',
+      },{
+        data: totalGirlsAbsent,
+        label: 'Girls Absent',
+        borderWidth: 1,
+        type: 'bar',
+      }];
+    });
     }
 
     public getPartnerEnrollmentGraph(id){
