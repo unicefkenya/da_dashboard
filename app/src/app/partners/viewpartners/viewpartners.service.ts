@@ -22,6 +22,19 @@ export class ViewpartnersService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getClasssesAttendancePartnerMonitor(id,taken, start_date,end_date){
+    let token=JSON.parse(localStorage.getItem("user"));
+    //console.log(token);
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.baseApiUrl+'api/attendances/monitor?partner='+id+'&taken_attendance='+taken+'&start_date='+start_date+'&end_date='+end_date, options)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 
   //used in enrollment component
   fetchAllPartners(){

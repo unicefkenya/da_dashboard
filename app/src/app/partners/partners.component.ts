@@ -2,14 +2,26 @@ import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { DashboardService } from '../dashboard/dashboard.service';
+import {ViewpartnersService} from './viewpartners/viewpartners.service';
 import {ActivatedRoute,Router} from '@angular/router';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
+
+
+export class attendanceTake {
+  constructor(
+    public takenAttendance: string,
+    public startDate: any,
+    public endDate: any
+  ){}
+}
+
+
 
 @Component({
   selector: 'app-partners',
   templateUrl: './partners.component.html',
   styleUrls: ['./partners.component.scss'],
-  providers: [DashboardService]
+  providers: [DashboardService,ViewpartnersService]
 })
 export class PartnersComponent implements OnInit{
 
@@ -34,6 +46,18 @@ export class PartnersComponent implements OnInit{
     noAttendanceGender: string;
     public attendanceSnapshot: any [];
     annualYear:any;
+    loading:boolean;
+    dt:any;
+    schoolId:number;
+    classes: any[];
+    selected: any[];
+    temp = [];
+    count: number = 0;
+    offset: number = 0;
+    limit: number = 100;
+    table = {
+      offset: 0
+    };
 
     //Annual Attendance per Gender
     public boys: any;
@@ -42,9 +66,38 @@ export class PartnersComponent implements OnInit{
     public sub;
     pId;
     dropouts:any;
+    columnData:any;
+    takenAttendance: boolean = true;
+    start_date:any;
+    end_date:any;
+    attendanceTake: attendanceTake;
+    form: FormGroup;
+    submitted: boolean =  true;
+
+    public weekday = [
+      'Sun','Mon','Tue', 'Wed','Thurs','Fri','Sat'
+    ]
+
+    columns = [
+    { prop: 'schoolname', name: 'SCHOOL NAME', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'classname', name: 'CLASS NAME', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'daysattendancetaken', name: 'DAYS ATTENDANCE TAKEN'},
+    { prop: 'totaldayspassed', name: 'TOTAL DAYS'},
+    { prop: 'daysattendancepercentage', name: 'ATTENDANCE (%)'},
+    { prop: 'startdate', name: 'DATE (FROM)'},
+    { prop: 'enddate', name: 'DATE (TO)'}
+  ];
 
     constructor(private dashboardServices: DashboardService, private route:ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private viewpartnerService:ViewpartnersService,
+              private fb: FormBuilder) {
+        this.form = this.fb.group({
+        
+        takenAttendance: [null, Validators.compose([Validators.required])],
+        startDate: [null, Validators.compose([Validators.required])],
+        endDate: [null, Validators.compose([Validators.required])],
+      });
       
     }
 
@@ -68,29 +121,117 @@ export class PartnersComponent implements OnInit{
       this.getPartnerAnnualEnrollmentGender(partnerId);
       this.getPartnerEnrollmentGraph(partnerId);
        this.getPartner(partnerId);
+
+         let date=new Date(this.get_start_date(30))
+        let d=new Date()
+        this.start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+
+        this.end_date=this.get_formatted_date(d)
+
+        
+        this.takenAttendance = true
+       this.getClasssesAttendanceMonitor(this.pId,this.offset, this.limit, this.takenAttendance, this.start_date,this.end_date);
+
      });
 
     }
 
+    get_start_date(days){
+      var d=new Date()
+      return d.setDate(d.getDate() - days);
+     }
+     get_formatted_date(date){
+       return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+     }
 
-    getRegisteredChildren(){
-       this.router.navigate(['/children/view-children']);
+
+   
+
+    getSchools(){ 
+        this.router.navigate(['/schools/view-schools', this.pId],{skipLocationChange: true});
     }
 
-    getSchools(){
-        this.router.navigate(['/schools/view-schools']); 
+     getRegisteredChildren(){
+      this.router.navigate(['/children/view-children', this.pId],{skipLocationChange: true});
     }
-
 
     getEnrolledChildren(){
-        this.router.navigate(['/children/enrollments']);
+      this.router.navigate(['/children/enrollments', this.pId],{skipLocationChange: true});
     }
+
 
 
     getDropouts(){
-        this.router.navigate(['/children/dropouts']);
+       this.router.navigate(['/children/dropouts', this.pId],{skipLocationChange: true});
     }
 
+    atTk: attendanceTake;
+    onSubmit(attendance: attendanceTake){
+    if(!this.submitted){
+
+      //edit
+    }else{
+
+      this.atTk = new attendanceTake( attendance.takenAttendance,attendance.startDate,attendance.endDate);
+
+      this.getClasssesAttendanceMonitor(this.pId, this.offset,this.limit, attendance.takenAttendance,attendance.startDate,attendance.endDate );
+    }
+  }
+
+
+  resetButton(){
+    this.form.reset();
+  }
+
+  onPage(event){
+
+  }
+
+  onActivate(event){
+
+  }
+
+  getClasssesAttendanceMonitor(id,offset,limit,taken, start_date, end_date): void {
+
+    this.viewpartnerService.getClasssesAttendancePartnerMonitor(id,taken, start_date, end_date).subscribe(data => {
+     console.log(data, start_date,end_date)
+       const start = offset * limit;
+      const end = start + limit;
+       this.count =data.count
+      data = data.results;
+      let allClasses =[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        this.dt.schoolname = data[i].school_name;
+        this.dt.classname = data[i].class_name;
+        this.dt.id = data[i].id;
+        this.dt.emiscode = data[i].school_emis_code;
+        this.dt.schooltype = data[i].school_type;
+        this.dt.totaldayspassed = data[i].total_days;
+        if(data[i].attendance_count == null){
+          this.dt.attendancecount = 0
+        }else{
+          this.dt.attendancecount = data[i].attendance_count;  
+        }
+        this.dt.daysattendancetaken = this.dt.attendancecount;
+        this.dt.daysattendancepercentage = Math.round((data[i].attendance_count/data[i].total_days)*100)+'%';
+        this.dt.startdate = start_date;
+        this.dt.enddate = end_date;
+        allClasses.push(this.dt)
+      }
+     //console.log(allClasses);
+      //cache our data
+      this.temp = [...allClasses];
+      //our initial data
+      this.classes = allClasses;
+      this.selected = [];
+    });
+  }
+
+  onSelect({ selected }) {
+   //localStorage.setItem('classId', this.selected[0].id);
+   //this.getClassId(this.selected[0].id);
+   }
 
     public getPartner(id):void{
       this.dashboardServices.getPartner(id).subscribe(data => {
@@ -576,11 +717,6 @@ export class PartnersComponent implements OnInit{
     backgroundColor: '#FFFF00',
     borderColor: 'rgba(148,159,177,1)'
   }];
-
-  public weekday = [
-    'Sun','Mon','Tue', 'Wed','Thurs','Fri','Sat'
-  ]
-
 
 
     public getPartnerSevenDaysAttendance(id){

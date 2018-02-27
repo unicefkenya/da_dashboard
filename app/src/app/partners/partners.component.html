@@ -262,3 +262,60 @@
     </md-card>
   </div>
 </div>
+
+
+
+<!--attendances per class-->
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100">
+      
+      <md-card>
+        <md-card-title>Classes (Number of days attendance taken per class)</md-card-title>
+        <md-card-content>
+          <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
+            <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
+                  <md-select [formControl]="form.controls['takenAttendance']"   placeholder="Attendance Taken">
+                    <md-option value="true">Yes</md-option>
+                    <md-option value="false">No</md-option>
+                  </md-select>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="Start Date (required)" [formControl]="form.controls['startDate']" type="date"></md-input>
+                  <small *ngIf="form.controls['startDate'].hasError('required') && form.controls['startDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="End Date (required)" [formControl]="form.controls['endDate']" type="date"></md-input>
+                  <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                </div>
+            </div>
+            <md-card-actions>
+                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Search</button>
+                <!--<button md-raised-button class="warn">Delete</button>-->
+                <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
+              </md-card-actions>
+          </form>
+        </md-card-content>
+      </md-card>
+      <ngx-datatable
+      class="material fullscreen"
+      [columns]="columns"
+      [sortType]="'multi'"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [rows]="classes"
+      [selected]="selected"
+      [selectionType]="'single'"
+      [externalPaging]="true"
+      [count]="count"
+      [offset]="offset"
+      [limit]="limit"
+      (page)='onPage($event)'
+      (activate)='onActivate($event)'
+      (select)='onSelect($event)'s>
+      </ngx-datatable>
+  </div>

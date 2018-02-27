@@ -92,21 +92,21 @@ export class DashboardComponent implements OnInit{
   }
 
   getRegisteredChildren(){
-       //this.router.navigate(['/children/view-children']);
+       this.router.navigate(['/children/view-children']);
     }
 
     getSchools(){
-        //this.router.navigate(['/schools/view-schools']); 
+        this.router.navigate(['/schools/view-schools']); 
     }
 
 
     getEnrolledChildren(){
-        //this.router.navigate(['/children/enrollments']);
+        this.router.navigate(['/children/enrollments']);
     }
 
 
     getDropouts(){
-       // this.router.navigate(['/children/dropouts']);
+       this.router.navigate(['/children/dropouts']);
     }
 
 
