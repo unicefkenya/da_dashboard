@@ -155,7 +155,7 @@ export class SearchComponent {
   getClasssesAttendanceMonitor(id,offset,limit,taken, start_date, end_date): void {
 
     this._searchService.getClasssesAttendanceMonitor(id,taken, start_date, end_date).subscribe(data => {
-      console.log(data, start_date,end_date)
+      //console.log(data, start_date,end_date)
        const start = offset * limit;
       const end = start + limit;
        this.count =data.count
@@ -179,7 +179,7 @@ export class SearchComponent {
         this.dt.enddate = this.end_date;
         allClasses.push(this.dt)
       }
-      console.log(allClasses);
+     // console.log(allClasses);
       //cache our data
       this.temp = [...allClasses];
       //our initial data
