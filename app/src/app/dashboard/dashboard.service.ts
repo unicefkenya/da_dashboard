@@ -11,6 +11,31 @@ export class DashboardService {
 
   private baseApiUrl = BaseUrl.base_api_url;
 
+   getClasssesAttendancePartnerMonitor(page, id,taken, start_date,end_date){
+    let token=JSON.parse(localStorage.getItem("user"));
+    //console.log(token);
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.baseApiUrl+'api/attendances/monitor?partner='+id+'&page='+page+'&taken_attendance='+taken+'&start_date='+start_date+'&end_date='+end_date, options)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+   getClasssesAttendancePartnerAdminMonitor(page, id,taken, start_date,end_date){
+    let token=JSON.parse(localStorage.getItem("user"));
+    //console.log(token);
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.baseApiUrl+'api/attendances/monitor?partner_admin='+id+'&page='+page+'&taken_attendance='+taken+'&start_date='+start_date+'&end_date='+end_date, options)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
   getStats(){
     return this.http.get(this.baseApiUrl+'api/statistics')
       .map((response: Response) => response.json())

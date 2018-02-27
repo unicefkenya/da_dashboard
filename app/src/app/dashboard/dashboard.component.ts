@@ -1,6 +1,19 @@
 import { Component,OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import {Router,ActivatedRoute} from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
+
+
+export class attendanceTake {
+  constructor(
+    public takenAttendance: string,
+    public startDate: any,
+    public endDate: any
+  ){}
+}
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -39,9 +52,50 @@ export class DashboardComponent implements OnInit{
   public locale;
   public month;
   public dateGiven;
+    dt:any;
+    schoolId:number;
+    classes: any[];
+    selected: any[];
+    temp = [];
+    count: number = 0;
+    offset: number = 0;
+    limit: number = 100;
+    page:number=1
+    table = {
+      offset: 0
+    };
+
+    columnData:any;
+    takenAttendance: boolean = true;
+    start_date:any;
+    end_date:any;
+    attendanceTake: attendanceTake;
+    form: FormGroup;
+    submitted: boolean =  true;
+
+   public weekday = [
+      'Sun','Mon','Tue', 'Wed','Thurs','Fri','Sat'
+    ]
+
+    columns = [
+    { prop: 'schoolname', name: 'SCHOOL NAME', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'classname', name: 'CLASS NAME', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'daysattendancetaken', name: 'DAYS ATTENDANCE TAKEN'},
+    { prop: 'totaldayspassed', name: 'TOTAL DAYS'},
+    { prop: 'daysattendancepercentage', name: 'ATTENDANCE (%)'},
+    { prop: 'startdate', name: 'DATE (FROM)'},
+    { prop: 'enddate', name: 'DATE (TO)'}
+  ];
 
   constructor(private dashboardServices: DashboardService,private route:ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private fb: FormBuilder) {
+     this.form = this.fb.group({
+        
+        takenAttendance: [null, Validators.compose([Validators.required])],
+        startDate: [null, Validators.compose([Validators.required])],
+        endDate: [null, Validators.compose([Validators.required])],
+      });
   }
 
   ngOnInit(): void {
@@ -63,6 +117,18 @@ export class DashboardComponent implements OnInit{
       this.getPartnerAnnualEnrollmentGender(this.partnerId);
       this.getPartnerEnrollmentGraph(this.partnerId);
 
+        let date=new Date(this.get_start_date(30))
+        let d=new Date()
+        this.start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+
+        this.end_date=this.get_formatted_date(d)
+
+        
+        this.takenAttendance = true
+       this.getClasssesAttendanceMonitor(this.page, this.partnerId,this.offset, this.limit, this.takenAttendance, this.start_date,this.end_date);
+
+
+
     }else if(this.partneradminId){
       this.getPartnerAdminStats(this.partneradminId);
       this.getPartnerAdminAnnualAttendanceGender(this.partneradminId, todayYear);
@@ -74,6 +140,17 @@ export class DashboardComponent implements OnInit{
 
       this.getPartnerAdminAnnualEnrollmentGender(this.partneradminId);
       this.getPartnerAdminEnrollmentGraph(this.partneradminId);
+
+        let date=new Date(this.get_start_date(30))
+        let d=new Date()
+        this.start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+
+        this.end_date=this.get_formatted_date(d)
+
+        
+        this.takenAttendance = true
+       this.getClasssesAttendanceMonitor(this.page, this.partneradminId,this.offset, this.limit, this.takenAttendance, this.start_date,this.end_date);
+
     }else{
       this.getStats();
       //this.getWeeklySummary(); commented till the api is fixed
@@ -90,6 +167,14 @@ export class DashboardComponent implements OnInit{
     }
 
   }
+
+  get_start_date(days){
+      var d=new Date()
+      return d.setDate(d.getDate() - days);
+     }
+     get_formatted_date(date){
+       return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+     }
 
   getRegisteredChildren(){
        this.router.navigate(['/children/view-children']);
@@ -109,6 +194,146 @@ export class DashboardComponent implements OnInit{
        this.router.navigate(['/children/dropouts']);
     }
 
+
+    atTk: attendanceTake;
+    onSubmit(attendance: attendanceTake){
+    if(!this.submitted){
+
+      //edit
+    }else{
+
+      this.atTk = new attendanceTake( attendance.takenAttendance,attendance.startDate,attendance.endDate);
+      this.takenAttendance = JSON.parse(attendance.takenAttendance);
+      this.start_date = attendance.startDate;
+      this.end_date = attendance.endDate;
+      if(this.partnerId){
+        this.getClasssesAttendanceMonitor(this.page, this.partnerId, this.offset,this.limit, attendance.takenAttendance,attendance.startDate,attendance.endDate );
+      }else if(this.partneradminId){
+        this.getClasssesAttendanceMonitor(this.page, this.partneradminId, this.offset,this.limit, attendance.takenAttendance,attendance.startDate,attendance.endDate );
+      }
+      
+    }
+  }
+
+
+  resetButton(){
+    this.form.reset();
+  }
+
+  onPage(event){
+    this.page=event.offset+1
+    if(this.partnerId){
+      this.getClasssesAttendanceMonitor(this.page,this.partnerId,event.offset, event.limit,this.takenAttendance, this.start_date, this.end_date);
+    }else if(this.partneradminId){
+      this.getClasssesAttendanceMonitor(this.page,this.partneradminId,event.offset, event.limit,this.takenAttendance, this.start_date, this.end_date);
+    }
+  }
+
+  onActivate(event){
+
+  }
+
+  getClasssesAttendanceMonitor(page, id,offset,limit,taken, start_date, end_date): void {
+    if(this.partnerId){
+     // console.log(id, 'this is being sent');
+    this.dashboardServices.getClasssesAttendancePartnerMonitor(page,id,taken, start_date, end_date).subscribe(data => {
+     
+       const start = offset * limit;
+      const end = start + limit;
+      //console.log(data, id,   start, end, start_date,end_date)
+       this.count =data.count
+      data = data.results;
+      let allClasses =[]
+      let rows=[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        this.dt.schoolname = data[i].school_name;
+        this.dt.classname = data[i].class_name;
+        this.dt.id = data[i].id;
+        this.dt.emiscode = data[i].school_emis_code;
+        this.dt.schooltype = data[i].school_type;
+        this.dt.totaldayspassed = data[i].total_days;
+        if(data[i].attendance_count == null){
+          this.dt.attendancecount = 0
+        }else{
+          this.dt.attendancecount = data[i].attendance_count;  
+        }
+        this.dt.daysattendancetaken = this.dt.attendancecount;
+        this.dt.daysattendancepercentage = Math.round((data[i].attendance_count/data[i].total_days)*100)+'%';
+        this.dt.startdate = start_date;
+        this.dt.enddate = end_date;
+        allClasses.push(this.dt)
+      }
+     //console.log(allClasses);
+      //cache our data
+      //this.temp = [...allClasses];
+       let row=[...rows]
+      this.temp=[...allClasses];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = allClasses[j];
+        j++;
+      }
+      //this.temp=row
+      this.classes=row;
+      //our initial data
+      //this.classes = allClasses;
+      this.selected = [];
+    });
+  }else if(this.partneradminId){
+    //console.log(id, 'this is being sent');
+    this.dashboardServices.getClasssesAttendancePartnerAdminMonitor(page,id,taken, start_date, end_date).subscribe(data => {
+     
+       const start = offset * limit;
+      const end = start + limit;
+      //console.log(data, id,   start, end, start_date,end_date)
+       this.count =data.count
+      data = data.results;
+      let allClasses =[]
+      let rows=[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        this.dt.schoolname = data[i].school_name;
+        this.dt.classname = data[i].class_name;
+        this.dt.id = data[i].id;
+        this.dt.emiscode = data[i].school_emis_code;
+        this.dt.schooltype = data[i].school_type;
+        this.dt.totaldayspassed = data[i].total_days;
+        if(data[i].attendance_count == null){
+          this.dt.attendancecount = 0
+        }else{
+          this.dt.attendancecount = data[i].attendance_count;  
+        }
+        this.dt.daysattendancetaken = this.dt.attendancecount;
+        this.dt.daysattendancepercentage = Math.round((data[i].attendance_count/data[i].total_days)*100)+'%';
+        this.dt.startdate = start_date;
+        this.dt.enddate = end_date;
+        allClasses.push(this.dt)
+      }
+     //console.log(allClasses);
+      //cache our data
+      //this.temp = [...allClasses];
+       let row=[...rows]
+      this.temp=[...allClasses];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = allClasses[j];
+        j++;
+      }
+      //this.temp=row
+      this.classes=row;
+      //our initial data
+      //this.classes = allClasses;
+      this.selected = [];
+    });
+  }
+    
+  }
+
+  onSelect({ selected }) {
+   //localStorage.setItem('classId', this.selected[0].id);
+   //this.getClassId(this.selected[0].id);
+   }
 
   // Shimanyi > getStats()
   public getStats():void {
@@ -1368,10 +1593,6 @@ End Students Based on Class
     backgroundColor: '#FFFF00',
     borderColor: 'rgba(148,159,177,1)'
   }];
-
-  public weekday = [
-    'Sun','Mon','Tue', 'Wed','Thurs','Fri','Sat'
-  ]
 
 
 /*

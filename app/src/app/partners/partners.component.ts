@@ -107,6 +107,8 @@ export class PartnersComponent implements OnInit{
        let partnerId = +params['id'];
        this.pId = +params['id'];
 
+       console.log(this.pId, 'this partner id');
+
        let today = new Date();
       let todayYear = today.getFullYear();
 
@@ -198,12 +200,12 @@ export class PartnersComponent implements OnInit{
   }
 
   getClasssesAttendanceMonitor(page, id,offset,limit,taken, start_date, end_date): void {
-
+    //console.log(id, 'this is being sent');
     this.viewpartnerService.getClasssesAttendancePartnerMonitor(page,id,taken, start_date, end_date).subscribe(data => {
      
        const start = offset * limit;
       const end = start + limit;
-      //console.log(data, start, end, start_date,end_date)
+      //console.log(data, id,   start, end, start_date,end_date)
        this.count =data.count
       data = data.results;
       let allClasses =[]
