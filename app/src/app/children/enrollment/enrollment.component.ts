@@ -954,6 +954,8 @@ export class EnrollmentComponent implements OnInit {
       this.page=event.offset+1
       if(this.partnerId){
         this.fetchPartnerChildren(this.partnerId,event.offset, event.limit);
+      }else if(this.partneradminid){
+        this.fetchPartnerChildren(this.partnerId,event.offset, event.limit);
       }else{
         this.fetchChildren(event.offset, event.limit);
       }

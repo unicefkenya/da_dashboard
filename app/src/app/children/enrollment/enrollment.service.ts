@@ -186,45 +186,45 @@ export class EnrollmentService {
   }
   //searching by Partner & Partner Admin
   searchAPartnerData(id){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner='+id)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   searchAPartnerAdminData(id){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner_admin='+id)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner_admin='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   //search by name and partner
   searchDataNamePartner(id,name){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner='+id+'name='+name)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner='+id+'name='+name)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   searchDataNamePartnerAdmin(id,name){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner_admin='+id+'name='+name)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner_admin='+id+'name='+name)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   //search by gender and partner
   searchDataGenderPartner(id,gender){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner='+id+'gender='+gender)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner='+id+'gender='+gender)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   searchDataGenderPartnerAdmin(id,gender){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner_admin='+id+'gender='+gender)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner_admin='+id+'gender='+gender)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   //search by name,gender,partner
   searchDataNameGenderPartner(id,gender,name){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner='+id+'gender='+gender+'name='+name)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner='+id+'gender='+gender+'name='+name)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   searchDataNameGenderPartnerAdmin(id,gender,name){
-    return this.http.get(this.baseApiUrl+'api/students?enrolls?is_oosc=true&partner_admin='+id+'gender='+gender+'name='+name)
+    return this.http.get(this.baseApiUrl+'api/students/enrolls?is_oosc=true&partner_admin='+id+'gender='+gender+'name='+name)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

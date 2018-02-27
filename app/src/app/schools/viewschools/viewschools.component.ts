@@ -311,6 +311,8 @@ export class ViewSchoolsComponent implements OnInit {
    this.page=event.offset+1
    if(this.partnerId){
      this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
+   }else if(this.partneradminId){
+     this.fetchPartnerAdminSchools(this.partneradminId, this.offset,this.limit);
    }else{
      this.fetchSchools(event.offset,event.limit);
    }

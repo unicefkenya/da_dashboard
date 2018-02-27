@@ -1,345 +1,882 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DropoutsService } from './dropouts.service';
-import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import {ViewpartnersService} from '../../partners/viewpartners/viewpartners.service'
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { Search } from '../../search';
 
 @Component({
-  selector: 'app-viewschools',
+  selector: 'app-dropouts',
   templateUrl: './dropouts.component.html',
   styleUrls: ['./dropouts.component.scss'],
-  providers: [DropoutsService]
+  providers: [DropoutsService,ViewpartnersService],
 })
+
+
 export class DropoutsComponent implements OnInit {
 
-  constructor(private schoolService: DropoutsService,private router: Router, private fb: FormBuilder ) {
+
+    public form: FormGroup;
+    public submitted: boolean =  true;
+    public search: Search;
+    success:string;
+    empty: string;
+    fail: string;
+    loading:boolean;
+    dt:any;
+    rows = [];
+    children: any[] = this.rows;
+    selected: any[];
+    temp = [];
+    //count: number = 0;
+    offset: number = 0;
+    limit: number = 100;
+    page:number=1
+    table = {
+      offset: 0
+    };
+    males:any;
+    females:any;
+    admin:any;
+    allChildren:number;
+    count:number;
+    partnerId:number;
+    partneradminid:number;
+    schoolId:number;
+    link:any;
+
+    columns = [
+      { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
+      { name: 'Gender' },
+      { name: 'School' },
+      { name: 'Class' },
+
+    ];
+
+  constructor(private dropoutsService: DropoutsService, private partnerService: ViewpartnersService, private router: Router,private fb: FormBuilder){}
+  partner:any;
+  gender:any;
+  allpartners = [];
+  //fetch partners
+  fetchPartners(){
+    this.partnerService.fetchAllPartners()
+      .subscribe(
+        (res)=>{
+          for (let i = 0; i < res.results.length; i++){
+            this.partner = {};
+            this.partner.name = res.results[i].name;
+            this.partner.id = res.results[i].id;
+            this.allpartners.push(this.partner);
+          }
+        },
+      //(err) => console.log(err)
+    );
 
   }
 
-  public form: FormGroup;
-  public submitted: boolean =  true;
-  public search: Search;
-  success:string;
-  empty: string;
-  fail: string;
-  loading: boolean;
-  temp = [];
-  rows = [];
-  count: number = 0;
-  offset: number = 0;
-  limit: number = 100;
-  page:number=1
 
-  dt:any;
-  schools: any[];
-  selected: any[];
-  public schoolId;
-  table = {
-    offset: 0
-  };
-  partnerId: number;
-  partneradminId: number;
-  columns = [
-    { name: 'Name' },
-    { name: 'Emiscode' },
-    { name: 'Level' }
-  ];
-
-   allColumns = [
-    { name: 'Name' },
-    { name: 'Emiscode' },
-    { name: 'Level' }
-  ];
-
-  toggle(col) {
-    const isChecked = this.isChecked(col);
-
-    if(isChecked) {
-      this.columns = this.columns.filter(c => { 
-        return c.name !== col.name; 
-      });
-    } else {
-      this.columns = [...this.columns, col];
-    }
-  }
-
-  isChecked(col) {
-    return this.columns.find(c => {
-      return c.name === col.name;
-    });
-  }
-
-
-  fetchSchools(offset,limit): void {
-    this.schoolService.fetchSchools(this.page).subscribe(data => {
+  fetchChildren(offset,limit): void {
+    this.dropoutsService.fetchDropouts(this.page).subscribe(data => {
       //start and end for pagination
+      console.log(data);
       const start = offset * limit;
       const end = start + limit;
        this.count =data.count
+      data = data.results;
       this.loading = false;
-      let items =[];
-      let rowss = [];
-      for (let i = 0; i < data.results.length; i++){
+
+      let childs =[]
+      let rows=[]
+      //  this.count = data.length;
+      for (let i = 0;i < data.length;i++){
         this.dt = {}
-        this.dt.name = data.results[i].school_name
-        this.dt.emiscode = data.results[i].emis_code
-        this.dt.level = data.results[i].level
-        this.dt.id = data.results[i].id
-        items.push(this.dt)
-
+        this.dt.name=data[i].student_name
+        this.dt.gender=data[i].gender
+        this.dt.school = data[i].school_name
+        this.dt.class=data[i].class_name
+        this.dt.id = data[i].id
+        childs.push(this.dt)
       }
-
-      //cached data
-      let rowSchool=[...rowss]
-      this.temp=[...items];
+      //cache our data
+      //this.temp = childs;
+      let row=[...rows]
+      this.temp=[...childs];
       let j=0
       for (let i = start; i < end; i++) {
-        rowSchool[i] = items[j];
+        row[i] = childs[j];
         j++;
       }
-      //initial data
-      this.schools=rowSchool;
+      //this.temp=row
+      this.children=row;
 
       this.selected = [];
 
-      //console.log('Page Results',this.schools,this.count, start, end);
+      //console.log('Page Results',this.children,this.count, start, end);
 
     });
   }
 
-
-    //individual partners
-    fetchPartnerSchools(id,offset,limit): void {
-      this.schoolService.fetchPartnerSchools(id,this.page).subscribe(data => {
+    fetchPartnerChildren(id,offset,limit): void {
+      this.dropoutsService.fetchPartnerDropouts(id,this.page).subscribe(data => {
         //start and end for pagination
         const start = offset * limit;
         const end = start + limit;
          this.count =data.count
+        data = data.results;
         this.loading = false;
-        let items =[];
-        let rowss = [];
-        for (let i = 0; i < data.results.length; i++){
+
+        let childs =[]
+        let rows=[]
+        //  this.count = data.length;
+        for (let i = 0;i < data.length;i++){
           this.dt = {}
-          this.dt.name = data.results[i].school_name
-          this.dt.emiscode = data.results[i].emis_code
-          this.dt.level = data.results[i].level
-          this.dt.id = data.results[i].id
-          items.push(this.dt)
-
+          this.dt.name=data[i].student_name
+          this.dt.gender=data[i].gender
+          this.dt.school = data[i].school_name
+          this.dt.class=data[i].class_name
+          this.dt.id = data[i].id
+          childs.push(this.dt)
         }
-
-        //cached data
-        let rowSchool=[...rowss]
-        this.temp=[...items];
+        //cache our data
+        //this.temp = childs;
+        let row=[...rows]
+        this.temp=[...childs];
         let j=0
         for (let i = start; i < end; i++) {
-          rowSchool[i] = items[j];
+          row[i] = childs[j];
           j++;
         }
-        //initial data
-        this.schools=rowSchool;
+        //this.temp=row
+        this.children=row;
 
         this.selected = [];
-        //console.log('Page Results',this.schools,this.count, start, end);
+
+        //console.log('Page Results',this.children,this.count, start, end);
 
       });
     }
 
-    //partner admin
-    fetchPartnerAdminSchools(id,offset,limit): void {
-      this.schoolService.fetchPartnerAdminSchools(id,this.page).subscribe(data => {
-        //console.log(data)
+    fetchPartnerAdminChildren(id,offset,limit): void {
+      this.dropoutsService.fetchPartnerAdminDropouts(id,this.page).subscribe(data => {
         //start and end for pagination
         const start = offset * limit;
         const end = start + limit;
          this.count =data.count
+        data = data.results;
         this.loading = false;
-        let items =[];
-        let rowss = [];
-        for (let i = 0; i < data.results.length; i++){
+
+        let childs =[]
+        let rows=[]
+        //  this.count = data.length;
+        for (let i = 0;i < data.length;i++){
           this.dt = {}
-          this.dt.name = data.results[i].school_name
-          this.dt.emiscode = data.results[i].emis_code
-          this.dt.level = data.results[i].level
-          this.dt.id = data.results[i].id
-          items.push(this.dt)
-
+          this.dt.name=data[i].student_name
+          this.dt.gender=data[i].gender
+          this.dt.school = data[i].school_name
+          this.dt.class=data[i].class_name
+          this.dt.id = data[i].id
+          childs.push(this.dt)
         }
-
-        //cached data
-        let rowSchool=[...rowss]
-        this.temp=[...items];
+        //cache our data
+        //this.temp = childs;
+        let row=[...rows]
+        this.temp=[...childs];
         let j=0
         for (let i = start; i < end; i++) {
-          rowSchool[i] = items[j];
+          row[i] = childs[j];
           j++;
         }
-        //initial data
-        this.schools=rowSchool;
+        //this.temp=row
+        this.children=row;
 
         this.selected = [];
 
-        //console.log('Page Results',this.schools,this.count, start, end);
+        //console.log('Page Results',this.children,this.count, start, end);
 
       });
     }
 
-    onSelect({ selected }) {
-        localStorage.setItem('schoolId', this.selected[0].id);
-     //console.log(event,, 'Select Event', selected, this.selected,this.selected[0].emiscode);
-       if(event.srcElement.localName == 'button'){
-         localStorage.setItem('editEmisCode', this.selected[0].emiscode);
+    fetchSchoolChildren(id,offset,limit): void {
+      this.dropoutsService.fetchSchoolDropouts(id,this.page).subscribe(data => {
+        //start and end for pagination
+        const start = offset * limit;
+        const end = start + limit;
+         this.count =data.count
+        data = data.results;
+        this.loading = false;
+
+        let childs =[]
+        let rows=[]
+        //  this.count = data.length;
+        for (let i = 0;i < data.length;i++){
+          this.dt = {}
+          this.dt.name=data[i].student_name
+          this.dt.gender=data[i].gender
+          this.dt.school = data[i].school_name
+          this.dt.class=data[i].class_name
+          this.dt.id = data[i].id
+          childs.push(this.dt)
+        }
+        //cache our data
+        //this.temp = childs;
+
+        //this.temp=row
+        this.children=childs;
+
+        //console.log('Page Results',this.children,this.count, start, end);
+
+      });
+    }
+
+
+    searchChild(search: Search){
+
+      if(!this.submitted){
+
+        //edit
+      }else{
+
+        if(this.schoolId){
+          //search by name
+          if(search.search){
+
+            this.dropoutsService.searchSchoolData(this.schoolId, search.search)
+              .subscribe(
+                data => //console.log(data)
+                {
+                  //console.log(data);
+                  let res = data.results;
+                  this.count = data.count;
+                  let childs =[];
+                  let rows=[]
+                  for (let i = 0; i < data.results.length; i++){
+                    this.dt = {}
+                    this.dt.emiscode=res[i].emis_code
+                    this.dt.name=res[i].student_name
+                    this.dt.gender=res[i].gender
+                    this.dt.attendance=res[i].last_attendance
+                    this.dt.school = res[i].school_name
+                    this.dt.class=res[i].class_name
+                    this.dt.id = res[i].id
+                    childs.push(this.dt)
+                  }
+
+                  //this.temp=[childs];
+                  this.children=childs;
+                  //console.log(childs);
+                },
+                error =>{
+                  this.empty = "This field is required";
+                  this.fail = "Failed to save data";
+                }
+              );
+            }
+            //search by gender
+            else if(search.gender){
+              this.dropoutsService.searchSchoolDataGender(this.schoolId,search.gender)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+                      let res = data.results;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+
+                      }
+
+                      this.temp=[childs];
+                      this.children=childs;
+                    //  console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+            }
+            //search by name and gender
+            else if(search.search && search.gender){
+              this.dropoutsService.searchSchoolDataGenderName(this.schoolId,search.gender,search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+                      this.count = data.count;
+                      let res = data.results;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+
+                      }
+
+                      this.temp=[childs];
+                      this.children=childs;
+                    //  console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+            }
+            else{
+              this.empty = "Kindly select a filtering field";
+            }
+        }
+        else if(this.partnerId){
+            //search by name
+
+            if(search.search){
+
+              this.dropoutsService.searchPartnerData(this.partnerId, search.search)
+                .subscribe(
+                  data => //console.log(data)
+                  {
+
+                    let res = data.results;
+                    this.count = data.count;
+                    let childs =[];
+                    let rows=[]
+                    for (let i = 0; i < data.results.length; i++){
+                      this.dt = {}
+                      this.dt.emiscode=res[i].emis_code
+                      this.dt.name=res[i].student_name
+                      this.dt.gender=res[i].gender
+                      this.dt.attendance=res[i].last_attendance
+                      this.dt.school = res[i].school_name
+                      this.dt.class=res[i].class_name
+                      this.dt.id = res[i].id
+                      childs.push(this.dt)
+                    }
+
+                    this.children=childs;
+                    //console.log(childs);
+                  },
+                  error =>{
+                    this.empty = "This field is required";
+                    this.fail = "Failed to save data";
+                  }
+                );
+              }
+              //search by gender
+
+              else if(search.gender){
+                this.dropoutsService.searchPartnerDataGender(this.partnerId,search.gender)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        let res = data.results;
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.children=childs;
+                        //console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+              //search by name and gender
+
+              if(search.search && search.gender){
+
+                this.dropoutsService.searchPartnerDataGenderName(this.partnerId,search.gender,search.search)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        this.count = data.count;
+                        let res = data.results;
+                        //console.log(res);
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.children=childs;
+                        //console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+              else{
+                this.empty = "Kindly select a filtering field";
+              }
+            }
+            else if(this.partneradminid){
+              if(search.search){
+                this.dropoutsService.searchPartnerAdminData(this.partneradminid, search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+
+                      let res = data.results;
+                      this.count = data.count;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+                      }
+
+                      this.children=childs;
+                      //console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+                }
+              //search by gender
+
+              else if(search.gender){
+                this.dropoutsService.searchPartnerAdminDataGender(this.partneradminid,search.gender)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        let res = data.results;
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.children=childs;
+                        //console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+              //search by name and gender
+
+              if(search.search && search.gender){
+
+                this.dropoutsService.searchPartnerAdminDataGenderName(this.partneradminid,search.gender,search.search)
+                    .subscribe(
+                      data => //console.log(data)
+                      {
+                        this.count = data.count;
+                        let res = data.results;
+                        //console.log(res);
+                        let childs =[];
+                        let rows=[]
+                        for (let i = 0; i < data.results.length; i++){
+                          this.dt = {}
+                          this.dt.emiscode=res[i].emis_code
+                          this.dt.name=res[i].student_name
+                          this.dt.gender=res[i].gender
+                          this.dt.attendance=res[i].last_attendance
+                          this.dt.school = res[i].school_name
+                          this.dt.class=res[i].class_name
+                          this.dt.id = res[i].id
+                          childs.push(this.dt)
+
+                        }
+
+                        this.children=childs;
+                        //console.log(childs);
+                      },
+                      error =>{
+                        this.empty = "This field is required";
+                        this.fail = "Failed to save data";
+                      }
+                    );
+              }
+              else{
+                this.empty = "Kindly select a filtering field";
+              }
+            }
+            
+
+            //admin
+            else{
+              //search by name
+              if(search.search){
+              this.dropoutsService.searchData(search.search)
+                  .subscribe(
+                    data => //console.log(data)
+                    {
+                      let res = data.results;
+                      let childs =[];
+                      let rows=[]
+                      for (let i = 0; i < data.results.length; i++){
+                        this.dt = {}
+                        this.dt.emiscode=res[i].emis_code
+                        this.dt.name=res[i].student_name
+                        this.dt.gender=res[i].gender
+                        this.dt.attendance=res[i].last_attendance
+                        this.dt.school = res[i].school_name
+                        this.dt.class=res[i].class_name
+                        this.dt.id = res[i].id
+                        childs.push(this.dt)
+
+                      }
+
+                      this.children=childs;
+                      //console.log(childs);
+                    },
+                    error =>{
+                      this.empty = "This field is required";
+                      this.fail = "Failed to save data";
+                    }
+                  );
+                }
+                //search by partner
+                else if(search.partner){
+                  //showing total data of enrollment
+                  this.dropoutsService.searchAPartnerData(search.partner)
+                      .subscribe(
+                        data => //console.log(data)
+                        {
+                          let res = data.results;
+                         //this.count = this.fetchPartnerGirlChildTotal(search.partner)+this.fetchPartnerBoyChildTotal(search.partner) ;
+                         //console.log(this.count, "jjjk");
+                          let childs =[];
+                          let rows=[]
+                          for (let i = 0; i < data.results.length; i++){
+                            this.dt = {}
+                            this.dt.emiscode=res[i].emis_code
+                            this.dt.name=res[i].student_name
+                            this.dt.gender=res[i].gender
+                            this.dt.attendance=res[i].last_attendance
+                            this.dt.school = res[i].school_name
+                            this.dt.class=res[i].class_name
+                            this.dt.id = res[i].id
+                            childs.push(this.dt)
+
+                          }
+
+                          this.children=childs;
+                          //console.log(childs);
+                        },
+                        error =>{
+                          this.empty = "This field is required";
+                          this.fail = "Failed to save data";
+                        }
+                      );
+                }
+                //search by gender
+                else if(search.gender){
+                  this.dropoutsService.searchDataGender(search.gender)
+                      .subscribe(
+                        data => //console.log(data)
+                        {
+                          let res = data.results;
+                          let childs =[];
+                          let rows=[]
+                          for (let i = 0; i < data.results.length; i++){
+                            this.dt = {}
+                            this.dt.emiscode=res[i].emis_code
+                            this.dt.name=res[i].student_name
+                            this.dt.gender=res[i].gender
+                            this.dt.attendance=res[i].last_attendance
+                            this.dt.school = res[i].school_name
+                            this.dt.class=res[i].class_name
+                            this.dt.id = res[i].id
+                            childs.push(this.dt)
+
+                          }
+
+                          this.children=childs;
+                        //  console.log(childs);
+                        },
+                        error =>{
+                          this.empty = "This field is required";
+                          this.fail = "Failed to save data";
+                        }
+                      );
+                }
+                //search by name and gender
+                else if(search.search && search.gender){
+                  this.dropoutsService.searchDataGenderName(search.gender,search.search)
+                      .subscribe(
+                        data => //console.log(data)
+                        {
+                          let res = data.results;
+                          let childs =[];
+                          let rows=[]
+                          for (let i = 0; i < data.results.length; i++){
+                            this.dt = {}
+                            this.dt.emiscode=res[i].emis_code
+                            this.dt.name=res[i].student_name
+                            this.dt.gender=res[i].gender
+                            this.dt.attendance=res[i].last_attendance
+                            this.dt.school = res[i].school_name
+                            this.dt.class=res[i].class_name
+                            this.dt.id = res[i].id
+                            childs.push(this.dt)
+
+                          }
+
+                          this.children=childs;
+                        //  console.log(childs);
+                        },
+                        error =>{
+                          this.empty = "This field is required";
+                          this.fail = "Failed to save data";
+                        }
+                      );
+                }
+                //search by name and partner
+                else if(search.search && search.partner){
+
+                  this.dropoutsService.searchDataNamePartner(search.partner,search.search)
+                      .subscribe(
+                        data => //console.log(data)
+                        {
+                          let res = data.results;
+                          this.count = data.count;
+                          let childs =[];
+                          let rows=[]
+                          for (let i = 0; i < data.results.length; i++){
+                            this.dt = {}
+                            this.dt.emiscode=res[i].emis_code
+                            this.dt.name=res[i].student_name
+                            this.dt.gender=res[i].gender
+                            this.dt.attendance=res[i].last_attendance
+                            this.dt.school = res[i].school_name
+                            this.dt.class=res[i].class_name
+                            this.dt.id = res[i].id
+                            childs.push(this.dt)
+
+                          }
+
+                          this.children=childs;
+                          //console.log(childs);
+                        },
+                        error =>{
+                          this.empty = "This field is required";
+                          this.fail = "Failed to save data";
+                        }
+                      );
+                }
+                //search by gender and partner
+                else if(search.gender && search.partner){
+
+                  this.dropoutsService.searchDataGenderPartner(search.partner,search.gender)
+                      .subscribe(
+                        data => //console.log(data)
+                        {
+                          let res = data.results;
+                          this.count = data.count;
+                          let childs =[];
+                          let rows=[]
+                          for (let i = 0; i < data.results.length; i++){
+                            this.dt = {}
+                            this.dt.emiscode=res[i].emis_code
+                            this.dt.name=res[i].student_name
+                            this.dt.gender=res[i].gender
+                            this.dt.attendance=res[i].last_attendance
+                            this.dt.school = res[i].school_name
+                            this.dt.class=res[i].class_name
+                            this.dt.id = res[i].id
+                            childs.push(this.dt)
+
+                          }
+
+                          this.children=childs;
+                          //console.log(childs);
+                        },
+                        error =>{
+                          this.empty = "This field is required";
+                          this.fail = "Failed to save data";
+                        }
+                      );
+                }
+                //search by name, gender and partner
+                else if(search.search && search.gender && search.partner){
+                  this.dropoutsService.searchDataNameGenderPartner(search.partner,search.gender,search.search)
+                      .subscribe(
+                        data => //console.log(data)
+                        {
+                          let res = data.results;
+                          let childs =[];
+                          let rows=[]
+                          for (let i = 0; i < data.results.length; i++){
+                            this.dt = {}
+                            this.dt.emiscode=res[i].emis_code
+                            this.dt.name=res[i].student_name
+                            this.dt.gender=res[i].gender
+                            this.dt.attendance=res[i].last_attendance
+                            this.dt.school = res[i].school_name
+                            this.dt.class=res[i].class_name
+                            this.dt.id = res[i].id
+                            childs.push(this.dt)
+
+                          }
+
+                          this.children=childs;
+                        //  console.log(childs);
+                        },
+                        error =>{
+                          this.empty = "This field is required";
+                          this.fail = "Failed to save data";
+                        }
+                      );
+                }
+                else{
+                  this.empty = "Kindly select a filtering field";
+                }
+            }
+          }
+    }
+
+
+
+  onSelect({ selected }) {
+    
+   //console.log('Select Event', selected, this.selected,this.selected[0].id);
+   localStorage.setItem('childId', this.selected[0].id);
+   
+     if(event.srcElement.localName == 'button'){
+         localStorage.setItem('schoolEdit', this.selected[0].school);
         // console.log('Edit Clicked')
-         this.router.navigate(['/schools/edit-school/', this.selected[0].id],{skipLocationChange: true});
+         this.router.navigate(['/children/edit-child/', this.selected[0].id],{skipLocationChange: true});
        }else{
         // console.log('Page Clicked')
-         this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
-       }
-     
-     
+         this.getChildId(this.selected[0].id);
+     }
    }
 
+     private getChildId(id){
 
-   updateFilter(event) {
-     const val = event.target.value.toLowerCase();
+       this.router.navigate(['/children/child', id],{skipLocationChange: true});
 
-     // filter our data
-     const temp = this.temp.filter(function(d) {
-       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-     });
-     // update the rows
-     this.schools = temp;
-     // Whenever the filter changes, always go back to the first page
-     this.table.offset = 0;
-   }
+     }
 
- searchSchool(search: Search){
-   if(!this.submitted){
+     onActivate(event) {
+       //console.log('Activate Event', event);
+     }
 
-     //edit
-   }else{
-       //console.log(this.partnerId);
-       if(this.partnerId){
-         this.schoolService.searchPartnerData(this.partnerId, search.search)
-             .subscribe(
-               data => //console.log(data)
-               {
-                 //console.log(data);
-                 let res =data.results;
-                 let items =[];
-                 for (let i = 0; i < res.length; i++){
-                   this.dt = {}
-                   this.dt.schoolcode = res[i].school_code
-                   this.dt.name = res[i].school_name
-                   this.dt.emiscode = res[i].emis_code
-                   this.dt.level = res[i].level
-                   this.dt.id = res[i].id
-                   items.push(this.dt)
+    updateFilter(event) {
+      const val = event.target.value.toLowerCase();
 
-                 }
+      // filter our data
+      const temp = this.temp.filter(function(d) {
+        return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+      // update the rows
+        this.children = temp;
+        // Whenever the filter changes, always go back to the first page
+        this.table.offset = this.page;
 
-                 this.temp=[items];
-                 this.schools=items;
-               },
-               error =>{
-                 this.empty = "This field is required";
-                 this.fail = "Failed to save data";
-               }
-             );
-         }
-         else if(this.partneradminId){
-                    this.schoolService.searchPartnerAdminData(this.partneradminId, search.search)
-             .subscribe(
-               data => //console.log(data)
-               {
-                 //console.log(data);
-                 let res =data.results;
-                 let items =[];
-                 for (let i = 0; i < res.length; i++){
-                   this.dt = {}
-                   this.dt.schoolcode = res[i].school_code
-                   this.dt.name = res[i].school_name
-                   this.dt.emiscode = res[i].emis_code
-                   this.dt.level = res[i].level
-                   this.dt.id = res[i].id
-                   items.push(this.dt)
-
-                 }
-
-                 this.temp=[items];
-                 this.schools=items;
-               },
-               error =>{
-                 this.empty = "This field is required";
-                 this.fail = "Failed to save data";
-               }
-             );
-         }
-         else{
-           this.schoolService.searchData(search.search)
-               .subscribe(
-                 data => //console.log(data)
-                 {
-                   //console.log(data);
-                   let items =[];
-                   for (let i = 0; i < data.results.length; i++){
-                     this.dt = {}
-                     this.dt.schoolcode = data.results[i].school_code
-                     this.dt.name = data.results[i].school_name
-                     this.dt.emiscode = data.results[i].emis_code
-                     this.dt.level = data.results[i].level
-                     this.dt.id = data.results[i].id
-                     items.push(this.dt)
-
-                   }
-
-                   this.temp=[items];
-                   this.schools=items;
-                   //console.log(items);
-                 },
-                 error =>{
-                   this.empty = "This field is required";
-                   this.fail = "Failed to save data";
-                 }
-               );
-         }
-       }
- }
-
- onPage(event) {
-   this.page=event.offset+1
-   if(this.partnerId){
-     this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
-   }else{
-     this.fetchSchools(event.offset,event.limit);
-   }
- }
-
- onActivate(event) {
-   //console.log('Activate Event', event);
- }
-
-  ngOnInit(): void {
-    this.loading = true;
-
-    this.form = this.fb.group({
-      search: [null, Validators.compose([Validators.required,])],
-    });
-
-    this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
-    this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
-    let partnerName = localStorage.getItem("welcomeName");
-
-    if(this.partnerId && partnerName){
-      this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);
-    }else if(this.partneradminId && partnerName){
-      this.fetchPartnerAdminSchools(this.partneradminId, this.offset,this.limit);
-    }
-    else{
-      this.fetchSchools(this.offset,this.limit);
+      //console.log('Filter event', event);
     }
 
-  }
+    exportAttendance(){
+      console.log('clicked right now');
+      this.router.navigate(['/children/export-attendance', this.partnerId],{skipLocationChange: true});
+      
+    }
 
+    onPage(event) {
+      this.page=event.offset+1
+      if(this.partnerId){
+        this.fetchPartnerChildren(this.partnerId,event.offset, event.limit);
+      }else if(this.partneradminid){
+        this.fetchPartnerChildren(this.partnerId,event.offset, event.limit);
+      }else{
+        this.fetchChildren(event.offset, event.limit);
+      }
+    }
+
+    ngOnInit(): void {
+      this.loading = true;
+      this.form = this.fb.group({
+        searchType: [null],
+        search: [null],
+        gender: [null],
+        partner: [null]
+      });
+
+      this.fetchPartners();
+      this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+      this.partneradminid = JSON.parse(localStorage.getItem("partneradminId"));
+      this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
+      let partnerName = localStorage.getItem("welcomeName");
+
+      if(this.partnerId && partnerName){
+        this.fetchPartnerChildren(this.partnerId,this.offset, this.limit);
+      }
+      else if(this.partneradminid && partnerName){
+        this.fetchPartnerAdminChildren(this.partneradminid,this.offset, this.limit);
+        
+      }
+      else if(this.schoolId && partnerName){
+        //console.log('school yaah')
+        this.fetchSchoolChildren(this.schoolId,this.offset, this.limit);
+        
+      }
+      else{
+        this.admin = localStorage.getItem("user-type");
+        console.log(this.admin);
+        this.fetchChildren(this.offset, this.limit);
+       
+      }
+
+    }
 }

@@ -22,7 +22,7 @@ import { DropoutsComponent } from './dropouts/dropouts.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ChildrenRoutes),Ng2AutoCompleteModule,ChartsModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
-  declarations: [ChildrenComponent, AddChildrenComponent,DropoutsComponent, EditchildComponent,SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent,ExportattendanceComponent]
+  declarations: [ChildrenComponent, AddChildrenComponent, EditchildComponent,SchoolenrollmentComponent, EnrollmentComponent, ChildComponent,SchoolchildrenComponent,ExportattendanceComponent,DropoutsComponent]
 })
 
 export class ChildrenModule {}
