@@ -168,7 +168,7 @@ export class SearchComponent {
   getClasssesAttendanceMonitor(id,offset,limit,taken, start_date, end_date): void {
 
     this._searchService.getClasssesAttendanceMonitor(id,taken, start_date, end_date).subscribe(data => {
-      //console.log(data, start_date,end_date)
+     //console.log(data, start_date,end_date)
        const start = offset * limit;
       const end = start + limit;
        this.count =data.count
@@ -188,11 +188,11 @@ export class SearchComponent {
         }
         this.dt.daysattendancetaken = this.dt.attendancecount;
         this.dt.daysattendancepercentage = Math.round((data[i].attendance_count/data[i].total_days)*100)+'%';
-        this.dt.startdate = this.start_date;
-        this.dt.enddate = this.end_date;
+        this.dt.startdate = start_date;
+        this.dt.enddate = end_date;
         allClasses.push(this.dt)
       }
-     // console.log(allClasses);
+     //console.log(allClasses);
       //cache our data
       this.temp = [...allClasses];
       //our initial data
