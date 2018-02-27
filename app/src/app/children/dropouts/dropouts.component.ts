@@ -46,13 +46,14 @@ export class DropoutsComponent implements OnInit {
     schoolId:number;
     link:any;
 
-    columns = [
-      { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
-      { name: 'Gender' },
-      { name: 'School' },
-      { name: 'Class' },
 
-    ];
+    columns = [
+    { prop: 'name', name: 'STUDENT NAME', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'gender', name: 'GENDER'},
+    { prop: 'oosc', name: 'OOSC CHILD'},
+    { prop: 'dropoutreason', name: 'DROPOUT REASON'},
+    { prop: 'lastattendance', name: 'LAST ATTENDANCE'}
+  ];
 
   constructor(private dropoutsService: DropoutsService, private partnerService: ViewpartnersService, private router: Router,private fb: FormBuilder){}
   partner:any;
@@ -79,7 +80,7 @@ export class DropoutsComponent implements OnInit {
   fetchChildren(offset,limit): void {
     this.dropoutsService.fetchDropouts(this.page).subscribe(data => {
       //start and end for pagination
-      console.log(data);
+      //console.log(data);
       const start = offset * limit;
       const end = start + limit;
        this.count =data.count
@@ -90,11 +91,31 @@ export class DropoutsComponent implements OnInit {
       let rows=[]
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
-        this.dt = {}
+                this.dt = {}
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
-        this.dt.school = data[i].school_name
-        this.dt.class=data[i].class_name
+
+        if(data[i].is_oosc == true){
+          this.dt.oosc = 'YES'
+        }else if(data[i].is_oosc == false){
+          this.dt.oosc = 'NO'
+        }else{
+           this.dt.oosc = 'N/A' 
+        }
+
+        if(data[i].dropout_reason == null){
+          this.dt.dropoutreason='N/A'
+        }else{
+         this.dt.dropoutreason=data[i].dropout_reason 
+        }
+        
+        if(data[i].last_attendance == null){
+          this.dt.lastattendance='N/A'
+        }else{
+         this.dt.lastattendance=data[i].last_attendance 
+        }
+        
+       
         this.dt.id = data[i].id
         childs.push(this.dt)
       }
@@ -109,6 +130,8 @@ export class DropoutsComponent implements OnInit {
       }
       //this.temp=row
       this.children=row;
+
+     // console.log(this.children)
 
       this.selected = [];
 
