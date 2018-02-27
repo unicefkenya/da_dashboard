@@ -123,6 +123,16 @@ export class DashboardComponent implements OnInit{
     }
 
 
+    getDropouts(){
+      if(this.partnerId){
+        this.router.navigate(['/children/dropouts', this.partnerId]);
+      }else if(this.partneradminId){
+        this.router.navigate(['/children/dropouts', this.partneradminId]);
+      }else{
+        this.router.navigate(['/children/dropouts']);
+      }
+    }
+
 
   // Shimanyi > getStats()
   public getStats():void {

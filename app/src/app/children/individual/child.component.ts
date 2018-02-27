@@ -59,6 +59,9 @@ export class ChildComponent implements OnInit{
   public sub;
   public form: FormGroup;
   public percentAttendance:any=0
+  presentDays:any=0;
+  totalDays:any=0;
+  dropoutProbability:any = 100;
   public schoolClasses;
 
 
@@ -167,7 +170,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     this.childService.fetchChild(id).subscribe(
       (data)  =>
       {
-        console.log(data);
+        //console.log(data);
 
         this.firstname = data.fstname;
         this.midname = data.midname;
@@ -290,13 +293,17 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
     this.childService.fetchChildAttendance(id).subscribe(
       (data)  =>
       {
-        let present=data.results[0]["present"]
-        let total=data.results[0]["total"]
-        if(total !=0 && present !=0){
-          let per=Math.round(present/total*100)
+        //console.log(data);
+        this.presentDays=data.results[0]["present"]
+        this.totalDays=data.results[0]["total"]
+        if(this.presentDays !=0 && this.totalDays !=0){
+          let per=Math.round(this.presentDays/this.totalDays*100)
             this.percentAttendance=per
+            this.dropoutProbability = 100-per
+            
         }
       });
+    //console.log(this.dropoutProbability)
   }
 
 
@@ -460,7 +467,7 @@ constructor(private childService: ChildService,private route:ActivatedRoute,priv
               .subscribe(
                 data => //console.log(data)
                 {
-                  console.log("Edited Child Successfully"),
+                  //console.log("Edited Child Successfully"),
                   this.success = "Edited Child Successfully";
                 },
                 error =>{
