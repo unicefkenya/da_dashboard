@@ -91,7 +91,7 @@ export class DropoutsComponent implements OnInit {
       let rows=[]
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
-                this.dt = {}
+        this.dt = {}
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
 
@@ -153,11 +153,31 @@ export class DropoutsComponent implements OnInit {
         let rows=[]
         //  this.count = data.length;
         for (let i = 0;i < data.length;i++){
-          this.dt = {}
+           this.dt = {}
           this.dt.name=data[i].student_name
           this.dt.gender=data[i].gender
-          this.dt.school = data[i].school_name
-          this.dt.class=data[i].class_name
+
+          if(data[i].is_oosc == true){
+            this.dt.oosc = 'YES'
+          }else if(data[i].is_oosc == false){
+            this.dt.oosc = 'NO'
+          }else{
+             this.dt.oosc = 'N/A' 
+          }
+
+          if(data[i].dropout_reason == null){
+            this.dt.dropoutreason='N/A'
+          }else{
+           this.dt.dropoutreason=data[i].dropout_reason 
+          }
+          
+          if(data[i].last_attendance == null){
+            this.dt.lastattendance='N/A'
+          }else{
+           this.dt.lastattendance=data[i].last_attendance 
+          }
+          
+         
           this.dt.id = data[i].id
           childs.push(this.dt)
         }
@@ -193,13 +213,33 @@ export class DropoutsComponent implements OnInit {
         let rows=[]
         //  this.count = data.length;
         for (let i = 0;i < data.length;i++){
-          this.dt = {}
-          this.dt.name=data[i].student_name
-          this.dt.gender=data[i].gender
-          this.dt.school = data[i].school_name
-          this.dt.class=data[i].class_name
-          this.dt.id = data[i].id
-          childs.push(this.dt)
+            this.dt = {}
+            this.dt.name=data[i].student_name
+            this.dt.gender=data[i].gender
+
+            if(data[i].is_oosc == true){
+              this.dt.oosc = 'YES'
+            }else if(data[i].is_oosc == false){
+              this.dt.oosc = 'NO'
+            }else{
+               this.dt.oosc = 'N/A' 
+            }
+
+            if(data[i].dropout_reason == null){
+              this.dt.dropoutreason='N/A'
+            }else{
+             this.dt.dropoutreason=data[i].dropout_reason 
+            }
+            
+            if(data[i].last_attendance == null){
+              this.dt.lastattendance='N/A'
+            }else{
+             this.dt.lastattendance=data[i].last_attendance 
+            }
+            
+           
+            this.dt.id = data[i].id
+            childs.push(this.dt)
         }
         //cache our data
         //this.temp = childs;
@@ -236,8 +276,28 @@ export class DropoutsComponent implements OnInit {
           this.dt = {}
           this.dt.name=data[i].student_name
           this.dt.gender=data[i].gender
-          this.dt.school = data[i].school_name
-          this.dt.class=data[i].class_name
+
+          if(data[i].is_oosc == true){
+            this.dt.oosc = 'YES'
+          }else if(data[i].is_oosc == false){
+            this.dt.oosc = 'NO'
+          }else{
+             this.dt.oosc = 'N/A' 
+          }
+
+          if(data[i].dropout_reason == null){
+            this.dt.dropoutreason='N/A'
+          }else{
+           this.dt.dropoutreason=data[i].dropout_reason 
+          }
+          
+          if(data[i].last_attendance == null){
+            this.dt.lastattendance='N/A'
+          }else{
+           this.dt.lastattendance=data[i].last_attendance 
+          }
+          
+         
           this.dt.id = data[i].id
           childs.push(this.dt)
         }
@@ -274,15 +334,33 @@ export class DropoutsComponent implements OnInit {
                   let childs =[];
                   let rows=[]
                   for (let i = 0; i < data.results.length; i++){
-                    this.dt = {}
-                    this.dt.emiscode=res[i].emis_code
-                    this.dt.name=res[i].student_name
-                    this.dt.gender=res[i].gender
-                    this.dt.attendance=res[i].last_attendance
-                    this.dt.school = res[i].school_name
-                    this.dt.class=res[i].class_name
-                    this.dt.id = res[i].id
-                    childs.push(this.dt)
+                      this.dt = {}
+                      this.dt.name=data[i].student_name
+                      this.dt.gender=data[i].gender
+
+                      if(data[i].is_oosc == true){
+                        this.dt.oosc = 'YES'
+                      }else if(data[i].is_oosc == false){
+                        this.dt.oosc = 'NO'
+                      }else{
+                         this.dt.oosc = 'N/A' 
+                      }
+
+                      if(data[i].dropout_reason == null){
+                        this.dt.dropoutreason='N/A'
+                      }else{
+                       this.dt.dropoutreason=data[i].dropout_reason 
+                      }
+                      
+                      if(data[i].last_attendance == null){
+                        this.dt.lastattendance='N/A'
+                      }else{
+                       this.dt.lastattendance=data[i].last_attendance 
+                      }
+                      
+                     
+                      this.dt.id = data[i].id
+                      childs.push(this.dt)
                   }
 
                   //this.temp=[childs];
@@ -306,13 +384,31 @@ export class DropoutsComponent implements OnInit {
                       let rows=[]
                       for (let i = 0; i < data.results.length; i++){
                         this.dt = {}
-                        this.dt.emiscode=res[i].emis_code
-                        this.dt.name=res[i].student_name
-                        this.dt.gender=res[i].gender
-                        this.dt.attendance=res[i].last_attendance
-                        this.dt.school = res[i].school_name
-                        this.dt.class=res[i].class_name
-                        this.dt.id = res[i].id
+                        this.dt.name=data[i].student_name
+                        this.dt.gender=data[i].gender
+
+                        if(data[i].is_oosc == true){
+                          this.dt.oosc = 'YES'
+                        }else if(data[i].is_oosc == false){
+                          this.dt.oosc = 'NO'
+                        }else{
+                           this.dt.oosc = 'N/A' 
+                        }
+
+                        if(data[i].dropout_reason == null){
+                          this.dt.dropoutreason='N/A'
+                        }else{
+                         this.dt.dropoutreason=data[i].dropout_reason 
+                        }
+                        
+                        if(data[i].last_attendance == null){
+                          this.dt.lastattendance='N/A'
+                        }else{
+                         this.dt.lastattendance=data[i].last_attendance 
+                        }
+                        
+                       
+                        this.dt.id = data[i].id
                         childs.push(this.dt)
 
                       }
@@ -339,13 +435,31 @@ export class DropoutsComponent implements OnInit {
                       let rows=[]
                       for (let i = 0; i < data.results.length; i++){
                         this.dt = {}
-                        this.dt.emiscode=res[i].emis_code
-                        this.dt.name=res[i].student_name
-                        this.dt.gender=res[i].gender
-                        this.dt.attendance=res[i].last_attendance
-                        this.dt.school = res[i].school_name
-                        this.dt.class=res[i].class_name
-                        this.dt.id = res[i].id
+                        this.dt.name=data[i].student_name
+                        this.dt.gender=data[i].gender
+
+                        if(data[i].is_oosc == true){
+                          this.dt.oosc = 'YES'
+                        }else if(data[i].is_oosc == false){
+                          this.dt.oosc = 'NO'
+                        }else{
+                           this.dt.oosc = 'N/A' 
+                        }
+
+                        if(data[i].dropout_reason == null){
+                          this.dt.dropoutreason='N/A'
+                        }else{
+                         this.dt.dropoutreason=data[i].dropout_reason 
+                        }
+                        
+                        if(data[i].last_attendance == null){
+                          this.dt.lastattendance='N/A'
+                        }else{
+                         this.dt.lastattendance=data[i].last_attendance 
+                        }
+                        
+                       
+                        this.dt.id = data[i].id
                         childs.push(this.dt)
 
                       }
@@ -380,13 +494,31 @@ export class DropoutsComponent implements OnInit {
                     let rows=[]
                     for (let i = 0; i < data.results.length; i++){
                       this.dt = {}
-                      this.dt.emiscode=res[i].emis_code
-                      this.dt.name=res[i].student_name
-                      this.dt.gender=res[i].gender
-                      this.dt.attendance=res[i].last_attendance
-                      this.dt.school = res[i].school_name
-                      this.dt.class=res[i].class_name
-                      this.dt.id = res[i].id
+                      this.dt.name=data[i].student_name
+                      this.dt.gender=data[i].gender
+
+                      if(data[i].is_oosc == true){
+                        this.dt.oosc = 'YES'
+                      }else if(data[i].is_oosc == false){
+                        this.dt.oosc = 'NO'
+                      }else{
+                         this.dt.oosc = 'N/A' 
+                      }
+
+                      if(data[i].dropout_reason == null){
+                        this.dt.dropoutreason='N/A'
+                      }else{
+                       this.dt.dropoutreason=data[i].dropout_reason 
+                      }
+                      
+                      if(data[i].last_attendance == null){
+                        this.dt.lastattendance='N/A'
+                      }else{
+                       this.dt.lastattendance=data[i].last_attendance 
+                      }
+                      
+                     
+                      this.dt.id = data[i].id
                       childs.push(this.dt)
                     }
 
@@ -411,13 +543,31 @@ export class DropoutsComponent implements OnInit {
                         let rows=[]
                         for (let i = 0; i < data.results.length; i++){
                           this.dt = {}
-                          this.dt.emiscode=res[i].emis_code
-                          this.dt.name=res[i].student_name
-                          this.dt.gender=res[i].gender
-                          this.dt.attendance=res[i].last_attendance
-                          this.dt.school = res[i].school_name
-                          this.dt.class=res[i].class_name
-                          this.dt.id = res[i].id
+                          this.dt.name=data[i].student_name
+                          this.dt.gender=data[i].gender
+
+                          if(data[i].is_oosc == true){
+                            this.dt.oosc = 'YES'
+                          }else if(data[i].is_oosc == false){
+                            this.dt.oosc = 'NO'
+                          }else{
+                             this.dt.oosc = 'N/A' 
+                          }
+
+                          if(data[i].dropout_reason == null){
+                            this.dt.dropoutreason='N/A'
+                          }else{
+                           this.dt.dropoutreason=data[i].dropout_reason 
+                          }
+                          
+                          if(data[i].last_attendance == null){
+                            this.dt.lastattendance='N/A'
+                          }else{
+                           this.dt.lastattendance=data[i].last_attendance 
+                          }
+                          
+                         
+                          this.dt.id = data[i].id
                           childs.push(this.dt)
 
                         }
@@ -446,13 +596,31 @@ export class DropoutsComponent implements OnInit {
                         let rows=[]
                         for (let i = 0; i < data.results.length; i++){
                           this.dt = {}
-                          this.dt.emiscode=res[i].emis_code
-                          this.dt.name=res[i].student_name
-                          this.dt.gender=res[i].gender
-                          this.dt.attendance=res[i].last_attendance
-                          this.dt.school = res[i].school_name
-                          this.dt.class=res[i].class_name
-                          this.dt.id = res[i].id
+                          this.dt.name=data[i].student_name
+                          this.dt.gender=data[i].gender
+
+                          if(data[i].is_oosc == true){
+                            this.dt.oosc = 'YES'
+                          }else if(data[i].is_oosc == false){
+                            this.dt.oosc = 'NO'
+                          }else{
+                             this.dt.oosc = 'N/A' 
+                          }
+
+                          if(data[i].dropout_reason == null){
+                            this.dt.dropoutreason='N/A'
+                          }else{
+                           this.dt.dropoutreason=data[i].dropout_reason 
+                          }
+                          
+                          if(data[i].last_attendance == null){
+                            this.dt.lastattendance='N/A'
+                          }else{
+                           this.dt.lastattendance=data[i].last_attendance 
+                          }
+                          
+                         
+                          this.dt.id = data[i].id
                           childs.push(this.dt)
 
                         }
@@ -483,13 +651,31 @@ export class DropoutsComponent implements OnInit {
                       let rows=[]
                       for (let i = 0; i < data.results.length; i++){
                         this.dt = {}
-                        this.dt.emiscode=res[i].emis_code
-                        this.dt.name=res[i].student_name
-                        this.dt.gender=res[i].gender
-                        this.dt.attendance=res[i].last_attendance
-                        this.dt.school = res[i].school_name
-                        this.dt.class=res[i].class_name
-                        this.dt.id = res[i].id
+                        this.dt.name=data[i].student_name
+                        this.dt.gender=data[i].gender
+
+                        if(data[i].is_oosc == true){
+                          this.dt.oosc = 'YES'
+                        }else if(data[i].is_oosc == false){
+                          this.dt.oosc = 'NO'
+                        }else{
+                           this.dt.oosc = 'N/A' 
+                        }
+
+                        if(data[i].dropout_reason == null){
+                          this.dt.dropoutreason='N/A'
+                        }else{
+                         this.dt.dropoutreason=data[i].dropout_reason 
+                        }
+                        
+                        if(data[i].last_attendance == null){
+                          this.dt.lastattendance='N/A'
+                        }else{
+                         this.dt.lastattendance=data[i].last_attendance 
+                        }
+                        
+                       
+                        this.dt.id = data[i].id
                         childs.push(this.dt)
                       }
 
@@ -514,13 +700,31 @@ export class DropoutsComponent implements OnInit {
                         let rows=[]
                         for (let i = 0; i < data.results.length; i++){
                           this.dt = {}
-                          this.dt.emiscode=res[i].emis_code
-                          this.dt.name=res[i].student_name
-                          this.dt.gender=res[i].gender
-                          this.dt.attendance=res[i].last_attendance
-                          this.dt.school = res[i].school_name
-                          this.dt.class=res[i].class_name
-                          this.dt.id = res[i].id
+                          this.dt.name=data[i].student_name
+                          this.dt.gender=data[i].gender
+
+                          if(data[i].is_oosc == true){
+                            this.dt.oosc = 'YES'
+                          }else if(data[i].is_oosc == false){
+                            this.dt.oosc = 'NO'
+                          }else{
+                             this.dt.oosc = 'N/A' 
+                          }
+
+                          if(data[i].dropout_reason == null){
+                            this.dt.dropoutreason='N/A'
+                          }else{
+                           this.dt.dropoutreason=data[i].dropout_reason 
+                          }
+                          
+                          if(data[i].last_attendance == null){
+                            this.dt.lastattendance='N/A'
+                          }else{
+                           this.dt.lastattendance=data[i].last_attendance 
+                          }
+                          
+                         
+                          this.dt.id = data[i].id
                           childs.push(this.dt)
 
                         }
@@ -549,13 +753,31 @@ export class DropoutsComponent implements OnInit {
                         let rows=[]
                         for (let i = 0; i < data.results.length; i++){
                           this.dt = {}
-                          this.dt.emiscode=res[i].emis_code
-                          this.dt.name=res[i].student_name
-                          this.dt.gender=res[i].gender
-                          this.dt.attendance=res[i].last_attendance
-                          this.dt.school = res[i].school_name
-                          this.dt.class=res[i].class_name
-                          this.dt.id = res[i].id
+                          this.dt.name=data[i].student_name
+                          this.dt.gender=data[i].gender
+
+                          if(data[i].is_oosc == true){
+                            this.dt.oosc = 'YES'
+                          }else if(data[i].is_oosc == false){
+                            this.dt.oosc = 'NO'
+                          }else{
+                             this.dt.oosc = 'N/A' 
+                          }
+
+                          if(data[i].dropout_reason == null){
+                            this.dt.dropoutreason='N/A'
+                          }else{
+                           this.dt.dropoutreason=data[i].dropout_reason 
+                          }
+                          
+                          if(data[i].last_attendance == null){
+                            this.dt.lastattendance='N/A'
+                          }else{
+                           this.dt.lastattendance=data[i].last_attendance 
+                          }
+                          
+                         
+                          this.dt.id = data[i].id
                           childs.push(this.dt)
 
                         }
@@ -588,13 +810,31 @@ export class DropoutsComponent implements OnInit {
                       let rows=[]
                       for (let i = 0; i < data.results.length; i++){
                         this.dt = {}
-                        this.dt.emiscode=res[i].emis_code
-                        this.dt.name=res[i].student_name
-                        this.dt.gender=res[i].gender
-                        this.dt.attendance=res[i].last_attendance
-                        this.dt.school = res[i].school_name
-                        this.dt.class=res[i].class_name
-                        this.dt.id = res[i].id
+                        this.dt.name=data[i].student_name
+                        this.dt.gender=data[i].gender
+
+                        if(data[i].is_oosc == true){
+                          this.dt.oosc = 'YES'
+                        }else if(data[i].is_oosc == false){
+                          this.dt.oosc = 'NO'
+                        }else{
+                           this.dt.oosc = 'N/A' 
+                        }
+
+                        if(data[i].dropout_reason == null){
+                          this.dt.dropoutreason='N/A'
+                        }else{
+                         this.dt.dropoutreason=data[i].dropout_reason 
+                        }
+                        
+                        if(data[i].last_attendance == null){
+                          this.dt.lastattendance='N/A'
+                        }else{
+                         this.dt.lastattendance=data[i].last_attendance 
+                        }
+                        
+                       
+                        this.dt.id = data[i].id
                         childs.push(this.dt)
 
                       }
@@ -622,13 +862,31 @@ export class DropoutsComponent implements OnInit {
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
                             this.dt = {}
-                            this.dt.emiscode=res[i].emis_code
-                            this.dt.name=res[i].student_name
-                            this.dt.gender=res[i].gender
-                            this.dt.attendance=res[i].last_attendance
-                            this.dt.school = res[i].school_name
-                            this.dt.class=res[i].class_name
-                            this.dt.id = res[i].id
+                            this.dt.name=data[i].student_name
+                            this.dt.gender=data[i].gender
+
+                            if(data[i].is_oosc == true){
+                              this.dt.oosc = 'YES'
+                            }else if(data[i].is_oosc == false){
+                              this.dt.oosc = 'NO'
+                            }else{
+                               this.dt.oosc = 'N/A' 
+                            }
+
+                            if(data[i].dropout_reason == null){
+                              this.dt.dropoutreason='N/A'
+                            }else{
+                             this.dt.dropoutreason=data[i].dropout_reason 
+                            }
+                            
+                            if(data[i].last_attendance == null){
+                              this.dt.lastattendance='N/A'
+                            }else{
+                             this.dt.lastattendance=data[i].last_attendance 
+                            }
+                            
+                           
+                            this.dt.id = data[i].id
                             childs.push(this.dt)
 
                           }
@@ -653,13 +911,31 @@ export class DropoutsComponent implements OnInit {
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
                             this.dt = {}
-                            this.dt.emiscode=res[i].emis_code
-                            this.dt.name=res[i].student_name
-                            this.dt.gender=res[i].gender
-                            this.dt.attendance=res[i].last_attendance
-                            this.dt.school = res[i].school_name
-                            this.dt.class=res[i].class_name
-                            this.dt.id = res[i].id
+                            this.dt.name=data[i].student_name
+                            this.dt.gender=data[i].gender
+
+                            if(data[i].is_oosc == true){
+                              this.dt.oosc = 'YES'
+                            }else if(data[i].is_oosc == false){
+                              this.dt.oosc = 'NO'
+                            }else{
+                               this.dt.oosc = 'N/A' 
+                            }
+
+                            if(data[i].dropout_reason == null){
+                              this.dt.dropoutreason='N/A'
+                            }else{
+                             this.dt.dropoutreason=data[i].dropout_reason 
+                            }
+                            
+                            if(data[i].last_attendance == null){
+                              this.dt.lastattendance='N/A'
+                            }else{
+                             this.dt.lastattendance=data[i].last_attendance 
+                            }
+                            
+                           
+                            this.dt.id = data[i].id
                             childs.push(this.dt)
 
                           }
@@ -684,13 +960,31 @@ export class DropoutsComponent implements OnInit {
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
                             this.dt = {}
-                            this.dt.emiscode=res[i].emis_code
-                            this.dt.name=res[i].student_name
-                            this.dt.gender=res[i].gender
-                            this.dt.attendance=res[i].last_attendance
-                            this.dt.school = res[i].school_name
-                            this.dt.class=res[i].class_name
-                            this.dt.id = res[i].id
+                            this.dt.name=data[i].student_name
+                            this.dt.gender=data[i].gender
+
+                            if(data[i].is_oosc == true){
+                              this.dt.oosc = 'YES'
+                            }else if(data[i].is_oosc == false){
+                              this.dt.oosc = 'NO'
+                            }else{
+                               this.dt.oosc = 'N/A' 
+                            }
+
+                            if(data[i].dropout_reason == null){
+                              this.dt.dropoutreason='N/A'
+                            }else{
+                             this.dt.dropoutreason=data[i].dropout_reason 
+                            }
+                            
+                            if(data[i].last_attendance == null){
+                              this.dt.lastattendance='N/A'
+                            }else{
+                             this.dt.lastattendance=data[i].last_attendance 
+                            }
+                            
+                           
+                            this.dt.id = data[i].id
                             childs.push(this.dt)
 
                           }
@@ -717,13 +1011,31 @@ export class DropoutsComponent implements OnInit {
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
                             this.dt = {}
-                            this.dt.emiscode=res[i].emis_code
-                            this.dt.name=res[i].student_name
-                            this.dt.gender=res[i].gender
-                            this.dt.attendance=res[i].last_attendance
-                            this.dt.school = res[i].school_name
-                            this.dt.class=res[i].class_name
-                            this.dt.id = res[i].id
+                            this.dt.name=data[i].student_name
+                            this.dt.gender=data[i].gender
+
+                            if(data[i].is_oosc == true){
+                              this.dt.oosc = 'YES'
+                            }else if(data[i].is_oosc == false){
+                              this.dt.oosc = 'NO'
+                            }else{
+                               this.dt.oosc = 'N/A' 
+                            }
+
+                            if(data[i].dropout_reason == null){
+                              this.dt.dropoutreason='N/A'
+                            }else{
+                             this.dt.dropoutreason=data[i].dropout_reason 
+                            }
+                            
+                            if(data[i].last_attendance == null){
+                              this.dt.lastattendance='N/A'
+                            }else{
+                             this.dt.lastattendance=data[i].last_attendance 
+                            }
+                            
+                           
+                            this.dt.id = data[i].id
                             childs.push(this.dt)
 
                           }
@@ -750,13 +1062,31 @@ export class DropoutsComponent implements OnInit {
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
                             this.dt = {}
-                            this.dt.emiscode=res[i].emis_code
-                            this.dt.name=res[i].student_name
-                            this.dt.gender=res[i].gender
-                            this.dt.attendance=res[i].last_attendance
-                            this.dt.school = res[i].school_name
-                            this.dt.class=res[i].class_name
-                            this.dt.id = res[i].id
+                            this.dt.name=data[i].student_name
+                            this.dt.gender=data[i].gender
+
+                            if(data[i].is_oosc == true){
+                              this.dt.oosc = 'YES'
+                            }else if(data[i].is_oosc == false){
+                              this.dt.oosc = 'NO'
+                            }else{
+                               this.dt.oosc = 'N/A' 
+                            }
+
+                            if(data[i].dropout_reason == null){
+                              this.dt.dropoutreason='N/A'
+                            }else{
+                             this.dt.dropoutreason=data[i].dropout_reason 
+                            }
+                            
+                            if(data[i].last_attendance == null){
+                              this.dt.lastattendance='N/A'
+                            }else{
+                             this.dt.lastattendance=data[i].last_attendance 
+                            }
+                            
+                           
+                            this.dt.id = data[i].id
                             childs.push(this.dt)
 
                           }
@@ -781,13 +1111,31 @@ export class DropoutsComponent implements OnInit {
                           let rows=[]
                           for (let i = 0; i < data.results.length; i++){
                             this.dt = {}
-                            this.dt.emiscode=res[i].emis_code
-                            this.dt.name=res[i].student_name
-                            this.dt.gender=res[i].gender
-                            this.dt.attendance=res[i].last_attendance
-                            this.dt.school = res[i].school_name
-                            this.dt.class=res[i].class_name
-                            this.dt.id = res[i].id
+                            this.dt.name=data[i].student_name
+                            this.dt.gender=data[i].gender
+
+                            if(data[i].is_oosc == true){
+                              this.dt.oosc = 'YES'
+                            }else if(data[i].is_oosc == false){
+                              this.dt.oosc = 'NO'
+                            }else{
+                               this.dt.oosc = 'N/A' 
+                            }
+
+                            if(data[i].dropout_reason == null){
+                              this.dt.dropoutreason='N/A'
+                            }else{
+                             this.dt.dropoutreason=data[i].dropout_reason 
+                            }
+                            
+                            if(data[i].last_attendance == null){
+                              this.dt.lastattendance='N/A'
+                            }else{
+                             this.dt.lastattendance=data[i].last_attendance 
+                            }
+                            
+                           
+                            this.dt.id = data[i].id
                             childs.push(this.dt)
 
                           }
