@@ -1,179 +1,234 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
-import {NgModel} from '@angular/forms';
+import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef,ViewChildren} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import { Router } from '@angular/router';
+
+import { TeachersRoutes } from './../teachers.routing';
 import {AppModule} from '../../app.module';
-import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormArray, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
-import { Router, NavigationEnd } from '@angular/router';
-import { TeacherRegistration } from './teachers';
+import { TeacherRegistration } from '../addteachers/teacher';
 import { Response } from '@angular/http';
 import {EditteacherService} from './editteacher.service';
+import {ClassService} from '../../classes/class.service';
+import {MdCheckbox} from '@angular/material';
+
+export interface Subjects {
+  name: string;
+  value: string;
+  teaching: boolean;
+}
+
 
 @Component({
-  selector: 'add-teacher',
+  selector: 'edit-teacher',
   templateUrl: './editteacher.component.html',
   styleUrls: ['./editteacher.component.scss'],
-  providers: [EditteacherService]
+  providers: [EditteacherService, DatePipe, ClassService],
+  //directives: [FocusDirective]
+
 })
 
 
 export class EditteacherComponent implements OnInit {
+  @ViewChildren(MdCheckbox) checkboxes;
+  @Output() selectedChange:EventEmitter<any> = new EventEmitter();
+
+  subjects= ['Mathematics','English','Kiswahili','Science','Social Studies','C.R.E'];
+  selected=[];
+
   editing = {};
   rows = [];
-
-  constructor(
-    private _teacherRegistrationService: EditteacherService,
-    private fb: FormBuilder,
-    private router: Router
-  ){}
-
-
+  tr:any;
+  schoolId:number;
+  partnerId:number;
   public success;
   public fail;
   public empty;
-  public schoolConstituency;
-  public schoolCounty;
+  public date;
+  public isVisible;
+  public schoolName;
+  public t_type;
+  public currentDate = new Date();
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
-  public form: FormGroup;
-  countyName:any;
-  county:any;
-  subcounties:any;
-  zones:any;
-  partnerId:any=[];
-  subcountyForm:boolean = false;
-  schoolId:any;
+  public form: FormGroup ;
+  dt:any;
+  classes:any;
+
+  constructor(
+    private _teacherRegistrationService: EditteacherService,
+    private classService:ClassService,
+    public datepipe:DatePipe,
+    public _router: Router,
+    private fb: FormBuilder
+  ){}
+
+
 
   ngOnInit(){
     //this.onSubmit;
     this.form = this.fb.group({
-      schoolName: [null, Validators.compose([Validators.required,])],
-      schoolCode: [null],
-      emisCode: [null],
-      county: [null, Validators.compose([Validators.required])],
-      zone: [null, Validators.compose([Validators.required])],
-      waterSource: [null, Validators.compose([Validators.required])],
-      long_geo_cordinates: [null],
-      lat_geo_cordinates: [null]
+      gender: [null, Validators.compose([Validators.required])],
+      firstName: [null, Validators.compose([Validators.required])],
+      lastName: [null, Validators.compose([Validators.required])],
+      phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.number])],
+      birthday: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
+      teacher_type: [null, Validators.compose([Validators.required])],
+      headteacher: [null, Validators.compose([Validators.required])],
+      qualifications: [null],
+      tsc_no: [null],
+      bom_no: [null],
+      dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
+      joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
     });
-    this.getSchoolCounties();
-    //this.getSchoolConstituencies();
+
+    this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
-    this.schoolId = localStorage.getItem("schoolId");
-
-    this.fetchSchool(this.schoolId);
-
-  }
-
-schoolname:any;
-schoolEmisCode:any;
-countySchool:any;
-subcountyname:any;
-subcountyid:any;
-longitude:any;
-latitude:any;
-watersource:any;
-schoolcode:any;
-
-  public fetchSchool(id){
-  this._teacherRegistrationService.getSchoolData(id).subscribe(
-    (data)  =>
-    {
-      console.log(data);
-      let res = data.results;
-      this.schoolname=res[0].school_name;
-      this.schoolEmisCode = res[0].emis_code;
-      this.countySchool = res[0].county_name;
-      this.subcountyname = res[0].subcounty_name;
-      this.subcountyid = res[0].subcounty;
-      this.watersource = res[0].source_of_water;
-      this.longitude = res[0].geo_coordinates.lng;
-      this.latitude = res[0].geo_coordinates.lat;
-      this.schoolcode = res[0].school_code;
-      
+    if(this.partnerId){
+      this.getSchoolNames(this.partnerId);
+    }else if(this.schoolId){
+      this.getClassses(this.schoolId);
+      this.getSchoolName(this.schoolId);
     }
-  );
-}
 
-  onSelect(event, data){
-    this.subcountyForm = true;
-    this.getSchoolConstituencies(data);
   }
+
+
 
   onSubmit(registerTeacher: TeacherRegistration){
+    var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
+
     if(!this.submitted){
 
       //edit
     }else{
-      let e_code = localStorage.getItem('editEmisCode');
-      this.teacher = new TeacherRegistration(registerTeacher.schoolName, 
-                    registerTeacher.schoolCode, 
-                    registerTeacher.emisCode, 
-                    registerTeacher.long_geo_cordinates,
-                    registerTeacher.lat_geo_cordinates,
-                    registerTeacher.waterSource, 
-                    registerTeacher.zone,
-                    registerTeacher.county);
+        this.teacher = new TeacherRegistration(
+                        registerTeacher.firstName,
+                        registerTeacher.lastName,
+                        registerTeacher.phoneNumber,
+                        registerTeacher.birthday,
+                        registerTeacher.teacher_type,
+                        registerTeacher.tsc_no,
+                        registerTeacher.bom_no,
+                        registerTeacher.qualifications,
+                        registerTeacher.dateStarted,
+                        registerTeacher.joinedCurrent,
+                        registerTeacher.gender,
+                        registerTeacher.classAssigned,
+                        registerTeacher.headteacher,
+                      );
+        this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
 
-      this._teacherRegistrationService.sendData({
-            partners: [this.partnerId],
-            school_name: registerTeacher.schoolName,
-            school_code: registerTeacher.schoolCode,
-            geo_cordinates: {lat:registerTeacher.long_geo_cordinates,lng:registerTeacher.lat_geo_cordinates},
-            emis_code: registerTeacher.emisCode,
-            county: registerTeacher.county,
-            subcounty: registerTeacher.zone,
-            source_of_water: registerTeacher.waterSource
-          })
+                  school: this.schoolId,
+                  phone_no: registerTeacher.phoneNumber,
+                  fstname:   registerTeacher.firstName,
+                  lstname:   registerTeacher.lastName,
+                  birthday:  registerTeacher.birthday,
+                  teacher_type:registerTeacher.teacher_type,
+                  qualifications: registerTeacher.qualifications,
+                  tsc_no: registerTeacher.tsc_no,
+                  bom_no: registerTeacher.bom_no,
+                  classes: this.selected,
+                  headteacher: registerTeacher.headteacher,
+                  date_started_teaching: registerTeacher.dateStarted,
+                  joined_current_school:  registerTeacher.joinedCurrent,
+                  gender: registerTeacher.gender
+          }})
           .subscribe(
             data => //console.log(data)
             {
-              //console.log(data);
-              //console.log("Added School Successfully"),
-              this.success = "Edited School Successfully";
+              console.log("Added Teacher Successfully"),
+              this.success = "Added Teacher Successfully";
               this.form.reset();
             },
             error =>{
-              if(error.emis_code[0]){
-                this.fail = 'Emis code already exists!'
-              }else{
-                this.fail = "Failed to save data";
-              }
+              console.log(error)
+
+              this.fail = "Failed to save data. Make sure all required data is filled "+error;
             }
           );
+      }
+        //end
+  }
+
+  resetButton(){
+    this.form.reset();
+  }
+
+  showInput(){
+    this.isVisible = this.isVisible ? false : true;
+  }
+
+  getTeacherType(){
+    var tsc = "TSC";
+    var bom = "BOM";
+    const teacherType = [tsc,bom];
+    //console.log(teacherType);
+  }
+
+  getClassses(id): void {
+    this.classService.getClassses(id).subscribe(data => {
+      console.log(data, 'classes');
+      data = data.results;
+      let allClasses =[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        //console.log(data[i].class_name);
+
+        if(data[i].class_name == null){
+          this.dt.name = "Class "+data[i].id
+        }else{
+          this.dt.name="Class "+data[i].class_name
         }
+        this.dt.id = data[i].id
+        allClasses.push(this.dt)
+      }
+      this.classes = allClasses;
+    });
   }
 
+  getSchoolNames(id){
 
-  navigateBack(){
-    //console.log('navigateBack');
-    localStorage.removeItem('editEmisCode');
-    this.router.navigate(['/schools/view-schools']);
-    //this.form.reset();
-  }
-
-  getSchoolCounties(){
-
-    this._teacherRegistrationService.getCounties()
-      .subscribe(res=>{
-
-          res = res.results;
-          this.countyName = [];
-          for(let i =0; i<res.length;i++){
-            this.county = {};
-            this.county.county_name = res[i].county_name;
-            this.county.id = res[i].id;
-            this.county.sub_counties = res[i].subcounties;
-            this.countyName.push(this.county);
+    this._teacherRegistrationService.getSchools(id)
+      .subscribe(
+        (res)=>{
+          res = res.results
+          const schoolName = [];
+          for (let i = 0;i < res.length;i++){
+            this.tr = {}
+            this.tr.school_name=res[i].school_name
+            this.tr.id=res[i].id
+            schoolName.push(this.tr)
           }
-          // console.log(this.county.sub_counties);
-        });
+          this.schoolName = schoolName;
+          //console.log(schoolName);
+        },
+      (err) => console.log(err)
+    );
+  }
+
+  getSchoolName(id){
+    this._teacherRegistrationService.getSchoolName(id).subscribe((data)=>{
+      this.schoolName = data.results[0].school_name
+    })
+  }
+notSelected:any;
+  toggle(i, data){
+    var index = this.selected.indexOf(data);
+    if(index === -1){
+      this.selected.push(data);
+    }else{
+      this.selected.splice(index, 1);
+    }
+    this.selectedChange.emit(this.selected);
+    //console.log(this.selected.length)
   }
 
 
 
-  getSchoolConstituencies(data){
-     this.subcounties = this.countyName.filter(ct=>ct.id==data)[0].sub_counties;
-    //console.log(data,this.subcounties, 'yeah');
+  exists(id){
+    return this.selected.indexOf(id) > -1;
   }
+
 }

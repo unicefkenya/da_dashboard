@@ -191,7 +191,7 @@ export class ViewSchoolsComponent implements OnInit {
        if(event.srcElement.localName == 'button'){
          localStorage.setItem('editEmisCode', this.selected[0].emiscode);
         // console.log('Edit Clicked')
-         this.router.navigate(['/schools/edit-school/', this.selected[0].id],{skipLocationChange: true});
+         this.router.navigate(['/schools/edit-school/', this.selected[0].id]);
        }else{
         // console.log('Page Clicked')
          this.router.navigate(['/school', this.selected[0].id],{skipLocationChange: true});
