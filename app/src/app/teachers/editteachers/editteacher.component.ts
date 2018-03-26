@@ -88,6 +88,8 @@ export class EditteacherComponent implements OnInit {
     if(this.partnerId){
       this.getSchoolNames(this.partnerId);
     }else if(this.schoolId){
+      let teacherId = JSON.parse(localStorage.getItem("teacherId"));
+      this.getTeacher(teacherId);
       this.getClassses(this.schoolId);
       this.getSchoolName(this.schoolId);
     }
@@ -187,6 +189,58 @@ export class EditteacherComponent implements OnInit {
       this.classes = allClasses;
     });
   }
+
+
+  phone_no:any;
+  fstname:any;
+  lstname:any;
+  birthday:any;
+  teacher_type:any;
+  qualifications:any;
+  tsc_no:any;
+  bom_no:any;
+  pre_selected_classes:any;
+  headteacher:any;
+  date_started_teaching:any;
+  joined_current_school:any;
+  gender:any;
+
+  getTeacher(id){
+
+    this._teacherRegistrationService.getTeacher(id).subscribe(data => {
+      console.log(data);
+
+      this.phone_no = data.phone_no;
+      this.fstname = data.fstname;
+      this.lstname = data.lstname;
+      this.birthday = data.birthday;
+      this.teacher_type = data.teacher_type;
+      this.qualifications = data.qualifications;
+      this.tsc_no = data.tsc_no;
+      this.bom_no = data.bom_no;
+      
+
+      
+
+
+      if(data.headteacher == true){
+        this.headteacher = 'Yes';
+        this.classes = [1,2,3,4,5,6,7,8];
+      }else{
+        this.headteacher = 'No';
+        this.classes = data.classes;
+      }
+      this.date_started_teaching = data.date_started_teaching;
+      this.joined_current_school = data.joined_current_school;
+      
+      if(data.gender == 'M'){
+        this.gender = 'Male';
+      }else{
+        this.gender = 'Female';
+      }
+    });
+  }
+
 
   getSchoolNames(id){
 

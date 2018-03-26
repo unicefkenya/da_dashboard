@@ -30,18 +30,19 @@
               </div>-->
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input placeholder="First Name (required)"  [formControl]="form.controls['firstName']" type="text"></md-input>
+                  <md-input placeholder="First Name (required)"  [formControl]="form.controls['firstName']" type="text" value="{{fstname}}">{{fstname}}</md-input>
                   <small *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched" class="md-text-warn">Kindly include a first name.</small>
                 </div>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Last Name (required)"  [formControl]="form.controls['lastName']" type="text"></md-input>
+                  <md-input  placeholder="Last Name (required)"  [formControl]="form.controls['lastName']" type="text" value="{{lstname}}">{{lstname}}</md-input>
                   <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched" class="md-text-warn">Kindly include a last name.</small>
                 </div>
                 <span style="margin-right:10px;"></span>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 77%;">
                   <md-select  style="margin-top:10px;" [formControl]="form.controls['gender']" placeholder="Gender (required)">
+                    <md-option selected value="{{gender}}">{{gender}}</md-option>
                     <md-option  value="M">Male</md-option>
                     <md-option   value="F">Female</md-option>
                   </md-select>
@@ -51,13 +52,13 @@
 
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input placeholder="Phone Number (required)"  [formControl]="form.controls['phoneNumber']" type="text"></md-input>
+                  <md-input placeholder="Phone Number (required)"  [formControl]="form.controls['phoneNumber']" type="text" value="{{phone_no}}">{{phone_no}}</md-input>
                   <small *ngIf="form.controls['phoneNumber'].hasError('required') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly include phone number.</small>
                   <small *ngIf="form.controls['phoneNumber'].hasError('number') && form.controls['phoneNumber'].touched" class="md-text-warn">Kindly input a valid phone number.</small>
                 </div>
 
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input placeholder="Birthday (required)" [formControl]="form.controls['birthday']" type="date"></md-input>
+                  <md-input placeholder="Birthday (required)" [formControl]="form.controls['birthday']" type="date" value="{{birthday}}">{{birthday}}</md-input>
                   <small *ngIf="form.controls['birthday'].hasError('required') && form.controls['birthday'].touched" class="md-text-warn">Kindly include a date.</small>
                   <small *ngIf="form.controls['birthday'].hasError('date') || form.controls['birthday'].hasError('maxDate') && form.controls['birthday'].touched" class="md-text-warn">Kindly include a valid date.</small>
                 </div>
@@ -76,6 +77,7 @@
               -->
               <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                 <md-select  [formControl]="form.controls['teacher_type']" placeholder="Teacher Type (required)">
+                  <md-option selected value="{{teacher_type}}">{{teacher_type}}</md-option>
                   <md-option  value="TSC">T.S.C</md-option>
                   <md-option   value="BRD">Board</md-option>
                 </md-select>
@@ -83,6 +85,7 @@
               </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-select  [formControl]="form.controls['headteacher']" placeholder="Are they the headteacher (required)">
+                    <md-option  selected value="{{headteacher}}">{{headteacher}}</md-option>
                     <md-option  value="True">Yes</md-option>
                     <md-option   value="False">No</md-option>
                   </md-select>
@@ -107,18 +110,18 @@
                   <md-input ng-show="isVisible"  placeholder="TSC Number"  [formControl]="form.controls['tsc_no']" type="text"></md-input>
                 </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input ng-show="bomNo"  placeholder="BOM Number" [formControl]="form.controls['bom_no']" type="text"></md-input>
+                  <md-input ng-show="bomNo"  placeholder="BOM Number" [formControl]="form.controls['bom_no']" type="text" value="{{bom_no}}">{{bom_no}}</md-input>
                 </div>
               </div>
 
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input placeholder="Date Started Teaching (required)" [formControl]="form.controls['dateStarted']" type="date"></md-input>
+                  <md-input placeholder="Date Started Teaching (required)" [formControl]="form.controls['dateStarted']" type="date" value="{{dateStarted}}">{{dateStarted}}</md-input>
                   <small *ngIf="form.controls['dateStarted'].hasError('required') && form.controls['dateStarted'].touched" class="md-text-warn">Kindly include a date.</small>
                   <small *ngIf="form.controls['dateStarted'].hasError('date') || form.controls['dateStarted'].hasError('maxDate') && form.controls['dateStarted'].touched" class="md-text-warn">Kindly input a valid date.</small>
                 </div>
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-input  placeholder="Joined Current School (required)" [formControl]="form.controls['joinedCurrent']"  type="date"></md-input>
+                  <md-input  placeholder="Joined Current School (required)" [formControl]="form.controls['joinedCurrent']"  type="date" value="{{joinedCurrent}}">{{joinedCurrent}}</md-input>
                   <small *ngIf="form.controls['joinedCurrent'].hasError('required') && form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a date.</small>
                   <small *ngIf="form.controls['joinedCurrent'].hasError('date') || form.controls['joinedCurrent'].hasError('maxDate') &&form.controls['joinedCurrent'].touched" class="md-text-warn">You must include a valid date.</small>
                 </div>

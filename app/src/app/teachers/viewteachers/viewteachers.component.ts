@@ -144,7 +144,7 @@ export class ViewTeachersComponent implements OnInit {
   }
  
     onSelect({ selected }) {
-        localStorage.setItem('schoolId', this.selected[0].id);
+        localStorage.setItem('teacherId', this.selected[0].id);
      //console.log(event,, 'Select Event', selected, this.selected,this.selected[0].emiscode);
        if(event.srcElement.localName == 'button'){
          //localStorage.setItem('teacherId', this.selected[0].emiscode);

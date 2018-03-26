@@ -66,6 +66,13 @@ export class EditteacherService {
     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+    getTeacher(id){
+    return this.http.get(this.baseApiUrl+'/api/teachers/'+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
  private handleError(error: Response | any){
     let errMsg: string;
 
