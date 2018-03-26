@@ -10,10 +10,11 @@ import { TeachersComponent } from './teachers.component';
 import { ViewTeachersComponent } from './viewteachers/viewteachers.component';
 import { TeachersRoutes } from './teachers.routing';
 import { AddTeachersComponent } from './addteachers/addteachers.component';
+import { EditteacherComponent } from './editteachers/editteacher.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(TeachersRoutes), MaterialModule, FlexLayoutModule, FormsModule,ReactiveFormsModule, NgxDatatableModule],
-  declarations: [TeachersComponent,ViewTeachersComponent, AddTeachersComponent],
+  declarations: [TeachersComponent,ViewTeachersComponent, AddTeachersComponent, EditteacherComponent],
   exports: [ ViewTeachersComponent ]
 
 })

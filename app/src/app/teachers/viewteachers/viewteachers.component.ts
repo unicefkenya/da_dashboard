@@ -149,7 +149,7 @@ export class ViewTeachersComponent implements OnInit {
        if(event.srcElement.localName == 'button'){
          //localStorage.setItem('teacherId', this.selected[0].emiscode);
         // console.log('Edit Clicked')
-         this.router.navigate(['/teachers/edit-teachers/', this.selected[0].id],{skipLocationChange: true});
+         this.router.navigate(['/teachers/edit-teacher/', this.selected[0].id],{skipLocationChange: true});
        }else{
         // console.log('Page Clicked')
          this.getTeacherId(this.selected[0].id);
