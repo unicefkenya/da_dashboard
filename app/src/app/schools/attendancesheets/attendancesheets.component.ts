@@ -4,16 +4,17 @@ import { AttendancesheetsService } from './attendancesheets.service';
 import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { Search } from '../../search';
+import { SchoolattendanceService} from './schoolattendance/schoolattendance.service';
 
 @Component({
   selector: 'app-viewschools',
   templateUrl: './attendancesheets.component.html',
   styleUrls: ['./attendancesheets.component.scss'],
-  providers: [AttendancesheetsService]
+  providers: [AttendancesheetsService,SchoolattendanceService]
 })
 export class AttendancesheetsComponent implements OnInit {
 
-  constructor(private _attendancesheetsService: AttendancesheetsService,private router: Router, private fb: FormBuilder ) {
+  constructor(private _schoolattendanceService: SchoolattendanceService,private _attendancesheetsService: AttendancesheetsService,private router: Router, private fb: FormBuilder ) {
 
   }
   public form: FormGroup;
@@ -44,6 +45,19 @@ export class AttendancesheetsComponent implements OnInit {
     { name: 'Emiscode' },
     { name: 'Level' },
   ];
+  public linkStudentDetails;
+
+  fileStudentsDownload(id){
+
+      this._schoolattendanceService.getAllStudentDetailsExportFile(id).subscribe(
+        (data)  =>
+        {
+          //console.log(data.results[0]);
+          console.log(data);
+          this.linkStudentDetails = data.link;
+        }
+      );
+    }
 
   fetchSchools(offset,limit): void {
     this._attendancesheetsService.fetchSchools(this.page).subscribe(data => {
@@ -233,6 +247,7 @@ export class AttendancesheetsComponent implements OnInit {
     let partnerName = localStorage.getItem("welcomeName");
     if(this.partnerId && partnerName){
       this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);
+      //this.fileStudentsDownload(this.partnerId);
     }else{
       this.fetchSchools(this.offset,this.limit);
     }

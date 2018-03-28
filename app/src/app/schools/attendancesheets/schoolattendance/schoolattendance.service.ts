@@ -28,6 +28,12 @@ getStudentDetailsExportFile(id){
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }
 
+getAllStudentDetailsExportFile(id){
+  return this.http.get(this.baseApiUrl+'api/students/exportall?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+}
+
 //data importing
 sendVerifyAttendanceSheetsData(data: any){
 

@@ -88,6 +88,7 @@ export class SchoolattendanceComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
      this.id = +params['id'];
      this.fileDownload(this.id);
+     this.fileStudentsDownload(this.id);
    });
   }
 
@@ -110,7 +111,7 @@ export class SchoolattendanceComponent implements OnInit {
         (data)  =>
         {
           //console.log(data.results[0]);
-          //console.log(data);
+          console.log(data);
           this.linkStudentDetails = data.link;
         }
       );

@@ -15,6 +15,11 @@
       <md-card-actions>
         <button type="submit" md-raised-button class="shadow-none">Search</button>
       </md-card-actions>
+      <!-- <md-card-actions *ngIf="partnerId">
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+          <a href="{{linkStudentDetails}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="fileStudentsDownload()">Export Students Details File</button></a>
+        </div>
+       </md-card-actions> -->
     </form>
   </md-card-content>
 </md-card>

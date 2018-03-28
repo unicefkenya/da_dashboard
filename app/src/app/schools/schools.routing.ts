@@ -23,7 +23,7 @@ export const SchoolsRoutes: Routes = [
       path: 'export-sheets',
       component: AttendancesheetsComponent
     }, {
-      path: 'attendance-sheets/:id',
+      path: 'export-sheets/:id',
       component: SchoolattendanceComponent
     }
   ],
