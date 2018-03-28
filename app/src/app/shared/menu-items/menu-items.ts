@@ -66,7 +66,7 @@ const MENUITEMS = [
     children: [
       {state: 'add-schools', name: 'Add Schools'},
       {state: 'view-schools', name: 'View Schools', access:'partner_admin'},
-      {state: 'attendance-sheets', name: 'Attendance Sheets'}
+      {state: 'export-sheets', name: 'Export Sheets'}
     ]
   },
   {

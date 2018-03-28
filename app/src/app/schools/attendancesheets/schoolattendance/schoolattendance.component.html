@@ -8,7 +8,7 @@
 </div>
 <md-card *ngIf="loading == false">
 
-  <md-card-title>Attendance data File export for <b style="color: #521DB7">{{schoolName}}</b></md-card-title>
+  <md-card-title>Data File export for <b style="color: #521DB7">{{schoolName}}</b></md-card-title>
   <!--<md-card-subtitle>Upload excel files in .CSV format</md-card-subtitle>-->
 
   <!--<md-card-content>
@@ -40,9 +40,16 @@
   </md-card-content>-->
   <md-card-content>
     <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
-      Click on the button below to download the export file.
+      Click on the button below to download the school students data export file.
       <br/><br/>
-      <a href="{{link}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="fileDownload()">Export Attendance File</button></a>
+      <a href="{{linkStudentDetails}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="fileStudentsDownload()">Export Students Details File</button></a>
+    </div>
+  </md-card-content>
+  <md-card-content>
+    <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+      Click on the button below to download the attendance data export file.
+      <br/><br/>
+      <a href="{{link}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="fileDownload()">Export Students Attendance File</button></a>
     </div>
   </md-card-content>
 </md-card>

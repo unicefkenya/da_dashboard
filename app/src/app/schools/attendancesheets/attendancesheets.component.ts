@@ -126,7 +126,7 @@ export class AttendancesheetsComponent implements OnInit {
    localStorage.setItem('attendanceschoolId', this.selected[0].id);
    localStorage.setItem('attendanceschoolName', this.selected[0].name);
 
-   this.router.navigate(['/schools/attendance-sheets', this.selected[0].id],{skipLocationChange:true});
+   this.router.navigate(['/schools/export-sheets', this.selected[0].id],{skipLocationChange:true});
  }
 
  updateFilter(event) {

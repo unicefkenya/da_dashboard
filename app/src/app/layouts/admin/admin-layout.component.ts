@@ -72,7 +72,7 @@ schoolId:any;
   }
 
   hideSchools(childitem){
-     let hiddenSchools = ['Add Schools','Attendance Sheets','Add Children', 'Add Partners','Add Class', 'Add Teachers', 'View Classes','View Teachers']
+     let hiddenSchools = ['Add Schools','Export Sheets','Add Children', 'Add Partners','Add Class', 'Add Teachers', 'View Classes','View Teachers']
      let index=hiddenSchools.indexOf(childitem.name)
      let res=index==-1?true:false
      //console.log("Hide item ",index,res)
@@ -80,7 +80,7 @@ schoolId:any;
   }
 
   hideItemsAdmin(childitem){
-     let hiddenitemsAdmin = ['Add Schools','Attendance Sheets','Add Children','Add Class', 'Add Teachers', 'View Classes','View Teachers']
+     let hiddenitemsAdmin = ['Add Schools','Export Sheets','Add Children','Add Class', 'Add Teachers', 'View Classes','View Teachers']
      let index=hiddenitemsAdmin.indexOf(childitem.name)
      let result=index==-1?true:false
      //console.log("Hide item ",index,res)

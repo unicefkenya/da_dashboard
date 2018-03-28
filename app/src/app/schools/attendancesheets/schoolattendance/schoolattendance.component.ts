@@ -65,6 +65,7 @@ export class SchoolattendanceComponent implements OnInit {
   loading: boolean;
   public sub;
   public link;
+  public linkStudentDetails;
   id:any;
 
   constructor(
@@ -99,6 +100,18 @@ export class SchoolattendanceComponent implements OnInit {
           //console.log(data.results[0]);
           //console.log(data);
           this.link = data.link;
+        }
+      );
+    }
+
+    fileStudentsDownload(id){
+
+      this._schoolattendanceService.getStudentDetailsExportFile(id).subscribe(
+        (data)  =>
+        {
+          //console.log(data.results[0]);
+          //console.log(data);
+          this.linkStudentDetails = data.link;
         }
       );
     }

@@ -15,9 +15,15 @@ export class SchoolattendanceService {
 private baseApiUrl = BaseUrl.base_api_url;
 
 
-//getting Export File
+//getting Attendance Export File
 getExportFile(id){
   return this.http.get(this.baseApiUrl+'api/students/exports?school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+}
+
+getStudentDetailsExportFile(id){
+  return this.http.get(this.baseApiUrl+'api/students/exportall?school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }
