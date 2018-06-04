@@ -16,14 +16,14 @@ private baseApiUrl = BaseUrl.base_api_url;
 
 
 //getting Attendance Export File
-getExportFile(id){
-  return this.http.get(this.baseApiUrl+'api/students/exports?school='+id)
+getExportFile(id,month,year){
+  return this.http.get(this.baseApiUrl+'api/students/exports?school='+id+'&month='+month+'&year='+year)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }
 
-getStudentDetailsExportFile(id){
-  return this.http.get(this.baseApiUrl+'api/students/exportall?school='+id)
+getStudentDetailsExportFile(id,month,year){
+  return this.http.get(this.baseApiUrl+'api/students/exportall?school='+id+'&month='+month+'&year='+year)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }
@@ -33,6 +33,8 @@ getAllStudentDetailsExportFile(id){
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }
+
+
 
 //data importing
 sendVerifyAttendanceSheetsData(data: any){

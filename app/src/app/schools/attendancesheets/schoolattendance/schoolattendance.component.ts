@@ -9,6 +9,12 @@ import { CustomValidators } from 'ng2-validation';
 import {schoolAttendance} from './schoolattendance';
 import {BaseUrl} from '../../../baseurl';
 
+export class exportAttendance {
+  constructor(
+    public month: any,
+    public year: any
+  ){}
+}
 
 
 @Component({
@@ -27,7 +33,9 @@ export class SchoolattendanceComponent implements OnInit {
 
   @ViewChild('myfile') myfile;
   public schoolName;
+  yearsSelect=[];
   public form: FormGroup;
+  public dateform:FormGroup;
   public submitted;
   public studentDataType : schoolAttendance;
   public empty;
@@ -77,6 +85,11 @@ export class SchoolattendanceComponent implements OnInit {
       myfile: [null, Validators.compose([Validators.required,])],
     });
 
+    this.dateform = this.fb.group({
+      month: [null, Validators.compose([Validators.required,])],
+      year: [null, Validators.compose([Validators.required,])],
+    });
+
     this.errorDiv = false;
     this.uploadDiv = false;
     this.uploadButton = false;
@@ -87,35 +100,61 @@ export class SchoolattendanceComponent implements OnInit {
     this.schoolName = localStorage.getItem('attendanceschoolName');
     this.sub = this.route.params.subscribe(params => {
      this.id = +params['id'];
-     this.fileDownload(this.id);
-     this.fileStudentsDownload(this.id);
+     //this.fileDownload(this.id);
+     //this.fileStudentsDownload(this.id);
    });
+    this.years();
   }
 
 
-    fileDownload(id){
+  years(){
+      let todayYear = (new Date()).getFullYear();
+      
+      for(let a=2016; a < todayYear+1; a++){
+        //this.yr = {}
+        //this.yr.year = a;
+        this.yearsSelect.push(a);
+      }
 
-      this._schoolattendanceService.getExportFile(id).subscribe(
+    }
+
+    fileDownload(id,month,year){
+
+      this._schoolattendanceService.getExportFile(id,month,year).subscribe(
         (data)  =>
         {
           //console.log(data.results[0]);
           //console.log(data);
           this.link = data.link;
+          this.loading = false;
         }
       );
     }
 
-    fileStudentsDownload(id){
+    fileStudentsDownload(id,month,year){
 
-      this._schoolattendanceService.getStudentDetailsExportFile(id).subscribe(
+      this._schoolattendanceService.getStudentDetailsExportFile(id,month,year).subscribe(
         (data)  =>
         {
           //console.log(data.results[0]);
-          console.log(data);
+          //console.log(data);
           this.linkStudentDetails = data.link;
+          this.loading = false;
         }
       );
     }
+
+    error;
+
+     onSubmit(exportParameters: exportAttendance){
+       this.loading = true;
+    //this.partner = new exportAttendance(exportParameters.month,exportParameters.year);
+
+      this.fileStudentsDownload(this.id,exportParameters.month, exportParameters.year);
+      this.fileDownload(this.id, exportParameters.month, exportParameters.year);
+    
+  }
+
 
     Importupload(event){
       this.loading = true;

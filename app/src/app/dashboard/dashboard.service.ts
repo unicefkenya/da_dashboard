@@ -279,7 +279,7 @@ Weekly newly enrolled children attendance
     var d=new Date()
     var start_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
     var end_date=this.get_formatted_date(d)
-    console.log("The start dat eis ",start_date)
+    //console.log("The start dat eis ",start_date)
     return this.http.get(this.baseApiUrl+'api/attendances/daily?partner='+id+'&is_oosc=true&start_date='+start_date+"&end_date="+end_date)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));

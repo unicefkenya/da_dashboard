@@ -6,9 +6,48 @@
   </md-progress-spinner>
   Loading. Please be patient.
 </div>
-<md-card *ngIf="loading == false">
 
-  <md-card-title>Data File export for <b style="color: #521DB7">{{schoolName}}</b></md-card-title>
+<md-card *ngIf="loading == false">
+  <md-card-title>Select the month and year you want to export data for <b style="color: #521DB7">{{schoolName}}</b></md-card-title>
+  <md-card-content>
+    <form [formGroup]="dateform" (ngSubmit)="onSubmit(dateform.value);">
+      <div  fxLayout="row">
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+            <md-select [formControl]="dateform.controls['month']"  placeholder="Month">
+              <md-option value="1">January</md-option>
+              <md-option value="2">February</md-option>
+              <md-option value="3">March</md-option>
+              <md-option value="4">April</md-option>
+              <md-option value="5">May</md-option>
+              <md-option value="6">June</md-option>
+              <md-option value="7">July</md-option>
+              <md-option value="8">August</md-option>
+              <md-option value="9">September</md-option>
+              <md-option value="10">October</md-option>
+              <md-option value="11">November</md-option>
+              <md-option value="12">December</md-option>
+            </md-select>
+            <small *ngIf="dateform.controls['month'].hasError('required') && dateform.controls['month'].touched" class="md-text-warn">Kindly input the month you want to export.</small>
+          </div>
+
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+            <md-select [formControl]="dateform.controls['year']"  placeholder="Year">
+              <md-option *ngFor="let item of yearsSelect" value="{{item}}">{{item}}</md-option>
+              <!--<md-option>2016</md-option>-->
+            </md-select>
+            <small *ngIf="dateform.controls['year'].hasError('required') && dateform.controls['year'].touched" class="md-text-warn">Kindly input the year you want to export.</small>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+            <button [disabled]="!dateform.valid" md-raised-button md-button-sm class="shadow-none" color="primary" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </md-card-content>
+  </md-card>
+
+  <md-card *ngIf="loading == false">
   <!--<md-card-subtitle>Upload excel files in .CSV format</md-card-subtitle>-->
 
   <!--<md-card-content>
@@ -38,22 +77,23 @@
       </div>
     </div>
   </md-card-content>-->
-  <md-card-content>
+  <md-card-content *ngIf="linkStudentDetails">
     <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
       Click on the button below to download the school students data export file.
       <br/><br/>
-      <a href="{{linkStudentDetails}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="fileStudentsDownload()">Export Students Details File</button></a>
+      <a href="{{linkStudentDetails}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button">Export Students Details File</button></a>
     </div>
   </md-card-content>
   
-  <md-card-content>
+  <md-card-content *ngIf="link">
     <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
       Click on the button below to download the attendance data export file.
       <br/><br/>
-      <a href="{{link}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="fileDownload()">Export Students Attendance File</button></a>
+      <a href="{{link}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button">Export Students Attendance File</button></a>
     </div>
   </md-card-content>
 </md-card>
+
 
 <!--errors display-->
 <div *ngIf="uploadDiv">
