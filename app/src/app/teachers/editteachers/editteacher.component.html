@@ -65,16 +65,6 @@
               </div>
 
               <div  fxLayout="row">
-                <!--<div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-select  [formControl]="form.controls['class']" placeholder="Assign Class (required)">
-                    <md-option *ngFor="let cl of classes" let i=index; value="{{cl.id}}">
-                      <md-checkbox (click)="cbClick(i, $event)"></md-checkbox>
-                      {{cl.name}}
-                    </md-option>
-                  </md-select>
-                  <small *ngIf="form.controls['class'].hasError('required') && form.controls['class'].touched" class="md-text-warn">Kindly input the class assigned.</small>
-                </div>
-              -->
               <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                 <md-select  [formControl]="form.controls['teacher_type']" placeholder="Teacher Type (required)">
                   <md-option selected value="{{teacher_type}}">{{teacher_type}}</md-option>
@@ -91,18 +81,6 @@
                   </md-select>
                   <small *ngIf="form.controls['headteacher'].hasError('required') && form.controls['headteacher'].touched" class="md-text-warn">Kindly state if they are the headteacher or not.</small>
                 </div>
-
-                <!--
-                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
-                  <md-select [formControl]="form.controls['qualifications']"  placeholder="Qualifications (required)">
-                    <md-option  value="UNI">University</md-option>
-                    <md-option  value="COL">College</md-option>
-                    <md-option  value="CERT">Certificate</md-option>
-                    <md-option  value="UT">Untrained</md-option>
-                  </md-select>
-                  <small *ngIf="form.controls['qualifications'].hasError('required') && form.controls['qualifications'].touched" class="md-text-warn">Kindly input the teacher's qualifications.</small>
-                </div>
-              -->
               </div>
 
               <div  fxLayout="row">
@@ -113,7 +91,7 @@
                   <md-input ng-show="bomNo"  placeholder="BOM Number" [formControl]="form.controls['bom_no']" type="text" value="{{bom_no}}">{{bom_no}}</md-input>
                 </div>
               </div>
-
+              
               <div  fxLayout="row">
                 <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
                   <md-input placeholder="Date Started Teaching (required)" [formControl]="form.controls['dateStarted']" type="date" value="{{dateStarted}}">{{dateStarted}}</md-input>

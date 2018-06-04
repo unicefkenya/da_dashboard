@@ -107,7 +107,7 @@ export class PartnersComponent implements OnInit{
        let partnerId = +params['id'];
        this.pId = +params['id'];
 
-       console.log(this.pId, 'this partner id');
+       //console.log(this.pId, 'this partner id');
 
        let today = new Date();
       let todayYear = today.getFullYear();

@@ -11,12 +11,13 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { PartnersRoutes } from './partners.routing';
 import { AddPartnerComponent } from './addpartner/addpartner.component';
 import { ViewpartnersComponent } from './viewpartners/viewpartners.component';
+import { AttendancepartnersComponent } from './attendancepartners/attendancepartners.component';
 import { PartnersComponent } from './partners.component';
 
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(PartnersRoutes), MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,ChartsModule,NgxDatatableModule],
-  declarations: [ AddPartnerComponent, ViewpartnersComponent, PartnersComponent]
+  declarations: [ AddPartnerComponent, ViewpartnersComponent, PartnersComponent,AttendancepartnersComponent ]
 })
 
 export class PartnersModule {}

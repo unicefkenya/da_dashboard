@@ -10,7 +10,7 @@
     <md-card-content>
       <form [formGroup]="form" (ngSubmit)="searchSchool(form.value);">
         <md-input placeholder="Search by name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
-        <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the child's name.</small>
+        <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the partner's name.</small>
         <md-card-actions>
           <button type="submit" md-raised-button class="shadow-none">Search</button>
         </md-card-actions>

@@ -15,10 +15,10 @@ import { User } from './user';
 
 export class SigninComponent implements OnInit {
 
-  public user = new User('','');
   public errorMsg = '';
   public success;
   public fail;
+  public user = new User('','');
   public form: FormGroup;
   public userLogin: User;
   returnUrl: string;

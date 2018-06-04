@@ -204,6 +204,8 @@ export class EditteacherComponent implements OnInit {
   date_started_teaching:any;
   joined_current_school:any;
   gender:any;
+  dateStarted:any;
+  joinedCurrent:any;
 
   getTeacher(id){
 
@@ -218,6 +220,8 @@ export class EditteacherComponent implements OnInit {
       this.qualifications = data.qualifications;
       this.tsc_no = data.tsc_no;
       this.bom_no = data.bom_no;
+      this.dateStarted = data.date_started_teaching;
+      this.joinedCurrent = data.joined_current_school;      
       
 
       

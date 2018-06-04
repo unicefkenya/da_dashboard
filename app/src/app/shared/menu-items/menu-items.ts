@@ -44,7 +44,8 @@ const MENUITEMS = [
     icon: 'extension',
     children: [
       {state: 'add-partner', name: 'Add Partners'},
-      {state: 'view-partners', name: 'View Partners'}
+      {state: 'view-partners', name: 'View Partners'},
+      {state: 'attendance-partners', name: 'Attendance'}
     ]
   },
   {
