@@ -267,7 +267,11 @@ export class AttendancepartnersComponent implements OnInit {
       }
       
     }
-    
+ 
+
+  resetButton(){
+    this.form.reset();
+  }   
 
 
    onActivate(event) {
