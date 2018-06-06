@@ -20,7 +20,7 @@
   <div fxLayout="row"  fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="100" fxFlex="100"> 
       <md-card>
-        <md-card-title>Data submitted by partners based on selected timelines</md-card-title>
+        <md-card-title>Attendance data submitted by schools based on selected timelines</md-card-title>
         <md-card-content>
           <form [formGroup]="attendanceform" (ngSubmit)="onSubmit(attendanceform.value);" >
             <div  fxLayout="row"><div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
@@ -45,6 +45,35 @@
   </div>
     <ngx-datatable
     class="material fullscreen"
+    [columns]="percentagecolumns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="partnersAttendancePercentage"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="countPercentage"
+    [offset]="offset"
+    [limit]="limit"
+    (activate)='onActivate($event)'>
+    </ngx-datatable>
+
+  <div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100"> 
+      <md-card>
+        <md-card-title></md-card-title>
+        <md-card-content>
+          <h4 style="margin-left: 30%; color: #3F51B5;">DISTRIBUTION OF MARKED ATTENDANCE</h4>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+
+    <ngx-datatable
+    class="material fullscreen"
     [columns]="columns"
     [sortType]="'multi'"
     [columnMode]="'force'"
@@ -60,4 +89,7 @@
     [limit]="limit"
     (activate)='onActivate($event)'>
     </ngx-datatable>
+
+  
+  
   

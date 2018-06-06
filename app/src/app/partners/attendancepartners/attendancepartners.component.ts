@@ -39,6 +39,7 @@ export class AttendancepartnersComponent implements OnInit {
   selected: any[];
   temp = [];
   count: number = 0;
+  countPercentage: number = 0;
   offset: number = 0;
   limit: number = 100;
   page:number=1
@@ -61,6 +62,20 @@ export class AttendancepartnersComponent implements OnInit {
     { prop: 'girlspresent', name: 'PRESENT GIRLS'},
     { prop: 'totalpresent', name: 'TOTAL PRESENT'}
   ];
+
+  percentagecolumns = [
+    { prop: 'organization', name: 'ORGANIZATION', filtering:{filterString: '', placeholder: 'Filter by name'}},
+    { prop: 'totaldaysAttendance', name: 'DAYS ATTENDANCE TAKEN'},
+    { prop: 'totalpresent', name: 'PRESENT CHILDREN'},
+    { prop: 'totalabsent', name: 'ABSENT CHILDREN'},
+    { prop: 'totalstudents', name: 'TOTAL CHILDREN'},
+    { prop: 'expectedattendance', name: 'EXPECTED ATTENDANCE'},
+    { prop: 'totalattendance', name: 'TOTAL ATTENDANCE'},
+    { prop: 'missingattendance', name: 'MISSING ATTENDANCE'},
+    { prop: 'attendancetakenpercentage', name: 'ATTENDANCE %'}
+  ];
+
+
 
   constructor( private attendancepartnersService: AttendancepartnersService,private route:ActivatedRoute,private enrollmentService: EnrollmentService,private router: Router,private fb: FormBuilder) {
     this.attendanceform = this.fb.group({
@@ -92,7 +107,7 @@ export class AttendancepartnersComponent implements OnInit {
 
         
        this.getPartnerAttendanceMonitor(this.page ,this.offset, this.limit, this.start_date,this.end_date);
-
+       this.getPartnerAttendanceMonitorPercentage(this.page ,this.offset, this.limit, this.start_date,this.end_date)
 
       this.partneradminid = JSON.parse(localStorage.getItem("partneradminId"));
 
@@ -109,6 +124,7 @@ export class AttendancepartnersComponent implements OnInit {
   start_date:any;
   end_date:any;
   partnersAttendance:any;
+  partnersAttendancePercentage:any;
 
     onSubmit(attendance: attendanceTake){
     if(!this.submitted){
@@ -120,6 +136,7 @@ export class AttendancepartnersComponent implements OnInit {
       this.start_date = attendance.startDate;
       this.end_date = attendance.endDate;
       this.getPartnerAttendanceMonitor(this.page, this.offset,this.limit,attendance.startDate,attendance.endDate );
+      this.getPartnerAttendanceMonitorPercentage(this.page, this.offset,this.limit,attendance.startDate,attendance.endDate );
     }
   }
 
@@ -140,8 +157,9 @@ export class AttendancepartnersComponent implements OnInit {
       let allAttendancePartners =[]
       let rows=[]
       for (let i = 0;i < data.length;i++){
+        let org = data[i].value.split('-');
         this.dt = {}
-        this.dt.organization = data[i].value.slice(3, data[i].value.length);
+        this.dt.organization = org[1];
         this.dt.boysabsent = data[i].absent_males+'%';
         this.dt.girlsabsent = data[i].absent_females+'%';
         this.dt.totalabsent = data[i].absent+'%';
@@ -162,6 +180,56 @@ export class AttendancepartnersComponent implements OnInit {
       }
       //this.temp=row
       this.partnersAttendance=row;
+      //our initial data
+      //this.classes = allClasses;
+      this.selected = [];
+    });
+  } 
+
+
+
+
+  getPartnerAttendanceMonitorPercentage(page,offset,limit, start_date, end_date): void {
+    //console.log(id, 'this is being sent');
+    this.attendancepartnersService.getPartnerAttendanceMonitorPercentage(page, start_date, end_date).subscribe(data => {
+     
+       const start = offset * limit;
+      const end = start + limit;
+      //console.log(data, id,   start, end, start_date,end_date)
+
+      //console.log(data, 'percentage');
+      let count = data.count
+      data = data.results;
+      this.countPercentage = count
+
+      let allAttendancePartnersPercentage =[]
+      let rows=[]
+      for (let i = 0; i < data.length; i++){
+        let org = data[i].partner.split('-');
+        this.dt = {}
+        this.dt.organization = org[1];
+        this.dt.totalpresent = data[i].sum_present;
+        this.dt.totalabsent = data[i].sum_absent;
+        this.dt.totalstudents = data[i].total_students;
+        this.dt.totaldaysAttendance = data[i].total_days;
+        this.dt.totalattendance = data[i].total_attendance;
+        this.dt.expectedattendance = data[i].expected_attendance;
+        this.dt.missingattendance = data[i].missing_attendance;
+        this.dt.attendancetakenpercentage = data[i].attendance_taken_percentage;
+        allAttendancePartnersPercentage.push(this.dt)
+      }
+     //console.log(allClasses);
+      //cache our data
+      //this.temp = [...allClasses];
+       let row=[...rows]
+      this.temp=[...allAttendancePartnersPercentage];
+      let j=0
+      for (let i = start; i < end; i++) {
+        row[i] = allAttendancePartnersPercentage[j];
+        j++;
+      }
+      //this.temp=row
+      this.partnersAttendancePercentage=row;
       //our initial data
       //this.classes = allClasses;
       this.selected = [];
