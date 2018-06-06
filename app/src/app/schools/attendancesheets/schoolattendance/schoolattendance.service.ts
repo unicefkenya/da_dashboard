@@ -16,14 +16,14 @@ private baseApiUrl = BaseUrl.base_api_url;
 
 
 //getting Attendance Export File
-getExportFile(id,month,year){
-  return this.http.get(this.baseApiUrl+'api/students/exports?school='+id+'&month='+month+'&year='+year)
+getExportFile(id,startDate,endDate){
+  return this.http.get(this.baseApiUrl+'api/students/exports?school='+id+'&start_date='+startDate+'&end_date='+endDate)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }
 
-getStudentDetailsExportFile(id,month,year){
-  return this.http.get(this.baseApiUrl+'api/students/exportall?school='+id+'&month='+month+'&year='+year)
+getStudentDetailsExportFile(id){
+  return this.http.get(this.baseApiUrl+'api/students/exportall?school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 }

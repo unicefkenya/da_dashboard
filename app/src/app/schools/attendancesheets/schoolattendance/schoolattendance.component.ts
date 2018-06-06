@@ -11,8 +11,8 @@ import {BaseUrl} from '../../../baseurl';
 
 export class exportAttendance {
   constructor(
-    public month: any,
-    public year: any
+    public startDate: any,
+    public endDate: any
   ){}
 }
 
@@ -85,10 +85,10 @@ export class SchoolattendanceComponent implements OnInit {
       myfile: [null, Validators.compose([Validators.required,])],
     });
 
-    this.dateform = this.fb.group({
-      month: [null, Validators.compose([Validators.required,])],
-      year: [null, Validators.compose([Validators.required,])],
-    });
+   this.dateform = this.fb.group({
+        startDate: [null, Validators.compose([Validators.required])],
+        endDate: [null, Validators.compose([Validators.required])],
+      });
 
     this.errorDiv = false;
     this.uploadDiv = false;
@@ -101,7 +101,7 @@ export class SchoolattendanceComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
      this.id = +params['id'];
      //this.fileDownload(this.id);
-     //this.fileStudentsDownload(this.id);
+     this.fileStudentsDownload(this.id);
    });
     this.years();
   }
@@ -118,9 +118,9 @@ export class SchoolattendanceComponent implements OnInit {
 
     }
 
-    fileDownload(id,month,year){
+    fileDownload(id,startDate,endDate){
 
-      this._schoolattendanceService.getExportFile(id,month,year).subscribe(
+      this._schoolattendanceService.getExportFile(id,startDate,endDate).subscribe(
         (data)  =>
         {
           //console.log(data.results[0]);
@@ -131,9 +131,9 @@ export class SchoolattendanceComponent implements OnInit {
       );
     }
 
-    fileStudentsDownload(id,month,year){
+    fileStudentsDownload(id){
 
-      this._schoolattendanceService.getStudentDetailsExportFile(id,month,year).subscribe(
+      this._schoolattendanceService.getStudentDetailsExportFile(id).subscribe(
         (data)  =>
         {
           //console.log(data.results[0]);
@@ -150,8 +150,8 @@ export class SchoolattendanceComponent implements OnInit {
        this.loading = true;
     //this.partner = new exportAttendance(exportParameters.month,exportParameters.year);
 
-      this.fileStudentsDownload(this.id,exportParameters.month, exportParameters.year);
-      this.fileDownload(this.id, exportParameters.month, exportParameters.year);
+      
+      this.fileDownload(this.id, exportParameters.startDate, exportParameters.endDate);
     
   }
 
