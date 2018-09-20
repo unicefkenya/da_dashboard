@@ -27,7 +27,7 @@
                 <small *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="md-text-warn">Password is required.</small>
               </div>
               <div class="pb-1">
-                <md-checkbox>Stay logged in</md-checkbox>
+                <md-checkbox #remember (change)="onCheckedRemember(remember)">Stay logged in</md-checkbox>
               </div>
               <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
             </div>

@@ -36,15 +36,21 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    private _signin: SigninService) {}
+    private _signin: SigninService) {
 
-  ngOnInit() {
     this.form = this.fb.group({
       email: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])]
     });
+  }
+
+  ngOnInit() {
+
+    this._signin.isTokenExpired();
+
+    
     //reset login status
-    this._signin.logout();
+    //this._signin.logout();
 
     //get return url from route parameters or default to '/home'
     this.returnUrl = this.activatedRouter.snapshot.queryParams['returnUrl'] || '/home';
@@ -117,5 +123,12 @@ export class SigninComponent implements OnInit {
   showMessage(){
     this.forgotPsd = "Kindly contact your partner to reset password"
   }
+
+  onCheckedRemember(element){
+    console.log(element.checked, 'checked event')
+      if(element.checked == true){
+        localStorage.setItem("rememberMe", JSON.stringify(element.checked))
+      }
+    }
 
   }
