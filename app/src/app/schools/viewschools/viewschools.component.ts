@@ -41,12 +41,14 @@ export class ViewSchoolsComponent implements OnInit {
   partnerId: number;
   partneradminId: number;
   columns = [
+    {name: 'Number'},
     { name: 'Name' },
     { name: 'Emiscode' },
     { name: 'Level' }
   ];
 
    allColumns = [
+     {name: 'Number'},
     { name: 'Name' },
     { name: 'Emiscode' },
     { name: 'Level' }
@@ -82,6 +84,8 @@ export class ViewSchoolsComponent implements OnInit {
       let rowss = [];
       for (let i = 0; i < data.results.length; i++){
         this.dt = {}
+        let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = num
         this.dt.name = data.results[i].school_name
         this.dt.emiscode = data.results[i].emis_code
         this.dt.level = data.results[i].level
@@ -121,6 +125,8 @@ export class ViewSchoolsComponent implements OnInit {
         let rowss = [];
         for (let i = 0; i < data.results.length; i++){
           this.dt = {}
+          let num = ((this.page-1)*100)+(i+1)
+          this.dt.number = num
           this.dt.name = data.results[i].school_name
           this.dt.emiscode = data.results[i].emis_code
           this.dt.level = data.results[i].level
@@ -159,6 +165,8 @@ export class ViewSchoolsComponent implements OnInit {
         let rowss = [];
         for (let i = 0; i < data.results.length; i++){
           this.dt = {}
+          let num = ((this.page-1)*100)+(i+1)
+          this.dt.number = num
           this.dt.name = data.results[i].school_name
           this.dt.emiscode = data.results[i].emis_code
           this.dt.level = data.results[i].level
@@ -186,8 +194,9 @@ export class ViewSchoolsComponent implements OnInit {
     }
 
     onSelect({ selected }) {
-        localStorage.setItem('schoolId', this.selected[0].id);
-     //console.log(event,, 'Select Event', selected, this.selected,this.selected[0].emiscode);
+       
+     //console.log('Select Event', selected, this.selected,this.selected[0].emiscode);
+      localStorage.setItem('schoolId', this.selected[0].id);
        if(event.srcElement.localName == 'button'){
          localStorage.setItem('editEmisCode', this.selected[0].emiscode);
         // console.log('Edit Clicked')
@@ -226,10 +235,13 @@ export class ViewSchoolsComponent implements OnInit {
                data => //console.log(data)
                {
                  //console.log(data);
+                 this.count =data.count
                  let res =data.results;
                  let items =[];
                  for (let i = 0; i < res.length; i++){
                    this.dt = {}
+                   let num = ((this.page-1)*100)+(i+1)
+                   this.dt.number = i+1
                    this.dt.schoolcode = res[i].school_code
                    this.dt.name = res[i].school_name
                    this.dt.emiscode = res[i].emis_code
@@ -254,10 +266,13 @@ export class ViewSchoolsComponent implements OnInit {
                data => //console.log(data)
                {
                  //console.log(data);
+                 this.count =data.count
                  let res =data.results;
                  let items =[];
                  for (let i = 0; i < res.length; i++){
                    this.dt = {}
+                   let num = ((this.page-1)*100)+(i+1)
+                   this.dt.number = i+1
                    this.dt.schoolcode = res[i].school_code
                    this.dt.name = res[i].school_name
                    this.dt.emiscode = res[i].emis_code
@@ -282,9 +297,12 @@ export class ViewSchoolsComponent implements OnInit {
                  data => //console.log(data)
                  {
                    //console.log(data);
+                   this.count =data.count
                    let items =[];
                    for (let i = 0; i < data.results.length; i++){
                      this.dt = {}
+                     let num = ((this.page-1)*100)+(i+1)
+                     this.dt.number = i+1
                      this.dt.schoolcode = data.results[i].school_code
                      this.dt.name = data.results[i].school_name
                      this.dt.emiscode = data.results[i].emis_code

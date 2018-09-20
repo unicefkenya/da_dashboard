@@ -28,7 +28,9 @@ export class ViewClassesComponent implements OnInit{
   };
 
   columns = [
+    {name: 'Number'},
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} }
+    
   ];
 
   constructor( private readonly location:Location, private classService: ClassService,private router: Router) {
@@ -42,6 +44,8 @@ export class ViewClassesComponent implements OnInit{
       let allClasses =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
+        //let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = i+1
         //console.log(data[i].class_name);
         if(data[i].class_name == null){
           this.dt.name = data[i].id

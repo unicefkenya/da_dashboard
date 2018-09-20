@@ -34,10 +34,12 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
   constructor(private countyService: CountyService){}
 
   ngOnInit(){}
+
   private map:any;
   countyName:any;
   kaunti:any;
   ngAfterViewInit(){
+    
       this.getCountiesData();
 
       this.getMapData((data) => {

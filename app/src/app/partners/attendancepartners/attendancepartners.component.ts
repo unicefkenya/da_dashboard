@@ -54,6 +54,7 @@ export class AttendancepartnersComponent implements OnInit {
   partneradminid:number;
 
   columns = [
+    {prop: 'number', name:'#'},
     { prop: 'organization', name: 'ORGANIZATION', filtering:{filterString: '', placeholder: 'Filter by name'}},
     { prop: 'boysabsent', name: 'ABSENT BOYS'},
     { prop: 'girlsabsent', name: 'ABSENT GIRLS'},
@@ -64,6 +65,7 @@ export class AttendancepartnersComponent implements OnInit {
   ];
 
   percentagecolumns = [
+    {prop: 'number', name:'#'},
     { prop: 'organization', name: 'ORGANIZATION', filtering:{filterString: '', placeholder: 'Filter by name'}},
     { prop: 'totaldaysAttendance', name: 'DAYS ATTENDANCE TAKEN'},
     { prop: 'totalpresent', name: 'PRESENT CHILDREN'},
@@ -159,6 +161,8 @@ export class AttendancepartnersComponent implements OnInit {
       for (let i = 0;i < data.length;i++){
         let org = data[i].value.split('-');
         this.dt = {}
+        let num = ((page-1)*100)+(i+1)
+        this.dt.number = num
         this.dt.organization = org[1];
         this.dt.boysabsent = data[i].absent_males+'%';
         this.dt.girlsabsent = data[i].absent_females+'%';
@@ -207,6 +211,8 @@ export class AttendancepartnersComponent implements OnInit {
       for (let i = 0; i < data.length; i++){
         let org = data[i].partner.split('-');
         this.dt = {}
+        let num = ((page-1)*100)+(i+1)
+        this.dt.number = num
         this.dt.organization = org[1];
         this.dt.totalpresent = data[i].sum_present;
         this.dt.totalabsent = data[i].sum_absent;
@@ -248,6 +254,7 @@ export class AttendancepartnersComponent implements OnInit {
             .subscribe(
               data => //console.log(data)
               {
+                this.count =data.count
                 data = data.results;
                 let partner =[]
                 let rows=[]
@@ -256,6 +263,8 @@ export class AttendancepartnersComponent implements OnInit {
                   this.id = data[i].id
 
                   this.dt = {}
+                  let num = ((this.page-1)*100)+(i+1)
+                  this.dt.number = i+1
                   this.dt.organization=data[i].name
                   //this.dt.email=data[i].email
                   //this.dt.phonenumber=data[i].phone
@@ -295,6 +304,7 @@ export class AttendancepartnersComponent implements OnInit {
             .subscribe(
               data => //console.log(data)
               {
+                this.count =data.count
                 data = data.results;
                 let partner =[]
                 let rows=[]
@@ -303,6 +313,8 @@ export class AttendancepartnersComponent implements OnInit {
                   this.id = data[i].id
 
                   this.dt = {}
+                  let num = ((this.page-1)*100)+(i+1)
+                  this.dt.number = i+1
                   this.dt.organization= data[i].name
                   //this.dt.email=data[i].email
                   //this.dt.phonenumber=data[i].phone

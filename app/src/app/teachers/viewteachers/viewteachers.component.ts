@@ -38,6 +38,7 @@ export class ViewTeachersComponent implements OnInit {
   schoolId: number;
 
   columns = [
+    {name: 'Number'},
     { name: 'Name' },
     { name: 'Phonenumber' },
     { name: 'Gender' },
@@ -61,6 +62,8 @@ export class ViewTeachersComponent implements OnInit {
       for (let i = 0; i < data.length; i++){
         //console.log(data[i].phone_no)
         this.tmp = {}
+        let num = ((this.page-1)*100)+(i+1)
+        this.tmp.number = num
         this.tmp.name = data[i].name
         this.tmp.phonenumber = data[i].phone_no
         this.tmp.gender = data[i].gender
@@ -96,11 +99,13 @@ export class ViewTeachersComponent implements OnInit {
                   .subscribe(
                     data => //console.log(data)
                     {
-
+                      this.count =data.count
                       let items = [];
                       let rows=[];
                       for (let i = 0; i < data.length; i++){
                         this.tmp = {}
+                        let num = ((this.page-1)*100)+(i+1)
+                        this.tmp.number = i+1
                         this.tmp.name = data[i].name
                         this.tmp.phonenumber = data[i].phone_no
                         this.tmp.gender = data[i].gender

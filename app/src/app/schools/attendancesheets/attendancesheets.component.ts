@@ -41,6 +41,7 @@ export class AttendancesheetsComponent implements OnInit {
   partnerId: number;
 
   columns = [
+    {name: 'Number'},
     { name: 'Name' },
     { name: 'Emiscode' },
     { name: 'Level' },
@@ -70,6 +71,8 @@ export class AttendancesheetsComponent implements OnInit {
       let rowss = [];
       for (let i = 0; i < data.results.length; i++){
         this.dt = {}
+        let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = num
         this.dt.name = data.results[i].school_name
         this.dt.emiscode = data.results[i].emis_code
         this.dt.level = data.results[i].level
@@ -109,6 +112,8 @@ export class AttendancesheetsComponent implements OnInit {
         let rowss = [];
         for (let i = 0; i < data.results.length; i++){
           this.dt = {}
+          let num = ((this.page-1)*100)+(i+1)
+          this.dt.number = num
           this.dt.name = data.results[i].school_name
           this.dt.emiscode = data.results[i].emis_code
           this.dt.level = data.results[i].level
@@ -168,10 +173,13 @@ export class AttendancesheetsComponent implements OnInit {
                data => //console.log(data)
                {
                  //console.log(data);
+                 this.count =data.count
                  let res =data.results;
                  let items =[];
                  for (let i = 0; i < res.length; i++){
                    this.dt = {}
+                   let num = ((this.page-1)*100)+(i+1)
+                   this.dt.number = i+1
                    this.dt.schoolcode = res[i].school_code
                    this.dt.name = res[i].school_name
                    this.dt.emiscode = res[i].emis_code
@@ -196,9 +204,12 @@ export class AttendancesheetsComponent implements OnInit {
                  data => //console.log(data)
                  {
                    //console.log(data);
+                   this.count =data.count
                    let items =[];
                    for (let i = 0; i < data.results.length; i++){
                      this.dt = {}
+                     let num = ((this.page-1)*100)+(i+1)
+                     this.dt.number = i+1
                      this.dt.schoolcode = data.results[i].school_code
                      this.dt.name = data.results[i].school_name
                      this.dt.emiscode = data.results[i].emis_code

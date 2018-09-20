@@ -43,6 +43,7 @@ export class ClassComponent implements OnInit, OnDestroy{
   };
 
   columns = [
+    {name: 'Number'},
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Gender' },
     {name: 'Guardianphone'},
@@ -84,6 +85,8 @@ selectionType:any;
       let allClasses =[]
       for (let i = 0;i < data.length;i++){
         this.dt = {}
+        //let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = i+1
         //console.log(data[i].class_name, ':the classes', data[i].id, ':their ids');
         if(data[i].class_name == null){
           this.dt.class_name = "Class "+data[i].id
@@ -124,6 +127,8 @@ selectionType:any;
           //  this.count = data.length;
           for (let i = 0;i < data.length;i++){
             this.dt = {}
+            //let num = ((this.page-1)*100)+(i+1)
+            this.dt.number = i+1
             this.dt.name=data[i].student_name
             this.dt.gender=data[i].gender
             if(data[i].guardianphone != null){

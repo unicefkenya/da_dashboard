@@ -45,6 +45,7 @@ export class SchoolenrollmentComponent implements OnInit {
   schoolId:number;
 
   columns = [
+    {name: 'Number'},
     { name: 'Name', filtering:{filterString: '', placeholder: 'Filter by name'} },
     { name: 'Gender' },
     { name: 'School' },
@@ -79,6 +80,8 @@ export class SchoolenrollmentComponent implements OnInit {
       //  this.count = data.length;
       for (let i = 0;i < data.length;i++){
         this.dt = {}
+        let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = num
         this.dt.name=data[i].student_name
         this.dt.gender=data[i].gender
         this.dt.school = data[i].school_name
@@ -134,6 +137,8 @@ export class SchoolenrollmentComponent implements OnInit {
                 let rows=[]
                 for (let i = 0; i < data.results.length; i++){
                   this.dt = {}
+                  let num = ((this.page-1)*100)+(i+1)
+                  this.dt.number = i+1
                   this.dt.emiscode=res[i].emis_code
                   this.dt.name=res[i].student_name
                   this.dt.gender=res[i].gender
@@ -160,11 +165,14 @@ export class SchoolenrollmentComponent implements OnInit {
                 .subscribe(
                   data => //console.log(data)
                   {
+                    this.count =data.count
                     let res = data.results;
                     let childs =[];
                     let rows=[]
                     for (let i = 0; i < data.results.length; i++){
                       this.dt = {}
+                      let num = ((this.page-1)*100)+(i+1)
+                      this.dt.number = i+1
                       this.dt.emiscode=res[i].emis_code
                       this.dt.name=res[i].student_name
                       this.dt.gender=res[i].gender
@@ -198,6 +206,8 @@ export class SchoolenrollmentComponent implements OnInit {
                     let rows=[]
                     for (let i = 0; i < data.results.length; i++){
                       this.dt = {}
+                      let num = ((this.page-1)*100)+(i+1)
+                      this.dt.number = i+1
                       this.dt.emiscode=res[i].emis_code
                       this.dt.name=res[i].student_name
                       this.dt.gender=res[i].gender

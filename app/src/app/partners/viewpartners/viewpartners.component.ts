@@ -42,6 +42,7 @@ export class ViewpartnersComponent implements OnInit {
   partneradminid:number;
 
   columns = [
+    { prop: 'number', name: ''},
     { prop: 'organization', name: 'ORGANIZATION', filtering:{filterString: '', placeholder: 'Filter by name'}},
     { prop: 'girlsenrolled', name: 'GIRLS ENROLLED'},
     { prop: 'boysenrolled', name: 'BOYS ENROLLED'},
@@ -74,6 +75,8 @@ export class ViewpartnersComponent implements OnInit {
         let a:any;
 
         this.dt = {}
+        let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = num
         this.dt.organization=data[i].name
         //this.dt.email=data[i].email
         //this.dt.phonenumber=data[i].phone
@@ -133,6 +136,8 @@ export class ViewpartnersComponent implements OnInit {
 
         this.dt = {}
         this.dt.organization=data[i].name
+        let num = ((this.page-1)*100)+(i+1)
+        this.dt.number = num
         //this.dt.email=data[i].email
         //this.dt.phonenumber=data[i].phone
         if(data[i].last_data_upload != null){
@@ -182,8 +187,10 @@ export class ViewpartnersComponent implements OnInit {
           this.partnersService.searchDataPartnerAdmin(search.search,this.partneradminid)
             .subscribe(
               data => //console.log(data)
-              {
+              {  
+                this.count =data.count
                 data = data.results;
+                
                 let partner =[]
                 let rows=[]
                 //  this.count = data.length;
@@ -192,6 +199,8 @@ export class ViewpartnersComponent implements OnInit {
 
                   this.dt = {}
                   this.dt.organization=data[i].name
+                  let num = ((this.page-1)*100)+(i+1)
+                  this.dt.number = i+1
                   //this.dt.email=data[i].email
                   //this.dt.phonenumber=data[i].phone
                   if(data[i].last_data_upload != null){
@@ -230,7 +239,9 @@ export class ViewpartnersComponent implements OnInit {
             .subscribe(
               data => //console.log(data)
               {
+                this.count =data.count
                 data = data.results;
+                
                 let partner =[]
                 let rows=[]
                 //  this.count = data.length;
@@ -239,6 +250,8 @@ export class ViewpartnersComponent implements OnInit {
 
                   this.dt = {}
                   this.dt.organization=data[i].name
+                  let num = ((this.page-1)*100)+(i+1)
+                  this.dt.number = i+1
                   //this.dt.email=data[i].email
                   //this.dt.phonenumber=data[i].phone
                   if(data[i].last_data_upload != null){
@@ -323,5 +336,21 @@ export class ViewpartnersComponent implements OnInit {
     }
     
   }
+
+
+  /*rowClass = (row)=> {
+    let ar = []
+    for(var i=0; i < row.length; i++){
+       if((i % 10) === 0){
+         ar.push(row[i])
+       }
+      }
+
+    return {
+      //'age-is-ten': (row.age % 10) === 0
+      'age-is-ten': ar
+
+    };
+  }*/
 
 }

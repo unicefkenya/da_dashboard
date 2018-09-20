@@ -37,27 +37,27 @@ export class DropoutsService {
 
   searchData(school){
 
-    return this.http.get(this.baseApiUrl+'api/students/dropouts?school_name='+school)
+    return this.http.get(this.baseApiUrl+'api/students/dropouts?name='+school)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   searchPartnerData(id,school){
 
-    return this.http.get(this.baseApiUrl+'api/students/dropouts?school_name='+school+'&partner='+id)
+    return this.http.get(this.baseApiUrl+'api/students/dropouts?name='+school+'&partner='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   searchPartnerAdminData(id,school){
 
-    return this.http.get(this.baseApiUrl+'api/students/dropouts?school_name='+school+'&partner_admin='+id)
+    return this.http.get(this.baseApiUrl+'api/students/dropouts?name='+school+'&partner_admin='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   searchSchoolData(id,school){
-    return this.http.get(this.baseApiUrl+'api/students/dropouts?school_name='+school+'&school='+id)
+    return this.http.get(this.baseApiUrl+'api/students/dropouts?name='+school+'&school='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

@@ -339,7 +339,7 @@ export class DashboardComponent implements OnInit{
   public getStats():void {
 
     this.dashboardServices.getStats().subscribe(data => {
-      
+      //console.log(data, 'dropouts')
        this.schools = data.active_schools;
        this.males = data.students.males;
        this.females = data.students.females;
@@ -352,6 +352,8 @@ export class DashboardComponent implements OnInit{
   public getPartnerStats(id):void {
 
     this.dashboardServices.getPartnerStats(id).subscribe(data => {
+
+      //console.log(data, 'dropouts')
 
        this.schools = data.active_schools;
        this.males = data.students.males;
