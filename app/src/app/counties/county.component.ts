@@ -190,9 +190,9 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
 
 
-      function initMap() {
+      /*function initMap() {
 
-      }
+      }*/
 
       google.maps.event.addDomListener(window, "load", initMap);
   }
