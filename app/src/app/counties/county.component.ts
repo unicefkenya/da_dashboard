@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CountyService} from './county.service';
-declare var google;
+declare var google:any;
 
 export class Marker {
   constructor(
@@ -15,6 +15,7 @@ export class Marker {
   selector: 'app-county',
   templateUrl: './county.component.html',
   styleUrls: ['./county.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   providers: [CountyService]
 
 })
@@ -23,6 +24,42 @@ export class CountyComponent implements OnInit, AfterViewInit {
 lat: number = 0.1768696;
 lng: number = 37.9083264;
 zoom: number = 6;
+
+styles: any = [{
+  featureType: 'all',
+  stylers: [{
+    saturation: -80,
+    visibility: 'off'
+  }]
+}, {
+  featureType: 'landscape',
+  elementType: 'geometry',
+  stylers: [{
+    hue: '#00ffee'
+  }, {
+    saturation: 50
+  },{visibility: 'on'},{color:'#fcfcfc'}]
+}, {
+  featureType: 'poi.business',
+  elementType: 'labels',
+  stylers: [{
+    visibility: 'off'
+  }]
+}];
+
+/*var mapStyle = [{
+        'stylers': [
+        {'visibility': 'off'}]
+      }, {
+        'featureType': 'landscape',
+        'elementType': 'geometry',
+        'stylers': [{'visibility': 'on'}, {'color': '#fcfcfc'}]
+      }, {
+        'featureType': 'water',
+        'elementType': 'geometry',
+        'stylers': [{'visibility': 'on'}, {'color': '#bfd4ff'}]
+      }];*/
+
 draggable: boolean = true;
 kaunt = [];
 ct:any;
@@ -33,14 +70,9 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
   constructor(private countyService: CountyService){}
 
-  ngOnInit(){}
+  ngOnInit(){
 
-  private map:any;
-  countyName:any;
-  kaunti:any;
-  ngAfterViewInit(){
-    
-      this.getCountiesData();
+    this.getCountiesData();
 
       this.getMapData((data) => {
         let properties = data.features
@@ -53,17 +85,6 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
       });
       var activeInfoWindow;
 
-      var mapStyle = [{
-        'stylers': [{'visibility': 'off'}]
-      }, {
-        'featureType': 'landscape',
-        'elementType': 'geometry',
-        'stylers': [{'visibility': 'on'}, {'color': '#fcfcfc'}]
-      }, {
-        'featureType': 'water',
-        'elementType': 'geometry',
-        'stylers': [{'visibility': 'on'}, {'color': '#bfd4ff'}]
-      }];
 
       var countyMin = Number.MAX_VALUE, countyMax = -Number.MAX_VALUE;
 
@@ -159,6 +180,14 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
       }
 
       google.maps.event.addDomListener(window, "load", initMap);
+  }
+
+  private map:any;
+  countyName:any;
+  kaunti:any;
+  ngAfterViewInit(){
+    
+      
 
   }
 
@@ -200,6 +229,19 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
     };
     req.send();
   }
+
+
+    infoWindowShow:boolean = false;
+    mouseOverMarker(infoWindow, gm, event){
+      // console.log(event)
+      if (gm.lastOpen != null) {
+          gm.lastOpen.close();
+      }
+
+      gm.lastOpen = infoWindow;
+
+      infoWindow.open();
+    }
 
 
 }

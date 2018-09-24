@@ -125,7 +125,7 @@ export class SigninComponent implements OnInit {
   }
 
   onCheckedRemember(element){
-    console.log(element.checked, 'checked event')
+    //console.log(element.checked, 'checked event')
       if(element.checked == true){
         localStorage.setItem("rememberMe", JSON.stringify(element.checked))
       }

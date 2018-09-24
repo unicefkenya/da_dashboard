@@ -9,12 +9,18 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { CountyRoutes } from './county.routing';
 import { CountyComponent } from './county.component';
+//import {AgmCoreModule} from '@agm/core';
 
 
 //const googleMapsCore = AgmCoreModule.forRoot({apiKey: 'AIzaSyAyMZ31YQXhc2OhbGPIKNPTEDZ3YoGknuU',});
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(CountyRoutes),MdIconModule, MdCardModule, MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,NgxDatatableModule],
+  imports: [CommonModule, RouterModule.forChild(CountyRoutes),MdIconModule, MdCardModule,
+   MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, 
+   MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, 
+   ReactiveFormsModule,NgxDatatableModule,
+   //AgmCoreModule.forRoot({apiKey: 'AIzaSyCDFMFgGqFafvxlLty2Vrm2x2A4o2x4Upc'})
+   ],
   declarations: [ CountyComponent]
 })
 
