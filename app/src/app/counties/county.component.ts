@@ -97,7 +97,7 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
       this.mapsApiLoader.load().then(() => {
 
-                
+
         this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 6,
           center:{lat: 0.176869, lng: 37.9083264}
@@ -194,7 +194,7 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
       }*/
 
-      google.maps.event.addDomListener(window, "load", initMap);
+      google.maps.event.addDomListener(window, "load");
   }
 
   private map:any;
