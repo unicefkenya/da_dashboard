@@ -10,7 +10,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CountyRoutes } from './county.routing';
 import { CountyComponent } from './county.component';
 //import {AgmCoreModule} from '@agm/core';
-
+import {AgmCoreModule} from 'angular2-google-maps/core';
 
 //const googleMapsCore = AgmCoreModule.forRoot({apiKey: 'AIzaSyAyMZ31YQXhc2OhbGPIKNPTEDZ3YoGknuU',});
 
@@ -19,7 +19,7 @@ import { CountyComponent } from './county.component';
    MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, 
    MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, 
    ReactiveFormsModule,NgxDatatableModule,
-   //AgmCoreModule.forRoot({apiKey: 'AIzaSyCDFMFgGqFafvxlLty2Vrm2x2A4o2x4Upc'})
+   AgmCoreModule.forRoot({apiKey: 'AIzaSyCDFMFgGqFafvxlLty2Vrm2x2A4o2x4Upc'})
    ],
   declarations: [ CountyComponent]
 })

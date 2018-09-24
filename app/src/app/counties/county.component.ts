@@ -1,13 +1,18 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CountyService} from './county.service';
+import { MapsAPILoader } from "angular2-google-maps/core";
+
+//import {MapsAPILoader} from '@agm/core';
+
 declare var google:any;
 
 export class Marker {
   constructor(
     public lat:any,
     public lng:any,
-    public draggable:any) { }
+    public draggable:any
+  ) { }
 }
 
 
@@ -20,6 +25,7 @@ export class Marker {
 
 })
 export class CountyComponent implements OnInit, AfterViewInit {
+
 
 lat: number = 0.1768696;
 lng: number = 37.9083264;
@@ -68,7 +74,7 @@ count =[];
 selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Dropouts'}];
   //http://technobytz.com/mapping-angular-google-maps-api-geojson.html
 
-  constructor(private countyService: CountyService){}
+  constructor(private countyService: CountyService, private mapsApiLoader:MapsAPILoader){}
 
   ngOnInit(){
 
@@ -89,8 +95,9 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
       var countyMin = Number.MAX_VALUE, countyMax = -Number.MAX_VALUE;
 
 
-      function initMap() {
+      this.mapsApiLoader.load().then(() => {
 
+                
         this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 6,
           center:{lat: 0.176869, lng: 37.9083264}
@@ -176,6 +183,14 @@ selections =[{select:'Total Children'},{select: 'Newly Enrolled'},{select: 'Drop
 
 
         this.map.data.loadGeoJson('assets/data/kenyancounties.json');
+
+
+                }
+            );
+
+
+
+      function initMap() {
 
       }
 
