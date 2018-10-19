@@ -90,6 +90,30 @@ sendattendanceSheetsData(data: any){
     xhr.abort();
   }
 
+
+sendImportAttendanceSchoolData(data: any){
+  return Observable.fromPromise(new Promise((resolve, reject) => {
+    const studentsImport = this.baseApiUrl+'api/v2/attendances/import';
+    let loadstart;
+    let progress;
+    let load;
+    let token=localStorage.getItem("user");
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                resolve(JSON.parse(xhr.response) as any);
+            } else {
+                reject(xhr.response)
+            }
+        }
+    }
+    xhr.open("POST", studentsImport, true);
+    xhr.setRequestHeader("Authorization", "Bearer "+JSON.parse(token));
+    xhr.send(data);
+    }))
+}
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };

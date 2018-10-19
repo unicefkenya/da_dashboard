@@ -21,14 +21,14 @@
 
               <md-select ngModel placeholder="County" [formControl]="form.controls['county']" class="mb-2">
                 <md-option style="visibility: hidden" selected value="{{countySchool}}">{{countySchool}}</md-option>
-                <md-option  *ngFor = "let name of countyName" value="{{countySchool}}" (click)="onSelect($event.target.value, name.id)" (keyup)="onSelect($event.target.value)" >
+                <md-option  *ngFor = "let name of countyName" value="{{countySchool}}" (click)="onSelect($event.target.value, name.county_name, name.id)" (keyup)="onSelect($event.target.value, name.county_name, name.id)" >
                   {{name.county_name}}
                 </md-option>
               </md-select>
 
               <md-select ngModel placeholder="Sub County" [formControl]="form.controls['zone']" class="mb-2">
                 <md-option style="visibility: hidden" selected value="{{subcountyid}}">{{subcountyname}}</md-option>
-                <md-option *ngFor = "let name of subcounties" value="{{name.id}}">{{name.name}}</md-option>
+                <md-option (click)="onSelectSubCounty($event.target.value, name.name, name.id)" *ngFor = "let name of subcounties" value="{{name.id}}">{{name.name}}</md-option>
               </md-select>
 
               <md-select ngModel [formControl]="form.controls['waterSource']" placeholder="Source of water" class="mb-2">

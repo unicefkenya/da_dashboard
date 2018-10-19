@@ -19,7 +19,7 @@ import {AgmCoreModule} from 'angular2-google-maps/core';
    MdInputModule, MdButtonModule, MdToolbarModule, MdTabsModule, MdListModule, 
    MdSlideToggleModule, MdSelectModule, FlexLayoutModule, FormsModule, 
    ReactiveFormsModule,NgxDatatableModule,
-   AgmCoreModule.forRoot({apiKey: 'AIzaSyCDFMFgGqFafvxlLty2Vrm2x2A4o2x4Upc'})
+   AgmCoreModule.forRoot({apiKey: 'AIzaSyBrvsVAxNOJQTd0gBk3rvWY7isaqVBl7ns'})
    ],
   declarations: [ CountyComponent]
 })

@@ -94,10 +94,21 @@ schoolcode:any;
     }
   );
 }
+  
+  county_name:any;
+  subcounty_name:any;
 
-  onSelect(event, data){
+  onSelect(event, county, countyid){
+   // console.log(event, countyid, 'county')
+    this.county_name = countyid;
+
     this.subcountyForm = true;
-    this.getSchoolConstituencies(data);
+    this.getSchoolConstituencies(countyid);
+  }
+
+  onSelectSubCounty(event, subcounty, subcountyid){
+   // console.log(event, subcounty, subcountyid, 'subcounty')
+    this.subcounty_name = subcountyid
   }
 
   onSubmit(registerSchool: SchoolRegistration){
@@ -106,6 +117,9 @@ schoolcode:any;
       //edit
     }else{
       let e_code = localStorage.getItem('editEmisCode');
+     
+      console.log(e_code);
+
       this.school = new SchoolRegistration(registerSchool.schoolName, 
                     registerSchool.schoolCode, 
                     registerSchool.emisCode, 
@@ -121,8 +135,8 @@ schoolcode:any;
             school_code: registerSchool.schoolCode,
             geo_cordinates: {lat:registerSchool.long_geo_cordinates,lng:registerSchool.lat_geo_cordinates},
             emis_code: registerSchool.emisCode,
-            county: registerSchool.county,
-            subcounty: registerSchool.zone,
+            county: this.county_name,
+            subcounty: this.subcounty_name,
             source_of_water: registerSchool.waterSource
           })
           .subscribe(
@@ -131,6 +145,9 @@ schoolcode:any;
               //console.log(data);
               //console.log("Added School Successfully"),
               this.success = "Edited School Successfully";
+              
+              localStorage.removeItem('editEmisCode');
+
               this.form.reset();
             },
             error =>{

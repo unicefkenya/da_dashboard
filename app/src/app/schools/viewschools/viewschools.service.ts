@@ -20,6 +20,11 @@ export class ViewSchoolsService {
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+  fetchPartnerCountySchools(id,page,countyId){
+    return this.http.get(this.baseApiUrl+'api/school?page='+page+'&partner='+id+'&county='+countyId)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   fetchPartnerAdminSchools(id,page){
     return this.http.get(this.baseApiUrl+'api/school?page='+page+'&partner_admin='+id)
@@ -46,6 +51,18 @@ export class ViewSchoolsService {
     return this.http.get(this.baseApiUrl+'api/school?school_name='+school+'&partner_admin='+id)
     .map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+   getCounties(){
+    let token=localStorage.getItem("user");
+    let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.baseApiUrl+'api/counties',options)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   private extractData(res: Response) {

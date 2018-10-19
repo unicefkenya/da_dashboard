@@ -18,6 +18,7 @@ export class ViewSchoolsComponent implements OnInit {
   }
 
   public form: FormGroup;
+  public countyForm:FormGroup;
   public submitted: boolean =  true;
   public search: Search;
   success:string;
@@ -72,6 +73,33 @@ export class ViewSchoolsComponent implements OnInit {
     });
   }
 
+  countyName:any;
+  county:any;
+  selectedCounty:any;
+  getSchoolCounties(){
+
+    this.schoolService.getCounties()
+      .subscribe(res=>{
+
+          res = res.results;
+          this.countyName = [];
+          for(let i =0; i<res.length;i++){
+            this.county = {};
+            this.county.county_name = res[i].county_name;
+            this.county.id = res[i].id;
+            this.county.sub_counties = res[i].subcounties;
+            this.countyName.push(this.county);
+          }
+          // console.log(this.county.sub_counties);
+        });
+  }
+
+  onSelectCounty(name,id){
+    this.selectedCounty = id;
+    this.fetchPartnerCountySchools(this.offset,this.limit,this.selectedCounty)
+  }
+
+
 
   fetchSchools(offset,limit): void {
     this.schoolService.fetchSchools(this.page).subscribe(data => {
@@ -113,13 +141,54 @@ export class ViewSchoolsComponent implements OnInit {
   }
 
 
-    //individual partners
-    fetchPartnerSchools(id,offset,limit): void {
-      this.schoolService.fetchPartnerSchools(id,this.page).subscribe(data => {
+    fetchPartnerCountySchools(offset,limit,id){
+      this.schoolService.fetchPartnerCountySchools(this.partnerId,this.page,id).subscribe(data => {
+        //console.log(data);
         //start and end for pagination
         const start = offset * limit;
         const end = start + limit;
          this.count =data.count
+        this.loading = false;
+        let items =[];
+        let rowss = [];
+        for (let i = 0; i < data.results.length; i++){
+          this.dt = {}
+          let num = ((this.page-1)*100)+(i+1)
+          this.dt.number = num
+          this.dt.name = data.results[i].school_name
+          this.dt.emiscode = data.results[i].emis_code
+          this.dt.level = data.results[i].level
+          this.dt.id = data.results[i].id
+          items.push(this.dt)
+
+        }
+
+        //cached data
+        let rowSchool=[...rowss]
+        this.temp=[...items];
+        let j=0
+        for (let i = start; i < end; i++) {
+          rowSchool[i] = items[j];
+          j++;
+        }
+        //initial data
+        this.schools=rowSchool;
+
+        this.selected = [];
+        //console.log('Page Results',this.schools,this.count, start, end);
+
+      });
+    }
+    //individual partners
+    fetchPartnerSchools(id,offset,limit): void {
+      this.schoolService.fetchPartnerSchools(id,this.page).subscribe(data => {
+        console.log(data);
+        //start and end for pagination
+        const start = offset * limit;
+        const end = start + limit;
+         this.count =data.count
+
+         console.log(this.count, 'ssdhsjdhsdjhsd')
         this.loading = false;
         let items =[];
         let rowss = [];
@@ -234,7 +303,7 @@ export class ViewSchoolsComponent implements OnInit {
              .subscribe(
                data => //console.log(data)
                {
-                 //console.log(data);
+                 console.log(data);
                  this.count =data.count
                  let res =data.results;
                  let items =[];
@@ -328,10 +397,18 @@ export class ViewSchoolsComponent implements OnInit {
  onPage(event) {
    this.page=event.offset+1
    if(this.partnerId){
-     this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
+
+     if(this.selectedCounty){
+       //console.log('dsdjhdskjsdkjsdkj')
+       this.fetchPartnerCountySchools(event.offset,event.limit,this.selectedCounty);
+     }else{
+       //console.log('hapa leao')
+       this.fetchPartnerSchools(this.partnerId, event.offset,event.limit);
+     } 
    }else if(this.partneradminId){
      this.fetchPartnerAdminSchools(this.partneradminId, this.offset,this.limit);
    }else{
+     //console.log('shcoollhdkjsdsdksdajsdlkkskdsajd')
      this.fetchSchools(event.offset,event.limit);
    }
  }
@@ -340,18 +417,28 @@ export class ViewSchoolsComponent implements OnInit {
    //console.log('Activate Event', event);
  }
 
+ partnerLog:boolean =false;
+
   ngOnInit(): void {
     this.loading = true;
 
     this.form = this.fb.group({
-      search: [null, Validators.compose([Validators.required,])],
+      search: [null],
+      //emiscode: [null]
     });
+
+    this.countyForm = this.fb.group({
+      county:[null]
+    })
 
     this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
     this.partneradminId = JSON.parse(localStorage.getItem("partneradminId"));
     let partnerName = localStorage.getItem("welcomeName");
 
     if(this.partnerId && partnerName){
+
+      this.partnerLog = true
+      this.getSchoolCounties()
       this.fetchPartnerSchools(this.partnerId, this.offset,this.limit);
     }else if(this.partneradminId && partnerName){
       this.fetchPartnerAdminSchools(this.partneradminId, this.offset,this.limit);
