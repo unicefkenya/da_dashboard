@@ -1,78 +1,47 @@
-import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef} from '@angular/core';
+import {Directive, EventEmitter, Input,Output,Component, OnInit,ElementRef,ViewChildren} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { Router } from '@angular/router';
 
 import { TeachersRoutes } from './../teachers.routing';
 import {AppModule} from '../../app.module';
-import { FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormArray, FormControl,FormsModule } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
 import { TeacherRegistration } from './teacher';
 import { Response } from '@angular/http';
 import {AddTeacherService} from './addteacher.service';
+import {ClassService} from '../../classes/class.service';
+import {MdCheckbox} from '@angular/material';
 
-/*
-@Directive({
-  selector: '[focus]'
-})*/
+export interface Subjects {
+  name: string;
+  value: string;
+  teaching: boolean;
+}
 
 
 @Component({
   selector: 'add-school',
   templateUrl: './addteacher.component.html',
   styleUrls: ['./addteacher.component.scss'],
-  providers: [AddTeacherService, DatePipe],
+  providers: [AddTeacherService, DatePipe, ClassService],
   //directives: [FocusDirective]
 
 })
 
 
 export class AddTeachersComponent implements OnInit {
+  @ViewChildren(MdCheckbox) checkboxes;
+  @Output() selectedChange:EventEmitter<any> = new EventEmitter();
+
+  subjects= ['Mathematics','English','Kiswahili','Science','Social Studies','C.R.E'];
+  selected=[];
+
   editing = {};
   rows = [];
-
-  constructor(
-    private _teacherRegistrationService: AddTeacherService,
-    public datepipe:DatePipe,
-    public _router: Router,
-    private fb: FormBuilder
-  ){
-    this.fetch((data) => {
-      this.rows = data;
-    });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
-  }
-
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
-  }
-
-/*
-  visible: boolean = true;
-  @Output() open: EventEmitter<any> = new EventEmitter();
-  @Output() close: EventEmitter<any> = new EventEmitter();
-
-  toggle(){
-    this.visible = !this.visible;
-    if(this.visible) {
-      this.open.emit(null);
-    }else{
-      this.close.emit(null);
-    }
-  }
-*/
-
+  tr:any;
+  schoolId:number;
+  partnerId:number;
   public success;
   public fail;
   public empty;
@@ -84,38 +53,57 @@ export class AddTeachersComponent implements OnInit {
   public submitted: boolean =  true;
   public teacher: TeacherRegistration;
   public form: FormGroup ;
+  dt:any;
+  classes:any;
+
+  constructor(
+    private _teacherRegistrationService: AddTeacherService,
+    private classService:ClassService,
+    public datepipe:DatePipe,
+    public _router: Router,
+    private fb: FormBuilder
+  ){}
+
+
 
   ngOnInit(){
     //this.onSubmit;
     this.form = this.fb.group({
-      schoolName: [null, Validators.compose([Validators.required,])],
       gender: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
       phoneNumber: [null, Validators.compose([Validators.required, CustomValidators.number])],
       birthday: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       teacher_type: [null, Validators.compose([Validators.required])],
-      qualifications: [null, Validators.compose([Validators.required])],
+      headteacher: [null, Validators.compose([Validators.required])],
+      qualifications: [null],
       tsc_no: [null],
       bom_no: [null],
       dateStarted: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
       joinedCurrent: [null, Validators.compose([Validators.required, CustomValidators.date, CustomValidators.maxDate(this.currentDate)])],
-
     });
-    this.getSchoolNames();
+
+    this.schoolId = JSON.parse(localStorage.getItem("schoolId"));
+    this.partnerId = JSON.parse(localStorage.getItem("partnerId"));
+    if(this.partnerId){
+      this.getSchoolNames(this.partnerId);
+    }else if(this.schoolId){
+      this.getClassses(this.schoolId);
+      this.getSchoolName(this.schoolId);
+    }
 
   }
 
 
-  onSubmit(registerTeacher: TeacherRegistration, form){
+
+  onSubmit(registerTeacher: TeacherRegistration){
     var joinedCurrent = this._teacherRegistrationService.transformDate(registerTeacher.joinedCurrent);
 
     if(!this.submitted){
 
       //edit
     }else{
-      this.teacher = new TeacherRegistration(
-                        registerTeacher.schoolName,
+        this.teacher = new TeacherRegistration(
                         registerTeacher.firstName,
                         registerTeacher.lastName,
                         registerTeacher.phoneNumber,
@@ -126,11 +114,13 @@ export class AddTeachersComponent implements OnInit {
                         registerTeacher.qualifications,
                         registerTeacher.dateStarted,
                         registerTeacher.joinedCurrent,
-                        registerTeacher.gender
+                        registerTeacher.gender,
+                        registerTeacher.classAssigned,
+                        registerTeacher.headteacher,
                       );
-      this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
+        this._teacherRegistrationService.sendData({username:  registerTeacher.phoneNumber,"details":{
 
-                  school: registerTeacher.schoolName,
+                  school: this.schoolId,
                   phone_no: registerTeacher.phoneNumber,
                   fstname:   registerTeacher.firstName,
                   lstname:   registerTeacher.lastName,
@@ -139,7 +129,8 @@ export class AddTeachersComponent implements OnInit {
                   qualifications: registerTeacher.qualifications,
                   tsc_no: registerTeacher.tsc_no,
                   bom_no: registerTeacher.bom_no,
-                  subjects: [1],
+                  classes: this.selected,
+                  headteacher: registerTeacher.headteacher,
                   date_started_teaching: registerTeacher.dateStarted,
                   joined_current_school:  registerTeacher.joinedCurrent,
                   gender: registerTeacher.gender
@@ -152,11 +143,13 @@ export class AddTeachersComponent implements OnInit {
               this.form.reset();
             },
             error =>{
-              this.empty = "This field is required";
-              this.fail = "Failed to save data";
+              console.log(error)
+
+              this.fail = "Failed to save data. Make sure all required data is filled "+error;
             }
           );
-        }
+      }
+        //end
   }
 
   resetButton(){
@@ -171,24 +164,71 @@ export class AddTeachersComponent implements OnInit {
     var tsc = "TSC";
     var bom = "BOM";
     const teacherType = [tsc,bom];
-    console.log(teacherType);
+    //console.log(teacherType);
   }
 
-  getSchoolNames(){
+  getClassses(id): void {
+    this.classService.getClassses(id).subscribe(data => {
+      console.log(data, 'classes');
+      data = data.results;
+      let allClasses =[]
+      for (let i = 0;i < data.length;i++){
+        this.dt = {}
+        //console.log(data[i].class_name);
 
-    this._teacherRegistrationService.getSchools()
+        if(data[i].class_name == null){
+          this.dt.name = "Class "+data[i].id
+        }else{
+          this.dt.name="Class "+data[i].class_name
+        }
+        this.dt.id = data[i].id
+        allClasses.push(this.dt)
+      }
+      this.classes = allClasses;
+    });
+  }
+
+  getSchoolNames(id){
+
+    this._teacherRegistrationService.getSchools(id)
       .subscribe(
         (res)=>{
+          res = res.results
           const schoolName = [];
-          for (let schoolname in res){
-            schoolName.push(res[schoolname]);
+          for (let i = 0;i < res.length;i++){
+            this.tr = {}
+            this.tr.school_name=res[i].school_name
+            this.tr.id=res[i].id
+            schoolName.push(this.tr)
           }
           this.schoolName = schoolName;
-          console.log(schoolName);
+          //console.log(schoolName);
         },
-      (err) => console.log(err),
-      ()=>console.log("Done")
+      (err) => console.log(err)
     );
+  }
+
+  getSchoolName(id){
+    this._teacherRegistrationService.getSchoolName(id).subscribe((data)=>{
+      this.schoolName = data.results[0].school_name
+    })
+  }
+notSelected:any;
+  toggle(i, data){
+    var index = this.selected.indexOf(data);
+    if(index === -1){
+      this.selected.push(data);
+    }else{
+      this.selected.splice(index, 1);
+    }
+    this.selectedChange.emit(this.selected);
+    //console.log(this.selected.length)
+  }
+
+
+
+  exists(id){
+    return this.selected.indexOf(id) > -1;
   }
 
 }

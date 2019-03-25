@@ -37,11 +37,7 @@ export class AddSchoolService {
 
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
-    return body.data || { };
-  }
-
+ 
   getConstituencies(){
     let token=localStorage.getItem("user");
     let headers = new Headers({
@@ -66,17 +62,19 @@ export class AddSchoolService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+   private extractData(res: Response) {
+    let body = res.json();
+    return body.data || { };
+  }
+
+
   private handleError(error: Response | any){
     let errMsg: string;
 
     if(error instanceof Response){
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    }else{
-      errMsg = error.message ? error.message: error.toString();
+      const body = error.json();
+      errMsg = body;
     }
-    console.log(errMsg);
     return Observable.throw(errMsg);
   }
 }

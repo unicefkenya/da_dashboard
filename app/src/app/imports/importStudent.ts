@@ -1,5 +1,5 @@
 export class importStudent {
   constructor(
-    public dataType: string
+    public type_of_file: any
   ){}
 }

@@ -14,7 +14,6 @@ export class AddTeacherService {
     private datePipe: DatePipe
   ){}
 
-
   private baseApiUrl = BaseUrl.base_api_url;
 
   transformDate(date){
@@ -49,30 +48,31 @@ export class AddTeacherService {
     return body.data || { };
   }
 
-  getSchools(){
+  getSchools(id){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.baseApiUrl+'api/schools',options)
+    return this.http.get(this.baseApiUrl+'api/schools?partner='+id,options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getSchoolName(id){
+    return this.http.get(this.baseApiUrl+'api/schools?id='+id)
+    .map((response:Response) => response.json())
+    .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
-  private handleError(error: Response | any){
+ private handleError(error: Response | any){
     let errMsg: string;
 
     if(error instanceof Response){
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    }else{
-      errMsg = error.message ? error.message: error.toString();
+      const body = error.json();
+      errMsg = body;
     }
-    console.log(errMsg);
     return Observable.throw(errMsg);
   }
 }

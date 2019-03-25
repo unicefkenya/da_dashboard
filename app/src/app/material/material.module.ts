@@ -24,12 +24,11 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { MenuComponent } from './menu/menu.component';
 import { SliderComponent } from './slider/slider.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
-import { DialogComponent } from './dialog/dialog.component';
 import { SelectComponent } from './select/select.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(MaterialRoutes), MaterialModule, HttpModule, FormsModule, ReactiveFormsModule, FlexLayoutModule],
-  declarations: [ButtonsComponent, CardsComponent, InputComponent, CheckboxComponent, MdCheckboxDemoNestedChecklist, RadioComponent, ToolbarComponent, ListsComponent, GridComponent, ProgressComponent, TabsComponent, ToggleComponent, TooltipComponent, MenuComponent, SliderComponent, SnackbarComponent, DialogComponent, SelectComponent],
+  declarations: [ButtonsComponent, CardsComponent, InputComponent, CheckboxComponent, MdCheckboxDemoNestedChecklist, RadioComponent, ToolbarComponent, ListsComponent, GridComponent, ProgressComponent, TabsComponent, ToggleComponent, TooltipComponent, MenuComponent, SliderComponent, SnackbarComponent,SelectComponent],
 })
 
 export class MaterialComponentsModule {}

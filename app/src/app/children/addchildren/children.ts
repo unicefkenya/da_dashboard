@@ -1,5 +1,6 @@
 export class ChildRegistration {
   constructor(
+    public schoolName: string,
     public firstName: string,
     public maidenName: string,
     public lastName: string,

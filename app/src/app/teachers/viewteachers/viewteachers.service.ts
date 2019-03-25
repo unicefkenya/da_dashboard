@@ -10,9 +10,24 @@ export class ViewTeachersService {
 
 private baseApiUrl = BaseUrl.base_api_url;
 
-  fetchTeachers(){
-    return this.http.get(this.baseApiUrl+'api/teachers')
+  fetchTeachers(id,page){
+    return this.http.get(this.baseApiUrl+'api/teachers?page='+page+'&school='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getTeacherId(id){
+    return this.http.get(this.baseApiUrl+'/api/teachers/'+id)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  searchTeacherData(id,name){
+
+    return this.http.get(this.baseApiUrl+'/api/teachers?name='+name+'&school='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
 }

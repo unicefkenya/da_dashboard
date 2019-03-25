@@ -15,8 +15,8 @@
               <img src="assets/images/logo-dark.png" alt=""/>
               <p class="md-text-muted">Sign in to continue.</p>
             </div>
-            <small *ngIf="load == false" style="color: red;">{{fail}}</small>
-            <small *ngIf="load == true" style="color: green;">{{success}}</small>
+            <small *ngIf="fail && !success" style="color: red;">{{fail}}</small>
+            <small *ngIf="success && !fail" style="color: green;">{{success}}</small>
             <div fxLayout="column"  fxLayoutAlign="space-around">
               <div class="pb-1">
                 <md-input placeholder="Username" [formControl]="form.controls['email']" style="width: 100%"></md-input>
@@ -27,13 +27,14 @@
                 <small *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="md-text-warn">Password is required.</small>
               </div>
               <div class="pb-1">
-                <md-checkbox>Stay logged in</md-checkbox>
+                <md-checkbox #remember (change)="onCheckedRemember(remember)">Stay logged in</md-checkbox>
               </div>
               <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
             </div>
+            <!--
             <div class="pt-1 pb-1 text-xs-center">
-              <a href="#">Forgot password?</a>
-            </div>
+              <a (click)="showMessage()" href="#">Forgot password?</a>
+            </div>-->
           </form>
         </md-card-content>
       </md-card>

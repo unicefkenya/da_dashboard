@@ -6,22 +6,47 @@
   </md-progress-spinner>
 </div>
 <div *ngIf="loading == false">
-  <md-input placeholder="Type to filter the name column..." required (keyup)='updateFilter($event)' style="width: 100%" class="mb-1 ml-1 mr-1"></md-input>
+  <md-card>
+    <md-card-content>
+      <form [formGroup]="form" (ngSubmit)="searchSchool(form.value);">
+        <md-input placeholder="Search by name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+        <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the child's name.</small>
+        <md-card-actions>
+          <button type="submit" md-raised-button class="shadow-none">Search</button>
+        </md-card-actions>
+      </form>
+    </md-card-content>
+  </md-card>
   <ngx-datatable
     class="material fullscreen"
     [columns]="columns"
     [sortType]="'multi'"
     [columnMode]="'force'"
     [headerHeight]="50"
-    [footerHeight]="0"
-    [rowHeight]="50"
-    [scrollbarV]="true"
-    [scrollbarH]="true"
-    [limit]="100"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
     [rows]="children"
     [selected]="selected"
     [selectionType]="'single'"
-    (activate)="onActivate($event)"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (page)='onPage($event)'
+    (activate)='onActivate($event)'
     (select)='onSelect($event)'>
+    <ngx-datatable-column 
+    *ngFor="let col of columns" 
+    [name]="col.name"
+    width="300"
+    >
+  </ngx-datatable-column>
+    <ngx-datatable-column *ngIf=" partnerId || schoolId" name="Edit" width="150"> 
+    <template let-value="value" ngx-datatable-cell-template>
+      <button *ngIf="selected" type="button" class="btn-customized" color="primary">
+        Edit
+      </button>
+    </template>
+  </ngx-datatable-column> 
   </ngx-datatable>
 </div>

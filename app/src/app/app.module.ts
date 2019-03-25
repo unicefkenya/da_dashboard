@@ -3,13 +3,16 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
-
 import { AuthGuard } from './authguard/auth.guard';
+import { Adminaccess } from './authguard/adminaccess';
+import { Schoolaccess } from './authguard/schoolaccess';
 import { SigninService } from './signin/signin.service';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
+
+import { EditProfileDialog } from './children/individual/child.component';
 
 
 import { AppRoutes } from './app.routing';
@@ -19,6 +22,7 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 
 import { SharedModule }       from './shared/shared.module';
+
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }
@@ -27,7 +31,8 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    EditProfileDialog
   ],
   imports: [
     BrowserModule,
@@ -46,9 +51,11 @@ export function createTranslateLoader(http: Http) {
   ],
   providers: [
     AuthGuard,
+    Adminaccess,
+    Schoolaccess,
     SigninService
   ],
-  entryComponents: [  ],
+  entryComponents: [ EditProfileDialog ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

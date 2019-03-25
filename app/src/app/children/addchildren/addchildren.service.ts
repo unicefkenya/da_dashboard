@@ -59,35 +59,45 @@ export class AddChildrenService {
 
   }
 
+  fetchPartnerSchools(id){
+    return this.http.get(this.baseApiUrl+'api/school?partner='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  fetchSchoolName(id){
+    return this.http.get(this.baseApiUrl+'api/school?id='+id)
+    .map((response: Response) => response.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };
   }
 
 
-  getClass(){
+
+
+  getClass(id){
     let token=localStorage.getItem("user");
     let headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.baseApiUrl+'api/classes',options)
+    return this.http.get(this.baseApiUrl+'api/streams?school='+id,options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  private handleError(error: Response | any){
+ private handleError(error: Response | any){
     let errMsg: string;
 
     if(error instanceof Response){
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    }else{
-      errMsg = error.message ? error.message: error.toString();
+      const body = error.json();
+      errMsg = body;
     }
-    console.log(errMsg);
     return Observable.throw(errMsg);
   }
 }

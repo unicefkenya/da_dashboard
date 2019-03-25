@@ -1,6 +1,5 @@
 export class TeacherRegistration {
   constructor(
-    public schoolName: string,
     public firstName: string,
     public lastName: string,
     public phoneNumber: number,
@@ -11,6 +10,9 @@ export class TeacherRegistration {
     public qualifications: string,
     public dateStarted: string,
     public joinedCurrent: string,
-    public gender: string
+    public gender: string,
+    public classAssigned: string,
+    public headteacher: string
+  //  public subjects: any
   ){}
 }

@@ -10,11 +10,12 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { SigninComponent } from './signin.component';
+import { ForgotComponent } from './forgot/forgot.component';
 import { SigninRoutes } from './signin.routing';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, RouterModule.forChild(SigninRoutes), MdIconModule, MdCardModule, MdInputModule, MdCheckboxModule, MdButtonModule, FlexLayoutModule, FormsModule, ReactiveFormsModule],
-  declarations: [SigninComponent]
+  declarations: [SigninComponent, ForgotComponent]
 })
 
 export class SigninModule {}

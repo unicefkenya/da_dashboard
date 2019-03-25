@@ -12,7 +12,7 @@
               <div class="pb-1">
                 <md-input placeholder="Email address" type="email" [formControl]="form.controls['email']" style="width: 100%"></md-input>
                 <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="md-text-warn">You must include an email address.</small>
-                <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="md-text-warn">You must include a valid email address.</small>
+                <small *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched" class="md-text-warn">You must include a valid email address.</small>
               </div>
               <div class="pb-1">
                 <md-input type="password" placeholder="Password" [formControl]="form.controls['password']" style="width: 100%"></md-input>
@@ -21,7 +21,7 @@
               <div class="pb-1">
                 <md-input placeholder="Confirm Password" [formControl]="form.controls['confirmPassword']" type="password" style="width: 100%"></md-input>
                 <small *ngIf="form.controls['confirmPassword'].hasError('required') && form.controls['confirmPassword'].touched" class="md-text-warn">You must include confirm password.</small>
-                <small *ngIf="form.controls['confirmPassword'].errors?.equalTo" class="md-text-warn">Passwords do not math.</small>
+                <small *ngIf="form.controls['confirmPassword'].hasError('equalTo')" class="md-text-warn">Passwords do not math.</small>
               </div>
               <div class="pb-1">
                 <md-checkbox>I have read and agree to the terms of service.</md-checkbox>
