@@ -11,22 +11,22 @@ export class EnrollmentService {
 
 //all
   fetchAllChildren(){
-    return this.http.get(this.baseApiUrl+'api/students')
+    return this.http.get(this.baseApiUrl+'api/students?active=true')
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   fetchAllPartnerChildren(id){
-    return this.http.get(this.baseApiUrl+'api/students?partner='+id)
+    return this.http.get(this.baseApiUrl+'api/students?active=true&partner='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   fetchAllPartnerAdminChildren(id){
-    return this.http.get(this.baseApiUrl+'api/students?partner_admin='+id)
+    return this.http.get(this.baseApiUrl+'api/students?active=true&partner_admin='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   fetchAllSchoolChildren(id){
-    return this.http.get(this.baseApiUrl+'api/students?school='+id)
+    return this.http.get(this.baseApiUrl+'api/students?active=true&school='+id)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

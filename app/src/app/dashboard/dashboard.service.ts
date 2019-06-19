@@ -123,8 +123,6 @@ Annual newly Enrolled attendance services
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-
-
   getAnnualEnrollmentGender(){
     return this.http.get(this.baseApiUrl+'api/students/enrolls/gender')
     .map((response: Response) => response.json())
